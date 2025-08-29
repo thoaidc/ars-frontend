@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'Chi tiết tài khoản' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <ng-container *ngIf="accountDetail">
+    <div class="form-space-between flex-wrap">
+      <div class="item-search w-50">
+        <label for="account-username">Tên đăng nhập</label>
+        <div class="input-text-custom">
+          <input
+            id="account-username"
+            class="form-control"
+            [(ngModel)]="accountDetail.username"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-fullname">Họ và tên</label>
+        <div class="input-text-custom">
+          <input
+            id="account-fullname"
+            class="form-control"
+            [(ngModel)]="accountDetail.fullname"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-email">Email</label>
+        <div class="input-text-custom">
+          <input
+            id="account-email"
+            class="form-control"
+            [(ngModel)]="accountDetail.email"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-username">Trạng thái tài khoản</label>
+        <div class="input-text-custom">
+          <input
+            id="account-status"
+            class="form-control"
+            [ngClass]="accountDetail.status === AccountStatus.ACTIVE ? 'success-color' : 'danger-color'"
+            [(ngModel)]="AccountStatusMap[accountDetail.status]"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-created-date">Ngày tạo</label>
+        <div class="input-text-custom">
+          <input
+            id="account-created-date"
+            class="form-control"
+            [(ngModel)]="accountDetail.createdDateStr"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-created-by">Người tạo</label>
+        <div class="input-text-custom">
+          <input
+            id="account-created-by"
+            class="form-control"
+            [(ngModel)]="accountDetail.createdByStr"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-updated-date">Ngày cập nhật</label>
+        <div class="input-text-custom">
+          <input
+            id="account-updated-date"
+            class="form-control"
+            [(ngModel)]="accountDetail.lastModifiedDateStr"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="item-search w-50">
+        <label for="account-updated-by">Người cập nhật</label>
+        <div class="input-text-custom">
+          <input
+            id="account-updated-by"
+            class="form-control"
+            [(ngModel)]="accountDetail.lastModifiedByStr"
+            type="text"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
+
+    <form class="w-100 mb-3 p-2">
+      <span>Vai trò </span>
+      <div class="select-search-custom">
+        <ng-select
+          [items]="roles"
+          bindLabel="name"
+          bindValue="id"
+          [multiple]="true"
+          [selectableGroup]="true"
+          [(ngModel)]="accountAuthorities"
+          [closeOnSelect]="false"
+          disabled
+          name="roleList"
+        >
+        </ng-select>
+      </div>
+    </form>
+  </ng-container>
+</div>
+
+<div class="modal-footer">
+  <button class="cancel-button-dialog" (click)="dismiss()">Đóng</button>
+</div>

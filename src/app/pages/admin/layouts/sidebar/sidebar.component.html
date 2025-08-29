@@ -1,0 +1,58 @@
+<div id="sidebar" [class]="'app-sidebar app-sidebar--' + (isSidebarShown ? 'show-all' : 'mini')">
+  <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+    <div class="menu">
+      <div [ngClass]="isSidebarShown ? 'menu-profile' : 'menu-profile-custom'">
+        <img *ngIf="isSidebarShown" src="assets/images/logo/logo_admin_full.png" class="logo-img" alt=""/>
+        <span (click)="toggleAppSidebar()" *ngIf="isSidebarShown" [innerHTML]="ICON_CLOSE_SIDEBAR | safeHtml"></span>
+        <img *ngIf="!isSidebarShown" src="assets/images/logo/logo_admin.png" class="logo-img-custom" alt="" />
+      </div>
+    </div>
+
+    <div class="list-item order-column">
+      <div class="menu">
+        <div class="menu-profile-action" (click)="toggleAppSidebar()">
+          <span *ngIf="!isSidebarShown" [innerHTML]="ICON_EXPAND_SIDEBAR | safeHtml"></span>
+        </div>
+        <ng-container *ngFor="let route of routerList">
+          <div class="menu-item has-sub" [ngClass]="isSidebarShown ? '' : 'menu-item-custom'" *hasAuthorities="route.permission">
+            <a
+              (click)="getLink(route.path, route.submenu && route.submenu.length > 0)"
+              class="menu-link menu-parent"
+              [ngClass]="latestUrl === route.path ? 'item-active' : ''"
+            >
+              <div class="menu-icon">
+                <span [innerHTML]="route.icon | safeHtml"></span>
+              </div>
+              <div [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">
+                {{ route.title }}
+              </div>
+              <div *ngIf="route.submenu?.length" [ngClass]="isSidebarShown ? 'menu-caret' : 'menu-caret caret-custom'"></div>
+            </a>
+            <div [ngClass]="isSidebarShown ? 'menu-submenu' : 'menu-submenu-custom'" class="order-column">
+              <ng-container *ngFor="let item of route.submenu">
+                <div [ngClass]="isSidebarShown ? 'menu-item' : 'menu-submenu-item'" *hasAuthorities="item.permission">
+                  <a
+                    (click)="getLink(route.path + item.path)"
+                    class="menu-link"
+                    [ngClass]="latestUrl === route.path + item.path ? 'item-active' : ''"
+                  >
+                    <div class="menu-icon">
+                      <span [innerHTML]="item.icon | safeHtml"></span>
+                    </div>
+                    <div class="menu-text--sub" [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">
+                      {{ item.title }}
+                    </div>
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="app-sidebar-mobile-backdrop">
+        <a routerLink="#" data-dismiss="app-sidebar-mobile" class="stretched-link"></a>
+      </div>
+    </div>
+  </div>
+</div>

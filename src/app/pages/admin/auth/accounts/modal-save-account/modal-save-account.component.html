@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ accountId ? 'Cập nhật tài khoản' : 'Thêm mới tài khoản' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="form-space-between flex-wrap">
+    <div class="item-search w-50">
+      <label for="username-login">Tên đăng nhập <span class="text-danger">*</span></label>
+      <div class="input-text-custom">
+        <input
+          id="username-login"
+          class="form-control"
+          [(ngModel)]="account.username"
+          type="text"
+          placeholder="Tên đăng nhập"
+          alphanumericOnly
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <div class="item-search w-50">
+      <label for="fullname">Họ và tên</label>
+      <div class="input-text-custom">
+        <input
+          id="fullname"
+          class="form-control"
+          [(ngModel)]="account.fullname"
+          type="text"
+          placeholder="Tên đầy đủ"
+        />
+      </div>
+    </div>
+
+    <div class="item-search w-50">
+      <label for="email-login">Email <span class="text-danger">*</span></label>
+      <div class="input-text-custom">
+        <input
+          id="email-login"
+          class="form-control"
+          [(ngModel)]="account.email"
+          type="email"
+          placeholder="Email"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+
+  <form class="w-100 mb-3 p-2">
+    <span>Vai trò <span class="text-danger">*</span></span>
+    <div class="select-search-custom">
+      <ng-select
+        [items]="roles"
+        bindLabel="name"
+        bindValue="id"
+        [multiple]="true"
+        [selectableGroup]="true"
+        placeholder="Chọn vai trò"
+        [(ngModel)]="account.roleIds"
+        [closeOnSelect]="false"
+        name="roleList"
+      >
+      </ng-select>
+    </div>
+  </form>
+
+  <div class="form-space-between">
+    <form class="item-search w-50" *ngIf="!accountId">
+      <label for="password-login">Mật khẩu <span class="text-danger">*</span></label>
+      <div class="input-text-custom" [class.input-password]="hiddenPassword">
+        <input
+          id="password-login"
+          class="form-control"
+          [(ngModel)]="account.password"
+          type="text"
+          placeholder="Mật khẩu"
+          alphanumericOnly
+          [isPassword]="hiddenPassword"
+          [specialCharacter]="true"
+          autocomplete="off"
+          name="password"
+        />
+        <div *ngIf="!hiddenPassword" class="display-password" (click)="hiddenPassword = !hiddenPassword">
+          <span [innerHTML]="ICON_EYE | safeHtml"></span>
+        </div>
+        <div *ngIf="hiddenPassword" class="display-password" (click)="hiddenPassword = !hiddenPassword">
+          <span [innerHTML]="ICON_EYE_CROSS | safeHtml"></span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="cancel-button-dialog" (click)="dismiss()">Huỷ</button>
+
+  <ng-container *hasAuthorities="[Authorities.ACCOUNT_UPDATE, Authorities.ACCOUNT]">
+    <button class="save-button-dialog" (click)="onSave()" [disabled]="isLoading">
+      <span>Lưu</span>
+    </button>
+  </ng-container>
+</div>

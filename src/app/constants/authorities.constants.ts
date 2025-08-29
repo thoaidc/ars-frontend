@@ -1,0 +1,17 @@
+
+export enum Authorities {
+
+  SYSTEM = '01',
+
+  ACCOUNT = '02',
+  ACCOUNT_VIEW = '0201',
+  ACCOUNT_CREATE = '0202',
+  ACCOUNT_UPDATE = '0203',
+  ACCOUNT_DELETE = '0204',
+
+  ROLE = '03',
+  ROLE_VIEW = '0301',
+  ROLE_CREATE = '0302',
+  ROLE_UPDATE = '0303',
+  ROLE_DELETE = '0304',
+}

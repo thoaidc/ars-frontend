@@ -1,0 +1,57 @@
+<div class="body-login">
+  <div class="login-img">
+    <div class="image-login">
+<!--      <img src="/assets/images/background/background.jpg" alt=""/>-->
+    </div>
+  </div>
+
+  <div class="login-info">
+    <div class="form-login justify-content-center">
+      <div class="form">
+        <span class="d-flex justify-content-center">
+          <img src="./assets/images/logo/logo_login.png" alt=""/>
+        </span>
+
+        <form autocomplete="on" class="info">
+          <span class="title-login">ĐĂNG NHẬP TÀI KHOẢN</span>
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              required
+              [(ngModel)]="loginRequest.username"
+              placeholder="Tài khoản"
+            />
+          </div>
+
+          <div class="input-login position-relative">
+            <input
+              [type]="isHiddenPassword ? 'password' : 'text'"
+              class="form-control"
+              name="password"
+              required
+              [(ngModel)]="loginRequest.password"
+              placeholder="Mật khẩu"
+            />
+            <div *ngIf="!isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
+              <span [innerHTML]="ICON_EYE | safeHtml"></span>
+            </div>
+            <div *ngIf="isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
+              <span [innerHTML]="ICON_EYE_CROSS | safeHtml"></span>
+            </div>
+          </div>
+
+          <div class="remember">
+            <div class="form-check">
+              <input class="form-check-input" name="remember" type="checkbox" id="remember" [(ngModel)]="isRememberMe"/>
+              <label class="form-check-label" for="remember">Ghi nhớ tài khoản</label>
+            </div>
+          </div>
+
+          <button class="button-login" (click)="login()" type="submit">Đăng nhập</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

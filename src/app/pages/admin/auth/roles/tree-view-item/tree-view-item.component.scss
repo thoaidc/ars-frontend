@@ -1,0 +1,34 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.label {
+  white-space: nowrap;
+  overflow: visible;
+}
+
+.i-caret-down {
+  float: left;
+  color: #0074bd;
+  margin-right: 5px !important;
+  margin-left: -12px;
+}
+
+.i-caret-right {
+  float: left;
+  color: #0074bd;
+  font-size: 16px;
+  margin-top: 3px !important;
+  margin-right: 5px !important;
+  margin-left: -12px;
+}
+
+.input-disabled {
+  pointer-events: none;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}

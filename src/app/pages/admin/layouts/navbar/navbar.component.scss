@@ -1,0 +1,359 @@
+$sidebar-width: 300px;
+$sidebar-height: 72px;
+$sidebar-width-collapsed: 76px;
+$app-sidebar-transition: cubic-bezier(0.685, 0.0473, 0.346, 1);
+$color-default: #0074bd;
+
+%form-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  box-shadow: 0 4px 4px 0 #0376b926;
+  z-index: 10;
+}
+
+.show-all-content {
+  margin-left: $sidebar-width;
+  height: $sidebar-height;
+  transition: all 0.5s $app-sidebar-transition;
+  color: black;
+  @extend %form-content;
+}
+
+.mini-content {
+  margin-left: $sidebar-width-collapsed;
+  height: $sidebar-height;
+  transition: all 0.5s $app-sidebar-transition;
+  color: black;
+  @extend %form-content;
+}
+
+.navbar-nav {
+  font-size: 16px;
+  justify-content: right;
+  background: white;
+  height: 72px;
+
+  span,
+  i,
+  b {
+    color: black;
+  }
+
+  li {
+    a {
+      .language-custom {
+        .language-item {
+          color: $color-default;
+          padding: 4px 16px;
+          border: 1px solid #d5d8dd;
+          border-radius: 35px;
+          width: 77px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 12px;
+          background: #ffffff;
+          height: 32px;
+
+          span {
+            color: $color-default;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 150%;
+          }
+        }
+      }
+    }
+  }
+
+  li ul {
+    inset: 21px auto auto -11px !important;
+  }
+
+  .nav-item {
+    border-right: 1px solid white;
+    padding-right: 20px;
+    height: 38px;
+    display: flex;
+
+    a.nav-link {
+      margin: auto;
+      padding: 0 !important;
+    }
+  }
+
+  .navbar-item {
+    display: flex;
+    color: black;
+
+    .navbar-icon {
+      padding: 0 20px;
+      font-size: 18px;
+      display: flex;
+      height: fit-content;
+      margin: auto;
+
+      .navbar-chat {
+        margin-right: 20px;
+        cursor: pointer;
+
+        fa-icon {
+          font-size: 20px;
+        }
+      }
+
+      .navbar-notify {
+        padding-right: 6px;
+        position: relative;
+        cursor: pointer;
+
+        fa-icon {
+          position: relative;
+          font-size: 20px;
+        }
+
+        .icon-badge {
+          background-color: red;
+          font-size: 11px;
+          color: black;
+          text-align: center;
+          width: 13px;
+          height: 13px;
+          border-radius: 100%;
+          position: absolute;
+          top: 0;
+          left: 11px;
+        }
+      }
+    }
+
+    .navbar-company {
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 14px;
+      background: white;
+      height: fit-content;
+      border-radius: 4px;
+      cursor: pointer;
+
+      span {
+        font-size: 16px;
+
+        &:hover {
+          opacity: 0.6;
+          transition: 0.8s;
+        }
+      }
+    }
+
+    .navbar-icon {
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 6px 8px;
+      height: fit-content;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .overlay-container {
+      position: relative;
+      margin-top: 16px;
+    }
+
+    .empty-dish {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .overlay {
+      position: absolute;
+      right: -20px;
+      top: 33px;
+      z-index: 1000;
+      border-radius: 4px;
+      background: #fff;
+      box-shadow: 0 1px 4px 0 rgba(0, 116, 189, 0.71);
+      overflow-y: auto;
+      min-width: 150px;
+      width: fit-content;
+    }
+
+    .overlay-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      height: 45px;
+    }
+
+    .overlay-item:hover {
+      background: var(--primary-blue-3, #d9eaf5);
+    }
+
+    .icon-text {
+      color: var(--gray-1, #16243d);
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      white-space: pre;
+    }
+
+    .icon-arrow {
+      position: absolute;
+      right: 1px;
+      top: 11px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    a.navbar-link {
+      color: black;
+
+      img {
+        margin-right: 20px !important;
+      }
+
+      span {
+        margin-right: 20px !important;
+        opacity: 1;
+      }
+    }
+
+    a.navbar-link :hover {
+      span {
+        opacity: 0.7 !important;
+      }
+    }
+  }
+}
+
+.navbar-header {
+  background: $color-default;
+}
+
+.modal-header {
+  max-height: 56px;
+  display: flex;
+  justify-content: center;
+  border: none;
+  text-align: center;
+
+  .group-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .btn-close {
+      color: black;
+      background: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      font-size: 16px;
+      position: absolute;
+      right: 20px;
+      top: 8px;
+    }
+  }
+}
+
+.border-header {
+  width: 85%;
+  border-bottom: 1px solid #d9eaf5;
+  margin-left: 7.5%;
+}
+
+.modal-body {
+  .change-session {
+    width: 91%;
+    margin-left: 4.5%;
+
+    label {
+      color: #58647a;
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
+
+.modal-footer {
+  border: none !important;
+
+  .btn-row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
+
+.navbar-user--submenu {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  z-index: 10;
+}
+
+.navbar-button:hover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 8px;
+  height: fit-content;
+  border-radius: 4px;
+  box-shadow: 1px 5px 5px 1px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  margin: auto 22px auto auto;
+}
+
+.navbar-button span {
+  color: black;
+  font-size: 16px;
+}
+
+.number-notification {
+  font-size: 11px !important;
+  top: -4px;
+  right: -6px;
+  padding: 1px 5px;
+  background: red;
+  border-radius: 100%;
+}
+
+.permissions-nav {
+  padding-right: 10px;
+  padding-left: 24px;
+}
+
+.div-login {
+  justify-content: normal !important;
+  padding: 3px 10px;
+  text-decoration: none;
+}
+
+.user-logo {
+  height: 40px;
+  width: 40px;
+  border: 1px solid var(--app-main-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

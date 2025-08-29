@@ -1,0 +1,52 @@
+<div (click)="hiddenAllDropdown()" id="header" [class]="'app-header ' + (isSidebarShown ? 'show-all-content' : 'mini-content')">
+  <div class="navbar-nav">
+    <div class="navbar-item navbar-user dropdown">
+      <div class="d-flex cursor-pointer position-relative me-3">
+        <div class="d-flex align-items-center">
+          <span (click)="toggleLanguage($event)">Ngôn ngữ</span>
+        </div>
+        <div class="overlay-container" *ngIf="showDropdown == 'LANGUAGE'" id="support-overlay-container">
+          <div class="overlay">
+            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)">
+              <span [innerHTML]="ICON_VIETNAMESE | safeHtml"></span>
+              <span class="icon-text">VN</span>
+            </a>
+            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)">
+              <span [innerHTML]="ICON_ENGLISH | safeHtml"></span>
+              <span class="icon-text">ENG</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-icon navbar-button text-dark">
+        <div class="me-0" id="notification-icon">
+          <div class="position-relative d-flex align-items-center gap-3">
+            <span [innerHTML]="ICON_NOTIFICATION | safeHtml"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex cursor-pointer position-relative me-4" (click)="toggleUserInfo($event)" id="show-role">
+        <div id="profile" class="d-flex align-items-center me-3 cursor-pointer">
+          <span>{{ username }}</span>
+        </div>
+        <div class="bg-white rounded-circle me-15px p-6px user-logo pointer">
+          <img src="assets/images/default_user.png" class="default-user" alt=""/>
+        </div>
+        <ng-container *ngIf="showDropdown == 'USER_INFO'">
+          <div class="navbar-user--submenu">
+            <div class="overlay-container" id="roles">
+              <div class="overlay">
+                <div (click)="logout()" class="overlay-item pointer div-login">
+                  <span [innerHTML]="ICON_LOGOUT | safeHtml"></span>
+                  <span class="icon-text">Đăng xuất</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

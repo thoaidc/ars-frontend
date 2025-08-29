@@ -1,0 +1,45 @@
+<ul [ngClass]="!isChildren ? 'row w-100' : ''" style="list-style: none">
+  <li *ngFor="let node of tree" [ngClass]="!isChildren ? 'col-3' : ''" [style]="!isChildren ? 'margin-top: 30px !important' : ''">
+    <div>
+      <div class="d-flex align-items-center">
+        <div class="col-custom-1 p-0 cursor-pointer" *ngIf="node.children && node.children.length">
+          <span (click)="onCollapseExpand(node)" style="margin-right: 5px">
+            <span *ngIf="!node.collapsed" [innerHTML]="ICON_CARET_DOWN | safeHtml"></span>
+            <span *ngIf="node.collapsed" [innerHTML]="ICON_CARET_RIGHT | safeHtml"></span>
+          </span>
+        </div>
+        <div>
+          <div class="col-custom-1 p-0" *ngIf="!node.children || node.children.length === 0"></div>
+          <div class="col-custom-23 p-0">
+            <div class="custom-checkbox ml-0">
+              <input
+                type="checkbox"
+                [ngClass]="isView ? 'custom-control-input cursor-pointer input-disabled' : 'custom-control-input cursor-pointer'"
+                id="{{ 'customCheck1' + node.code }}"
+                [(ngModel)]="node.checked"
+                (ngModelChange)="onCheck(node); updateTree()"
+                [disabled]="node.disabled"
+                name="{{ 'customCheck1' + node.code }}"
+                style="margin-right: 5px"
+              />
+              <label
+                [ngClass]="isView ? 'custom-control-input cursor-pointer input-disabled' : 'custom-control-input cursor-pointer'"
+                for="{{ 'customCheck1' + node.code }}"
+              >
+                {{ node.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 p-0">
+        <app-tree-view-item
+          *ngIf="node.children && node.children.length > 0 && !node.collapsed"
+          [tree]="node.children"
+          [isChildren]="true"
+          [isView]="isView"
+        ></app-tree-view-item>
+      </div>
+    </div>
+  </li>
+</ul>

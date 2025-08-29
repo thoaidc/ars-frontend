@@ -1,0 +1,165 @@
+<div class="title-feature form-space-between">
+  <h5>Danh sách tài khoản</h5>
+
+  <ng-container *hasAuthorities="Authorities.ACCOUNT_CREATE">
+    <button class="success-button-dialog ms-3" (click)="openModalSaveAccount()">
+      <span [innerHTML]="ICON_PLUS | safeHtml"></span>
+      <span>Tạo tài khoản</span>
+    </button>
+  </ng-container>
+</div>
+
+<div class="field-search">
+  <div class="search-citeria">
+    <app-date-filter
+      [class]="periods == 8 ? 'col-9' : 'col-3'"
+      (timeChange)="onTimeChange($event)"
+      [periods]="periods"
+      [clearable]="false"
+    >
+    </app-date-filter>
+
+    <div class="item-search">
+      <span>Trạng thái</span>
+      <div class="select-search-custom">
+        <ng-select
+          [items]="ACCOUNT_STATUS_SELECTION"
+          bindLabel="name"
+          bindValue="value"
+          [clearable]="false"
+          placeholder="Chọn trạng thái"
+          [(ngModel)]="accountsFilter.status"
+          (ngModelChange)="onSearch()"
+        >
+        </ng-select>
+      </div>
+    </div>
+
+    <div class="item-search">
+      <label for="account-search-keyword" class="fw-semibold">Từ khoá</label>
+      <div class="input-text-custom">
+        <input
+          id="account-search-keyword"
+          class="form-control"
+          [(ngModel)]="accountsFilter.keyword"
+          type="search"
+          (keyup.enter)="onSearch()"
+          placeholder="Tài khoản, họ và tên"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-btn-search">
+    <button class="cancel-button-dialog" (click)="onReload()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_RELOAD | safeHtml"></span>Đặt lại
+    </button>
+    <button class="save-button-dialog ms-3" (click)="onSearch()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>Tìm kiếm
+    </button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table class="table editing-table">
+    <thead>
+      <tr class="table-custom-header">
+        <th>STT</th>
+        <th>Tài khoản</th>
+        <th>Họ và tên</th>
+        <th>Trạng thái</th>
+        <th>Ngày tạo</th>
+        <th>Người tạo</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let account of accounts; index as i">
+        <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+          <td class="text-center">{{ i + 1 + (accountsFilter.page - 1) * accountsFilter.size }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.username }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.fullname }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(account.id)">
+            <span [ngClass]="account.status === AccountStatus.ACTIVE ? 'success-color' : 'danger-color'">
+              <span *ngIf="account.status === AccountStatus.ACTIVE">Đang hoạt động</span>
+              <span *ngIf="account.status === AccountStatus.INACTIVE">Dừng hoạt động</span>
+              <span *ngIf="account.status === AccountStatus.LOCKED">Đã bị khóa</span>
+            </span>
+          </td>
+          <td class="text-center" (click)="openModalAccountDetail(account.id)">
+            {{ account.createdDate | date: 'dd/MM/yyyy' }}
+          </td>
+          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.createdBy }}</td>
+
+          <td>
+            <div class="action-table">
+              <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
+                <span
+                  [innerHTML]="ICON_UPDATE | safeHtml"
+                  (click)="openModalSaveAccount(account.id)"
+                  ngbTooltip="Cập nhật tài khoản"
+                ></span>
+              </ng-container>
+
+              <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
+                <span
+                  *ngIf="account.status === AccountStatus.ACTIVE && account.username.toLowerCase() !== username.toLowerCase()"
+                  [innerHTML]="ICON_STOP | safeHtml"
+                  (click)="updateUserStatus(account.id, AccountStatus.INACTIVE)"
+                  ngbTooltip="Dừng hoạt động"
+                ></span>
+                <span
+                  *ngIf="account.status === AccountStatus.INACTIVE && account.username.toLowerCase() !== username.toLowerCase()"
+                  [innerHTML]="ICON_PLAY | safeHtml"
+                  (click)="updateUserStatus(account.id, AccountStatus.ACTIVE)"
+                  ngbTooltip="Cấp phép hoạt động"
+                ></span>
+              </ng-container>
+
+              <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
+                <span
+                  [innerHTML]="ICON_KEY | safeHtml"
+                  (click)="changePassword(account)"
+                  ngbTooltip="Đổi mật khẩu"
+                ></span>
+              </ng-container>
+
+              <ng-container *ngIf="account.username.toLowerCase() !== username.toLowerCase()">
+                <span
+                  [innerHTML]="ICON_DELETE | safeHtml"
+                  (click)="deleteUser(account.id)"
+                  ngbTooltip="Xoá tài khoản"
+                  *hasAuthorities="Authorities.ACCOUNT_DELETE"
+                ></span>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<div class="from-pagination">
+  <div class="total">
+    <span class="label-total">Tổng: {{ totalItems | number }}</span>
+    <ng-select
+      [items]="PAGINATION_PAGE_SIZE"
+      [(ngModel)]="accountsFilter.size"
+      (ngModelChange)="getAccounts()"
+    >
+    </ng-select>
+  </div>
+
+  <ngb-pagination
+    class="pagination"
+    [collectionSize]="totalItems"
+    [pageSize]="accountsFilter.size"
+    [page]="accountsFilter.page"
+    [directionLinks]="true"
+    [maxSize]="5"
+    (pageChange)="loadMore($event)"
+  ></ngb-pagination>
+</div>
