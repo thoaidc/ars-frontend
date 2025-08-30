@@ -1,0 +1,20 @@
+export const SIDEBAR_DASHBOARD_TITLE = 'Trang chủ';
+export const SIDEBAR_ADMIN_AUTHORIZATION_MANAGEMENT_TITLE = 'Quản lý phân quyền';
+export const SIDEBAR_ADMIN_AUTHORIZATION_ACCOUNTS_MANAGEMENT_TITLE = 'Tài khoản';
+export const SIDEBAR_ADMIN_AUTHORIZATION_ROLES_MANAGEMENT_TITLE = 'Vai trò';
+export const SIDEBAR_CUSTOMERS_TITLE = 'Khách hàng';
+export const SIDEBAR_HOME_TITLE = 'Quản lý trang chủ';
+export const SIDEBAR_COMPANY_TITLE = 'Quản lý thông tin công ty';
+export const SIDEBAR_HIRING_TITLE = 'Quản lý tuyển dụng';
+export const SIDEBAR_ABOUT_TITLE = 'Quản lý giới thiệu';
+export const SIDEBAR_ABOUT_STORIES_TITLE = 'Câu chuyện';
+export const SIDEBAR_ABOUT_PARTNERS_TITLE = 'Đối tác';
+export const SIDEBAR_ABOUT_MOTTOS_TITLE = 'Phương châm';
+export const SIDEBAR_ABOUT_FORMS_TITLE = 'Form liên hệ';
+export const SIDEBAR_PRODUCT_TITLE = 'Quản lý dịch vụ';
+export const SIDEBAR_WORK_TITLE = 'Quản lý dự án';
+export const SIDEBAR_WORK_CATEGORIES_TITLE = 'Danh mục';
+export const SIDEBAR_WORK_PROJECTS_TITLE = 'Dự án';
+
+export const SIDEBAR_CLASS_DROPDOWN = 'dropdown nav-item has-sub';
+export const SIDEBAR_CLASS_DROPDOWN_ITEM = 'dropdown nav-item';

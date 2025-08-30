@@ -1,0 +1,60 @@
+<div class="form-space-between">
+  <div class="item-search" [class]="periods == 8 ? 'col-4' : 'col-12'">
+    <span>Thời gian</span>
+    <div class="select-search-custom">
+      <ng-select
+        [items]="LIST_TIME_SELECT"
+        bindLabel="name"
+        bindValue="id"
+        [(ngModel)]="periods"
+        [clearable]="clearable"
+        (change)="changePeriods()"
+      >
+      </ng-select>
+    </div>
+  </div>
+  <div class="item-search col-4" *ngIf="periods === 8">
+    <label for="from-date-filter">Từ ngày</label>
+    <div class="input-text-custom">
+      <input
+        id="from-date-filter"
+        class="form-control"
+        placeholder="DD/MM/YYYY"
+        [(ngModel)]="fromDate"
+        [minDate]="utilsService.getFromToMoment(minDate, true)"
+        [maxDate]="utilsService.getFromToMoment(toDate)"
+        (ngModelChange)="changeDate()"
+        ngbDatepicker
+        name="d1"
+        #d1="ngbDatepicker"
+        dateFormat
+        maxlength="10"
+      />
+      <button class="btn-datepicker" (click)="d1.toggle()" type="button">
+        <span class="d-flex" [innerHTML]="ICON_CALENDER | safeHtml"></span>
+      </button>
+    </div>
+  </div>
+  <div class="item-search col-4" *ngIf="periods === 8">
+    <label for="to-date-filter">Đến ngày</label>
+    <div class="input-text-custom">
+      <input
+        id="to-date-filter"
+        class="form-control"
+        placeholder="DD/MM/YYYY"
+        [(ngModel)]="toDate"
+        [minDate]="utilsService.getFromToMoment(fromDate ? fromDate : minDate, true)"
+        [maxDate]="utilsService.getCurrentDate()"
+        (ngModelChange)="changeDate()"
+        ngbDatepicker
+        name="d2"
+        #d2="ngbDatepicker"
+        dateFormat
+        maxlength="10"
+      />
+      <button class="btn-datepicker" (click)="d2.toggle()" type="button">
+        <span class="d-flex" [innerHTML]="ICON_CALENDER | safeHtml"></span>
+      </button>
+    </div>
+  </div>
+</div>
