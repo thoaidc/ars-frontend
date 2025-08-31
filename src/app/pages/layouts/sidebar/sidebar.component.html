@@ -1,7 +1,7 @@
 <div id="sidebar" [class]="'app-sidebar app-sidebar--' + (isSidebarShown ? 'show-all' : 'mini')">
   <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
     <div class="menu">
-      <div [ngClass]="isSidebarShown ? 'menu-profile' : 'menu-profile-custom'">
+      <div [ngClass]="isSidebarShown ? 'menu-expanded' : 'menu-collapsed'">
         <img *ngIf="isSidebarShown" src="assets/images/logo/logo_admin_full.png" class="logo-img" alt=""/>
         <span (click)="toggleAppSidebar()" *ngIf="isSidebarShown" [innerHTML]="ICON_CLOSE_SIDEBAR | safeHtml"></span>
         <img *ngIf="!isSidebarShown" src="assets/images/logo/logo_admin.png" class="logo-img-custom" alt="" />
@@ -10,7 +10,7 @@
 
     <div class="list-item order-column">
       <div class="menu">
-        <div class="menu-profile-action" (click)="toggleAppSidebar()">
+        <div class="menu-toggle-button" (click)="toggleAppSidebar()">
           <span *ngIf="!isSidebarShown" [innerHTML]="ICON_EXPAND_SIDEBAR | safeHtml"></span>
         </div>
         <ng-container *ngFor="let route of routerList">

@@ -21,6 +21,8 @@ $text-color: #58647a;
   .menu {
     .menu-caret:before {
       font-size: 1.5rem !important;
+      width: 1rem;
+      height: 1.5rem;
     }
   }
 }
@@ -30,7 +32,7 @@ $text-color: #58647a;
 
   .app-sidebar-content {
     .menu {
-      .menu-profile {
+      .menu-expanded {
         background: $text-color-active !important;
         height: $sidebar-height;
         padding: 10px 10px 10px 24px !important;
@@ -160,7 +162,7 @@ $text-color: #58647a;
   transition: 0.5s ease-in-out !important;
 
   .menu {
-    .menu-profile-custom {
+    .menu-collapsed {
       white-space: nowrap;
       transform: translateZ(0);
       transition: all 0.6s ease-in-out;
@@ -191,7 +193,7 @@ $text-color: #58647a;
       }
     }
 
-    .menu-profile-action {
+    .menu-toggle-button {
       position: absolute;
       top: 22px;
       right: -15px;
@@ -249,7 +251,7 @@ $text-color: #58647a;
   transition: all 0.6s ease-in-out !important;
 
   .menu {
-    .menu-profile-custom {
+    .menu-collapsed {
       width: $sidebar-width !important;
       background: $text-color-active !important;
       height: $sidebar-height;
@@ -281,7 +283,7 @@ $text-color: #58647a;
       }
     }
 
-    .menu-profile-action {
+    .menu-toggle-button {
       position: absolute;
       top: 22px;
       right: -15px;
@@ -456,7 +458,7 @@ $text-color: #58647a;
 }
 
 @media (max-width: 767.98px) {
-  .menu-profile-action {
+  .menu-toggle-button {
     display: block;
     visibility: visible !important;
     opacity: 1 !important;

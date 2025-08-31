@@ -1,5 +1,4 @@
 // Auth API constants
-export const API_COMMON_REGISTER = `api/p/common/auth/register`;
 export const API_COMMON_LOGIN = `api/p/common/auth/login`;
 export const API_COMMON_CHECK_AUTHENTICATION_STATUS = `api/common/accounts/status`;
 export const API_COMMON_CHANGE_PASSWORD = `api/common/accounts/passwords`;
