@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Authentication} from '../models/account.model';
+import {Authentication} from '../models/user.model';
 import {catchError, map, Observable, of, ReplaySubject, shareReplay, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {StateStorageService} from './state-storage.service';
 import {Router} from '@angular/router';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {
-  API_COMMON_CHECK_AUTHENTICATION_STATUS,
-  API_COMMON_LOGIN,
-  API_COMMON_LOGOUT
+  API_CHECK_AUTHENTICATION_STATUS,
+  API_LOGIN,
+  API_LOGOUT
 } from '../../constants/api.constants';
 import {LoginRequest} from '../models/login.model';
 import {BaseResponse} from '../models/response.model';
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   logout(): Observable<boolean> {
-    const apiUrl = this.applicationConfigService.getEndpointFor(API_COMMON_LOGOUT);
+    const apiUrl = this.applicationConfigService.getEndpointFor(API_LOGOUT);
 
     return this.http.post<BaseResponse<any>>(apiUrl, {}).pipe(
       map(response => {
@@ -83,8 +83,8 @@ export class AuthService {
   }
 
   checkAuthenticateFromBe(loginRequest?: LoginRequest): Observable<Authentication | null> {
-    const apiLoginUrl = this.applicationConfigService.getEndpointFor(API_COMMON_LOGIN);
-    const apiStatusUrl = this.applicationConfigService.getEndpointFor(API_COMMON_CHECK_AUTHENTICATION_STATUS);
+    const apiLoginUrl = this.applicationConfigService.getEndpointFor(API_LOGIN);
+    const apiStatusUrl = this.applicationConfigService.getEndpointFor(API_CHECK_AUTHENTICATION_STATUS);
     const apiUrl = loginRequest ? apiLoginUrl : apiStatusUrl;
     const requestBody = loginRequest ? loginRequest: {};
 

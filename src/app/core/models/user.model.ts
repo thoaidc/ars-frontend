@@ -5,7 +5,7 @@ export interface Authentication {
   authorities: string[];
 }
 
-export interface Account {
+export interface User {
   id: number;
   fullname: string;
   username: string;
@@ -15,12 +15,12 @@ export interface Account {
   createdDate: string;
 }
 
-export interface AccountDetail extends Account {
+export interface UserDetail extends User {
   createdByStr?: string;
   createdDateStr?: string;
   lastModifiedByStr?: string;
   lastModifiedDateStr?: string;
-  accountRoles?: Authority[];
+  userRoles?: Authority[];
 }
 
 export interface Authority {
@@ -29,38 +29,38 @@ export interface Authority {
   code: string;
 }
 
-export enum AccountStatus {
+export enum UserStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
   LOCKED = 'LOCKED'
 }
 
-export const AccountStatusMap: Record<string, string> = {
+export const UserStatusMap: Record<string, string> = {
   ACTIVE: 'Hoạt động',
   INACTIVE: 'Dừng hoạt động',
   LOCKED: 'Đã bị khóa'
 }
 
-export const ACCOUNT_STATUS_SELECTION = [
+export const USER_STATUS_SELECTION = [
   {
     value: '',
     name: 'Tất cả',
   },
   {
-    value: AccountStatus.ACTIVE,
+    value: UserStatus.ACTIVE,
     name: 'Hoạt động',
   },
   {
-    value: AccountStatus.INACTIVE,
+    value: UserStatus.INACTIVE,
     name: 'Dừng hoạt động',
   },
   {
-    value: AccountStatus.LOCKED,
+    value: UserStatus.LOCKED,
     name: 'Đã bị khóa'
   }
 ];
 
-export interface SaveAccountRequest {
+export interface SaveUserRequest {
   id: number;
   username: string;
   email: string;
@@ -69,12 +69,12 @@ export interface SaveAccountRequest {
   roleIds: number[];
 }
 
-export interface UpdateAccountStatusRequest {
+export interface UpdateUserStatusRequest {
   accountId: number;
   status: string;
 }
 
-export interface UpdateAccountPasswordRequest {
+export interface UpdateUserPasswordRequest {
   id: number;
   oldPassword: string;
   newPassword: string;

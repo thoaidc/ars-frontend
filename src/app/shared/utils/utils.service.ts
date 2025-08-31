@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { ToastrService } from 'ngx-toastr';
 import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constants';
-import {SIDEBAR_ROUTES} from '../../pages/admin/layouts/sidebar/sidebar.route';
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 
 @Injectable({
@@ -86,12 +85,12 @@ export class UtilsService {
     return isValidPassword;
   }
 
-  findFirstAccessibleRoute(userPermissions?: string[]): string {
+  findFirstAccessibleRoute(routes: SidebarNavItem[], userPermissions?: string[]): string {
     if (!userPermissions) {
-      userPermissions = this.getAccountPermissions();
+      userPermissions = this.getUserPermissions();
     }
 
-    for (const route of SIDEBAR_ROUTES) {
+    for (const route of routes) {
       const accessiblePath = this.findAccessiblePath(route, userPermissions);
 
       if (accessiblePath || accessiblePath === '') {
@@ -133,7 +132,7 @@ export class UtilsService {
     return null;
   }
 
-  getAccountPermissions() {
+  getUserPermissions() {
     const jsonString = localStorage.getItem(LOCAL_USER_AUTHORITIES_KEY) || '';
 
     try {
@@ -143,8 +142,8 @@ export class UtilsService {
     }
   }
 
-  checkAccountPermission(permission: string) {
-    const userRoles = this.getAccountPermissions();
+  checkUserPermission(permission: string) {
+    const userRoles = this.getUserPermissions();
     return userRoles.includes(permission);
   }
 }
