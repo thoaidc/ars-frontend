@@ -12,7 +12,6 @@ import {ICON_CLOSE_SIDEBAR, ICON_EXPAND_SIDEBAR} from '../../../shared/utils/ico
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {NgClass, NgFor, NgIf} from '@angular/common';
 import {HasAuthorityDirective} from '../../../shared/directives/has-authority.directive';
-import {slideUp} from '../../../shared/composables/slideCommonStyles';
 import {SIDEBAR_ROUTES} from './sidebar.route';
 
 @Component({
@@ -35,7 +34,7 @@ export class SidebarComponent implements AfterViewInit {
   latestUrl: string = '';
   mobileMode: boolean = false;
   desktopMode: boolean = false;
-
+  private expanded = new Set<string>(); // Key is route.path
   @Input() isSidebarShown!: boolean;
   @Output() isSidebarShownChange = new EventEmitter<boolean>();
 
@@ -61,64 +60,27 @@ export class SidebarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const menuBaseSelector = '.app-sidebar .menu > .menu-item.has-sub';
-    const submenuBaseSelector = ' > .menu-submenu > .menu-item.has-sub';
+    const current = this.latestUrl;
+    const parent = this.routerList.find(r => current.startsWith(r.path) && r.submenu?.length);
 
-    // menu
-    const menuLinkSelector = menuBaseSelector + ' > .menu-link';
-    const menus = Array.from(document.querySelectorAll(menuLinkSelector)) as HTMLElement[];
-
-    if (menus.length > 0) {
-      this.handleSidebarMenuToggle(menus);
-    }
-
-    // submenu
-    const submenuSelector = menuBaseSelector + submenuBaseSelector;
-    const submenus = Array.from(document.querySelectorAll(submenuSelector + ' > .menu-link')) as HTMLElement[];
-
-    if (submenus.length > 0) {
-      this.handleSidebarMenuToggle(submenus);
+    if (parent) {
+      this.expanded.add(parent.path);
     }
   }
 
-  handleSidebarMenuToggle(menus: HTMLElement[]) {
-    menus.forEach((menu) => {
-      menu.onclick = (e) => {
-        e.preventDefault();
-        const target = menu.nextElementSibling;
+  isExpanded(key: string): boolean {
+    return this.expanded.has(key);
+  }
 
-        if (target && target instanceof HTMLElement) {
-          menus.forEach((m) => {
-            const otherTarget = m.nextElementSibling;
+  toggleParent(key: string) {
+    if (key) {
+      const wasOpen = this.expanded.has(key);
+      this.expanded.clear();
 
-            if (otherTarget && otherTarget !== target && otherTarget instanceof HTMLElement) {
-              slideUp(otherTarget);
-              const otherItem = otherTarget.closest('.menu-item');
-
-              if (otherItem instanceof HTMLElement) {
-                otherItem.classList.remove('expand');
-                otherItem.classList.add('closed');
-              }
-            }
-          });
-
-          const targetItemElm = target.closest('.menu-item');
-
-          if (targetItemElm instanceof HTMLElement) {
-            if (
-              targetItemElm.classList.contains('expand') ||
-              (targetItemElm.classList.contains('active') && !target.style.display)
-            ) {
-              targetItemElm.classList.remove('expand');
-              targetItemElm.classList.add('closed');
-            } else {
-              targetItemElm.classList.add('expand');
-              targetItemElm.classList.remove('closed');
-            }
-          }
-        }
-      };
-    });
+      if (!wasOpen) {
+        this.expanded.add(key);
+      }
+    }
   }
 
   getLink(path: string, ignore?: boolean) {
