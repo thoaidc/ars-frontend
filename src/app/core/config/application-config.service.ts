@@ -7,11 +7,7 @@ import { environment } from '../../../environments/environment';
 export class ApplicationConfigService {
   private endpointPrefix = environment.SERVER_API_URL;
 
-  getEndpointFor(api: string, microservice?: string): string {
-    if (microservice) {
-      return `${this.endpointPrefix}services/${microservice}/${api}`;
-    }
-
-    return `${this.endpointPrefix}${api}`;
+  getEndpointFor(api: string): string {
+    return `${this.endpointPrefix}/${api}`;
   }
 }

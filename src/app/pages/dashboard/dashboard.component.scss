@@ -1,0 +1,12 @@
+.search-criteria {
+  margin-bottom: 12px;
+}
+
+:host.type-report .select-search-custom .ng-select .ng-clear-wrapper {
+  display: none !important;
+}
+
+.form-chart {
+  width: 100%;
+  height: calc(100vh - 330px);
+}

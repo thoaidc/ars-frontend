@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { ToastrService } from 'ngx-toastr';
 import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constants';
-import {SIDEBAR_ROUTES} from '../../pages/admin/layouts/sidebar/sidebar.route';
+import {SIDEBAR_ROUTES} from '../../pages/layouts/sidebar/sidebar.route';
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 
 @Injectable({
@@ -88,7 +88,7 @@ export class UtilsService {
 
   findFirstAccessibleRoute(userPermissions?: string[]): string {
     if (!userPermissions) {
-      userPermissions = this.getAccountPermissions();
+      userPermissions = this.getUserPermissions();
     }
 
     for (const route of SIDEBAR_ROUTES) {
@@ -133,7 +133,7 @@ export class UtilsService {
     return null;
   }
 
-  getAccountPermissions() {
+  getUserPermissions() {
     const jsonString = localStorage.getItem(LOCAL_USER_AUTHORITIES_KEY) || '';
 
     try {
@@ -143,8 +143,8 @@ export class UtilsService {
     }
   }
 
-  checkAccountPermission(permission: string) {
-    const userRoles = this.getAccountPermissions();
+  checkUserPermission(permission: string) {
+    const userRoles = this.getUserPermissions();
     return userRoles.includes(permission);
   }
 }

@@ -27,10 +27,11 @@ export class AlphanumericOnlyDirective implements ControlValueAccessor, OnInit, 
   ngOnInit() {
     this.updateRegex();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     const input = this.el.nativeElement as HTMLInputElement;
 
-    // Kiểm tra nếu có sự thay đổi của isPassword
+    // If password has changed
     if (changes['isPassword'] && !changes['isPassword'].firstChange) {
       if (this.isPassword) {
         input.value = '.'.repeat(this.originalValue.length);
@@ -118,12 +119,12 @@ export class AlphanumericOnlyDirective implements ControlValueAccessor, OnInit, 
   @HostListener('paste', ['$event'])
   onPaste(event: ClipboardEvent): void {
     if (this.isPassword) {
-      // Chặn hành động paste nếu isPassword là true
+      // Prevent paste action if isPassword = true
       event.preventDefault();
       return;
     }
 
-    // Nếu isPassword là false, gán giá trị paste vào ngModel
+    // If isPassword = false, assign paste value into ngModel
     const clipboardData = event.clipboardData?.getData('text') || '';
     const input = this.el.nativeElement as HTMLInputElement;
     const start = input.selectionStart || 0;
@@ -133,8 +134,9 @@ export class AlphanumericOnlyDirective implements ControlValueAccessor, OnInit, 
 
     this.el.nativeElement.value = this.originalValue;
     event.preventDefault();
-    this.onChange(this.originalValue);  // Cập nhật giá trị cho ngModel
+    this.onChange(this.originalValue);
   }
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
