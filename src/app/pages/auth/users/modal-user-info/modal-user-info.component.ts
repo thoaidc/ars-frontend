@@ -1,19 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location, NgClass, NgIf} from '@angular/common';
-import {AccountsService} from '../../../../core/services/accounts.service';
+import {UserService} from '../../../../core/services/users.service';
 import {RolesService} from '../../../../core/services/roles.service';
 import {Authorities} from '../../../../constants/authorities.constants';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {AccountDetail, AccountStatus, AccountStatusMap} from '../../../../core/models/account.model';
+import {UserDetail} from '../../../../core/models/user.model';
 import {Role, RolesFilter} from '../../../../core/models/role.model';
+import {USER_STATUS, USER_STATUS_MAP} from '../../../../constants/user.constants';
 
 @Component({
-  selector: 'app-modal-account-info',
+  selector: 'app-modal-user-info',
   standalone: true,
-  templateUrl: './modal-account-info.component.html',
-  styleUrls: ['./modal-account-info.component.scss'],
+  templateUrl: './modal-user-info.component.html',
+  styleUrls: ['./modal-user-info.component.scss'],
   imports: [
     FormsModule,
     NgSelectModule,
@@ -21,29 +22,29 @@ import {Role, RolesFilter} from '../../../../core/models/role.model';
     NgClass
   ]
 })
-export class ModalAccountInfoComponent implements OnInit {
-  accountId: number = 0;
-  accountDetail!: AccountDetail;
-  accountAuthorities: number[] = [];
+export class ModalUserInfoComponent implements OnInit {
+  userId: number = 0;
+  userDetail!: UserDetail;
+  userAuthorities: number[] = [];
   roles: Role[] = [];
 
   constructor(
     public activeModal: NgbActiveModal,
     private location: Location,
-    private accountsService: AccountsService,
+    private userService: UserService,
     private roleService: RolesService
   ) {
     this.location.subscribe(() => this.activeModal.dismiss());
   }
 
   ngOnInit(): void {
-    if (this.accountId) {
-      this.accountsService.getAccountDetail(this.accountId).subscribe(response => {
+    if (this.userId) {
+      this.userService.getUserDetail(this.userId).subscribe(response => {
         if (response) {
-          this.accountDetail = response;
+          this.userDetail = response;
 
-          if (this.accountDetail.accountRoles) {
-            this.accountAuthorities = this.accountDetail.accountRoles.map(authority => authority.id);
+          if (this.userDetail.roles) {
+            this.userAuthorities = this.userDetail.roles.map(authority => authority.id);
           }
         }
       });
@@ -72,6 +73,6 @@ export class ModalAccountInfoComponent implements OnInit {
   }
 
   protected readonly Authorities = Authorities;
-  protected readonly AccountStatus = AccountStatus;
-  protected readonly AccountStatusMap = AccountStatusMap;
+  protected readonly USER_STATUS = USER_STATUS;
+  protected readonly USER_STATUS_MAP = USER_STATUS_MAP;
 }

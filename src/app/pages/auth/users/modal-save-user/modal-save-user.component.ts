@@ -5,41 +5,43 @@ import {HasAuthorityDirective} from '../../../../shared/directives/has-authority
 import {Location, NgIf} from '@angular/common';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
-import {SaveAccountRequest} from '../../../../core/models/account.model';
 import {Role, RolesFilter} from '../../../../core/models/role.model';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {UtilsService} from '../../../../shared/utils/utils.service';
-import {AccountsService} from '../../../../core/services/accounts.service';
 import {ToastrService} from 'ngx-toastr';
 import {RolesService} from '../../../../core/services/roles.service';
 import {ICON_EYE, ICON_EYE_CROSS} from '../../../../shared/utils/icon';
 import {Authorities} from '../../../../constants/authorities.constants';
+import {UserService} from '../../../../core/services/users.service';
+import {SaveUserRequest} from '../../../../core/models/user.model';
 
 @Component({
-  selector: 'app-modal-save-account',
+  selector: 'app-modal-save-user',
   standalone: true,
     imports: [
-        AlphanumericOnlyDirective,
-        FormsModule,
-        HasAuthorityDirective,
-        NgIf,
-        NgSelectComponent,
-        ReactiveFormsModule,
-        SafeHtmlPipe
+      AlphanumericOnlyDirective,
+      FormsModule,
+      HasAuthorityDirective,
+      NgIf,
+      NgSelectComponent,
+      ReactiveFormsModule,
+      SafeHtmlPipe
     ],
-  templateUrl: './modal-save-account.component.html',
-  styleUrl: './modal-save-account.component.scss'
+  templateUrl: './modal-save-user.component.html',
+  styleUrl: './modal-save-user.component.scss'
 })
-export class ModalSaveAccountComponent implements OnInit {
-  @Input() accountId: number = 0;
+export class ModalSaveUserComponent implements OnInit {
+  @Input() userId: number = 0;
   hiddenPassword = true;
   isLoading = false;
   roles: Role[] = [];
-  account: SaveAccountRequest = {
+  user: SaveUserRequest = {
     id: 0,
+    fullname: '',
     username: '',
     email: '',
     password: '',
+    isAdmin: false,
     roleIds: []
   };
 
@@ -47,7 +49,7 @@ export class ModalSaveAccountComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private location: Location,
     protected utilsService: UtilsService,
-    private accountsService: AccountsService,
+    private userService: UserService,
     private toast: ToastrService,
     private roleService: RolesService
   ) {
@@ -55,60 +57,60 @@ export class ModalSaveAccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.accountId) {
-      this.getAccountInfo();
+    if (this.userId) {
+      this.getUserInfo();
     }
 
     this.getRoles();
   }
 
-  getAccountInfo() {
-    this.accountsService.getAccountDetail(this.accountId).subscribe(response => {
+  getUserInfo() {
+    this.userService.getUserDetail(this.userId).subscribe(response => {
       if (response) {
-        this.account.id = this.accountId;
-        this.account.username = response.username;
-        this.account.fullname = response.fullname;
-        this.account.email = response.email;
+        this.user.id = this.userId;
+        this.user.username = response.username;
+        this.user.fullname = response.fullname;
+        this.user.email = response.email;
 
-        if (response.accountRoles) {
-          this.account.roleIds = response.accountRoles.map(authority => authority.id);
+        if (response.roles) {
+          this.user.roleIds = response.roles.map(authority => authority.id);
         }
       }
     });
   }
 
   onSave() {
-    if (!this.account.username) {
+    if (!this.user.username) {
       this.toast.error('Tài khoản không được để trống', 'Thông báo');
       return;
     }
 
-    if (!this.account.email) {
+    if (!this.user.email) {
       this.toast.error('Email không được để trống', 'Thông báo');
       return;
     }
 
-    if (!this.account.id || this.account.id <= 0) {
-      if (!this.account.password) {
+    if (!this.user.id || this.user.id <= 0) {
+      if (!this.user.password) {
         this.toast.error('Mật khẩu không được để trống', 'Thông báo');
         return;
-      } else if (!this.utilsService.validatePassword(this.account.password)) {
+      } else if (!this.utilsService.validatePassword(this.user.password)) {
         return;
       }
     }
 
-    if (!this.account.roleIds || this.account.roleIds.length == 0) {
+    if (!this.user.roleIds || this.user.roleIds.length == 0) {
       this.toast.error('Vai trò không được để trống', 'Thông báo');
       return;
     }
 
-    if (!this.account.id) {
-      this.accountsService.createAccount(this.account).subscribe(value => {
+    if (!this.user.id) {
+      this.userService.createUser(this.user).subscribe(value => {
         this.toast.success(value.message, 'Thông báo');
         this.activeModal.close(value);
       });
     } else {
-      this.accountsService.updateAccount(this.account).subscribe(value => {
+      this.userService.updateUser(this.user).subscribe(value => {
         this.toast.success(value.message, 'Thông báo');
         this.activeModal.close(value);
       });

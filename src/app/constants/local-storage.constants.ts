@@ -1,3 +1,4 @@
-export const LOCAL_PREVIOUS_PAGE_URL_KEY = 'dct_nxg_pre_p_k';
-export const LOCAL_USER_AUTHORITIES_KEY = 'dct_nxg_ath_k';
-export const LOCAL_USERNAME_KEY = 'dct_nxg_usm_k';
+export const LOCAL_PREVIOUS_PAGE_URL_KEY = 'ars_pre_page_k';
+export const LOCAL_USER_TOKEN_KEY = 'ars_token_k';
+export const LOCAL_USER_AUTHORITIES_KEY = 'ars_auth_k';
+export const LOCAL_USERNAME_KEY = 'ars_user_k';

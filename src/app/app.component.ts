@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs';
 import {WebSocketService} from './core/services/websocket.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AuthService} from './core/services/auth.service';
-import {Authentication} from './core/models/account.model';
+import {Authentication} from './core/models/auth.model';
 
 @Component({
   selector: 'app-root',

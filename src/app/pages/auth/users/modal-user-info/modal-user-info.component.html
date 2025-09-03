@@ -4,15 +4,15 @@
 </div>
 
 <div class="modal-body">
-  <ng-container *ngIf="accountDetail">
+  <ng-container *ngIf="userDetail">
     <div class="form-space-between flex-wrap">
       <div class="item-search w-50">
-        <label for="account-username">Tên đăng nhập</label>
+        <label for="user-username">Tên đăng nhập</label>
         <div class="input-text-custom">
           <input
-            id="account-username"
+            id="user-username"
             class="form-control"
-            [(ngModel)]="accountDetail.username"
+            [(ngModel)]="userDetail.username"
             type="text"
             disabled
           />
@@ -20,12 +20,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-fullname">Họ và tên</label>
+        <label for="user-fullname">Họ và tên</label>
         <div class="input-text-custom">
           <input
-            id="account-fullname"
+            id="user-fullname"
             class="form-control"
-            [(ngModel)]="accountDetail.fullname"
+            [(ngModel)]="userDetail.fullname"
             type="text"
             disabled
           />
@@ -33,12 +33,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-email">Email</label>
+        <label for="user-email">Email</label>
         <div class="input-text-custom">
           <input
-            id="account-email"
+            id="user-email"
             class="form-control"
-            [(ngModel)]="accountDetail.email"
+            [(ngModel)]="userDetail.email"
             type="text"
             disabled
           />
@@ -46,13 +46,13 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-username">Trạng thái tài khoản</label>
+        <label for="user-username">Trạng thái tài khoản</label>
         <div class="input-text-custom">
           <input
-            id="account-status"
+            id="user-status"
             class="form-control"
-            [ngClass]="accountDetail.status === AccountStatus.ACTIVE ? 'success-color' : 'danger-color'"
-            [(ngModel)]="AccountStatusMap[accountDetail.status]"
+            [ngClass]="userDetail.status === USER_STATUS.ACTIVE ? 'success-color' : 'danger-color'"
+            [(ngModel)]="USER_STATUS_MAP[userDetail.status]"
             type="text"
             disabled
           />
@@ -60,12 +60,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-created-date">Ngày tạo</label>
+        <label for="user-created-date">Ngày tạo</label>
         <div class="input-text-custom">
           <input
-            id="account-created-date"
+            id="user-created-date"
             class="form-control"
-            [(ngModel)]="accountDetail.createdDateStr"
+            [(ngModel)]="userDetail.createdDate"
             type="text"
             disabled
           />
@@ -73,12 +73,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-created-by">Người tạo</label>
+        <label for="user-created-by">Người tạo</label>
         <div class="input-text-custom">
           <input
-            id="account-created-by"
+            id="user-created-by"
             class="form-control"
-            [(ngModel)]="accountDetail.createdByStr"
+            [(ngModel)]="userDetail.createdBy"
             type="text"
             disabled
           />
@@ -86,12 +86,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-updated-date">Ngày cập nhật</label>
+        <label for="user-updated-date">Ngày cập nhật</label>
         <div class="input-text-custom">
           <input
-            id="account-updated-date"
+            id="user-updated-date"
             class="form-control"
-            [(ngModel)]="accountDetail.lastModifiedDateStr"
+            [(ngModel)]="userDetail.lastModifiedDate"
             type="text"
             disabled
           />
@@ -99,12 +99,12 @@
       </div>
 
       <div class="item-search w-50">
-        <label for="account-updated-by">Người cập nhật</label>
+        <label for="user-updated-by">Người cập nhật</label>
         <div class="input-text-custom">
           <input
-            id="account-updated-by"
+            id="user-updated-by"
             class="form-control"
-            [(ngModel)]="accountDetail.lastModifiedByStr"
+            [(ngModel)]="userDetail.lastModifiedBy"
             type="text"
             disabled
           />
@@ -121,7 +121,7 @@
           bindValue="id"
           [multiple]="true"
           [selectableGroup]="true"
-          [(ngModel)]="accountAuthorities"
+          [(ngModel)]="userAuthorities"
           [closeOnSelect]="false"
           disabled
           name="roleList"

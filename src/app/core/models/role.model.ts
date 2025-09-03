@@ -1,23 +1,19 @@
 import {BaseFilterRequest} from './request.model';
+import {AuditingEntity} from './common.model';
 
-export interface Role {
-  id: number;
+export interface Role extends AuditingEntity {
   name: string;
   code: string;
 }
 
 export interface RoleDetail extends Role {
-  createdByStr?: string;
-  createdDateStr?: string;
-  lastModifiedByStr?: string;
-  lastModifiedDateStr?: string;
-  permissions: number[];
+  authorities: number[];
 }
 
 export interface CreateRoleRequest {
   name: string;
   code: string;
-  permissionIds: number[];
+  authorityIds: number[];
 }
 
 export interface UpdateRoleRequest extends CreateRoleRequest {
@@ -26,16 +22,4 @@ export interface UpdateRoleRequest extends CreateRoleRequest {
 
 export interface RolesFilter extends BaseFilterRequest {
   code?: string;
-  name?: string;
-}
-
-export interface TreeViewItem {
-  id: number;
-  name: string;
-  code: string;
-  disabled: boolean;
-  checked: boolean;
-  collapsed: boolean;
-  children?: TreeViewItem[];
-  parentId?: number[];
 }

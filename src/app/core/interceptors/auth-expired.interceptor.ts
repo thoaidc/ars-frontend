@@ -6,9 +6,9 @@ import {
 } from '@angular/common/http';
 import {AuthService} from '../services/auth.service';
 import {StateStorageService} from '../services/state-storage.service';
-import {API_COMMON_LOGIN} from '../../constants/api.constants';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs';
+import {API_USERS_LOGIN, API_USERS_LOGOUT} from '../../constants/api.constants';
 
 export const AuthExpiredInterceptorFn: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
   const stateStorageService = inject(StateStorageService);
@@ -18,7 +18,7 @@ export const AuthExpiredInterceptorFn: HttpInterceptorFn = (request: HttpRequest
   return next(request).pipe(
     tap({
       error: (error: HttpErrorResponse) => {
-        if (error.status == 401 && !error.url?.includes(API_COMMON_LOGIN)) {
+        if (error.status == 401 && !error.url?.includes(API_USERS_LOGIN) && !error.url?.includes(API_USERS_LOGOUT)) {
           stateStorageService.savePreviousPage(router.routerState.snapshot.url);
           authService.logout().subscribe(() => router.navigate(['/login']).then());
         }

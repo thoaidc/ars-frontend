@@ -1,13 +1,16 @@
-// Auth API constants
-export const API_COMMON_LOGIN = `api/p/common/auth/login`;
-export const API_COMMON_CHECK_AUTHENTICATION_STATUS = `api/common/accounts/status`;
-export const API_COMMON_CHANGE_PASSWORD = `api/common/accounts/passwords`;
-export const API_COMMON_LOGOUT = `api/p/common/auth/logout`;
+export const API_SECURE = 'api/v1';
+export const API_PUBLIC = 'api/p/v1';
 
-// Accounts API constants
-export const API_COMMON_ACCOUNTS = `api/common/accounts`;
-export const API_COMMON_ACCOUNTS_UPDATE_STATUS = `api/common/accounts/status`;
+// User API constants
+export const API_USERS = API_SECURE + '/users';
+export const API_USERS_LOGIN = API_PUBLIC + '/users/authenticate';
+export const API_USERS_REFRESH = API_PUBLIC + '/users/refresh-token';
+export const API_USERS_STATUS = API_SECURE + '/users/status';
+export const API_USERS_LOGOUT = API_SECURE + '/users/logout';
+export const API_USERS_CHANGE_EMAIL = API_SECURE + '/users/email';
+export const API_USERS_CHANGE_PASSWORD = API_SECURE + '/users/password';
+export const API_USERS_RECOVER_PASSWORD = API_SECURE + '/users/recover';
 
-// Roles API constants
-export const API_COMMON_ROLES = `api/common/roles`;
-export const API_COMMON_PERMISSIONS_TREE = `api/common/roles/permissions`;
+// Role API constants
+export const API_ROLES = API_SECURE + '/roles';
+export const API_ROLES_PERMISSIONS_TREE = API_SECURE + '/roles/authorities';

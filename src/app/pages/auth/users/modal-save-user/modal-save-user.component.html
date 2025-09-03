@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h5 class="modal-title">{{ accountId ? 'Cập nhật tài khoản' : 'Thêm mới tài khoản' }}</h5>
+  <h5 class="modal-title">{{ userId ? 'Cập nhật tài khoản' : 'Thêm mới tài khoản' }}</h5>
   <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
 </div>
 
@@ -11,7 +11,7 @@
         <input
           id="username-login"
           class="form-control"
-          [(ngModel)]="account.username"
+          [(ngModel)]="user.username"
           type="text"
           placeholder="Tên đăng nhập"
           alphanumericOnly
@@ -26,7 +26,7 @@
         <input
           id="fullname"
           class="form-control"
-          [(ngModel)]="account.fullname"
+          [(ngModel)]="user.fullname"
           type="text"
           placeholder="Tên đầy đủ"
         />
@@ -39,7 +39,7 @@
         <input
           id="email-login"
           class="form-control"
-          [(ngModel)]="account.email"
+          [(ngModel)]="user.email"
           type="email"
           placeholder="Email"
           autocomplete="off"
@@ -58,7 +58,7 @@
         [multiple]="true"
         [selectableGroup]="true"
         placeholder="Chọn vai trò"
-        [(ngModel)]="account.roleIds"
+        [(ngModel)]="user.roleIds"
         [closeOnSelect]="false"
         name="roleList"
       >
@@ -67,13 +67,13 @@
   </form>
 
   <div class="form-space-between">
-    <form class="item-search w-50" *ngIf="!accountId">
+    <form class="item-search w-50" *ngIf="!userId">
       <label for="password-login">Mật khẩu <span class="text-danger">*</span></label>
       <div class="input-text-custom" [class.input-password]="hiddenPassword">
         <input
           id="password-login"
           class="form-control"
-          [(ngModel)]="account.password"
+          [(ngModel)]="user.password"
           type="text"
           placeholder="Mật khẩu"
           alphanumericOnly

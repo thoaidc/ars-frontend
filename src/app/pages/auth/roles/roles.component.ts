@@ -11,7 +11,7 @@ import {HasAuthorityDirective} from '../../../shared/directives/has-authority.di
 import {FormsModule} from '@angular/forms';
 import {DecimalPipe, NgClass, NgFor} from '@angular/common';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {Role, RolesFilter, TreeViewItem} from '../../../core/models/role.model';
+import {Role, RolesFilter} from '../../../core/models/role.model';
 import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
 
 @Component({
@@ -35,7 +35,6 @@ export class RolesComponent implements OnInit {
   totalItems = 0;
   listSelected: any = [];
   roles: any = [];
-  permissions: TreeViewItem[] = [];
   rolesFilter: RolesFilter = {
     page: 1,
     size: 10,
@@ -113,12 +112,12 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  copyPermissions(id: any) {
+  copyAuthorities(id: any) {
     this.roleService.getRoleDetail(id).subscribe(roleDetail => {
       if (roleDetail) {
         this.toast.success('Sao chép quyền của vai trò ' + roleDetail.name + ' thành công.');
         this.modalRef = this.modalService.open(CreateRolesComponent, {size: 'xl', backdrop: 'static'});
-        this.modalRef.componentInstance.listSelected = JSON.parse(JSON.stringify(roleDetail.permissions));
+        this.modalRef.componentInstance.listSelected = JSON.parse(JSON.stringify(roleDetail.authorities));
       } else {
         this.toast.error('Sao chép thất bại');
       }

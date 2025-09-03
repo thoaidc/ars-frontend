@@ -8,9 +8,10 @@ import {HasAuthorityDirective} from '../../../../shared/directives/has-authority
 import {FormsModule} from '@angular/forms';
 import {TreeViewComponent} from '../tree-view/tree-view.component';
 import {AlphanumericOnlyDirective} from '../../../../shared/directives/alphanumeric-only.directive';
-import {CreateRoleRequest, RoleDetail, TreeViewItem, UpdateRoleRequest} from '../../../../core/models/role.model';
+import {CreateRoleRequest, RoleDetail, UpdateRoleRequest} from '../../../../core/models/role.model';
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
 import {ICON_ATTENTION} from '../../../../shared/utils/icon';
+import {TreeViewItem} from '../../../../core/models/authority.model';
 
 @Component({
   selector: 'app-create-roles',
@@ -28,7 +29,12 @@ import {ICON_ATTENTION} from '../../../../shared/utils/icon';
 })
 export class CreateRolesComponent implements OnInit {
   Authority = Authorities;
-  roleDetail: RoleDetail = { id: 0, name: '', code: '', permissions: [] };
+  roleDetail: RoleDetail = {
+    id: 0,
+    name: '',
+    code: '',
+    authorities: []
+  };
   totalItems = 0;
   roleId: number = 0;
   children: TreeViewItem[] = [];
@@ -62,7 +68,7 @@ export class CreateRolesComponent implements OnInit {
   }
 
   create() {
-    this.roleDetail.permissions = this.listSelected;
+    this.roleDetail.authorities = this.listSelected;
 
     if (!this.checkRolePermission()) {
       return;
@@ -72,7 +78,7 @@ export class CreateRolesComponent implements OnInit {
     const createRoleRequest: CreateRoleRequest = {
       name: this.roleDetail.name,
       code: this.roleDetail.code,
-      permissionIds: this.roleDetail.permissions
+      authorityIds: this.roleDetail.authorities
     };
 
     const updateRoleRequest: UpdateRoleRequest = {
@@ -118,7 +124,7 @@ export class CreateRolesComponent implements OnInit {
       return false;
     }
 
-    if (!this.roleDetail.permissions) {
+    if (!this.roleDetail.authorities) {
       this.toast.error('Danh sách quyền không được để trống', 'Thông báo');
       return false;
     }
@@ -130,7 +136,7 @@ export class CreateRolesComponent implements OnInit {
     this.rolesService.getRoleDetail(id).subscribe((roleDetail: RoleDetail | null) => {
       if (roleDetail) {
         this.roleDetail = roleDetail;
-        this.listSelected = roleDetail.permissions || [];
+        this.listSelected = roleDetail.authorities || [];
       }
     });
   }

@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
-import {Authentication} from '../models/account.model';
 import {catchError, map, Observable, of, ReplaySubject, shareReplay, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {StateStorageService} from './state-storage.service';
 import {Router} from '@angular/router';
 import {ApplicationConfigService} from '../config/application-config.service';
-import {
-  API_COMMON_CHECK_AUTHENTICATION_STATUS,
-  API_COMMON_LOGIN,
-  API_COMMON_LOGOUT
-} from '../../constants/api.constants';
 import {LoginRequest} from '../models/login.model';
 import {BaseResponse} from '../models/response.model';
 import {filter} from 'rxjs/operators';
-import {LOCAL_USER_AUTHORITIES_KEY, LOCAL_USERNAME_KEY} from '../../constants/local-storage.constants';
+import {
+  LOCAL_USER_AUTHORITIES_KEY,
+  LOCAL_USER_TOKEN_KEY,
+  LOCAL_USERNAME_KEY
+} from '../../constants/local-storage.constants';
+import {Authentication} from '../models/auth.model';
+import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_STATUS} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   logout(): Observable<boolean> {
-    const apiUrl = this.applicationConfigService.getEndpointFor(API_COMMON_LOGOUT);
+    const apiUrl = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
 
     return this.http.post<BaseResponse<any>>(apiUrl, {}).pipe(
       map(response => {
@@ -83,8 +83,8 @@ export class AuthService {
   }
 
   checkAuthenticateFromBe(loginRequest?: LoginRequest): Observable<Authentication | null> {
-    const apiLoginUrl = this.applicationConfigService.getEndpointFor(API_COMMON_LOGIN);
-    const apiStatusUrl = this.applicationConfigService.getEndpointFor(API_COMMON_CHECK_AUTHENTICATION_STATUS);
+    const apiLoginUrl = this.applicationConfigService.getEndpointFor(API_USERS_LOGIN);
+    const apiStatusUrl = this.applicationConfigService.getEndpointFor(API_USERS_STATUS);
     const apiUrl = loginRequest ? apiLoginUrl : apiStatusUrl;
     const requestBody = loginRequest ? loginRequest: {};
 
@@ -106,6 +106,7 @@ export class AuthService {
 
     if (authentication) {
       localStorage.setItem(LOCAL_USERNAME_KEY, authentication.username);
+      localStorage.setItem(LOCAL_USER_TOKEN_KEY, authentication.accessToken);
       localStorage.setItem(LOCAL_USER_AUTHORITIES_KEY, JSON.stringify(authentication.authorities));
     } else {
       this.authenticationCache$ = null;
@@ -115,6 +116,7 @@ export class AuthService {
   clearData() {
     this.stateStorageService.clearPreviousPage();
     localStorage.removeItem(LOCAL_USERNAME_KEY);
+    localStorage.removeItem(LOCAL_USER_TOKEN_KEY);
     localStorage.removeItem(LOCAL_USER_AUTHORITIES_KEY);
   }
 

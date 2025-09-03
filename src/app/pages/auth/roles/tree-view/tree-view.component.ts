@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {RolesService} from '../../../../core/services/roles.service';
 import {TreeViewItemComponent} from '../tree-view-item/tree-view-item.component';
-import {TreeViewItem} from '../../../../core/models/role.model';
+import {TreeViewItem} from '../../../../core/models/authority.model';
 
 @Component({
   selector: 'app-tree-view',
@@ -26,12 +26,6 @@ export class TreeViewComponent implements AfterViewInit {
     });
   }
 
-  /**
-   * Lại là mấy vòng for vớ vẩn nữa để check nếu 1 children mà parent nó là ae với 1 role trong list
-   * thì bỏ check thằng role đó, ai đó nếu có ý tưởng hay hơn thì sửa giùm vs, đoạn này chỉ check ngược được 1 tầng thui
-   * @Author phuonghv
-   * @param node
-   */
   updateTree(node: TreeViewItem): void {
     if (node.children?.length) {
       node.checked = false;

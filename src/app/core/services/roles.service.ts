@@ -3,9 +3,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {createSearchRequestParams} from '../utils/request.util';
-import {API_COMMON_PERMISSIONS_TREE, API_COMMON_ROLES} from '../../constants/api.constants';
-import {CreateRoleRequest, Role, RoleDetail, RolesFilter, TreeViewItem, UpdateRoleRequest} from '../models/role.model';
 import {BaseResponse} from '../models/response.model';
+import {API_ROLES, API_ROLES_PERMISSIONS_TREE} from '../../constants/api.constants';
+import {CreateRoleRequest, Role, RoleDetail, RolesFilter, UpdateRoleRequest} from '../models/role.model';
+import {TreeViewItem} from '../models/authority.model';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +18,8 @@ export class RolesService {
     private applicationConfigService: ApplicationConfigService
   ) {}
 
-  private roleApiUrl = this.applicationConfigService.getEndpointFor(API_COMMON_ROLES);
-  private permissionApiUrl = this.applicationConfigService.getEndpointFor(API_COMMON_PERMISSIONS_TREE);
+  private roleApiUrl = this.applicationConfigService.getEndpointFor(API_ROLES);
+  private permissionApiUrl = this.applicationConfigService.getEndpointFor(API_ROLES_PERMISSIONS_TREE);
   private searchSubject = new Subject<void>();
   searchObservable$ = this.searchSubject.asObservable();
   checkEvent = new EventEmitter();

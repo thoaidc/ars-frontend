@@ -10,7 +10,7 @@ export const AUTHORIZATION_ROUTES: Routes = [
     path: 'accounts',
     title: SIDEBAR_AUTHORIZATION_ACCOUNTS_MANAGEMENT_TITLE,
     pathMatch: 'full',
-    loadComponent: () => import('./accounts/accounts.component').then(m => m.AccountsComponent),
+    loadComponent: () => import('./users/user.component').then(m => m.UserComponent),
     canActivate: [AuthGuardFn]
   },
   {

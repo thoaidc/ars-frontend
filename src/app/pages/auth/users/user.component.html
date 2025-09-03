@@ -23,12 +23,12 @@
       <span>Trạng thái</span>
       <div class="select-search-custom">
         <ng-select
-          [items]="ACCOUNT_STATUS_SELECTION"
+          [items]="USER_STATUS_OPTIONS"
           bindLabel="name"
           bindValue="value"
           [clearable]="false"
           placeholder="Chọn trạng thái"
-          [(ngModel)]="accountsFilter.status"
+          [(ngModel)]="userFilter.status"
           (ngModelChange)="onSearch()"
         >
         </ng-select>
@@ -41,7 +41,7 @@
         <input
           id="account-search-keyword"
           class="form-control"
-          [(ngModel)]="accountsFilter.keyword"
+          [(ngModel)]="userFilter.keyword"
           type="search"
           (keyup.enter)="onSearch()"
           placeholder="Tài khoản, họ và tên"
@@ -76,44 +76,44 @@
     </thead>
 
     <tbody>
-      <ng-container *ngFor="let account of accounts; index as i">
+      <ng-container *ngFor="let user of users; index as i">
         <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
-          <td class="text-center">{{ i + 1 + (accountsFilter.page - 1) * accountsFilter.size }}</td>
-          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.username }}</td>
-          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.fullname }}</td>
-          <td class="text-center" (click)="openModalAccountDetail(account.id)">
-            <span [ngClass]="account.status === AccountStatus.ACTIVE ? 'success-color' : 'danger-color'">
-              <span *ngIf="account.status === AccountStatus.ACTIVE">Đang hoạt động</span>
-              <span *ngIf="account.status === AccountStatus.INACTIVE">Dừng hoạt động</span>
-              <span *ngIf="account.status === AccountStatus.LOCKED">Đã bị khóa</span>
+          <td class="text-center">{{ i + 1 + (userFilter.page - 1) * userFilter.size }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(user.id)">{{ user.username }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(user.id)">{{ user.fullname }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(user.id)">
+            <span [ngClass]="user.status === USER_STATUS.ACTIVE ? 'success-color' : 'danger-color'">
+              <span *ngIf="user.status === USER_STATUS.ACTIVE">Đang hoạt động</span>
+              <span *ngIf="user.status === USER_STATUS.INACTIVE">Dừng hoạt động</span>
+              <span *ngIf="user.status === USER_STATUS.LOCKED">Đã bị khóa</span>
             </span>
           </td>
-          <td class="text-center" (click)="openModalAccountDetail(account.id)">
-            {{ account.createdDate | date: 'dd/MM/yyyy' }}
+          <td class="text-center" (click)="openModalAccountDetail(user.id)">
+            {{ user.createdDate | date: 'dd/MM/yyyy' }}
           </td>
-          <td class="text-center" (click)="openModalAccountDetail(account.id)">{{ account.createdBy }}</td>
+          <td class="text-center" (click)="openModalAccountDetail(user.id)">{{ user.createdBy }}</td>
 
           <td>
             <div class="action-table">
               <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
                 <span
                   [innerHTML]="ICON_UPDATE | safeHtml"
-                  (click)="openModalSaveAccount(account.id)"
+                  (click)="openModalSaveAccount(user.id)"
                   ngbTooltip="Cập nhật tài khoản"
                 ></span>
               </ng-container>
 
               <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
                 <span
-                  *ngIf="account.status === AccountStatus.ACTIVE && account.username.toLowerCase() !== username.toLowerCase()"
+                  *ngIf="user.status === USER_STATUS.ACTIVE && user.username.toLowerCase() !== username.toLowerCase()"
                   [innerHTML]="ICON_STOP | safeHtml"
-                  (click)="updateUserStatus(account.id, AccountStatus.INACTIVE)"
+                  (click)="updateUserStatus(user.id, USER_STATUS.INACTIVE)"
                   ngbTooltip="Dừng hoạt động"
                 ></span>
                 <span
-                  *ngIf="account.status === AccountStatus.INACTIVE && account.username.toLowerCase() !== username.toLowerCase()"
+                  *ngIf="user.status === USER_STATUS.INACTIVE && user.username.toLowerCase() !== username.toLowerCase()"
                   [innerHTML]="ICON_PLAY | safeHtml"
-                  (click)="updateUserStatus(account.id, AccountStatus.ACTIVE)"
+                  (click)="updateUserStatus(user.id, USER_STATUS.ACTIVE)"
                   ngbTooltip="Cấp phép hoạt động"
                 ></span>
               </ng-container>
@@ -121,15 +121,15 @@
               <ng-container *hasAuthorities="Authorities.ACCOUNT_UPDATE">
                 <span
                   [innerHTML]="ICON_KEY | safeHtml"
-                  (click)="changePassword(account)"
+                  (click)="changePassword(user)"
                   ngbTooltip="Đổi mật khẩu"
                 ></span>
               </ng-container>
 
-              <ng-container *ngIf="account.username.toLowerCase() !== username.toLowerCase()">
+              <ng-container *ngIf="user.username.toLowerCase() !== username.toLowerCase()">
                 <span
                   [innerHTML]="ICON_DELETE | safeHtml"
-                  (click)="deleteUser(account.id)"
+                  (click)="deleteUser(user.id)"
                   ngbTooltip="Xoá tài khoản"
                   *hasAuthorities="Authorities.ACCOUNT_DELETE"
                 ></span>
@@ -147,8 +147,8 @@
     <span class="label-total">Tổng: {{ totalItems | number }}</span>
     <ng-select
       [items]="PAGINATION_PAGE_SIZE"
-      [(ngModel)]="accountsFilter.size"
-      (ngModelChange)="getAccounts()"
+      [(ngModel)]="userFilter.size"
+      (ngModelChange)="getUsers()"
     >
     </ng-select>
   </div>
@@ -156,8 +156,8 @@
   <ngb-pagination
     class="pagination"
     [collectionSize]="totalItems"
-    [pageSize]="accountsFilter.size"
-    [page]="accountsFilter.page"
+    [pageSize]="userFilter.size"
+    [page]="userFilter.page"
     [directionLinks]="true"
     [maxSize]="5"
     (pageChange)="loadMore($event)"

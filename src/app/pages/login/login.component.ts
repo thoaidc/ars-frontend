@@ -59,7 +59,7 @@ export class LoginComponent {
       if (authentication) {
         this.toastr.success('Đăng nhập thành công', 'Thông báo');
         const redirectUrl = this.utilsService.findFirstAccessibleRoute(authentication.authorities);
-        this.router.navigate([redirectUrl || '/admin/dashboard']).then();
+        this.router.navigate([redirectUrl || '/dashboard']).then();
       }
     });
   }

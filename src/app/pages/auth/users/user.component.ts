@@ -1,16 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, NgbModalRef, NgbPagination, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import dayjs from 'dayjs/esm';
-import { ModalAccountInfoComponent } from './modal-account-info/modal-account-info.component';
 import { ToastrService } from 'ngx-toastr';
 import { ModalChangePasswordComponent } from './modal-change-password/modal-change-password.component';
-import {
-  Account,
-  ACCOUNT_STATUS_SELECTION,
-  AccountStatus,
-  UpdateAccountStatusRequest
-} from '../../../core/models/account.model';
-import {AccountsService} from '../../../core/services/accounts.service';
 import {UtilsService} from '../../../shared/utils/utils.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {Authorities} from '../../../constants/authorities.constants';
@@ -35,13 +27,17 @@ import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
 import {LOCAL_USERNAME_KEY} from '../../../constants/local-storage.constants';
 import {BaseResponse} from '../../../core/models/response.model';
 import {BaseFilterRequest} from '../../../core/models/request.model';
-import {ModalSaveAccountComponent} from './modal-save-account/modal-save-account.component';
+import {USER_STATUS, USER_STATUS_OPTIONS} from '../../../constants/user.constants';
+import {UpdateUserStatusRequest, User} from '../../../core/models/user.model';
+import {UserService} from '../../../core/services/users.service';
+import {ModalSaveUserComponent} from './modal-save-user/modal-save-user.component';
+import {ModalUserInfoComponent} from './modal-user-info/modal-user-info.component';
 
 @Component({
-  selector: 'app-accounts-management',
+  selector: 'app-user-management',
   standalone: true,
-  templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.scss'],
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.scss'],
   imports: [
     SafeHtmlPipe,
     HasAuthorityDirective,
@@ -57,10 +53,9 @@ import {ModalSaveAccountComponent} from './modal-save-account/modal-save-account
     NgbTooltip
   ]
 })
-export class AccountsComponent implements OnInit {
+export class UserComponent implements OnInit {
   private modalRef: NgbModalRef | undefined;
-  AccountStatus = AccountStatus;
-  accountsFilter = {
+  userFilter = {
     page: 1,
     size: 10,
     status: '',
@@ -68,7 +63,7 @@ export class AccountsComponent implements OnInit {
     fromDate: dayjs().startOf('day'),
     toDate: dayjs().endOf('day')
   };
-  accounts: Account[] = [];
+  users: User[] = [];
   totalItems = 0;
   username = '';
   periods = 1;
@@ -76,7 +71,7 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     protected modalService: NgbModal,
-    private accountService: AccountsService,
+    private userService: UserService,
     private utilsService: UtilsService,
     private toast: ToastrService,
     private authService: AuthService,
@@ -89,7 +84,7 @@ export class AccountsComponent implements OnInit {
 
   onReload() {
     this.periods = 1;
-    this.accountsFilter = {
+    this.userFilter = {
       page: 1,
       size: 10,
       status: '',
@@ -102,73 +97,73 @@ export class AccountsComponent implements OnInit {
   }
 
   onTimeChange(even: any) {
-    this.accountsFilter.fromDate = even.fromDate;
-    this.accountsFilter.toDate = even.toDate;
+    this.userFilter.fromDate = even.fromDate;
+    this.userFilter.toDate = even.toDate;
     this.periods = even.periods;
     this.onSearch();
   }
 
   onSearch() {
-    this.accountsFilter.page = 1;
-    this.getAccounts();
+    this.userFilter.page = 1;
+    this.getUsers();
   }
 
-  getAccounts() {
+  getUsers() {
     const searchAccountsRequest: BaseFilterRequest = {
-      page: this.accountsFilter.page - 1,
-      size: this.accountsFilter.size
+      page: this.userFilter.page - 1,
+      size: this.userFilter.size
     };
 
-    if (this.accountsFilter.keyword) {
-      searchAccountsRequest.keyword = this.accountsFilter.keyword;
+    if (this.userFilter.keyword) {
+      searchAccountsRequest.keyword = this.userFilter.keyword;
     }
 
-    if (Object.values(AccountStatus).includes(this.accountsFilter.status as AccountStatus)) {
-      searchAccountsRequest.status = this.accountsFilter.status;
+    if (Object.values(USER_STATUS).includes(this.userFilter.status as USER_STATUS)) {
+      searchAccountsRequest.status = this.userFilter.status;
     }
 
-    if (this.accountsFilter.fromDate) {
-      const fromDate = this.accountsFilter.fromDate.toString();
+    if (this.userFilter.fromDate) {
+      const fromDate = this.userFilter.fromDate.toString();
       searchAccountsRequest.fromDate = this.utilsService.convertToDateString(fromDate, 'YYYY-MM-DD HH:mm:ss');
     }
 
-    if (this.accountsFilter.toDate) {
-      const toDate = this.accountsFilter.toDate.toString();
+    if (this.userFilter.toDate) {
+      const toDate = this.userFilter.toDate.toString();
       searchAccountsRequest.toDate = this.utilsService.convertToDateString(toDate, 'YYYY-MM-DD HH:mm:ss');
     }
 
-    this.accountService.getAccountsWithPaging(searchAccountsRequest).subscribe((response) => {
-      this.accounts = [];
+    this.userService.getUsersWithPaging(searchAccountsRequest).subscribe((response) => {
+      this.users = [];
 
-      if (response && response.result as Account[]) {
-        this.accounts = response.result as Account[];
+      if (response && response.result as User[]) {
+        this.users = response.result as User[];
         this.totalItems = response.total || 0;
       }
     });
   }
 
-  openModalSaveAccount(accountId?: number) {
-    this.modalRef = this.modalService.open(ModalSaveAccountComponent, { size: 'lg', backdrop: 'static' });
-    this.modalRef.componentInstance.accountId = accountId || 0;
-    this.modalRef.closed.subscribe(() => this.getAccounts());
+  openModalSaveAccount(userId?: number) {
+    this.modalRef = this.modalService.open(ModalSaveUserComponent, { size: 'lg', backdrop: 'static' });
+    this.modalRef.componentInstance.userId = userId || 0;
+    this.modalRef.closed.subscribe(() => this.getUsers());
   }
 
-  openModalAccountDetail(accountId: number) {
-    this.modalRef = this.modalService.open(ModalAccountInfoComponent, { size: 'lg', backdrop: 'static' });
-    this.modalRef.componentInstance.accountId = accountId;
+  openModalAccountDetail(userId: number) {
+    this.modalRef = this.modalService.open(ModalUserInfoComponent, { size: 'lg', backdrop: 'static' });
+    this.modalRef.componentInstance.userId = userId;
   }
 
-  updateUserStatus(accountId: number, status: string) {
+  updateUserStatus(userId: number, status: string) {
     this.modalRef = this.modalService.open(ModalConfirmDialogComponent, { backdrop: 'static' });
 
     switch (status) {
-      case AccountStatus.INACTIVE: {
+      case USER_STATUS.INACTIVE: {
         this.modalRef.componentInstance.title = 'Bạn có chắc chắn muốn mở hoạt động tài khoản này?';
         this.modalRef.componentInstance.classBtn = 'save-button-dialog';
         break;
       }
 
-      case AccountStatus.ACTIVE: {
+      case USER_STATUS.ACTIVE: {
         this.modalRef.componentInstance.title = 'Bạn có chắc chắn muốn ngưng hoạt động tài khoản này?';
         this.modalRef.componentInstance.classBtn = 'btn-delete';
         break;
@@ -177,12 +172,12 @@ export class AccountsComponent implements OnInit {
 
     this.modalRef.closed.subscribe((isConfirmed?: boolean) => {
       if (isConfirmed) {
-        const request: UpdateAccountStatusRequest = { accountId: accountId, status: status };
+        const request: UpdateUserStatusRequest = { id: userId, status: status };
 
-        this.accountService.updateAccountStatus(request).subscribe(response => {
+        this.userService.updateUserStatus(request).subscribe(response => {
           if (response && response.status) {
             this.toast.success(response.message, 'Thông báo');
-            this.getAccounts();
+            this.getUsers();
           } else {
             this.toast.error(response.message || 'Cập nhật thất bại!');
           }
@@ -193,7 +188,7 @@ export class AccountsComponent implements OnInit {
 
   changePassword(account: any) {
     this.modalRef = this.modalService.open(ModalChangePasswordComponent, {backdrop: 'static'});
-    this.modalRef.componentInstance.accountId = account.id;
+    this.modalRef.componentInstance.userId = account.id;
 
     this.modalRef.closed.subscribe((response?: BaseResponse<any>) => {
       if (response && response.status) {
@@ -202,7 +197,7 @@ export class AccountsComponent implements OnInit {
           this.authService.logout();
         } else {
           this.toast.success('Đổi mật khẩu thành công', 'Thông báo');
-          this.getAccounts();
+          this.getUsers();
         }
       }
 
@@ -212,8 +207,8 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  deleteUser(accountId: any) {
-    if (!accountId) {
+  deleteUser(userId: any) {
+    if (!userId) {
       this.toast.success('Không tìm thấy thông tin tài khoản', 'Thông báo');
       return;
     }
@@ -224,10 +219,10 @@ export class AccountsComponent implements OnInit {
 
     this.modalRef.closed.subscribe((isConfirmed?: boolean) => {
       if (isConfirmed) {
-        this.accountService.deleteAccount(accountId).subscribe(response => {
+        this.userService.deleteUser(userId).subscribe(response => {
           if (response.status) {
             this.toast.success('Xóa tài khoản thành công', 'Thông báo');
-            this.getAccounts();
+            this.getUsers();
           } else {
             this.toast.error(response.message, 'Xóa tài khoản thất bại');
           }
@@ -237,8 +232,8 @@ export class AccountsComponent implements OnInit {
   }
 
   loadMore($event: any) {
-    this.accountsFilter.page = $event;
-    this.getAccounts();
+    this.userFilter.page = $event;
+    this.getUsers();
   }
 
   protected readonly ICON_RELOAD = ICON_RELOAD;
@@ -251,5 +246,6 @@ export class AccountsComponent implements OnInit {
   protected readonly Authorities = Authorities;
   protected readonly ICON_DELETE = ICON_DELETE;
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
-  protected readonly ACCOUNT_STATUS_SELECTION = ACCOUNT_STATUS_SELECTION;
+  protected readonly USER_STATUS = USER_STATUS;
+  protected readonly USER_STATUS_OPTIONS = USER_STATUS_OPTIONS;
 }
