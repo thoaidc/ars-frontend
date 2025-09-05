@@ -64,8 +64,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(), // To let HttpClient use Fetch API instead of XMLHttpRequest (XHR)
       withInterceptors([
-        AuthExpiredInterceptorFn,
-        ApiInterceptorFn
+        ApiInterceptorFn,
+        AuthExpiredInterceptorFn
       ])
     )
   ]

@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.authService.subscribeAuthenticationState().subscribe((authentication: Authentication | null) => {
       if (authentication) {
-        this.webSocketService.connect();
+        // this.webSocketService.connect();
       }
     });
   }

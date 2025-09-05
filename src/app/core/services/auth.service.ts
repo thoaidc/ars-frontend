@@ -13,7 +13,7 @@ import {
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
 import {Authentication} from '../models/auth.model';
-import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_STATUS} from '../../constants/api.constants';
+import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -65,21 +65,37 @@ export class AuthService {
     return this.authenticationState.asObservable();
   }
 
-  logout(): Observable<boolean> {
-    const apiUrl = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
-
-    return this.http.post<BaseResponse<any>>(apiUrl, {}).pipe(
+  refreshToken(): Observable<string | null> {
+    const refreshTokenAPI = this.applicationConfigService.getEndpointFor(API_USERS_REFRESH);
+    return this.http.post<BaseResponse<string>>(refreshTokenAPI, {}).pipe(
       map(response => {
-        if (response.status) {
-          this.setAuthenticationState(null);
-          this.clearData();
-          return true;
+        if (response.status && response.result) {
+          return response.result;
         }
-
-        return false;
+        return null;
       }),
-      catchError(() => of(false))
+      catchError(() => of(null))
     );
+  }
+
+  logout(): Observable<boolean> {
+    const logoutAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
+
+    this.setAuthenticationState(null);
+    this.clearData();
+    return of(true);
+
+    // return this.http.post<BaseResponse<any>>(logoutAPI, {}).pipe(
+    //   map(response => {
+    //     if (response.status) {
+    //       this.setAuthenticationState(null);
+    //       this.clearData();
+    //       return true;
+    //     }
+    //     return false;
+    //   }),
+    //   catchError(() => of(false))
+    // );
   }
 
   checkAuthenticateFromBe(loginRequest?: LoginRequest): Observable<Authentication | null> {

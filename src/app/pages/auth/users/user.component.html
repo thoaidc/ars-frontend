@@ -82,10 +82,10 @@
           <td class="text-center" (click)="openModalAccountDetail(user.id)">{{ user.username }}</td>
           <td class="text-center" (click)="openModalAccountDetail(user.id)">{{ user.fullname }}</td>
           <td class="text-center" (click)="openModalAccountDetail(user.id)">
-            <span [ngClass]="user.status === USER_STATUS.ACTIVE ? 'success-color' : 'danger-color'">
-              <span *ngIf="user.status === USER_STATUS.ACTIVE">Đang hoạt động</span>
-              <span *ngIf="user.status === USER_STATUS.INACTIVE">Dừng hoạt động</span>
-              <span *ngIf="user.status === USER_STATUS.LOCKED">Đã bị khóa</span>
+            <span [ngClass]="user.status == USER_STATUS.ACTIVE_INT ? 'success-color' : 'danger-color'">
+              <span *ngIf="user.status == USER_STATUS.ACTIVE_INT">Đang hoạt động</span>
+              <span *ngIf="user.status == USER_STATUS.INACTIVE_INT">Dừng hoạt động</span>
+              <span *ngIf="user.status == USER_STATUS.LOCKED_INT">Đã bị khóa</span>
             </span>
           </td>
           <td class="text-center" (click)="openModalAccountDetail(user.id)">

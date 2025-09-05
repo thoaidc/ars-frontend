@@ -1,7 +1,10 @@
 export enum USER_STATUS {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
-  LOCKED = 'LOCKED'
+  LOCKED = 'LOCKED',
+  ACTIVE_INT = '1',
+  INACTIVE_INT = '2',
+  LOCKED_INT = '3'
 }
 
 export const USER_STATUS_MAP: Record<string, string> = {
