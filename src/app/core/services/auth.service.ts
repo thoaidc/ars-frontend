@@ -13,11 +13,12 @@ import {
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
 import {Authentication} from '../models/auth.model';
-import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
+import {API_USERS_LOGIN, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   private authentication: Authentication | null = null;
+  private refreshTokenCache$: Observable<string | null> | null = null;
   private authenticationCache$: Observable<Authentication> | null = null;
   private authenticationState = new ReplaySubject<Authentication | null>(1);
 
@@ -37,7 +38,7 @@ export class AuthService {
         }),
         tap((account: Authentication | null) => this.setAuthenticationState(account)),
         filter((account): account is Authentication => account !== null),
-        shareReplay()
+        shareReplay(1)
       );
     }
 
@@ -65,12 +66,14 @@ export class AuthService {
     return this.authenticationState.asObservable();
   }
 
-  refreshToken(): Observable<string | null> {
+  doRefreshToken(): Observable<string | null> {
     const refreshTokenAPI = this.applicationConfigService.getEndpointFor(API_USERS_REFRESH);
     return this.http.post<BaseResponse<string>>(refreshTokenAPI, {}).pipe(
       map(response => {
         if (response.status && response.result) {
-          return response.result;
+          const newToken = response.result;
+          localStorage.setItem(LOCAL_USER_TOKEN_KEY, newToken);
+          return newToken;
         }
         return null;
       }),
@@ -78,13 +81,21 @@ export class AuthService {
     );
   }
 
-  logout(): Observable<boolean> {
-    const logoutAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
+  refreshTokenShared(): Observable<string | null> {
+    if (!this.refreshTokenCache$) {
+      this.refreshTokenCache$ = this.doRefreshToken().pipe(
+        shareReplay({ bufferSize: 1, refCount: false })
+      );
+    }
+    return this.refreshTokenCache$;
+  }
 
+  logout(): Observable<boolean> {
     this.setAuthenticationState(null);
     this.clearData();
     return of(true);
 
+    // const logoutAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
     // return this.http.post<BaseResponse<any>>(logoutAPI, {}).pipe(
     //   map(response => {
     //     if (response.status) {
@@ -130,6 +141,7 @@ export class AuthService {
   }
 
   clearData() {
+    this.refreshTokenCache$ = null;
     this.stateStorageService.clearPreviousPage();
     localStorage.removeItem(LOCAL_USERNAME_KEY);
     localStorage.removeItem(LOCAL_USER_TOKEN_KEY);
