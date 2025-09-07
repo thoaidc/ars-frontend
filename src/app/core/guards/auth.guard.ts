@@ -3,11 +3,10 @@ import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from
 import {AuthService} from '../services/auth.service';
 import {StateStorageService} from '../services/state-storage.service';
 
-export const AuthGuardFn: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const AuthGuardFn: CanActivateFn = (_route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   const stateService = inject(StateStorageService);
-
   stateService.savePreviousPage(state.url);
 
   if (authService.hasToken()) {

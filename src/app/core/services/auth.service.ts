@@ -4,7 +4,6 @@ import {HttpClient} from '@angular/common/http';
 import {StateStorageService} from './state-storage.service';
 import {Router} from '@angular/router';
 import {ApplicationConfigService} from '../config/application-config.service';
-import {LoginRequest} from '../models/login.model';
 import {BaseResponse} from '../models/response.model';
 import {filter} from 'rxjs/operators';
 import {
@@ -12,7 +11,7 @@ import {
   LOCAL_USER_TOKEN_KEY,
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
-import {Authentication} from '../models/auth.model';
+import {Authentication, LoginRequest} from '../models/auth.model';
 import {API_USERS_LOGIN, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
@@ -31,7 +30,7 @@ export class AuthService {
 
   authenticate(loginRequest?: LoginRequest, forceLogin?: boolean): Observable<Authentication | null> {
     if (!this.authenticationCache$ || forceLogin) {
-      this.authenticationCache$ = this.checkAuthenticateFromBe(loginRequest).pipe(
+      this.authenticationCache$ = this.getAuthenticate(loginRequest).pipe(
         catchError(() => {
           this.setAuthenticationState(null);
           return of(null);
@@ -66,7 +65,7 @@ export class AuthService {
     return this.authenticationState.asObservable();
   }
 
-  doRefreshToken(): Observable<string | null> {
+  refreshToken(): Observable<string | null> {
     const refreshTokenAPI = this.applicationConfigService.getEndpointFor(API_USERS_REFRESH);
     return this.http.post<BaseResponse<string>>(refreshTokenAPI, {}).pipe(
       map(response => {
@@ -83,9 +82,7 @@ export class AuthService {
 
   refreshTokenShared(): Observable<string | null> {
     if (!this.refreshTokenCache$) {
-      this.refreshTokenCache$ = this.doRefreshToken().pipe(
-        shareReplay({ bufferSize: 1, refCount: false })
-      );
+      this.refreshTokenCache$ = this.refreshToken().pipe(shareReplay({ bufferSize: 1, refCount: false }));
     }
     return this.refreshTokenCache$;
   }
@@ -109,10 +106,10 @@ export class AuthService {
     // );
   }
 
-  checkAuthenticateFromBe(loginRequest?: LoginRequest): Observable<Authentication | null> {
-    const apiLoginUrl = this.applicationConfigService.getEndpointFor(API_USERS_LOGIN);
-    const apiStatusUrl = this.applicationConfigService.getEndpointFor(API_USERS_STATUS);
-    const apiUrl = loginRequest ? apiLoginUrl : apiStatusUrl;
+  getAuthenticate(loginRequest?: LoginRequest): Observable<Authentication | null> {
+    const loginAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGIN);
+    const userStatusAPI = this.applicationConfigService.getEndpointFor(API_USERS_STATUS);
+    const apiUrl = loginRequest ? loginAPI : userStatusAPI;
     const requestBody = loginRequest ? loginRequest: {};
 
     return this.http.post<BaseResponse<Authentication>>(apiUrl, requestBody).pipe(

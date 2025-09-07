@@ -95,6 +95,7 @@ export class WebSocketService implements OnDestroy {
     );
   }
 
+  // noinspection JSUnusedGlobalSymbols
   unsubscribeFromTopic(topic: string): void {
     const subscription = this.topicSubscriptions.get(topic);
 

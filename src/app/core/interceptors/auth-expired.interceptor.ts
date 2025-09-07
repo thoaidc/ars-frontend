@@ -2,7 +2,8 @@ import {inject} from '@angular/core';
 import {
   HttpRequest,
   HttpInterceptorFn,
-  HttpHandlerFn, HttpErrorResponse
+  HttpHandlerFn,
+  HttpErrorResponse
 } from '@angular/common/http';
 import {AuthService} from '../services/auth.service';
 import {StateStorageService} from '../services/state-storage.service';

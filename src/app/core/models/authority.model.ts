@@ -1,5 +1,6 @@
 import {AuditingEntity} from './common.model';
 
+// noinspection JSUnusedGlobalSymbols
 export interface Authority extends AuditingEntity {
   name: string;
   code: string;

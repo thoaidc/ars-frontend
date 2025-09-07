@@ -18,13 +18,12 @@ import {AuthService} from '../../core/services/auth.service';
 })
 export class HasAuthorityDirective implements OnDestroy {
   private authorities!: string | string[];
-
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private authService: AuthService,
     private templateRef: TemplateRef<any>,
-    private viewContainerRef: ViewContainerRef,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   @Input()
@@ -36,9 +35,7 @@ export class HasAuthorityDirective implements OnDestroy {
     this.authService
       .subscribeAuthenticationState()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.updateView();
-      });
+      .subscribe(() => this.updateView());
   }
 
   ngOnDestroy(): void {
@@ -47,7 +44,7 @@ export class HasAuthorityDirective implements OnDestroy {
   }
 
   private updateView(): void {
-    let hasAuthorities = true;
+    let hasAuthorities = false;
 
     if (this.authorities) {
       hasAuthorities = this.authService.hasAllAuthorities(this.authorities);

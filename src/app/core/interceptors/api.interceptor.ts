@@ -13,7 +13,7 @@ import {LOCAL_USER_TOKEN_KEY} from '../../constants/local-storage.constants';
 export const ApiInterceptorFn: HttpInterceptorFn = (request: HttpRequest<any>, next: HttpHandlerFn) => {
   const toast = inject(ToastrService);
   const appConfig = inject(ApplicationConfigService);
-  const isApiRequest = request.url.startsWith(appConfig.getEndpointFor(''));
+  const isApiRequest = request.url.startsWith(appConfig.getEndpointFor('api'));
   let modifiedReq = request;
 
   if (isApiRequest) {
