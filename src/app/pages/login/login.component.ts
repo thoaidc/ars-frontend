@@ -4,10 +4,10 @@ import {AuthService} from '../../core/services/auth.service';
 import {Router} from '@angular/router';
 import {UtilsService} from '../../shared/utils/utils.service';
 import {ICON_EYE, ICON_EYE_CROSS} from '../../shared/utils/icon';
-import {LoginRequest} from '../../core/models/login.model';
 import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {LoginRequest} from '../../core/models/auth.model';
 
 @Component({
   selector: 'app-login',
