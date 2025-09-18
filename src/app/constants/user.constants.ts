@@ -8,26 +8,26 @@ export enum USER_STATUS {
 }
 
 export const USER_STATUS_MAP: Record<string, string> = {
-  ACTIVE: 'Hoạt động',
-  INACTIVE: 'Dừng hoạt động',
-  LOCKED: 'Đã bị khóa'
+  ACTIVE: 'user.status.active',
+  INACTIVE: 'user.status.inactive',
+  LOCKED: 'user.status.locked'
 }
 
 export const USER_STATUS_OPTIONS = [
   {
     value: '',
-    name: 'Tất cả',
+    name: 'global.all',
   },
   {
     value: USER_STATUS.ACTIVE,
-    name: 'Hoạt động',
+    name: USER_STATUS_MAP[USER_STATUS.ACTIVE]
   },
   {
     value: USER_STATUS.INACTIVE,
-    name: 'Dừng hoạt động',
+    name: USER_STATUS_MAP[USER_STATUS.INACTIVE]
   },
   {
     value: USER_STATUS.LOCKED,
-    name: 'Đã bị khóa'
+    name: USER_STATUS_MAP[USER_STATUS.LOCKED]
   }
 ];

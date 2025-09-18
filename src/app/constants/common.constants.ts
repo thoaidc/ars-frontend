@@ -1,11 +1,16 @@
-export const TODAY = 'Hôm nay';
-export const LAST_DAY = 'Hôm qua';
-export const THIS_WEEK = 'Tuần này';
-export const THIS_MONTH = 'Tháng này';
-export const LAST_7_DAYS = '7 ngày trước';
-export const LAST_30_DAYS = '30 ngày trước';
-export const THIS_YEAR = 'Năm nay';
-export const OTHER = 'Khác';
+export const LOCALE = {
+  VI: 'vi',
+  EN: 'en'
+}
+
+export const TODAY = 'global.today';
+export const LAST_DAY = 'global.yesterday';
+export const THIS_WEEK = 'global.thisWeek';
+export const THIS_MONTH = 'global.thisMonth';
+export const LAST_7_DAYS = 'global.lastDay';
+export const LAST_30_DAYS = 'global.last30Day';
+export const THIS_YEAR = 'global.thisYear';
+export const OTHER = 'global.other';
 export const PAGINATION_PAGE_SIZE = [10, 20, 30];
 
 export const LIST_TIME_SELECT = [

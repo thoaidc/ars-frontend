@@ -1,0 +1,12 @@
+{
+  "sidebar": {
+    "dashboard": "Home",
+    "authorization": {
+      "title": "Authorization",
+      "account": "Account",
+      "role": "Role"
+    },
+    "customer": "Customer",
+    "product": "Product"
+  }
+}

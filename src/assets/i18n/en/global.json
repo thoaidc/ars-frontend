@@ -1,0 +1,23 @@
+{
+  "global": {
+    "all": "All",
+    "notification": "Notification",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "agree": "Agree",
+    "exit": "Exit",
+    "open": "Open",
+    "close": "Close",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "thisYear": "This year",
+    "lastWeek": "Last week",
+    "lastMonth": "Last month",
+    "lastYear": "Last year",
+    "last7Day": "7 days ago",
+    "last30Day": "30 days Ago",
+    "other": "Other"
+  }
+}

@@ -27,7 +27,7 @@
                [ngClass]="latestUrl === route.path ? 'item-active' : ''"
                [attr.aria-expanded]="route.submenu?.length ? isExpanded(route.path) : null">
               <div class="menu-icon"><span [innerHTML]="route.icon | safeHtml"></span></div>
-              <div [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">{{ route.title }}</div>
+              <div [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">{{ route.title | translate }}</div>
               <div *ngIf="route.submenu?.length"
                    [ngClass]="isSidebarShown ? 'menu-caret' : 'menu-caret caret-custom'"></div>
             </a>
@@ -43,7 +43,7 @@
                      [ngClass]="latestUrl === route.path + item.path ? 'item-active' : ''">
                     <div class="menu-icon"><span [innerHTML]="item.icon | safeHtml"></span></div>
                     <div class="menu-text--sub" [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">
-                      {{ item.title }}
+                      {{ item.title | translate }}
                     </div>
                   </a>
                 </div>

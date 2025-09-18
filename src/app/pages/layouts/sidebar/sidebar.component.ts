@@ -13,6 +13,7 @@ import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {NgClass, NgFor, NgIf} from '@angular/common';
 import {HasAuthorityDirective} from '../../../shared/directives/has-authority.directive';
 import {SIDEBAR_ROUTES} from './sidebar.route';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +27,8 @@ import {SIDEBAR_ROUTES} from './sidebar.route';
     NgFor,
     NgClass,
     HasAuthorityDirective,
-    RouterLink
+    RouterLink,
+    TranslatePipe
   ]
 })
 export class SidebarComponent implements AfterViewInit {

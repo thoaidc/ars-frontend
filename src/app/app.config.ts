@@ -16,11 +16,12 @@ import {AuthExpiredInterceptorFn} from './core/interceptors/auth-expired.interce
 import {ApiInterceptorFn} from './core/interceptors/api.interceptor';
 import {provideToastr} from 'ngx-toastr';
 import {provideAnimations} from '@angular/platform-browser/animations';
-import {provideTranslateService} from '@ngx-translate/core';
+import {provideTranslateService, TranslateLoader} from '@ngx-translate/core';
 import {NgbDateAdapter} from '@ng-bootstrap/ng-bootstrap';
 import {NgbDateDayjsAdapter} from './core/config/datepicker.config';
 import {provideLoadingBar} from '@ngx-loading-bar/core';
 import {provideLoadingBarRouter} from '@ngx-loading-bar/router';
+import {CustomHttpLoaderFactory} from './core/config/i18n.config';
 
 /**
  * {@link provideHttpClient} configure HTTP Interceptors in Angular
@@ -54,7 +55,13 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), // Optional: to optimize change detection
     provideRouter(APP_ROUTES, withEnabledBlockingInitialNavigation()),
-    provideTranslateService(),
+    provideTranslateService({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: CustomHttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     provideAnimations(),
     provideLoadingBar({ latencyThreshold: 0 }), // The request takes more than 0ms to start showing the loading bar
     provideLoadingBarRouter(), // To load according to route change

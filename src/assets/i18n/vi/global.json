@@ -1,0 +1,23 @@
+{
+  "global": {
+    "all": "Tất cả",
+    "notification": "Thông báo",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận",
+    "agree": "Đồng ý",
+    "exit": "Thoát",
+    "open": "Mở",
+    "close": "Đóng",
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "thisWeek": "Tuần này",
+    "thisMonth": "Tháng này",
+    "thisYear": "Năm nay",
+    "lastWeek": "Tuần trước",
+    "lastMonth": "Tháng trước",
+    "lastYear": "Năm trước",
+    "last7Day": "7 ngày trước",
+    "last30Day": "30 ngày trước",
+    "other": "Khác"
+  }
+}
