@@ -18,6 +18,25 @@
     "lastYear": "Last year",
     "last7Day": "7 days ago",
     "last30Day": "30 days Ago",
-    "other": "Other"
+    "other": "Other",
+    "languages": "Languages",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "dashboard": "Home",
+    "authorization": {
+      "title": "Authorization",
+      "account": "Account",
+      "role": "Role"
+    },
+    "customer": "Customer",
+    "product": "Product"
+  },
+  "user": {
+    "status": {
+      "active": "Hoạt động",
+      "inactive": "Dừng hoạt động",
+      "locked": "Đã bị khóa"
+    }
   }
 }

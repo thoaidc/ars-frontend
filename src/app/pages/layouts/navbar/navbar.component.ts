@@ -9,6 +9,7 @@ import {LOCAL_USERNAME_KEY} from '../../../constants/local-storage.constants';
 import {WebSocketService} from '../../../core/services/websocket.service';
 import {NOTIFICATION_TOPIC, SocketMessage} from '../../../constants/websocket.constants';
 import {IMessage} from '@stomp/stompjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,8 @@ import {IMessage} from '@stomp/stompjs';
   styleUrls: ['./navbar.component.scss'],
   imports: [
     SafeHtmlPipe,
-    NgIf
+    NgIf,
+    TranslatePipe
   ]
 })
 export class NavbarComponent implements OnInit {

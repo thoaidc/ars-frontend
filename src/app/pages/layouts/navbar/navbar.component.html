@@ -3,7 +3,7 @@
     <div class="navbar-item navbar-user dropdown">
       <div class="d-flex cursor-pointer position-relative me-3">
         <div class="d-flex align-items-center">
-          <span (click)="toggleLanguage($event)">Ngôn ngữ</span>
+          <span (click)="toggleLanguage($event)">{{ 'global.languages' | translate }}</span>
         </div>
         <div class="overlay-container" *ngIf="showDropdown == 'LANGUAGE'" id="support-overlay-container">
           <div class="overlay">
@@ -40,7 +40,7 @@
               <div class="overlay">
                 <div (click)="logout()" class="overlay-item pointer div-login">
                   <span [innerHTML]="ICON_LOGOUT | safeHtml"></span>
-                  <span class="icon-text">Đăng xuất</span>
+                  <span class="icon-text">{{ 'global.logout' | translate }}</span>
                 </div>
               </div>
             </div>

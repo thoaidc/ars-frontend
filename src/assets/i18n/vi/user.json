@@ -1,9 +1,0 @@
-{
-  "user": {
-    "status": {
-      "active": "Hoạt động",
-      "inactive": "Dừng hoạt động",
-      "locked": "Đã bị khóa"
-    }
-  }
-}

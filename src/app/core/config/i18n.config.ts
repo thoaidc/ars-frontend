@@ -1,10 +1,6 @@
-import {HttpBackend} from '@angular/common/http';
-import {TranslateLoader} from '@ngx-translate/core';
-import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
+import {HttpClient} from '@angular/common/http';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-export function CustomHttpLoaderFactory(http: HttpBackend): TranslateLoader {
-  return new MultiTranslateHttpLoader(http, [
-    { prefix: './assets/i18n/en/', suffix: '.json' },
-    { prefix: './assets/i18n/vi/', suffix: '.json' }
-  ]);
+export function CustomHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

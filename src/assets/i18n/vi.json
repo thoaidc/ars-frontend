@@ -18,6 +18,25 @@
     "lastYear": "Năm trước",
     "last7Day": "7 ngày trước",
     "last30Day": "30 ngày trước",
-    "other": "Khác"
+    "other": "Khác",
+    "languages": "Ngôn ngữ",
+    "logout": "Đăng xuất"
+  },
+  "sidebar": {
+    "dashboard": "Trang chủ",
+    "authorization": {
+      "title": "Phân quyền",
+      "account": "Tài khoản",
+      "role": "Vai trò"
+    },
+    "customer": "Khách hàng",
+    "product": "Sản phẩm"
+  },
+  "user": {
+    "status": {
+      "active": "Hoạt động",
+      "inactive": "Dừng hoạt động",
+      "locked": "Đã bị khóa"
+    }
   }
 }

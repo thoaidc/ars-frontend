@@ -1,4 +1,4 @@
-import {ApplicationConfig, LOCALE_ID, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter, withEnabledBlockingInitialNavigation} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {
@@ -22,6 +22,7 @@ import {NgbDateDayjsAdapter} from './core/config/datepicker.config';
 import {provideLoadingBar} from '@ngx-loading-bar/core';
 import {provideLoadingBarRouter} from '@ngx-loading-bar/router';
 import {CustomHttpLoaderFactory} from './core/config/i18n.config';
+import {LOCALE} from './constants/common.constants';
 
 /**
  * {@link provideHttpClient} configure HTTP Interceptors in Angular
@@ -56,6 +57,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }), // Optional: to optimize change detection
     provideRouter(APP_ROUTES, withEnabledBlockingInitialNavigation()),
     provideTranslateService({
+      defaultLanguage: LOCALE.VI,
       loader: {
         provide: TranslateLoader,
         useFactory: CustomHttpLoaderFactory,
@@ -66,7 +68,6 @@ export const appConfig: ApplicationConfig = {
     provideLoadingBar({ latencyThreshold: 0 }), // The request takes more than 0ms to start showing the loading bar
     provideLoadingBarRouter(), // To load according to route change
     provideToastr(),
-    { provide: LOCALE_ID, useValue: 'en' }, // Locale configuration
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter }, // Date adapter
     provideHttpClient(
       withFetch(), // To let HttpClient use Fetch API instead of XMLHttpRequest (XHR)
