@@ -18,7 +18,8 @@ export const AuthExpiredInterceptorFn: HttpInterceptorFn = (request: HttpRequest
 
   const doLogout = () => {
     stateStorageService.savePreviousPage(router.routerState.snapshot.url);
-    authService.logout().subscribe(() => router.navigate(['/login']).then());
+    authService.logout();
+    router.navigate(['/login']).then();
   };
 
   return next(request).pipe(

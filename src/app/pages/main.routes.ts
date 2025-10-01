@@ -17,8 +17,7 @@ export const MAIN_ROUTES: Routes = [
   },
   {
     path: 'authorization',
-    loadChildren: () => AUTHORIZATION_ROUTES,
-    canActivate: [AuthGuardFn]
+    loadChildren: () => AUTHORIZATION_ROUTES
   },
   {
     path: 'customers',

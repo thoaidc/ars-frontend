@@ -69,14 +69,9 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout().subscribe((success: boolean) => {
-      if (success) {
-        this.toast.success('Đăng xuất thành công', 'Thông báo');
-        this.router.navigate(['/login']).then();
-      } else {
-        this.toast.error('Đăng xuất thất bại', 'Thông báo');
-      }
-    });
+    this.authService.logout();
+    this.toast.success('Đăng xuất thành công', 'Thông báo');
+    this.router.navigate(['/login']).then();
   }
 
   protected readonly ICON_LOGOUT = ICON_LOGOUT;

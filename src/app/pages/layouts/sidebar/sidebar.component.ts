@@ -13,7 +13,7 @@ import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {NgClass, NgFor, NgIf} from '@angular/common';
 import {HasAuthorityDirective} from '../../../shared/directives/has-authority.directive';
 import {SIDEBAR_ROUTES} from './sidebar.route';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -40,7 +40,7 @@ export class SidebarComponent implements AfterViewInit {
   @Input() isSidebarShown!: boolean;
   @Output() isSidebarShownChange = new EventEmitter<boolean>();
 
-  constructor(private router: Router, private translateService: TranslateService) {
+  constructor(private router: Router) {
     this.latestUrl = this.router.url;
 
     this.router.events.subscribe(event => {
@@ -68,8 +68,6 @@ export class SidebarComponent implements AfterViewInit {
     if (parent) {
       this.expanded.add(parent.path);
     }
-
-    console.log(this.translateService.instant('user.status.active'));
   }
 
   isExpanded(key: string): boolean {

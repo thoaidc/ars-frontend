@@ -12,7 +12,7 @@ import {
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
 import {Authentication, LoginRequest} from '../models/auth.model';
-import {API_USERS_LOGIN, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
+import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   hasToken(): boolean {
-    return !!localStorage.getItem(LOCAL_USERNAME_KEY);
+    return !!localStorage.getItem(LOCAL_USER_TOKEN_KEY);
   }
 
   isAuthenticated(): boolean {
@@ -87,23 +87,11 @@ export class AuthService {
     return this.refreshTokenCache$;
   }
 
-  logout(): Observable<boolean> {
+  logout() {
     this.setAuthenticationState(null);
     this.clearData();
-    return of(true);
-
-    // const logoutAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
-    // return this.http.post<BaseResponse<any>>(logoutAPI, {}).pipe(
-    //   map(response => {
-    //     if (response.status) {
-    //       this.setAuthenticationState(null);
-    //       this.clearData();
-    //       return true;
-    //     }
-    //     return false;
-    //   }),
-    //   catchError(() => of(false))
-    // );
+    const logoutAPI = this.applicationConfigService.getEndpointFor(API_USERS_LOGOUT);
+    this.http.post<BaseResponse<any>>(logoutAPI, {}).subscribe();
   }
 
   getAuthenticate(loginRequest?: LoginRequest): Observable<Authentication | null> {
