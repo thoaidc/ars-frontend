@@ -4,7 +4,7 @@ import {AuthService} from '../services/auth.service';
 export function LoginGuardFn() {
   const authService = inject(AuthService);
 
-  if (authService.isAuthenticated()) {
+  if (authService.isAuthenticated() || authService.hasToken()) {
     authService.navigateToPreviousPage();
     return false;
   }

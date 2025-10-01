@@ -22,8 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {
     if (this.authService.hasToken()) {
-      this.authService.authenticate().subscribe();
-      this.authService.navigateToPreviousPage();
+      this.authService.authenticate().subscribe(() => this.authService.navigateToPreviousPage());
     } else {
       this.router.navigate(['/login']).then();
     }

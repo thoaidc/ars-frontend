@@ -117,8 +117,11 @@ export class AuthService {
     this.authenticationState.next(authentication);
 
     if (authentication) {
+      if (authentication.accessToken) {
+        localStorage.setItem(LOCAL_USER_TOKEN_KEY, authentication.accessToken);
+      }
+
       localStorage.setItem(LOCAL_USERNAME_KEY, authentication.username);
-      localStorage.setItem(LOCAL_USER_TOKEN_KEY, authentication.accessToken);
       localStorage.setItem(LOCAL_USER_AUTHORITIES_KEY, JSON.stringify(authentication.authorities));
     } else {
       this.authenticationCache$ = null;

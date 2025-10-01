@@ -9,10 +9,10 @@ export const AuthGuardFn: CanActivateFn = (_route: ActivatedRouteSnapshot, state
   const stateService = inject(StateStorageService);
   stateService.savePreviousPage(state.url);
 
-  if (authService.hasToken()) {
+  if (authService.isAuthenticated() || authService.hasToken()) {
     return true;
   }
 
-  router.navigate(['login']).then();
+  router.navigateByUrl('/login').then();
   return false;
 }
