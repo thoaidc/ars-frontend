@@ -12,5 +12,5 @@ export const API_USERS_CHANGE_PASSWORD = API_SECURE + '/users/password';
 export const API_USERS_RECOVER_PASSWORD = API_SECURE + '/users/recover';
 
 // Role API constants
-export const API_ROLES = API_SECURE + '/roles';
+export const API_ROLES = API_USERS + '/roles';
 export const API_ROLES_PERMISSIONS_TREE = API_SECURE + '/roles/authorities';
