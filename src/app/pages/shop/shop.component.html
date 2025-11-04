@@ -1,0 +1,8 @@
+<div id="app-shop" class="app app-sidebar-fixed app-header-fixed app-with-two-sidebar app-with-wide-sidebar app-with-light-sidebar">
+  <app-navbar [isSidebarShown]="isSidebarShown"></app-navbar>
+  <app-sidebar [(isSidebarShown)]="isSidebarShown" [routerList]="SHOP_SIDEBAR_ROUTES"></app-sidebar>
+
+  <div class="app-content p-4" [ngClass]="isSidebarShown ? 'show-all-content' : 'mini-content'">
+    <router-outlet></router-outlet>
+  </div>
+</div>

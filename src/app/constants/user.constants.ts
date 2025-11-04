@@ -31,3 +31,9 @@ export const USER_STATUS_OPTIONS = [
     name: USER_STATUS_MAP[USER_STATUS.LOCKED]
   }
 ];
+
+export enum USER_TYPE {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  SHOP = 'SHOP'
+}

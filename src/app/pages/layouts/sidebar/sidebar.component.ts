@@ -12,8 +12,8 @@ import {ICON_CLOSE_SIDEBAR, ICON_EXPAND_SIDEBAR} from '../../../shared/utils/ico
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {NgClass, NgFor, NgIf} from '@angular/common';
 import {HasAuthorityDirective} from '../../../shared/directives/has-authority.directive';
-import {SIDEBAR_ROUTES} from './sidebar.route';
 import {TranslatePipe} from '@ngx-translate/core';
+import {SidebarNavItem} from '../../../core/models/sidebar.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -32,7 +32,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   ]
 })
 export class SidebarComponent implements AfterViewInit {
-  routerList = SIDEBAR_ROUTES;
+  @Input() routerList: SidebarNavItem[] = [];
   latestUrl: string = '';
   mobileMode: boolean = false;
   desktopMode: boolean = false;

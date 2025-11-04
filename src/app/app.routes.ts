@@ -1,6 +1,8 @@
 import {Routes} from '@angular/router';
 import {LoginGuardFn} from './core/guards/login.guard';
-import {MainComponent} from './pages/main.component';
+import {AdminComponent} from './pages/admin/admin.component';
+import {ShopComponent} from './pages/shop/shop.component';
+import {ClientComponent} from './pages/client/client.component';
 
 export const APP_ROUTES: Routes = [
   {
@@ -11,8 +13,23 @@ export const APP_ROUTES: Routes = [
     canActivate: [LoginGuardFn]
   },
   {
+    path: 'admin',
+    component: AdminComponent,
+    loadChildren: () => import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES)
+  },
+  {
+    path: 'shop',
+    component: ShopComponent,
+    loadChildren: () => import('./pages/shop/shop.routes').then(m => m.SHOP_ROUTES)
+  },
+  {
+    path: 'client',
+    component: ClientComponent,
+    loadChildren: () => import('./pages/client/client.routes').then(m => m.CLIENT_ROUTES)
+  },
+  {
     path: '',
-    component: MainComponent,
-    loadChildren: () => import('./pages/main.routes').then(m => m.MAIN_ROUTES)
+    redirectTo: 'client',
+    pathMatch: 'full'
   }
 ];

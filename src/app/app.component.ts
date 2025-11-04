@@ -1,10 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router, RouterOutlet} from '@angular/router';
+import {RouterOutlet} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {WebSocketService} from './core/services/websocket.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
-import {AuthService} from './core/services/auth.service';
-import {Authentication} from './core/models/auth.model';
 
 @Component({
   selector: 'app-root',
@@ -16,25 +14,10 @@ import {Authentication} from './core/models/auth.model';
 export class AppComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription | null = null;
 
-  constructor(
-    private router: Router,
-    private webSocketService: WebSocketService,
-    private authService: AuthService
-  ) {
-    if (this.authService.hasToken()) {
-      this.authService.authenticate().subscribe(() => this.authService.navigateToPreviousPage());
-    } else {
-      this.router.navigate(['/login']).then();
-    }
-  }
+  constructor(private webSocketService: WebSocketService) {}
 
   ngOnInit(): void {
     this.stateSubscription = this.webSocketService.onState().subscribe();
-    this.authService.subscribeAuthenticationState().subscribe((authentication: Authentication | null) => {
-      if (authentication) {
-        // this.webSocketService.connect();
-      }
-    });
   }
 
   ngOnDestroy(): void {

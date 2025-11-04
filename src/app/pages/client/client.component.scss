@@ -1,0 +1,19 @@
+.app-content {
+  background-color: #ffffff;
+  padding: 16px;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 72px;
+  overflow-y: auto;
+
+  &.show-all-content {
+    width: calc(100% - 300px);
+  }
+
+  &.mini-content {
+    width: calc(100% - 72px);
+  }
+}

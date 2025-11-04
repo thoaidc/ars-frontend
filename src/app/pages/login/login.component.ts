@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../../core/services/auth.service';
 import {Router} from '@angular/router';
@@ -8,6 +8,7 @@ import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {LoginRequest} from '../../core/models/auth.model';
+import {USER_TYPE} from '../../constants/user.constants';
 
 @Component({
   selector: 'app-login',
@@ -58,8 +59,17 @@ export class LoginComponent {
     this.authService.authenticate(this.loginRequest, true).subscribe(authentication => {
       if (authentication) {
         this.toastr.success('Đăng nhập thành công', 'Thông báo');
-        const redirectUrl = this.utilsService.findFirstAccessibleRoute(authentication.authorities);
-        this.router.navigate([redirectUrl || '/dashboard']).then();
+        let redirectUrl = '/';
+
+        if (authentication.type === USER_TYPE.ADMIN) {
+          redirectUrl += this.utilsService.findFirstAccessibleRoute(authentication.authorities);
+        } else if (authentication.type === USER_TYPE.SHOP) {
+          redirectUrl += 'shop/dashboard';
+        } else {
+          redirectUrl += 'client/home';
+        }
+
+        this.router.navigate([redirectUrl]).then();
       }
     });
   }

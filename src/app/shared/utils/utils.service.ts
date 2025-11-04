@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { ToastrService } from 'ngx-toastr';
 import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constants';
-import {SIDEBAR_ROUTES} from '../../pages/layouts/sidebar/sidebar.route';
 import {SidebarNavItem} from '../../core/models/sidebar.model';
+import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -91,7 +91,7 @@ export class UtilsService {
       userPermissions = this.getUserPermissions();
     }
 
-    for (const route of SIDEBAR_ROUTES) {
+    for (const route of ADMIN_SIDEBAR_ROUTES) {
       const accessiblePath = this.findAccessiblePath(route, userPermissions);
 
       if (accessiblePath || accessiblePath === '') {
