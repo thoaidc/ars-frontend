@@ -5,6 +5,7 @@ import {
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
 import {AUTHORIZATION_ROUTES} from './authorization/authorization.routes';
+import {SECURITY_ROUTES} from './security/security.routes';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -22,6 +23,10 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'authorization',
     loadChildren: () => AUTHORIZATION_ROUTES
+  },
+  {
+    path: 'security',
+    loadChildren: () => SECURITY_ROUTES
   },
   {
     path: 'products',

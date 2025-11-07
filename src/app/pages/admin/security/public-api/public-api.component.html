@@ -1,0 +1,68 @@
+<div class="title-feature form-space-between">
+  <span class="">Các API không yêu cầu thông tin xác thực</span>
+  <div class="mt-5 d-flex align-items-center justify-content-end">
+    <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.SYSTEM" (click)="createNewApiPattern()">
+      <span [innerHTML]="ICON_PLUS | safeHtml"></span>
+      Tạo mới
+    </button>
+    <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.SYSTEM" (click)="resetPublicApisConfig()">
+      Khôi phục cài đặt gốc
+    </button>
+  </div>
+</div>
+
+<div class="tab-pane fade active show">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+              <tr class="table-custom-header">
+                <th style="width: 4rem;">STT</th>
+                <th style="width: auto;">API</th>
+                <th style="width: 8rem;">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="publicApiPatterns.length === 0">
+              <tr class="table-not-data">
+                <td colspan="8">
+                  <span>Không có dữ liệu</span>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <ng-container *ngFor="let apiPattern of publicApiPatterns; index as i">
+                <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td class="break-word-table ps-4 td-text-overflow">{{ apiPattern }}</td>
+                  <td>
+                    <div class="action-table">
+                      <ng-container>
+                          <span
+                            [innerHTML]="ICON_UPDATE | safeHtml"
+                            ngbTooltip="Cập nhật"
+                            (click)="updatePublicApiConfig(apiPattern)"
+                            *hasAuthorities="Authorities.SYSTEM"
+                          ></span>
+                      </ng-container>
+
+                      <ng-container>
+                          <span
+                            [innerHTML]="ICON_DELETE | safeHtml"
+                            ngbTooltip="Xóa"
+                            (click)="deleteApiPattern(apiPattern)"
+                            *hasAuthorities="Authorities.SYSTEM"
+                          ></span>
+                      </ng-container>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

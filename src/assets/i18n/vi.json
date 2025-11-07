@@ -30,7 +30,12 @@
       "role": "Vai trò"
     },
     "customer": "Khách hàng",
-    "product": "Sản phẩm"
+    "product": "Sản phẩm",
+    "security": {
+      "title": "Bảo mật",
+      "publicApi": "API",
+      "rateLimiter": "Lưu lượng truy cập"
+    }
   },
   "user": {
     "status": {

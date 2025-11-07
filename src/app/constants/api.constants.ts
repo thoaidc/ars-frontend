@@ -14,3 +14,8 @@ export const API_USERS_RECOVER_PASSWORD = API_SECURE + '/users/recover';
 // Role API constants
 export const API_ROLES = API_USERS + '/roles';
 export const API_ROLES_PERMISSIONS_TREE = API_SECURE + '/roles/authorities';
+
+// Security gateway
+export const RATE_LIMITER_API = API_SECURE + '/admin/gateway/securities/rate-limiter';
+export const RATE_LIMITER_EXCLUDED_API = API_SECURE + '/admin/gateway/securities/rate-limiter/excluded';
+export const PUBLIC_PATTERNS_CONFIG_API = API_SECURE + '/admin/gateway/securities/public-request-patterns';

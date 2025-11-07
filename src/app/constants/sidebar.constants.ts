@@ -4,7 +4,7 @@ import {
   ICON_USER_PERMISSION,
   ICON_USER,
   ICON_CUSTOMER,
-  ICON_PRODUCTS
+  ICON_PRODUCTS, ICON_CONFIG, ICON_SETTING, ICON_RUN_API, ICON_FILTER, ICON_LOCK
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
 import {Authorities} from './authorities.constants';
@@ -16,6 +16,9 @@ export const SIDEBAR_AUTHORIZATION_ACCOUNTS_MANAGEMENT_TITLE = 'sidebar.authoriz
 export const SIDEBAR_AUTHORIZATION_ROLES_MANAGEMENT_TITLE = 'sidebar.authorization.role';
 export const SIDEBAR_CUSTOMERS_TITLE = 'sidebar.customer';
 export const SIDEBAR_PRODUCT_TITLE = 'sidebar.product';
+export const SIDEBAR_SECURITY_MANAGEMENT_TITLE = 'sidebar.security.title';
+export const SIDEBAR_SECURITY_PUBLIC_API_MANAGEMENT_TITLE = 'sidebar.security.publicApi';
+export const SIDEBAR_SECURITY_RATE_LIMITER_API_MANAGEMENT_TITLE = 'sidebar.security.rateLimiter';
 
 export const SIDEBAR_CLASS_DROPDOWN = 'dropdown nav-item has-sub';
 export const SIDEBAR_CLASS_DROPDOWN_ITEM = 'dropdown nav-item';
@@ -52,6 +55,32 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
         permission: Authorities.ROLE
+      }
+    ]
+  },
+  {
+    path: '/admin/security',
+    title: SIDEBAR_SECURITY_MANAGEMENT_TITLE,
+    icon: ICON_CONFIG,
+    class: SIDEBAR_CLASS_DROPDOWN,
+    isExternalLink: false,
+    permission: [Authorities.SYSTEM],
+    submenu: [
+      {
+        path: '/public-api',
+        title: SIDEBAR_SECURITY_PUBLIC_API_MANAGEMENT_TITLE,
+        icon: ICON_LOCK,
+        class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+        isExternalLink: false,
+        permission: Authorities.SYSTEM
+      },
+      {
+        path: '/rate-limiter',
+        title: SIDEBAR_SECURITY_RATE_LIMITER_API_MANAGEMENT_TITLE,
+        icon: ICON_FILTER,
+        class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+        isExternalLink: false,
+        permission: Authorities.SYSTEM
       }
     ]
   },

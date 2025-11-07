@@ -1,0 +1,209 @@
+<div>
+  <div class="mb-5">
+    <div class="title-feature form-space-between">
+      <span class="">Các API không giới hạn lưu lượng truy cập</span>
+      <div class="mt-5 d-flex align-items-center justify-content-end">
+        <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.SYSTEM" (click)="createNewApiPattern()">
+          <span [innerHTML]="ICON_PLUS | safeHtml"></span>
+          Tạo mới
+        </button>
+        <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.SYSTEM" (click)="resetRateLimitExcludedApiConfig()">
+          Khôi phục cài đặt gốc
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-pane fade active show">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="panel panel-inverse">
+            <div class="table-responsive" style="min-height: unset; height: auto">
+              <table class="table editing-table">
+                <thead class="table-header-sticky">
+                  <tr class="table-custom-header">
+                    <th style="width: 4rem;">STT</th>
+                    <th style="width: auto;">API</th>
+                    <th style="width: 8rem;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="rateLimiterConfigs.length === 0">
+                  <tr class="table-not-data">
+                    <td colspan="8">
+                      <span>Không có dữ liệu</span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <ng-container *ngFor="let apiPattern of rateLimitExcludedApis; index as i">
+                    <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                      <td class="text-center">{{ i + 1 }}</td>
+                      <td class="break-word-table ps-4 td-text-overflow">{{ apiPattern }}</td>
+                      <td>
+                        <div class="action-table">
+                          <ng-container>
+                          <span
+                            [innerHTML]="ICON_UPDATE | safeHtml"
+                            ngbTooltip="Cập nhật"
+                            (click)="updateRateLimiterExcludedApiConfig(apiPattern)"
+                            *hasAuthorities="Authorities.SYSTEM"
+                          ></span>
+                          </ng-container>
+
+                          <ng-container>
+                          <span
+                            [innerHTML]="ICON_DELETE | safeHtml"
+                            ngbTooltip="Xóa"
+                            (click)="deleteApiPattern(apiPattern)"
+                            *hasAuthorities="Authorities.SYSTEM"
+                          ></span>
+                          </ng-container>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="title-feature form-space-between">
+      <span class="">Giới hạn lưu lượng truy cập theo routing gateway</span>
+      <div class="mt-5 d-flex align-items-center justify-content-end">
+        <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.SYSTEM" (click)="resetRateLimitConfigs()">
+          Khôi phục cài đặt gốc
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-pane fade active show">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="panel panel-inverse">
+            <div class="table-responsive">
+              <table class="table editing-table">
+                <thead class="table-header-sticky">
+                  <tr class="table-custom-header">
+                    <th style="width: auto;">Routing</th>
+                    <th style="width: auto;">Lưu lượng request</th>
+                    <th style="width: auto;">Tần suất kiểm tra (giây)</th>
+                    <th style="width: auto;">Thời gian chặn (phút)</th>
+                    <th style="width: 8rem;">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="rateLimiterConfigs.length === 0">
+                  <tr class="table-not-data">
+                    <td colspan="8">
+                      <span>Không có dữ liệu</span>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody>
+                  <ng-container *ngFor="let config of rateLimiterConfigs; index as i">
+                    <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                      <td class="break-word-table text-start ps-4 td-text-overflow">{{ config.routeId }}</td>
+                      <td class="break-word-table text-center td-text-overflow">{{ config.banThreshold }}</td>
+                      <td class="break-word-table text-center td-text-overflow">{{ config.windowSeconds }}</td>
+                      <td class="break-word-table text-center td-text-overflow">{{ config.banDurationMinutes }}</td>
+                      <td>
+                        <div class="action-table">
+                          <ng-container>
+                          <span
+                            [innerHTML]="ICON_UPDATE | safeHtml"
+                            ngbTooltip="Cập nhật"
+                            (click)="openModalUpdateRoute(config.routeId)"
+                            *hasAuthorities="Authorities.SYSTEM"
+                          ></span>
+                          </ng-container>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #rateLimiterModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ 'Chỉnh sửa giới hạn lưu lượng' }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+  <div class="d-flex align-items-center role-wrapper">
+    <span class="ps-3 pb-1" [innerHTML]="ICON_ATTENTION | safeHtml"></span>
+    <div class="ps-2">Lưu ý trước khi thay đổi vì sẽ ảnh hưởng trực tiếp tới cấu hình bảo mật của Gateway</div>
+  </div>
+  <div class="modal-body" id="save-rate-limiter-config">
+    <div>
+      <div class="input-text-custom">
+        <div class="input-container">
+          <div class="input-group">
+            <label for="routing-name" class="title-info">Routing<span class="text-danger m-0">*</span></label>
+            <input
+              class="input-value form-control"
+              [ngModel]="configToUpdate.routeId"
+              disabled
+              id="routing-name"
+            />
+          </div>
+        </div>
+        <div class="input-container">
+          <div class="input-group">
+            <label for="ban-threshold" class="title-info">Lưu lượng request<span class="text-danger m-0">*</span></label>
+            <input
+              type="number"
+              [min]="0"
+              class="input-value form-control"
+              [(ngModel)]="configToUpdate.banThreshold"
+              id="ban-threshold"
+            />
+          </div>
+        </div>
+        <div class="input-container">
+          <div class="input-group">
+            <label for="window-second" class="title-info">Tần suất kiểm tra (giây)<span class="text-danger m-0">*</span></label>
+            <input
+              type="number"
+              [min]="0"
+              class="input-value form-control"
+              [(ngModel)]="configToUpdate.windowSeconds"
+              id="window-second"
+            />
+          </div>
+        </div>
+        <div class="input-container">
+          <div class="input-group">
+            <label for="ban-time" class="title-info">Thời gian chặn (phút)<span class="text-danger m-0">*</span></label>
+            <input
+              type="number"
+              [min]="0"
+              class="input-value form-control"
+              [(ngModel)]="configToUpdate.banDurationMinutes"
+              id="ban-time"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="cancel-button-dialog" (click)="modal.dismiss('cancel')">Huỷ</button>
+    <button
+      class="save-button-dialog"
+      (click)="confirmSaveRateLimiterConfig()"
+      *hasAuthorities="[Authorities.SYSTEM]"
+    >
+      Lưu
+    </button>
+  </div>
+</ng-template>

@@ -26,17 +26,22 @@
     "dashboard": "Home",
     "authorization": {
       "title": "Authorization",
-      "account": "Account",
-      "role": "Role"
+      "account": "Accounts",
+      "role": "Roles"
     },
-    "customer": "Customer",
-    "product": "Product"
+    "customer": "Customers",
+    "product": "Products",
+    "security": {
+      "title": "Security",
+      "publicApi": "API",
+      "rateLimiter": "Rate limiter"
+    }
   },
   "user": {
     "status": {
-      "active": "Hoạt động",
-      "inactive": "Dừng hoạt động",
-      "locked": "Đã bị khóa"
+      "active": "Active",
+      "inactive": "Inactive",
+      "locked": "Locked"
     }
   }
 }
