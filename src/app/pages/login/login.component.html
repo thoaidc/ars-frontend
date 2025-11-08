@@ -11,7 +11,7 @@
         </span>
 
         <form autocomplete="on" class="info">
-          <span class="title-login">ĐĂNG NHẬP TÀI KHOẢN</span>
+          <span class="title-login">{{ 'text.loginTitleMain' | translate }}</span>
           <div class="input-login">
             <input
               type="text"
@@ -19,7 +19,7 @@
               name="username"
               required
               [(ngModel)]="loginRequest.username"
-              placeholder="Tài khoản"
+              [placeholder]="'global.account' | translate"
             />
           </div>
 
@@ -30,7 +30,7 @@
               name="password"
               required
               [(ngModel)]="loginRequest.password"
-              placeholder="Mật khẩu"
+              [placeholder]="'global.password' | translate"
             />
             <div *ngIf="!isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
               <span [innerHTML]="ICON_EYE | safeHtml"></span>
@@ -43,11 +43,11 @@
           <div class="remember">
             <div class="form-check">
               <input class="form-check-input" name="remember" type="checkbox" id="remember" [(ngModel)]="isRememberMe"/>
-              <label class="form-check-label" for="remember">Ghi nhớ tài khoản</label>
+              <label class="form-check-label" for="remember">{{ 'text.rememberAccount' | translate }}</label>
             </div>
           </div>
 
-          <button class="button-login" (click)="login()" type="submit">Đăng nhập</button>
+          <button class="button-login" (click)="login()" type="submit">{{ 'global.login' | translate }}</button>
         </form>
       </div>
     </div>

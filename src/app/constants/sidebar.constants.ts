@@ -4,7 +4,10 @@ import {
   ICON_USER_PERMISSION,
   ICON_USER,
   ICON_CUSTOMER,
-  ICON_PRODUCTS, ICON_CONFIG, ICON_SETTING, ICON_RUN_API, ICON_FILTER, ICON_LOCK
+  ICON_PRODUCTS,
+  ICON_CONFIG,
+  ICON_FILTER,
+  ICON_LOCK
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
 import {Authorities} from './authorities.constants';

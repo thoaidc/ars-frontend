@@ -1,9 +1,9 @@
 <div class="form-space-between">
   <div class="item-search" [class]="periods == 8 ? 'col-4' : 'col-12'">
-    <span>Thời gian</span>
+    <span>{{ 'global.datetime' | translate }}</span>
     <div class="select-search-custom">
       <ng-select
-        [items]="LIST_TIME_SELECT"
+        [items]="listTimeSelect"
         bindLabel="name"
         bindValue="id"
         [(ngModel)]="periods"
@@ -14,7 +14,7 @@
     </div>
   </div>
   <div class="item-search col-4" *ngIf="periods === 8">
-    <label for="from-date-filter">Từ ngày</label>
+    <label for="from-date-filter">{{ 'global.fromDate' | translate }}</label>
     <div class="input-text-custom">
       <input
         id="from-date-filter"
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="item-search col-4" *ngIf="periods === 8">
-    <label for="to-date-filter">Đến ngày</label>
+    <label for="to-date-filter">{{ 'global.toDate' | translate }}</label>
     <div class="input-text-custom">
       <input
         id="to-date-filter"

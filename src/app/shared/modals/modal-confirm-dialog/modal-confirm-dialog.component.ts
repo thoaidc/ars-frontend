@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location, NgClass} from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal-confirm-dialog',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './modal-confirm-dialog.component.html',
   styleUrls: ['./modal-confirm-dialog.component.scss'],
 })

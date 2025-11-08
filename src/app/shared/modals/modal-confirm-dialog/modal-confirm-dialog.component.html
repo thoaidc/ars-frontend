@@ -1,15 +1,15 @@
 <div class="modal-header">
-  <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
+  <h5 class="modal-title" id="exampleModalLongTitle">{{ 'global.notification' | translate }}</h5>
   <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
 </div>
 <div class="modal-body">{{ title }}</div>
 <div class="modal-footer">
   <div class="btn-row col-md-12 d-flex justify-content-end m-0">
     <button type="button" class="cancel-button-dialog me-2 mb-1" (click)="dismiss()">
-      <span>Huỷ</span>
+      <span>{{ 'global.cancel' | translate }}</span>
     </button>
     <button (click)="onConfirm()" class="mb-1 save-button-dialog" [ngClass]="classBtn">
-      <span>Xác nhận</span>
+      <span>{{ 'global.confirm' | translate }}</span>
     </button>
   </div>
 </div>

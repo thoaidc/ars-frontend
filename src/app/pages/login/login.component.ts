@@ -9,6 +9,7 @@ import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {LoginRequest} from '../../core/models/auth.model';
 import {USER_TYPE} from '../../constants/user.constants';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import {USER_TYPE} from '../../constants/user.constants';
   imports: [
     SafeHtmlPipe,
     FormsModule,
-    NgIf
+    NgIf,
+    TranslatePipe
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -34,7 +36,8 @@ export class LoginComponent {
     private router: Router,
     private toastr: ToastrService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private translateService: TranslateService
   ) {}
 
   toggleDisplayPassword() {
@@ -43,12 +46,12 @@ export class LoginComponent {
 
   login() {
     if (!this.loginRequest.username) {
-      this.toastr.error('Tên đăng nhập không được để trống', 'Thông báo');
+      this.toastr.error(this.translateService.instant('notification.notEmptyUsername'));
       return;
     }
 
     if (!this.loginRequest.password) {
-      this.toastr.error('Mật khẩu không được để trống', 'Thông báo');
+      this.toastr.error(this.translateService.instant('notification.notEmptyPassword'));
       return;
     } else if (!this.utilsService.validatePassword(this.loginRequest.password)) {
       return;
@@ -58,7 +61,7 @@ export class LoginComponent {
 
     this.authService.authenticate(this.loginRequest, true).subscribe(authentication => {
       if (authentication) {
-        this.toastr.success('Đăng nhập thành công', 'Thông báo');
+        this.toastr.success(this.translateService.instant('notification.loginSuccess'));
         let redirectUrl = '/';
 
         if (authentication.type === USER_TYPE.ADMIN) {

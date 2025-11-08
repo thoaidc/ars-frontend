@@ -1,15 +1,15 @@
 <div class="title-feature form-space-between">
-  <span>Vai trò</span>
+  <span>{{ 'text.role' | translate }}</span>
   <button class="success-button-dialog ms-3" *hasAuthorities="Authorities.ROLE_CREATE" (click)="openModalCreateRole()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
-    Tạo vai trò
+    {{ 'text.createRole' | translate }}
   </button>
 </div>
 
 <div class="field-search">
   <div class="search-criteria">
     <div class="item-search">
-      <label for="search-role-keyword" class="fw-semibold">Từ khoá</label>
+      <label for="search-role-keyword" class="fw-semibold">{{ 'global.keyword' | translate }}</label>
       <div class="input-text-custom">
         <input
           [(ngModel)]="rolesFilter.keyword"
@@ -17,13 +17,14 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          placeholder="Mã vai trò, tên vai trò"
+          [placeholder]="'text.searchRolePlaceholder' | translate"
           (keyup.enter)="onSearch()"
         />
       </div>
     </div>
     <button class="save-button-dialog ms-4" (click)="onSearch()" [disabled]="isLoading">
-      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>Tìm kiếm
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>
+      {{ 'global.search' | translate }}
     </button>
   </div>
 </div>
@@ -36,10 +37,10 @@
           <table class="table editing-table">
             <thead class="table-header-sticky">
               <tr class="table-custom-header">
-                <th>STT</th>
-                <th>Mã vai trò</th>
-                <th>Tên vai trò</th>
-                <th>Thao tác</th>
+                <th>{{ 'global.no' | translate }}</th>
+                <th>{{ 'text.roleCode' | translate }}</th>
+                <th>{{ 'text.roleName' | translate }}</th>
+                <th>{{ 'global.action' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -53,7 +54,7 @@
                       <ng-container>
                         <span
                           [innerHTML]="ICON_UPDATE | safeHtml"
-                          ngbTooltip="Cập nhật"
+                          [ngbTooltip]="'global.update' | translate"
                           (click)="openModalCreateRole(role.id)"
                           *hasAuthorities="Authorities.ROLE_UPDATE"
                         ></span>
@@ -62,7 +63,7 @@
                       <span
                         [innerHTML]="ICON_COPY | safeHtml"
                         class="d-flex align-items-center"
-                        ngbTooltip="Sao chép"
+                        [ngbTooltip]="'global.copy' | translate"
                         (click)="copyAuthorities(role.id)"
                         *hasAuthorities="Authorities.ROLE_CREATE"
                       ></span>
@@ -70,7 +71,7 @@
                       <ng-container>
                         <span
                           [innerHTML]="ICON_DELETE | safeHtml"
-                          ngbTooltip="Xóa"
+                          [ngbTooltip]="'global.delete' | translate"
                           (click)="delete(role)"
                           *hasAuthorities="Authorities.ROLE_DELETE"
                         ></span>
@@ -88,7 +89,7 @@
 
   <div class="from-pagination">
     <div class="total">
-      <span class="label-total">Tổng: {{ totalItems | number }}</span>
+      <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
       <ng-select
         [items]="PAGINATION_PAGE_SIZE"
         [(ngModel)]="rolesFilter.size"

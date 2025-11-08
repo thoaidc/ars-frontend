@@ -32,6 +32,7 @@ import {UpdateUserStatusRequest, User} from '../../../../core/models/user.model'
 import {UserService} from '../../../../core/services/users.service';
 import {ModalSaveUserComponent} from './modal-save-user/modal-save-user.component';
 import {ModalUserInfoComponent} from './modal-user-info/modal-user-info.component';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-management',
@@ -50,7 +51,8 @@ import {ModalUserInfoComponent} from './modal-user-info/modal-user-info.componen
     NgClass,
     NgIf,
     NgFor,
-    NgbTooltip
+    NgbTooltip,
+    TranslatePipe
   ]
 })
 export class UserComponent implements OnInit {
@@ -68,6 +70,7 @@ export class UserComponent implements OnInit {
   username = '';
   periods = 1;
   isLoading = false;
+  userStatusOption: any = USER_STATUS_OPTIONS;
 
   constructor(
     protected modalService: NgbModal,
@@ -80,6 +83,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.onReload();
     this.username = localStorage.getItem(LOCAL_USERNAME_KEY) || '';
+    this.userStatusOption = this.utilsService.translateList(this.userStatusOption);
   }
 
   onReload() {
@@ -247,5 +251,4 @@ export class UserComponent implements OnInit {
   protected readonly ICON_DELETE = ICON_DELETE;
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly USER_STATUS = USER_STATUS;
-  protected readonly USER_STATUS_OPTIONS = USER_STATUS_OPTIONS;
 }

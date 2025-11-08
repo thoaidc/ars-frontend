@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { UtilsService } from '../../utils/utils.service';
 import {LIST_TIME_SELECT} from '../../../constants/common.constants';
@@ -9,6 +9,7 @@ import {NgIf} from '@angular/common';
 import {DateFormatDirective} from '../../directives/date-format.directive';
 import {ICON_CALENDER} from '../../utils/icon';
 import {SafeHtmlPipe} from '../../pipes/safe-html.pipe';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-date-filter',
@@ -19,18 +20,20 @@ import {SafeHtmlPipe} from '../../pipes/safe-html.pipe';
     NgbDatepickerModule,
     NgIf,
     DateFormatDirective,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    TranslatePipe
   ],
   templateUrl: './date-filter.component.html',
   styleUrls: ['./date-filter.component.scss'],
 })
-export class DateFilterComponent implements OnChanges {
+export class DateFilterComponent implements OnChanges, OnInit {
   @Input() periods: any;
   @Input() clearable: boolean = true;
   @Output() timeChange = new EventEmitter<any>();
   minDate: dayjs.Dayjs | any;
   fromDate: dayjs.Dayjs | any;
   toDate: dayjs.Dayjs | any;
+  listTimeSelect: any = LIST_TIME_SELECT;
 
   constructor(public utilsService: UtilsService) {}
 
@@ -38,6 +41,12 @@ export class DateFilterComponent implements OnChanges {
     if (changes['periods']) {
       this.periods = changes['periods'].currentValue;
     }
+
+    this.listTimeSelect = this.utilsService.translateList(this.listTimeSelect);
+  }
+
+  ngOnInit() {
+    this.listTimeSelect = this.utilsService.translateList(this.listTimeSelect);
   }
 
   changeDate() {
@@ -116,6 +125,5 @@ export class DateFilterComponent implements OnChanges {
     }
   }
 
-  protected readonly LIST_TIME_SELECT = LIST_TIME_SELECT;
   protected readonly ICON_CALENDER = ICON_CALENDER;
 }
