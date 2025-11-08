@@ -7,11 +7,11 @@
         </div>
         <div class="overlay-container" *ngIf="showDropdown == 'LANGUAGE'" id="support-overlay-container">
           <div class="overlay">
-            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)">
+            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)" (click)="switchLocale(LOCALE.VI)">
               <span [innerHTML]="ICON_VIETNAMESE | safeHtml"></span>
               <span class="icon-text">Tiếng Việt</span>
             </a>
-            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)">
+            <a class="overlay-item pointer text-decoration-none px-3 py-2" href="javascript:void(0)" (click)="switchLocale(LOCALE.EN)">
               <span [innerHTML]="ICON_ENGLISH | safeHtml"></span>
               <span class="icon-text">English</span>
             </a>
