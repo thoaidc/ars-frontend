@@ -12,6 +12,7 @@ import {CreateRoleRequest, RoleDetail, UpdateRoleRequest} from '../../../../../c
 import {SafeHtmlPipe} from '../../../../../shared/pipes/safe-html.pipe';
 import {ICON_ATTENTION} from '../../../../../shared/utils/icon';
 import {TreeViewItem} from '../../../../../core/models/authority.model';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-create-roles',
@@ -24,7 +25,8 @@ import {TreeViewItem} from '../../../../../core/models/authority.model';
     TreeViewComponent,
     AlphanumericOnlyDirective,
     NgIf,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    TranslatePipe
   ]
 })
 export class CreateRolesComponent implements OnInit {

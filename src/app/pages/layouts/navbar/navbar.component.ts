@@ -9,7 +9,8 @@ import {LOCAL_USERNAME_KEY} from '../../../constants/local-storage.constants';
 import {WebSocketService} from '../../../core/services/websocket.service';
 import {NOTIFICATION_TOPIC, SocketMessage} from '../../../constants/websocket.constants';
 import {IMessage} from '@stomp/stompjs';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {LOCALE} from '../../../constants/common.constants';
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +32,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private toast: ToastrService,
     private authService: AuthService,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -68,9 +70,13 @@ export class NavbarComponent implements OnInit {
     this.showDropdown = this.showDropdown == 'LANGUAGE' ? '' : 'LANGUAGE';
   }
 
+  switchLocale(locale: string) {
+    this.translateService.use(locale);
+  }
+
   logout() {
     this.authService.logout();
-    this.toast.success('Đăng xuất thành công', 'Thông báo');
+    this.toast.success(this.translateService.instant('notification.logoutSuccess'));
     this.router.navigate(['/login']).then();
   }
 
@@ -78,4 +84,5 @@ export class NavbarComponent implements OnInit {
   protected readonly ICON_VIETNAMESE = ICON_VIETNAMESE;
   protected readonly ICON_ENGLISH = ICON_ENGLISH;
   protected readonly ICON_NOTIFICATION = ICON_NOTIFICATION;
+  protected readonly LOCALE = LOCALE;
 }

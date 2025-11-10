@@ -66,7 +66,7 @@ export class GatewaySecurityService {
 
   notify(response: BaseResponse<any>, modalRef?: NgbModalRef) {
     if (response && response.status) {
-      this.toast.success(this.translateService.instant('Cập nhật cấu hình thành công'));
+      this.toast.success(this.translateService.instant('notification.updateConfigSuccess'));
       if (modalRef) {
         modalRef.close();
         // noinspection JSUnusedAssignment
@@ -76,7 +76,7 @@ export class GatewaySecurityService {
       this.toast.error(
         response.message
           ? response.message
-          : this.translateService.instant('Cập nhật cấu hình thất bại')
+          : this.translateService.instant('notification.updateConfigFailed')
       );
     }
   }
@@ -85,7 +85,7 @@ export class GatewaySecurityService {
     this.toast.error(
       error.error.message[0].message
         ? error.error.message[0].message
-        : this.translateService.instant('Cập nhật cấu hình thất bại')
+        : this.translateService.instant('notification.updateConfigFailed')
     );
   }
 }

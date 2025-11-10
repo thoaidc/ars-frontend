@@ -36,7 +36,7 @@ export const ApiInterceptorFn: HttpInterceptorFn = (request: HttpRequest<any>, n
       error: (error: HttpErrorResponse) => {
         if (error.error && error.message) {
           // Here use langKey comparison operator instead of TranslateService to avoid circular dependency error
-          toast.error(error.error.message, langKey === LOCALE.VI ? 'Thông báo' : 'Notification');
+          toast.error(error.error.message);
         }
       }
     })

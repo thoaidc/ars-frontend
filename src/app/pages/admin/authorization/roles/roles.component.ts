@@ -13,6 +13,7 @@ import {DecimalPipe, NgClass, NgFor} from '@angular/common';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {Role, RolesFilter} from '../../../../core/models/role.model';
 import {PAGINATION_PAGE_SIZE} from '../../../../constants/common.constants';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-roles',
@@ -28,7 +29,8 @@ import {PAGINATION_PAGE_SIZE} from '../../../../constants/common.constants';
     NgbPagination,
     NgClass,
     NgFor,
-    NgbTooltip
+    NgbTooltip,
+    TranslatePipe
   ]
 })
 export class RolesComponent implements OnInit {
@@ -48,6 +50,7 @@ export class RolesComponent implements OnInit {
     private roleService: RolesService,
     private toast: ToastrService,
     protected modalService: NgbModal,
+    private translateService: TranslateService
   ) {
     this.roleService.searchObservable$.subscribe(() => {
       this.onSearch();
@@ -95,17 +98,17 @@ export class RolesComponent implements OnInit {
 
   delete(role: any) {
     this.modalRef = this.modalService.open(ModalConfirmDialogComponent, {backdrop: 'static'});
-    this.modalRef.componentInstance.title = 'Bạn có chắc chắn muốn xoá vai trò này?';
+    this.modalRef.componentInstance.title = '';
     this.modalRef.componentInstance.classBtn = 'btn-delete';
 
     this.modalRef.closed.subscribe((isConfirmed?: boolean) => {
       if (isConfirmed) {
         this.roleService.delete(role.id).subscribe(response => {
           if (response && response.status) {
-            this.toast.success(response.message || 'Xóa thành công', 'Thông báo');
+            this.toast.success(response.message || this.translateService.instant('text.deleteSuccess'));
             this.getRoles();
           } else {
-            this.toast.error(response.message || 'Xóa thất bại');
+            this.toast.error(response.message || this.translateService.instant('text.deleteFailed'));
           }
         });
       }
@@ -115,11 +118,12 @@ export class RolesComponent implements OnInit {
   copyAuthorities(id: any) {
     this.roleService.getRoleDetail(id).subscribe(roleDetail => {
       if (roleDetail) {
-        this.toast.success('Sao chép quyền của vai trò ' + roleDetail.name + ' thành công.');
+        const roleName = roleDetail.name;
+        this.toast.success(this.translateService.instant('notification.copeRoleAuthoritiesSuccess', { roleName }));
         this.modalRef = this.modalService.open(CreateRolesComponent, {size: 'xl', backdrop: 'static'});
         this.modalRef.componentInstance.listSelected = JSON.parse(JSON.stringify(roleDetail.authorities));
       } else {
-        this.toast.error('Sao chép thất bại');
+        this.toast.error(this.translateService.instant('notification.copyFailed'));
       }
     });
   }

@@ -4,13 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constants';
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
 
-  constructor(private toast: ToastrService) {}
+  constructor(private toast: ToastrService, private translateService: TranslateService) {}
 
   convertToDateString(dateString: string, toFormat: string): string {
     const dateFormats = ['MM-DD-YYYY', 'YYYY-MM-DD', 'DD-MM-YYYY', 'YYYY/MM/DD', 'DD/MM/YYYY'];
@@ -58,26 +59,26 @@ export class UtilsService {
     const isValidPassword = password.length >= minLength && hasLowerCase && hasUpperCase && hasDigit && hasSpecialChar;
 
     if (!isValidPassword) {
-      let errorMessage = 'Mật khẩu không hợp lệ.';
+      let errorMessage = this.translateService.instant('notification.invalidPassword');
 
       if (password.length < minLength) {
-        errorMessage += ' Cần ít nhất 8 ký tự.';
+        errorMessage += this.translateService.instant('notification.minCharacter');
       }
 
       if (!hasLowerCase) {
-        errorMessage += ' Cần ít nhất một chữ cái thường.';
+        errorMessage += this.translateService.instant('notification.requiredLowerCase');
       }
 
       if (!hasUpperCase) {
-        errorMessage += ' Cần ít nhất một chữ cái hoa.';
+        errorMessage += this.translateService.instant('notification.requiredUpperCase');
       }
 
       if (!hasDigit) {
-        errorMessage += ' Cần ít nhất một số.';
+        errorMessage += this.translateService.instant('notification.requiredNumber');
       }
 
       if (!hasSpecialChar) {
-        errorMessage += ' Cần ít nhất một ký tự đặc biệt.';
+        errorMessage += this.translateService.instant('notification.requiredSpecialCharacter');
       }
 
       this.toast.error(errorMessage);
@@ -146,5 +147,12 @@ export class UtilsService {
   checkUserPermission(permission: string) {
     const userRoles = this.getUserPermissions();
     return userRoles.includes(permission);
+  }
+
+  translateList(list: Array<{id: number, name: string}>): Array<{id: number, name: string}> {
+    return list.map(item => ({
+      ...item,
+      name: this.translateService.instant(item.name)
+    }));
   }
 }
