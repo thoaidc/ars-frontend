@@ -1,6 +1,6 @@
-$sidebar-width: 300px;
-$sidebar-height: 72px;
-$sidebar-width-collapsed: 76px;
+$sidebar-width: 250px;
+$sidebar-height: 50px;
+$sidebar-width-collapsed: 64px;
 $app-sidebar-transition: cubic-bezier(0.685, 0.0473, 0.346, 1);
 $background-color-active: #0074bd;
 $background-color-hover: #e6f1f8;
@@ -35,24 +35,22 @@ $text-color: #58647a;
       .menu-expanded {
         background: $text-color-active !important;
         height: $sidebar-height;
-        padding: 10px 10px 10px 24px !important;
+        padding: 0 0 0 16px !important;
         border-bottom: 1px solid #d9eaf5;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         .logo-img {
-          transition: none !important;
           max-width: 100%;
           max-height: 100%;
           object-fit: cover;
-          margin: auto 0;
         }
 
         .collapse-body:hover {
           cursor: pointer;
           background-color: var(--app-main-color);
-          border-radius: 100%;
+          border-radius: 50%;
           padding: 5px;
 
           svg path {
@@ -71,7 +69,7 @@ $text-color: #58647a;
     }
 
     a.menu-parent {
-      padding-left: 24px !important;
+      padding-left: 18px !important;
     }
 
     .menu-item:last-child {
@@ -93,7 +91,7 @@ $text-color: #58647a;
     }
 
     .menu-caret {
-      right: 24px;
+      right: 12px;
       visibility: visible;
       opacity: 1;
       white-space: nowrap;
@@ -175,15 +173,6 @@ $text-color: #58647a;
       justify-content: center;
       align-items: center;
 
-      .logo-img-custom {
-        position: absolute;
-        transition: none !important;
-        width: 48px !important;
-        margin: auto;
-        visibility: visible;
-        opacity: 1;
-      }
-
       .logo-action {
         display: flex;
         justify-content: space-between;
@@ -195,24 +184,28 @@ $text-color: #58647a;
 
     .menu-toggle-button {
       position: absolute;
-      top: 22px;
-      right: -15px;
+      top: 11px;
+      right: 18px;
       visibility: visible !important;
       opacity: 1 !important;
       transition: opacity 0.6s !important;
       cursor: pointer;
+      width: 24px;
+      height: 24px;
 
       .expand-body:hover {
         background: var(--app-main-color);
         padding: 3px;
         border-radius: 100%;
+        width: 100%;
+        height: 100%;
       }
     }
   }
 
   .menu-item-custom {
     a.menu-parent {
-      padding: 10px 24px !important;
+      padding: 10px 18px !important;
     }
   }
 
@@ -248,45 +241,34 @@ $text-color: #58647a;
 
 .app-sidebar--mini.open {
   width: $sidebar-width !important;
-  transition: all 0.6s ease-in-out !important;
+  transition: all 0.4s ease-in-out !important;
+  transform-origin: center center;
 
   .menu {
     .menu-collapsed {
       width: $sidebar-width !important;
       background: $text-color-active !important;
       height: $sidebar-height;
-      padding: 10px 24px !important;
       border-bottom: 1px solid #d9eaf5;
       display: flex;
       justify-content: center;
       align-items: center;
       white-space: nowrap;
       transform: translateZ(0);
-      transition: all 0.6s ease-in-out;
+      transition: all 0.4s ease-in-out;
+      transform-origin: center center;
 
       .logo-img {
         transition: none !important;
-        height: 100%;
-        object-fit: cover;
-        margin: auto 0;
-        max-width: 100%;
-      }
-
-      .logo-img-custom {
-        height: 70%;
         object-fit: cover;
         max-width: 100%;
-        display: block !important;
-        transition: 0.5s;
-        visibility: visible;
-        opacity: 1;
       }
     }
 
     .menu-toggle-button {
       position: absolute;
-      top: 22px;
-      right: -15px;
+      top: 11px;
+      right: 18px;
       visibility: visible !important;
       opacity: 1 !important;
       transition: opacity 0.6s !important;
@@ -468,7 +450,7 @@ $text-color: #58647a;
 .list-item {
   overflow-y: auto;
   overflow-x: hidden;
-  height: calc(100vh - 72px);
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -488,6 +470,7 @@ $text-color: #58647a;
 .menu-submenu .menu-item a {
   .menu-text {
     font-size: 15px !important;
+    flex: unset !important;
   }
 }
 
@@ -499,8 +482,14 @@ $text-color: #58647a;
 }
 
 a.sub-item-active {
+  .menu-icon span svg {
+    stroke: var(--app-main-color) !important;
+    fill: var(--app-main-color) !important;
+  }
+
   .menu-icon span svg path {
     fill: var(--app-main-color) !important;
+    stroke: var(--app-main-color) !important;
   }
 
   .menu-text span {
