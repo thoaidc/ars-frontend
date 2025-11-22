@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
-import {HasAuthorityDirective} from "../../../shared/directives/has-authority.directive";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -16,7 +15,6 @@ import {Product, ProductsFilter} from '../../../core/models/product.model';
   standalone: true,
   imports: [
     DecimalPipe,
-    HasAuthorityDirective,
     NgForOf,
     NgSelectComponent,
     NgbPagination,

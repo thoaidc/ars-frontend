@@ -18,7 +18,7 @@ import {Dayjs} from 'dayjs';
 import {Authorities} from '../../../constants/authorities.constants';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
     DateFilterComponent,

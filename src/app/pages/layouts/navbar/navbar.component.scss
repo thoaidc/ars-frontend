@@ -206,6 +206,7 @@ $color-default: #0074bd;
       font-weight: 500;
       line-height: normal;
       white-space: pre;
+      flex-grow: 1;
     }
 
     .icon-arrow {
@@ -350,8 +351,8 @@ $color-default: #0074bd;
 }
 
 .user-logo {
-  height: 40px;
-  width: 40px;
+  height: 32px;
+  width: 32px;
   border: 1px solid var(--app-main-color);
   display: flex;
   justify-content: center;

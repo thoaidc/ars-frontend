@@ -72,7 +72,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: []
   },
   {
-    path: '/shop/categories',
+    path: '/admin/categories',
     title: SIDEBAR_CATEGORY_TITLE,
     icon: ICON_CATEGORY,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -88,7 +88,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: [Authorities.SYSTEM]
   },
   {
-    path: '/shop/orders',
+    path: '/admin/orders',
     title: SIDEBAR_ORDER_TITLE,
     icon: ICON_ORDER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -96,7 +96,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: []
   },
   {
-    path: '/shop/finance',
+    path: '/admin/finance',
     title: SIDEBAR_FINANCE_TITLE,
     icon: ICON_FINANCE,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -104,7 +104,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: []
   },
   {
-    path: '/shop/statistic',
+    path: '/admin/statistics',
     title: SIDEBAR_STATISTIC_TITLE,
     icon: ICON_CHART,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -112,7 +112,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: []
   },
   {
-    path: '/shop/supports',
+    path: '/admin/supports',
     title: SIDEBAR_SUPPORT_TITLE,
     icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -146,7 +146,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     ]
   },
   {
-    path: '/admin/security',
+    path: '/admin/securities',
     title: SIDEBAR_SECURITY_MANAGEMENT_TITLE,
     icon: ICON_SHIELD,
     class: SIDEBAR_CLASS_DROPDOWN,
@@ -154,7 +154,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: Authorities.SYSTEM,
     submenu: [
       {
-        path: '/public-api',
+        path: '/public-apis',
         title: SIDEBAR_SECURITY_PUBLIC_API_MANAGEMENT_TITLE,
         icon: ICON_LOCK,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -223,7 +223,7 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
         permission: []
       },
       {
-        path: '/items',
+        path: '/designs',
         title: SIDEBAR_PRODUCT_ITEM_TITLE,
         icon: ICON_DESIGN,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
@@ -249,7 +249,7 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     permission: []
   },
   {
-    path: '/shop/statistic',
+    path: '/shop/statistics',
     title: SIDEBAR_STATISTIC_TITLE,
     icon: ICON_CHART,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,

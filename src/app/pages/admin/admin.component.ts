@@ -7,7 +7,7 @@ import {AuthService} from '../../core/services/auth.service';
 import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-admin-main',
   standalone: true,
   imports: [RouterOutlet, NgClass, SidebarComponent, NavbarComponent],
   templateUrl: './admin.component.html',
