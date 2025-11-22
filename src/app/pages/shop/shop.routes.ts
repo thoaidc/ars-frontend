@@ -69,5 +69,9 @@ export const SHOP_ROUTES: Routes = [
     pathMatch: 'full',
     loadComponent: () => import('./setting/setting.component').then(m => m.SettingComponent),
     canActivate: [AuthGuardFn]
+  },
+  {
+    path: '**',
+    redirectTo: 'dashboard'
   }
 ];
