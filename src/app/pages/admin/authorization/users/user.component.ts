@@ -57,13 +57,13 @@ import {TranslatePipe} from '@ngx-translate/core';
 })
 export class UserComponent implements OnInit {
   private modalRef: NgbModalRef | undefined;
-  userFilter = {
+  userFilter: BaseFilterRequest = {
     page: 1,
     size: 10,
     status: '',
     keyword: '',
-    fromDate: dayjs().startOf('day'),
-    toDate: dayjs().endOf('day')
+    fromDate: dayjs().startOf('day').toString(),
+    toDate: dayjs().endOf('day').toString()
   };
   users: User[] = [];
   totalItems = 0;
@@ -93,8 +93,8 @@ export class UserComponent implements OnInit {
       size: 10,
       status: '',
       keyword: '',
-      fromDate: dayjs().startOf('day'),
-      toDate: dayjs().endOf('day')
+      fromDate: dayjs().startOf('day').toString(),
+      toDate: dayjs().endOf('day').toString()
     };
 
     this.onSearch();
@@ -113,28 +113,7 @@ export class UserComponent implements OnInit {
   }
 
   getUsers() {
-    const searchAccountsRequest: BaseFilterRequest = {
-      page: this.userFilter.page - 1,
-      size: this.userFilter.size
-    };
-
-    if (this.userFilter.keyword) {
-      searchAccountsRequest.keyword = this.userFilter.keyword;
-    }
-
-    if (Object.values(USER_STATUS).includes(this.userFilter.status as USER_STATUS)) {
-      searchAccountsRequest.status = this.userFilter.status;
-    }
-
-    if (this.userFilter.fromDate) {
-      const fromDate = this.userFilter.fromDate.toString();
-      searchAccountsRequest.fromDate = this.utilsService.convertToDateString(fromDate, 'YYYY-MM-DD HH:mm:ss');
-    }
-
-    if (this.userFilter.toDate) {
-      const toDate = this.userFilter.toDate.toString();
-      searchAccountsRequest.toDate = this.utilsService.convertToDateString(toDate, 'YYYY-MM-DD HH:mm:ss');
-    }
+    const searchAccountsRequest = this.utilsService.buildFilterRequest(this.userFilter);
 
     this.userService.getUsersWithPaging(searchAccountsRequest).subscribe((response) => {
       this.users = [];

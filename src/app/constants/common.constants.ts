@@ -3,6 +3,7 @@ export const LOCALE = {
   EN: 'en'
 }
 
+export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 export const TODAY = 'global.today';
 export const LAST_DAY = 'global.yesterday';
 export const THIS_WEEK = 'global.thisWeek';

@@ -5,6 +5,8 @@ import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constant
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 import {TranslateService} from '@ngx-translate/core';
+import {BaseFilterRequest} from '../../core/models/request.model';
+import {DATETIME_FORMAT} from '../../constants/common.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +87,35 @@ export class UtilsService {
     }
 
     return isValidPassword;
+  }
+
+  buildFilterRequest<T extends BaseFilterRequest>(filter: T): T {
+    const req: T = { ...filter };
+
+    req.page = (filter.page ?? 1) - 1;
+    req.size = filter.size ?? 20;
+
+    if (!filter.keyword) {
+      delete req.keyword;
+    }
+
+    if (!filter.status) {
+      delete req.status;
+    }
+
+    if (filter.fromDate) {
+      req.fromDate = this.convertToDateString(filter.fromDate.toString(), DATETIME_FORMAT);
+    } else {
+      delete req.fromDate;
+    }
+
+    if (filter.toDate) {
+      req.toDate = this.convertToDateString(filter.toDate.toString(), DATETIME_FORMAT);
+    } else {
+      delete req.toDate;
+    }
+
+    return req;
   }
 
   findFirstAccessibleRoute(userPermissions?: string[]): string {

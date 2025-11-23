@@ -1,1 +1,106 @@
-<p>category works!</p>
+<div class="title-feature form-space-between">
+  <span>{{ 'text.product' | translate }}</span>
+  <button class="success-button-dialog ms-3" (click)="openModalCreateCategory()">
+    <span [innerHTML]="ICON_PLUS | safeHtml"></span>
+    {{ 'text.createProduct' | translate }}
+  </button>
+</div>
+
+<div class="field-search">
+  <div class="search-criteria">
+    <div class="item-search">
+      <label for="search-role-keyword" class="fw-semibold">{{ 'global.keyword' | translate }}</label>
+      <div class="input-text-custom">
+        <input
+          [(ngModel)]="categoriesFilter.keyword"
+          name="keyword"
+          class="form-control"
+          type="search"
+          id="search-role-keyword"
+          [placeholder]="'text.searchProductPlaceholder' | translate"
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+    </div>
+    <button class="save-button-dialog ms-4" (click)="onSearch()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>
+      {{ 'global.search' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="tab-pane fade active show">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+            <tr class="table-custom-header">
+              <th>{{ 'global.no' | translate }}</th>
+              <th>{{ 'text.categoryCode' | translate }}</th>
+              <th>{{ 'text.categoryName' | translate }}</th>
+              <th>{{ 'text.description' | translate }}</th>
+              <th>{{ 'text.createdBy' | translate }}</th>
+              <th>{{ 'text.createdDate' | translate }}</th>
+              <th>{{ 'global.action' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let category of categories; index as i">
+              <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                <td class="text-center" (click)="view(category.id)">{{ (categoriesFilter.page - 1) * categoriesFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.code }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(category.id)">{{ category.name }}</td>
+                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.description }}</td>
+                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.createdBy }}</td>
+                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.createdDate }}</td>
+                <td>
+                  <div class="action-table">
+                    <ng-container>
+                        <span
+                          [innerHTML]="ICON_UPDATE | safeHtml"
+                          [ngbTooltip]="'global.update' | translate"
+                          (click)="openModalCreateCategory(category.id)"
+                        ></span>
+                    </ng-container>
+
+                    <ng-container>
+                        <span
+                          [innerHTML]="ICON_DELETE | safeHtml"
+                          [ngbTooltip]="'global.delete' | translate"
+                          (click)="delete(category.id)"
+                        ></span>
+                    </ng-container>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="from-pagination">
+    <div class="total">
+      <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
+      <ng-select
+        [items]="PAGINATION_PAGE_SIZE"
+        [(ngModel)]="categoriesFilter.size"
+        (ngModelChange)="getCategoriesWithPaging()"
+      >
+      </ng-select>
+    </div>
+    <ngb-pagination
+      class="pagination"
+      [collectionSize]="totalItems"
+      [pageSize]="categoriesFilter.size"
+      [(page)]="categoriesFilter.page"
+      [directionLinks]="true"
+      [maxSize]="5"
+      (pageChange)="onChangedPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>
