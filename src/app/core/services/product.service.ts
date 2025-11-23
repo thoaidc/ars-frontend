@@ -29,15 +29,15 @@ export class ProductService {
       .pipe(map(response => response.result));
   }
 
-  createCategory(request: Product): Observable<BaseResponse<any>> {
+  createProduct(request: Product): Observable<BaseResponse<any>> {
     return this.http.post<BaseResponse<any>>(this.productAPI, request);
   }
 
-  updateCategory(request: Product): Observable<BaseResponse<any>> {
+  updateProduct(request: Product): Observable<BaseResponse<any>> {
     return this.http.put<BaseResponse<any>>(this.productAPI, request);
   }
 
-  deleteCategoryById(productId: number): Observable<any> {
+  deleteProductById(productId: number): Observable<BaseResponse<any>> {
     return this.http.delete<BaseResponse<any>>(this.productAPI + `/${productId}`);
   }
 }

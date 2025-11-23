@@ -38,7 +38,7 @@ export class ProductGroupService {
     return this.http.put<BaseResponse<any>>(this.productGroupAPI, request);
   }
 
-  deleteProductGroupById(productGroupId: number): Observable<any> {
+  deleteProductGroupById(productGroupId: number): Observable<BaseResponse<any>> {
     return this.http.delete<BaseResponse<any>>(this.productGroupAPI + `/${productGroupId}`);
   }
 }

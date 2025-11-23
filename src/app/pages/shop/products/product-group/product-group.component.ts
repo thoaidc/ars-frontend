@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {ICON_COPY, ICON_DELETE, ICON_PLUS, ICON_SEARCH, ICON_UPDATE} from '../../../../shared/utils/icon';
@@ -12,6 +12,10 @@ import {BaseFilterRequest} from '../../../../core/models/request.model';
 import {ProductGroupDTO} from '../../../../core/models/product.model';
 import {ProductGroupService} from '../../../../core/services/product-group.service';
 import {UtilsService} from '../../../../shared/utils/utils.service';
+import {
+  ModalConfirmDialogComponent
+} from '../../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-shop-product-group',
@@ -40,11 +44,14 @@ export class ProductGroupComponent implements OnInit {
   productGroups: ProductGroupDTO[] = [];
   totalItems: number = 0;
   isLoading: boolean = false;
+  private modalRef?: NgbModalRef;
 
   constructor(
     private translateService: TranslateService,
     private productGroupService: ProductGroupService,
-    private utilService: UtilsService
+    private utilService: UtilsService,
+    private modalService: NgbModal,
+    private toast: ToastrService
   ) {}
 
   ngOnInit() {
@@ -78,7 +85,27 @@ export class ProductGroupComponent implements OnInit {
   }
 
   delete(productGroupId: number) {
+    this.modalRef = this.modalService.open(ModalConfirmDialogComponent, {size: 'lg', backdrop: 'static'});
+    this.modalRef.componentInstance.title = 'Bạn có chắn chắn muốn xóa mục này không?';
+    this.modalRef.closed.subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.productGroupService.deleteProductGroupById(productGroupId).subscribe(response => {
+          if (response.status) {
+            this.toast.success('Xóa thành công');
+            this.onSearch();
+          } else {
+            this.toast.error(
+              response.message
+                ? response.message
+                : this.translateService.instant('notification.deleteCategoryFailed')
+            );
+          }
+        });
 
+        if (this.modalRef)
+          this.modalRef.close();
+      }
+    });
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

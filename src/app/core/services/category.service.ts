@@ -38,7 +38,7 @@ export class CategoryService {
     return this.http.put<BaseResponse<any>>(this.categoryAPI, request);
   }
 
-  deleteCategoryById(categoryId: number): Observable<any> {
+  deleteCategoryById(categoryId: number): Observable<BaseResponse<any>> {
     return this.http.delete<BaseResponse<any>>(this.categoryAPI + `/${categoryId}`);
   }
 }

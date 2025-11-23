@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SafeHtmlPipe} from "../../../shared/pipes/safe-html.pipe";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
@@ -12,6 +12,8 @@ import {BaseFilterRequest} from '../../../core/models/request.model';
 import {CategoryDTO} from '../../../core/models/product.model';
 import {CategoryService} from '../../../core/services/category.service';
 import {UtilsService} from '../../../shared/utils/utils.service';
+import {ModalConfirmDialogComponent} from '../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -40,11 +42,14 @@ export class CategoryComponent implements OnInit {
   categories: CategoryDTO[] = [];
   totalItems: number = 0;
   isLoading: boolean = false;
+  private modalRef?: NgbModalRef;
 
   constructor(
     private translateService: TranslateService,
     private categoryService: CategoryService,
-    private utilService: UtilsService
+    private utilService: UtilsService,
+    private modalService: NgbModal,
+    private toast: ToastrService
   ) {}
 
   ngOnInit() {
@@ -78,8 +83,26 @@ export class CategoryComponent implements OnInit {
   }
 
   delete(categoryId: number) {
-    this.categoryService.deleteCategoryById(categoryId).subscribe(response => {
-      this.onSearch();
+    this.modalRef = this.modalService.open(ModalConfirmDialogComponent, {size: 'lg', backdrop: 'static'});
+    this.modalRef.componentInstance.title = 'Bạn có chắn chắn muốn xóa mục này không?';
+    this.modalRef.closed.subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.categoryService.deleteCategoryById(categoryId).subscribe(response => {
+          if (response.status) {
+            this.toast.success('Xóa thành công');
+            this.onSearch();
+          } else {
+            this.toast.error(
+              response.message
+                ? response.message
+                : this.translateService.instant('notification.deleteCategoryFailed')
+            );
+          }
+        });
+
+        if (this.modalRef)
+          this.modalRef.close();
+      }
     });
   }
 

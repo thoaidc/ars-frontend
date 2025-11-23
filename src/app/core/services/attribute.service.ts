@@ -38,7 +38,7 @@ export class AttributeService {
     return this.http.put<BaseResponse<any>>(this.attributeAPI, request);
   }
 
-  deleteAttributeById(attributeId: number): Observable<any> {
+  deleteAttributeById(attributeId: number): Observable<BaseResponse<any>> {
     return this.http.delete<BaseResponse<any>>(this.attributeAPI + `/${attributeId}`);
   }
 }
