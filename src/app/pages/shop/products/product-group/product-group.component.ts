@@ -16,6 +16,8 @@ import {
   ModalConfirmDialogComponent
 } from '../../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {ToastrService} from 'ngx-toastr';
+import {BaseResponse} from '../../../../core/models/response.model';
+import {SaveProductGroupComponent} from './save-group/save-group.component';
 
 @Component({
   selector: 'app-shop-product-group',
@@ -76,12 +78,25 @@ export class ProductGroupComponent implements OnInit {
     });
   }
 
-  view(productGroupId: number) {
+  openModalSaveProductGroup(productGroup?: ProductGroupDTO) {
+    this.modalRef = this.modalService.open(SaveProductGroupComponent, { size: 'lg', backdrop: 'static' });
+    this.modalRef.componentInstance.productGroup = productGroup ? productGroup : {
+      id: 0,
+      shopId: 0,
+      code: '',
+      name: ''
+    };
 
-  }
+    this.modalRef.closed.subscribe((productGroup: any) => {
+      if (productGroup) {
+        this.productGroupService.saveProductGroup(productGroup).subscribe(response => {
+          this.notify(response, 'Lưu nhóm sản phẩm thành công', 'Lưu nhóm sản phẩm thất bại');
+        });
 
-  openModalCreateProductGroup(productGroupId?: number) {
-
+        if (this.modalRef)
+          this.modalRef.close();
+      }
+    });
   }
 
   delete(productGroupId: number) {
@@ -90,22 +105,26 @@ export class ProductGroupComponent implements OnInit {
     this.modalRef.closed.subscribe((confirm: boolean) => {
       if (confirm) {
         this.productGroupService.deleteProductGroupById(productGroupId).subscribe(response => {
-          if (response.status) {
-            this.toast.success('Xóa thành công');
-            this.onSearch();
-          } else {
-            this.toast.error(
-              response.message
-                ? response.message
-                : this.translateService.instant('notification.deleteCategoryFailed')
-            );
-          }
+          this.notify(response, 'Xóa nhóm sản phẩm thành công', 'Xóa nhóm sản phẩm thất bại');
         });
 
         if (this.modalRef)
           this.modalRef.close();
       }
     });
+  }
+
+  private notify(response: BaseResponse<any>, successMessage: string, errorMessage: string) {
+    if (response.status) {
+      this.toast.success(this.translateService.instant(successMessage));
+      this.onSearch();
+    } else {
+      this.toast.error(
+        response.message
+          ? response.message
+          : this.translateService.instant(errorMessage)
+      );
+    }
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

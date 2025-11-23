@@ -1,6 +1,6 @@
 <div class="title-feature form-space-between">
   <span>{{ 'text.product' | translate }}</span>
-  <button class="success-button-dialog ms-3" (click)="openModalCreateProductGroup()">
+  <button class="success-button-dialog ms-3" (click)="openModalSaveProductGroup()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
     {{ 'text.createProduct' | translate }}
   </button>
@@ -49,19 +49,19 @@
             <tbody>
             <ng-container *ngFor="let productGroup of productGroups; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
-                <td class="text-center" (click)="view(productGroup.id)">{{ (productGroupsFilter.page - 1) * productGroupsFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center" (click)="view(productGroup.id)">{{ productGroup.code }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view(productGroup.id)">{{ productGroup.name }}</td>
-                <td class="break-word-table text-center" (click)="view(productGroup.id)">{{ productGroup.description }}</td>
-                <td class="break-word-table text-center" (click)="view(productGroup.id)">{{ productGroup.createdBy }}</td>
-                <td class="break-word-table text-center" (click)="view(productGroup.id)">{{ productGroup.createdDate }}</td>
+                <td class="text-center">{{ (productGroupsFilter.page - 1) * productGroupsFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-center">{{ productGroup.code }}</td>
+                <td class="break-word-table text-left td-text-overflow">{{ productGroup.name }}</td>
+                <td class="break-word-table text-center">{{ productGroup.description }}</td>
+                <td class="break-word-table text-center">{{ productGroup.createdBy }}</td>
+                <td class="break-word-table text-center">{{ productGroup.createdDate }}</td>
                 <td>
                   <div class="action-table">
                     <ng-container>
                         <span
                           [innerHTML]="ICON_UPDATE | safeHtml"
                           [ngbTooltip]="'global.update' | translate"
-                          (click)="openModalCreateProductGroup(productGroup.id)"
+                          (click)="openModalSaveProductGroup(productGroup)"
                         ></span>
                     </ng-container>
 

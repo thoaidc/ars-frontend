@@ -32,7 +32,7 @@ export interface VariantDTO extends AuditingEntity {
 export interface CategoryDTO extends AuditingEntity {
   name: string;
   code: string;
-  description: string;
+  description?: string;
 }
 
 export interface AttributeDTO extends AuditingEntity {
@@ -44,7 +44,7 @@ export interface ProductGroupDTO extends AuditingEntity {
   shopId: number;
   name: string;
   code: string;
-  description: string;
+  description?: string;
 }
 
 export interface ProductOptionDTO extends AuditingEntity {

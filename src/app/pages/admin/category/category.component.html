@@ -1,6 +1,6 @@
 <div class="title-feature form-space-between">
   <span>{{ 'text.product' | translate }}</span>
-  <button class="success-button-dialog ms-3" (click)="openModalCreateCategory()">
+  <button class="success-button-dialog ms-3" (click)="openModalSaveCategory()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
     {{ 'text.createProduct' | translate }}
   </button>
@@ -49,19 +49,19 @@
             <tbody>
             <ng-container *ngFor="let category of categories; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
-                <td class="text-center" (click)="view(category.id)">{{ (categoriesFilter.page - 1) * categoriesFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.code }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view(category.id)">{{ category.name }}</td>
-                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.description }}</td>
-                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.createdBy }}</td>
-                <td class="break-word-table text-center" (click)="view(category.id)">{{ category.createdDate }}</td>
+                <td class="text-center">{{ (categoriesFilter.page - 1) * categoriesFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-center">{{ category.code }}</td>
+                <td class="break-word-table text-left td-text-overflow">{{ category.name }}</td>
+                <td class="break-word-table text-center">{{ category.description }}</td>
+                <td class="break-word-table text-center">{{ category.createdBy }}</td>
+                <td class="break-word-table text-center">{{ category.createdDate }}</td>
                 <td>
                   <div class="action-table">
                     <ng-container>
                         <span
                           [innerHTML]="ICON_UPDATE | safeHtml"
                           [ngbTooltip]="'global.update' | translate"
-                          (click)="openModalCreateCategory(category.id)"
+                          (click)="openModalSaveCategory(category)"
                         ></span>
                     </ng-container>
 

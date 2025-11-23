@@ -73,7 +73,7 @@ export class RateLimiterComponent implements OnInit {
   }
 
   createNewApiPattern() {
-    this.modalRef = this.modalService.open(SaveApiPatternComponent, {size: 'lg', centered: true});
+    this.modalRef = this.modalService.open(SaveApiPatternComponent, {size: 'lg', backdrop: 'static'});
     this.modalRef.componentInstance.isCreateNew = true;
     this.modalRef.closed.subscribe((newApiPattern: string) => {
       if (newApiPattern) {
@@ -88,7 +88,7 @@ export class RateLimiterComponent implements OnInit {
 
   updateRateLimiterExcludedApiConfig(oldApiPattern: string) {
     const oldExcludedApiToUpdate = JSON.parse(JSON.stringify(oldApiPattern));
-    this.modalRef = this.modalService.open(SaveApiPatternComponent, {size: 'lg', centered: true});
+    this.modalRef = this.modalService.open(SaveApiPatternComponent, {size: 'lg', backdrop: 'static'});
     this.modalRef.componentInstance.isCreateNew = false;
     this.modalRef.componentInstance.apiPattern = oldExcludedApiToUpdate;
     this.modalRef.closed.subscribe((newApiPattern: string) => {
@@ -121,7 +121,7 @@ export class RateLimiterComponent implements OnInit {
   }
 
   openModalUpdateRoute(routeId: string) {
-    this.modalRef = this.modalService.open(this.rateLimiterModal, { size: 'lg', centered: true });
+    this.modalRef = this.modalService.open(this.rateLimiterModal, { size: 'lg', backdrop: 'static' });
     const configToUpdate = this.rateLimiterConfigs.filter(config => config.routeId === routeId)?.[0];
     this.configToUpdate = { ...configToUpdate };
     this.modalRef.result.finally(() => (this.modalRef = undefined));

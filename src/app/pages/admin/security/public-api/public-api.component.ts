@@ -50,7 +50,7 @@ export class PublicApiComponent implements OnInit {
   }
 
   createNewApiPattern() {
-    this.modalRef = this.modalService.open(SaveApiPatternComponent, { size: 'lg', centered: true });
+    this.modalRef = this.modalService.open(SaveApiPatternComponent, { size: 'lg', backdrop: 'static' });
     this.modalRef.componentInstance.isCreateNew = true;
     this.modalRef.closed.subscribe((newApiPattern: string) => {
       if (newApiPattern) {
@@ -64,7 +64,7 @@ export class PublicApiComponent implements OnInit {
 
   updatePublicApiConfig(oldApiPattern: string) {
     const oldPublicApiPatternToUpdate = JSON.parse(JSON.stringify(oldApiPattern));
-    this.modalRef = this.modalService.open(SaveApiPatternComponent, { size: 'lg', centered: true });
+    this.modalRef = this.modalService.open(SaveApiPatternComponent, { size: 'lg', backdrop: 'static' });
     this.modalRef.componentInstance.isCreateNew = false;
     this.modalRef.componentInstance.apiPattern = oldPublicApiPatternToUpdate;
     this.modalRef.closed.subscribe((newApiPattern: string) => {

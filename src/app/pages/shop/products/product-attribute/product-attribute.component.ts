@@ -10,13 +10,14 @@ import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
 import {PAGINATION_PAGE_SIZE} from '../../../../constants/common.constants';
 import {BaseFilterRequest} from '../../../../core/models/request.model';
 import {AttributeDTO} from '../../../../core/models/product.model';
-import {CategoryService} from '../../../../core/services/category.service';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {AttributeService} from '../../../../core/services/attribute.service';
 import {
   ModalConfirmDialogComponent
 } from '../../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {ToastrService} from 'ngx-toastr';
+import {BaseResponse} from '../../../../core/models/response.model';
+import {SaveAttributeComponent} from './save-attribute/save-attribute.component';
 
 @Component({
   selector: 'app-shop-product-attribute',
@@ -77,12 +78,24 @@ export class ProductAttributeComponent implements OnInit {
     });
   }
 
-  view(attributeId: number) {
+  openModalSaveAttribute(attribute?: AttributeDTO) {
+    this.modalRef = this.modalService.open(SaveAttributeComponent, { size: 'lg', backdrop: 'static' });
+    this.modalRef.componentInstance.attribute = attribute ? attribute : {
+      id: 0,
+      shopId: 0,
+      name: ''
+    };
 
-  }
+    this.modalRef.closed.subscribe((attribute: any) => {
+      if (attribute) {
+        this.attributeService.saveAttribute(attribute).subscribe(response => {
+          this.notify(response, 'Lưu thuộc tính thành công', 'Lưu thuộc tính thất bại');
+        });
 
-  openModalCreateAttribute(attributeId?: number) {
-
+        if (this.modalRef)
+          this.modalRef.close();
+      }
+    });
   }
 
   delete(attributeId: number) {
@@ -91,22 +104,26 @@ export class ProductAttributeComponent implements OnInit {
     this.modalRef.closed.subscribe((confirm: boolean) => {
       if (confirm) {
         this.attributeService.deleteAttributeById(attributeId).subscribe(response => {
-          if (response.status) {
-            this.toast.success('Xóa thành công');
-            this.onSearch();
-          } else {
-            this.toast.error(
-              response.message
-                ? response.message
-                : this.translateService.instant('notification.deleteCategoryFailed')
-            );
-          }
+          this.notify(response, 'Xóa thuộc tính thành công', 'Xóa thuộc tính thất bại');
         });
 
         if (this.modalRef)
           this.modalRef.close();
       }
     });
+  }
+
+  private notify(response: BaseResponse<any>, successMessage: string, errorMessage: string) {
+    if (response.status) {
+      this.toast.success(this.translateService.instant(successMessage));
+      this.onSearch();
+    } else {
+      this.toast.error(
+        response.message
+          ? response.message
+          : this.translateService.instant(errorMessage)
+      );
+    }
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

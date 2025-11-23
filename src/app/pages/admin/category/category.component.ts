@@ -14,6 +14,8 @@ import {CategoryService} from '../../../core/services/category.service';
 import {UtilsService} from '../../../shared/utils/utils.service';
 import {ModalConfirmDialogComponent} from '../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {ToastrService} from 'ngx-toastr';
+import {SaveCategoryComponent} from './save-category/save-category.component';
+import {BaseResponse} from '../../../core/models/response.model';
 
 @Component({
   selector: 'app-category',
@@ -74,12 +76,24 @@ export class CategoryComponent implements OnInit {
     });
   }
 
-  view(categoryId: number) {
+  openModalSaveCategory(category?: CategoryDTO) {
+    this.modalRef = this.modalService.open(SaveCategoryComponent, { size: 'lg', backdrop: 'static' });
+    this.modalRef.componentInstance.category = category ? category : {
+      id: 0,
+      code: '',
+      name: ''
+    };
 
-  }
+    this.modalRef.closed.subscribe((category: any) => {
+      if (category) {
+        this.categoryService.saveCategory(category).subscribe(response => {
+          this.notify(response, 'Lưu danh mục thành công', 'Lưu danh mục thất bại');
+        });
 
-  openModalCreateCategory(categoryId?: number) {
-
+        if (this.modalRef)
+          this.modalRef.close();
+      }
+    });
   }
 
   delete(categoryId: number) {
@@ -88,22 +102,26 @@ export class CategoryComponent implements OnInit {
     this.modalRef.closed.subscribe((confirm: boolean) => {
       if (confirm) {
         this.categoryService.deleteCategoryById(categoryId).subscribe(response => {
-          if (response.status) {
-            this.toast.success('Xóa thành công');
-            this.onSearch();
-          } else {
-            this.toast.error(
-              response.message
-                ? response.message
-                : this.translateService.instant('notification.deleteCategoryFailed')
-            );
-          }
+          this.notify(response, 'Xóa danh mục thành công', 'Xóa danh mục thất bại');
         });
 
         if (this.modalRef)
           this.modalRef.close();
       }
     });
+  }
+
+  private notify(response: BaseResponse<any>, successMessage: string, errorMessage: string) {
+    if (response.status) {
+      this.toast.success(this.translateService.instant(successMessage));
+      this.onSearch();
+    } else {
+      this.toast.error(
+        response.message
+          ? response.message
+          : this.translateService.instant(errorMessage)
+      );
+    }
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

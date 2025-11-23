@@ -1,6 +1,6 @@
 <div class="title-feature form-space-between">
   <span>{{ 'text.product' | translate }}</span>
-  <button class="success-button-dialog ms-3" (click)="openModalCreateAttribute()">
+  <button class="success-button-dialog ms-3" (click)="openModalSaveAttribute()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
     {{ 'text.createProduct' | translate }}
   </button>
@@ -47,17 +47,17 @@
             <tbody>
             <ng-container *ngFor="let attribute of attributes; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
-                <td class="text-center" (click)="view(attribute.id)">{{ (attributesFilter.page - 1) * attributesFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view(attribute.id)">{{ attribute.name }}</td>
-                <td class="break-word-table text-center" (click)="view(attribute.id)">{{ attribute.createdBy }}</td>
-                <td class="break-word-table text-center" (click)="view(attribute.id)">{{ attribute.createdDate }}</td>
+                <td class="text-center">{{ (attributesFilter.page - 1) * attributesFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-left td-text-overflow">{{ attribute.name }}</td>
+                <td class="break-word-table text-center">{{ attribute.createdBy }}</td>
+                <td class="break-word-table text-center">{{ attribute.createdDate }}</td>
                 <td>
                   <div class="action-table">
                     <ng-container>
                         <span
                           [innerHTML]="ICON_UPDATE | safeHtml"
                           [ngbTooltip]="'global.update' | translate"
-                          (click)="openModalCreateAttribute(attribute.id)"
+                          (click)="openModalSaveAttribute(attribute)"
                         ></span>
                     </ng-container>
 

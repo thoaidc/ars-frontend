@@ -25,17 +25,12 @@ export class CategoryService {
     return this.http.get<BaseResponse<CategoryDTO[]>>(this.categoryPublicAPI, {params: params});
   }
 
-  getById(categoryId: number): Observable<CategoryDTO | undefined> {
-    return this.http.get<BaseResponse<CategoryDTO>>(this.categoryPublicAPI + `/${categoryId}`)
-      .pipe(map(response => response.result));
-  }
-
-  createCategory(request: CategoryDTO): Observable<BaseResponse<any>> {
-    return this.http.post<BaseResponse<any>>(this.categoryAPI, request);
-  }
-
-  updateCategory(request: CategoryDTO): Observable<BaseResponse<any>> {
-    return this.http.put<BaseResponse<any>>(this.categoryAPI, request);
+  saveCategory(request: CategoryDTO): Observable<BaseResponse<any>> {
+    if (request.id && request.id > 0) {
+      return this.http.post<BaseResponse<any>>(this.categoryAPI, request);
+    } else {
+      return this.http.put<BaseResponse<any>>(this.categoryAPI, request);
+    }
   }
 
   deleteCategoryById(categoryId: number): Observable<BaseResponse<any>> {
