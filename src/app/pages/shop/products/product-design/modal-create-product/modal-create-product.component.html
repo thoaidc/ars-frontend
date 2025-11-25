@@ -1,0 +1,269 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'Tạo mới thiết kế' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body pb-4" style="max-height: 75vh; overflow-y: auto">
+  <ul class="nav nav-tabs tab-switcher mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 0"
+        (click)="currentTab = 0"
+        type="button"
+        role="tab"
+      >
+        Thông tin cơ bản
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 1"
+        (click)="currentTab = 1"
+        type="button"
+        role="tab"
+      >
+        Thông tin bổ sung
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab 1 -->
+  <div *ngIf="currentTab === 0" class="tab-pane fade show active">
+    <div class="d-flex justify-content-between align-items-start">
+      <div class="flex-grow-1">
+        <div class="item-search w-100">
+          <label for="design-name" class="title-info">Tên<span class="text-danger m-0">*</span></label>
+          <div class="input-text-custom">
+            <input
+              id="design-name"
+              class="form-control"
+              [(ngModel)]="product.name"
+              type="text"
+              placeholder="Ví dụ: Logo cửa hàng lớn,..."
+            />
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <form class="w-50 p-2 pb-0">
+            <span>Danh mục</span>
+            <div class="select-search-custom">
+              <ng-select
+                [items]="categories"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [selectableGroup]="true"
+                placeholder="Chọn danh mục sản phẩm"
+                [(ngModel)]="product.categoryIds"
+                [closeOnSelect]="false"
+                name="categories"
+              >
+              </ng-select>
+            </div>
+          </form>
+
+          <form class="w-50 p-2 pb-0">
+            <span>Nhóm sản phẩm</span>
+            <div class="select-search-custom">
+              <ng-select
+                [items]="productGroups"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [selectableGroup]="true"
+                placeholder="Chọn nhóm sản phẩm"
+                [(ngModel)]="product.productGroupIds"
+                [closeOnSelect]="false"
+                name="productGroups"
+              >
+              </ng-select>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="design-code" class="title-info">Mã<span class="text-danger m-0">*</span></label>
+            <div class="input-text-custom">
+              <input
+                id="design-code"
+                class="form-control"
+                [(ngModel)]="product.code"
+                type="text"
+                placeholder="Ví dụ: LOGO_1"
+                alphanumericOnly
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="design-price" class="title-info">Giá bán<span class="text-danger m-0">*</span></label>
+            <div class="input-text-custom">
+              <input
+                id="design-price"
+                class="form-control"
+                [(ngModel)]="product.price"
+                type="number"
+                placeholder="Ví dụ: 120000"
+                alphanumericOnly
+                autocomplete="off"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="item-search mt-0 w-100">
+          <label for="product-description">Mô tả sản phẩm</label>
+          <div class="input-text-custom">
+            <textarea
+              id="product-description"
+              class="form-control"
+              [(ngModel)]="product.description"
+              type="text"
+              placeholder="Mô tả sản phẩm"
+              autocomplete="off"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="item-search w-100 mt-3">
+          <label class="title-info">File thiết kế gốc</label>
+          <div class="input-text-custom">
+            <input
+              type="file"
+              class="form-control"
+              id="designFile"
+              (change)="onDesignFileSelected($event)"
+              accept=".zip,.rar,.7z,.tar,.ai,.psd,.cdr,.eps,.indd..jpg,.jpeg,.png,.gif,.bmp,.webp,.tiff,.svg" />
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 250px; max-width: 25%; padding-left: 0.5rem">
+        <div class="item-search w-100 mt-3">
+          <label class="title-info">Ảnh bìa<span class="text-danger m-0">*</span></label>
+          <div class="image-upload-container-single"
+               [class.has-image]="selectedThumbnail.url"
+               (click)="fileInput.click()"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onDrop($event)">
+
+            <input type="file" [multiple]="false" #fileInput id="imageUploadSingle" accept="image/*"
+                   (change)="onSingleFileSelected($event)" style="display: none;" />
+
+            <div class="single-image-display">
+              <img [src]="selectedThumbnail.url || 'assets/images/product_default.png'" alt="Selected Image" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 0 6px">
+      <div class="card-header-custom mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Thuộc tính (Màu sắc, kích thước)</h5>
+        </div>
+      </div>
+
+      <div class="attribute-container p-2">
+        <div class="attribute-row d-flex align-items-center mb-2 gap-3">
+          <form class="w-25">
+            <div class="select-search-custom mt-0 attribute-form-select-custom">
+              <ng-select
+                style="max-height: 36px !important;"
+                [items]="attributes"
+                bindLabel="name"
+                bindValue="id"
+                [selectableGroup]="true"
+                placeholder="Chọn thuộc tính"
+                [(ngModel)]="attributeIdSelected"
+                [closeOnSelect]="true"
+                name="productGroups"
+              >
+              </ng-select>
+            </div>
+          </form>
+
+          <div class="attribute-values-input flex-grow-1 d-flex flex-wrap align-items-center">
+            <div id="attributes-wrapper" class="ps-1">
+              <div class="attribute-tag me-1">S
+                <span style="width: 18px; margin-bottom: 2px" class="cursor-pointer ms-2" [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </div>
+              <div class="attribute-tag me-1">M
+                <span style="width: 18px; margin-bottom: 2px" class="cursor-pointer ms-2" [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </div>
+            </div>
+
+            <input
+              id="attribute-name-input"
+              type="text"
+              class="form-control attribute-value-text-input"
+              placeholder="Nhập giá trị và Enter"
+            />
+          </div>
+
+          <span class="cursor-pointer mb-1 me-2" [innerHTML]="ICON_DELETE | safeHtml"></span>
+        </div>
+
+        <button class="btn btn-add-attribute">Thêm thuộc tính</button>
+      </div>
+    </div>
+
+    <div style="padding: 0 6px">
+      <div class="card-header-custom border-bottom-0 mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Danh sách thiết kế cùng loại</h5>
+          <i class="bi bi-chevron-down"></i>
+        </div>
+      </div>
+
+      <div class="attribute-container border-0">
+        <table class="table editing-table">
+          <tbody>
+          <tr class="table-custom-body even-row">
+            <td class="text-center">STT</td>
+            <td class="text-center w-75">Tên sản phẩm</td>
+            <td class="text-center">Giá bán</td>
+          </tr>
+
+          <ng-container *ngFor="let attribute of attributes; index as i">
+            <tr [ngClass]="{ 'odd-row': i % 2 === 0, 'even-row': i % 2 === 1 }" class="table-custom-body">
+              <td class="text-center">{{ i + 1 }}</td>
+              <td class="text-start">{{ attribute.name }}</td>
+              <td class="input-price-cell">
+                <div class="input-group input-group-sm">
+                  <input
+                    type="text"
+                    class="form-control text-start input-price-field"
+                    placeholder="Nhập giá bán"
+                    value=""
+                    autocomplete="off"
+                  />
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div *ngIf="currentTab === 1" class="tab-pane fade show active">
+    HAHA
+  </div>
+</div>
+
+<div class="modal-footer border-top-0">
+  <button class="cancel-button-dialog" (click)="dismiss()">Huỷ</button>
+  <button class="save-button-dialog" (click)="confirmSave()" [disabled]="loading.isLoading">
+    <span>Lưu</span>
+  </button>
+</div>

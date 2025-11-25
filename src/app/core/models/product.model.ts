@@ -64,3 +64,42 @@ export interface ProductOptionAttributeDTO extends AuditingEntity {
   image?: string;
   text?: string;
 }
+
+export interface CreateProductRequest {
+  name: string;
+  code: string;
+  price: string;
+  description?: string;
+  customizable: boolean;
+  thumbnail: any;
+  originalImage: any;
+  categoryIds?: number[];
+  productGroupIds?: number[];
+  options?: ProductOptionDTO[];
+  variants?: VariantDTO[];
+}
+
+export interface CreateOption {
+  name: string;
+  type: string;
+  topPercentage: number;
+  leftPercentage: number;
+  widthPercentage: number;
+  heightPercentage: number;
+  description?: string;
+  attributes?: CreateOptionAttribute[];
+}
+
+export interface CreateOptionAttribute {
+  image?: any;
+  text?: string;
+}
+
+export interface CreateVariant {
+  thumbnail?: any;
+  originalImage?: any;
+  name: string;
+  price: number;
+  attributeId: number;
+  productOptionIds?: number[];
+}

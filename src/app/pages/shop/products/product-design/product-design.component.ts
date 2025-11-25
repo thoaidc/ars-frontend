@@ -15,6 +15,7 @@ import {
   ModalConfirmDialogComponent
 } from '../../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {ToastrService} from 'ngx-toastr';
+import {ModalCreateProductComponent} from './modal-create-product/modal-create-product.component';
 
 @Component({
   selector: 'app-shop-product-design',
@@ -80,7 +81,7 @@ export class ProductDesignComponent implements OnInit {
   }
 
   openModalCreateProduct(productId?: number) {
-
+    this.modalRef = this.modalService.open(ModalCreateProductComponent, { size: 'xl', backdrop: 'static' });
   }
 
   delete(product: Product) {

@@ -200,6 +200,16 @@ export const ICON_DELETE = `
 </svg>
 `;
 
+export const ICON_X_WHITE = `
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+  <g id="SVGRepo_iconCarrier">
+    <path d="M6 6L18 18M18 6L6 18" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+</svg>
+`;
+
 export const ICON_COPY = `
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M17 13.4V16.4C17 20.4 15.4 22 11.4 22H7.6C3.6 22 2 20.4 2 16.4V12.6C2 8.6 3.6 7 7.6 7H10.6" stroke="#151B33" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
