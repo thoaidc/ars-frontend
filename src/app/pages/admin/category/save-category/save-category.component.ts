@@ -17,7 +17,6 @@ export class SaveCategoryComponent {
   Authority = Authorities;
   @Input() category: CategoryDTO = {
     id: 0,
-    code: '',
     name: ''
   }
 
@@ -32,10 +31,10 @@ export class SaveCategoryComponent {
   }
 
   confirmSave() {
-    if (this.category.name && this.category.code) {
+    if (this.category.name) {
       this.activeModal.close(this.category);
     } else {
-      this.toast.error('Mã và tên không được phép để trống');
+      this.toast.error('Tên không được phép để trống');
     }
   }
 

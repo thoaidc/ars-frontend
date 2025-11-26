@@ -17,8 +17,7 @@ export class SaveProductGroupComponent {
   @Input() productGroup: ProductGroupDTO = {
     id: 0,
     shopId: 0,
-    name: '',
-    code: ''
+    name: ''
   }
 
   constructor(
@@ -32,10 +31,10 @@ export class SaveProductGroupComponent {
   }
 
   confirmSave() {
-    if (this.productGroup.name && this.productGroup.code) {
+    if (this.productGroup.name) {
       this.activeModal.close(this.productGroup);
     } else {
-      this.toast.error('Tên và mã nhóm sản phẩm không được phép để trống');
+      this.toast.error('Tên nhóm sản phẩm không được phép để trống');
     }
   }
 

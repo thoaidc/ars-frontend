@@ -38,9 +38,7 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.productGroupCode' | translate }}</th>
               <th>{{ 'text.productGroupName' | translate }}</th>
-              <th>{{ 'text.description' | translate }}</th>
               <th>{{ 'text.createdBy' | translate }}</th>
               <th>{{ 'text.createdDate' | translate }}</th>
               <th>{{ 'global.action' | translate }}</th>
@@ -50,9 +48,7 @@
             <ng-container *ngFor="let productGroup of productGroups; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ (productGroupsFilter.page - 1) * productGroupsFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center">{{ productGroup.code }}</td>
                 <td class="break-word-table text-left td-text-overflow">{{ productGroup.name }}</td>
-                <td class="break-word-table text-center">{{ productGroup.description }}</td>
                 <td class="break-word-table text-center">{{ productGroup.createdBy }}</td>
                 <td class="break-word-table text-center">{{ productGroup.createdDate }}</td>
                 <td>

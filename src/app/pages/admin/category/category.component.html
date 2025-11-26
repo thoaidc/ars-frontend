@@ -38,7 +38,6 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.categoryCode' | translate }}</th>
               <th>{{ 'text.categoryName' | translate }}</th>
               <th>{{ 'text.description' | translate }}</th>
               <th>{{ 'text.createdBy' | translate }}</th>
@@ -50,7 +49,6 @@
             <ng-container *ngFor="let category of categories; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ (categoriesFilter.page - 1) * categoriesFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center">{{ category.code }}</td>
                 <td class="break-word-table text-left td-text-overflow">{{ category.name }}</td>
                 <td class="break-word-table text-center">{{ category.description }}</td>
                 <td class="break-word-table text-center">{{ category.createdBy }}</td>
