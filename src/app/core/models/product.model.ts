@@ -14,29 +14,14 @@ export interface Product extends AuditingEntity {
   customizable: boolean;
   status: string;
   thumbnailUrl: string;
-  variants?: VariantDTO[];
   categories?: CategoryDTO[];
   productGroups?: ProductGroupDTO[];
-  productOptions?: ProductOptionDTO[];
-}
-
-export interface VariantDTO extends AuditingEntity {
-  productId: number;
-  attributeId: number;
-  name: string;
-  price: number;
-  thumbnailUrl?: string;
   productOptions?: ProductOptionDTO[];
 }
 
 export interface CategoryDTO extends AuditingEntity {
   name: string;
   description?: string;
-}
-
-export interface AttributeDTO extends AuditingEntity {
-  shopId: number;
-  name: string;
 }
 
 export interface ProductGroupDTO extends AuditingEntity {
@@ -47,12 +32,13 @@ export interface ProductGroupDTO extends AuditingEntity {
 export interface ProductOptionDTO extends AuditingEntity {
   productId: number;
   name: string;
-  attributes: ProductOptionAttributeDTO[];
+  values: ProductOptionValueDTO[];
 }
 
-export interface ProductOptionAttributeDTO extends AuditingEntity {
+export interface ProductOptionValueDTO extends AuditingEntity {
   productOptionId: number;
   image: string;
+  data?: any;
 }
 
 export interface CreateProductRequest {
@@ -62,23 +48,19 @@ export interface CreateProductRequest {
   description?: string;
   customizable: boolean;
   thumbnail: any;
-  originalImage: any;
+  originalImage?: any;
   categoryIds?: number[];
   productGroupIds?: number[];
   options?: CreateOption[];
-  variants?: CreateVariant[];
+  images?: any[];
 }
 
 export interface CreateOption {
   name: string;
-  images: any[];
+  values: CreateOptionValue[];
 }
 
-export interface CreateVariant {
-  thumbnail: any;
-  originalImage?: any;
-  name: string;
-  price: number;
-  attributeId: number;
-  productOptionIds: number[];
+export interface CreateOptionValue {
+  image: string;
+  data?: any;
 }

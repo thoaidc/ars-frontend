@@ -163,7 +163,10 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Tab 2 -->
+  <div *ngIf="currentTab === 1" class="tab-pane fade show active">
     <div style="padding: 0 6px">
       <div class="card-header-custom mt-3">
         <div class="d-flex justify-content-between align-items-center">
@@ -177,7 +180,7 @@
             <div class="select-search-custom mt-0 attribute-form-select-custom">
               <ng-select
                 style="max-height: 36px !important;"
-                [items]="attributes"
+                [items]="categories"
                 bindLabel="name"
                 bindValue="id"
                 [selectableGroup]="true"
@@ -214,50 +217,6 @@
         <button class="btn btn-add-attribute">Thêm thuộc tính</button>
       </div>
     </div>
-
-    <div style="padding: 0 6px">
-      <div class="card-header-custom border-bottom-0 mt-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">Danh sách thiết kế cùng loại</h5>
-          <i class="bi bi-chevron-down"></i>
-        </div>
-      </div>
-
-      <div class="attribute-container border-0">
-        <table class="table editing-table">
-          <tbody>
-          <tr class="table-custom-body even-row">
-            <td class="text-center">STT</td>
-            <td class="text-center w-75">Tên sản phẩm</td>
-            <td class="text-center">Giá bán</td>
-          </tr>
-
-          <ng-container *ngFor="let attribute of attributes; index as i">
-            <tr [ngClass]="{ 'odd-row': i % 2 === 0, 'even-row': i % 2 === 1 }" class="table-custom-body">
-              <td class="text-center">{{ i + 1 }}</td>
-              <td class="text-start">{{ attribute.name }}</td>
-              <td class="input-price-cell">
-                <div class="input-group input-group-sm">
-                  <input
-                    type="text"
-                    class="form-control text-start input-price-field"
-                    placeholder="Nhập giá bán"
-                    value=""
-                    autocomplete="off"
-                  />
-                </div>
-              </td>
-            </tr>
-          </ng-container>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tab 2 -->
-  <div *ngIf="currentTab === 1" class="tab-pane fade show active">
-    HAHA
   </div>
 </div>
 

@@ -16,7 +16,6 @@ import {
   ICON_ORDER,
   ICON_RATE_LIMIT,
   ICON_DESIGN,
-  ICON_ATTRIBUTE,
   ICON_GROUP
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
@@ -32,7 +31,6 @@ export const SIDEBAR_SHOP_TITLE = 'sidebar.shop';
 export const SIDEBAR_CATEGORY_TITLE = 'sidebar.category';
 export const SIDEBAR_PRODUCT_TITLE = 'sidebar.product';
 export const SIDEBAR_GROUP_TITLE = 'sidebar.product.group';
-export const SIDEBAR_ATTRIBUTE_TITLE = 'sidebar.product.attribute';
 export const SIDEBAR_PRODUCT_ITEM_TITLE = 'sidebar.product.item';
 export const SIDEBAR_ORDER_TITLE = 'sidebar.order';
 export const SIDEBAR_SETTING_TITLE = 'sidebar.setting';
@@ -206,14 +204,6 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     isExternalLink: false,
     permission: [],
     submenu: [
-      {
-        path: '/attributes',
-        title: SIDEBAR_ATTRIBUTE_TITLE,
-        icon: ICON_ATTRIBUTE,
-        class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-        isExternalLink: false,
-        permission: []
-      },
       {
         path: '/groups',
         title: SIDEBAR_GROUP_TITLE,

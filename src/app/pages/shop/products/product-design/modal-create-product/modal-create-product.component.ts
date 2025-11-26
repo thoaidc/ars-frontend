@@ -12,8 +12,8 @@ import {UtilsService} from '../../../../../shared/utils/utils.service';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingOption} from '../../../../../shared/utils/loading-option';
 import {
-  AttributeDTO,
-  CategoryDTO, CreateProductRequest,
+  CategoryDTO,
+  CreateProductRequest,
   ProductGroupDTO
 } from '../../../../../core/models/product.model';
 import {CategoryService} from '../../../../../core/services/category.service';
@@ -21,7 +21,6 @@ import {ProductGroupService} from '../../../../../core/services/product-group.se
 import {AlphanumericOnlyDirective} from '../../../../../shared/directives/alphanumeric-only.directive';
 import {SafeHtmlPipe} from '../../../../../shared/pipes/safe-html.pipe';
 import {ICON_DELETE, ICON_PLUS, ICON_X_WHITE} from '../../../../../shared/utils/icon';
-import {AttributeService} from '../../../../../core/services/attribute.service';
 import {SingleSelectedImage} from '../../../../../core/models/common.model';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -34,8 +33,6 @@ import {DomSanitizer} from '@angular/platform-browser';
     FormsModule,
     AlphanumericOnlyDirective,
     SafeHtmlPipe,
-    NgClass,
-    NgForOf,
     NgIf
   ],
   templateUrl: './modal-create-product.component.html',
@@ -43,7 +40,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ModalCreateProductComponent implements OnInit {
   currentTab: number = 0;
-  attributes: AttributeDTO[] = [];
   attributeIdSelected: number = 0;
   categories: CategoryDTO[] = [];
   productGroups: ProductGroupDTO[] = [];
@@ -70,7 +66,6 @@ export class ModalCreateProductComponent implements OnInit {
     public loading: LoadingOption,
     private categoryService: CategoryService,
     private productGroupService: ProductGroupService,
-    private attributeService: AttributeService,
     private sanitizer: DomSanitizer
   ) {
     this.location.subscribe(() => {
@@ -95,13 +90,6 @@ export class ModalCreateProductComponent implements OnInit {
       size: 1000
     }).subscribe(response => {
       this.productGroups = response.result || [];
-    });
-
-    this.attributeService.getAllWithPaging({
-      page: 0,
-      size: 1000
-    }).subscribe(response => {
-      this.attributes = response.result || [];
     });
   }
 

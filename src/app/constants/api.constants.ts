@@ -18,8 +18,6 @@ export const API_PRODUCT_GROUP = API_PRODUCT + '/groups';
 export const API_PRODUCT_GROUP_PUBLIC = API_PRODUCT_PUBLIC + '/groups';
 export const API_CATEGORY = API_PRODUCT + '/categories';
 export const API_CATEGORY_PUBLIC = API_PRODUCT_PUBLIC + '/categories';
-export const API_ATTRIBUTE = API_PRODUCT + '/attributes';
-export const API_ATTRIBUTE_PUBLIC = API_PRODUCT_PUBLIC + '/attributes';
 
 // Role API constants
 export const API_ROLES = API_USERS + '/roles';
