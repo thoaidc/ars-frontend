@@ -1,0 +1,189 @@
+<div class="cart-page">
+  <div class="container">
+    <!-- breadcrumb / step bar -->
+    <div class="cart-steps">
+      <span class="step active">Cart</span>
+      <span class="step-separator">—</span>
+      <span class="step">Order Information</span>
+      <span class="step-separator">—</span>
+      <span class="step">Complete</span>
+    </div>
+
+    <!-- banner bonus point -->
+    <div class="cart-banner" *ngIf="amountToNextBonus > 0">
+      <span>
+        Buy <strong>\${{ amountToNextBonus | number : '1.2-2' }}</strong> more to
+        get <strong>75 bonus points</strong> 🎁
+      </span>
+      <button class="banner-close">×</button>
+    </div>
+
+    <!-- main layout -->
+    <section class="cart-main">
+      <!-- LEFT: items -->
+      <div class="cart-left card">
+        <div class="cart-header-row">
+          <div class="col-item">Item</div>
+          <div class="col-price">Price</div>
+          <div class="col-qty">Quantity</div>
+          <div class="col-sub">Subtotal</div>
+        </div>
+
+        <div class="cart-items">
+          <div
+            class="cart-row"
+            *ngFor="let item of cartItems; trackBy: trackById"
+          >
+            <div class="col-item">
+              <div class="item-img">
+                <img [src]="item.imageUrl" [alt]="item.name" />
+              </div>
+              <div class="item-info">
+                <a
+                  class="item-name"
+                  [routerLink]="['/client/product', item.id]"
+                >
+                  {{ item.name }}
+                </a>
+                <div class="item-variant">{{ item.variant }}</div>
+                <button class="item-remove" (click)="removeItem(item)">
+                  Remove
+                </button>
+              </div>
+            </div>
+
+            <div class="col-price">
+              <span class="price">\${{ item.price | number : '1.2-2' }}</span>
+              <span class="old-price">\${{ 39.95 | number : '1.2-2' }}</span>
+            </div>
+
+            <div class="col-qty">
+              <div class="qty-box">
+                <button (click)="decreaseQty(item)">-</button>
+                <span>{{ item.qty }}</span>
+                <button (click)="increaseQty(item)">+</button>
+              </div>
+            </div>
+
+            <div class="col-sub">
+              <span class="sub-price">
+                \${{ (item.price * item.qty) | number : '1.2-2' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: summary -->
+      <aside class="cart-summary card">
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>\${{ subtotal | number : '1.2-2' }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping fee</span>
+          <span>\${{ shippingFee | number : '1.2-2' }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>\${{ total | number : '1.2-2' }}</span>
+        </div>
+
+        <button class="btn-checkout" [routerLink]="['/client/checkout']">
+          CHECKOUT
+        </button>
+
+        <div class="payment-methods">
+          <span class="pm-label">We accept</span>
+          <div class="pm-icons">
+            <span class="pm">VISA</span>
+            <span class="pm">Mastercard</span>
+            <span class="pm">Momo</span>
+            <span class="pm">ZaloPay</span>
+          </div>
+        </div>
+
+        <div class="express-checkout">
+          <button class="btn-express">Pay with PayPal</button>
+          <button class="btn-express secondary">Pay with Apple Pay</button>
+        </div>
+
+        <div class="summary-rating">
+          <div class="stars">
+            <i class="fa fa-star" *ngFor="let s of [1,2,3,4,5]"></i>
+          </div>
+          <span>4.8 out of 5 based on 67017 reviews</span>
+        </div>
+
+        <div class="summary-guarantee">
+          Don’t love it? We’ll fix it. For free.
+        </div>
+      </aside>
+    </section>
+
+    <!-- YOU MAY ALSO LIKE -->
+    <section class="cart-section">
+      <h2>You may also like</h2>
+      <div class="scroll-row">
+        <article
+          class="horizontal-card"
+          *ngFor="let p of youMayAlsoLike; trackBy: trackById"
+        >
+          <div class="h-card-img">
+            <img [src]="p.imageUrl" [alt]="p.name" />
+          </div>
+          <div class="h-card-info">
+            <div class="h-card-name">{{ p.name }}</div>
+            <div class="h-card-price">
+              \${{ p.price | number : '1.2-2' }}
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RECENTLY VIEWED -->
+    <section class="cart-section">
+      <h2>Recently viewed</h2>
+      <div class="scroll-row">
+        <article
+          class="horizontal-card"
+          *ngFor="let p of recentlyViewed; trackBy: trackById"
+        >
+          <div class="h-card-img small">
+            <img [src]="p.imageUrl" [alt]="p.name" />
+          </div>
+          <div class="h-card-info">
+            <div class="h-card-name">{{ p.name }}</div>
+            <div class="h-card-price">
+              \${{ p.price | number : '1.2-2' }}
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TRUST BADGES ROW (trước footer) -->
+    <section class="cart-benefits">
+      <div class="benefit">
+        <strong>Worldwide Shipping</strong>
+        <span>Standard or Express delivery</span>
+      </div>
+      <div class="benefit">
+        <strong>Secure Payments</strong>
+        <span>100% Secure payment with SSL</span>
+      </div>
+      <div class="benefit">
+        <strong>Free Return</strong>
+        <span>Money back guarantee for all orders</span>
+      </div>
+      <div class="benefit">
+        <strong>Local Support</strong>
+        <span>24/7 dedicated support</span>
+      </div>
+    </section>
+  </div>
+</div>

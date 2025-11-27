@@ -1,0 +1,248 @@
+<div class="product-page">
+  <div class="container">
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+      <a routerLink="/client/home">Home</a>
+      <span>/</span>
+      <a href="#">Nurse</a>
+      <span>/</span>
+      <span class="current">{{ productTitle }}</span>
+    </nav>
+
+    <!-- VÙNG CHÍNH: GALLERY + INFO -->
+    <section class="product-main">
+      <!-- LEFT: GALLERY -->
+      <div class="product-gallery">
+        <div class="main-image">
+          <img [src]="activeImage.url" alt="Product main image" />
+        </div>
+
+        <div class="thumb-row">
+          <button
+            class="thumb"
+            *ngFor="let img of images; trackBy: trackById"
+            [class.active]="img.id === activeImage.id"
+            (click)="setActiveImage(img)"
+          >
+            <img [src]="img.thumbUrl" alt="Thumbnail" />
+          </button>
+        </div>
+
+        <div class="personalized-tag">Personalized design</div>
+      </div>
+
+      <!-- RIGHT: PRODUCT INFO -->
+      <div class="product-info">
+        <h1 class="product-title">
+          {{ productTitle }}
+        </h1>
+
+        <div class="rating-row">
+          <span class="stars">
+            <i class="fa fa-star" *ngFor="let s of [1,2,3,4,5]"></i>
+          </span>
+          <span class="rating-value">{{ rating }}</span>
+          <span class="rating-count">({{ ratingCount }} reviews)</span>
+        </div>
+
+        <div class="price-row">
+          <span class="price">{{ price | number : '1.0-0' }}đ</span>
+          <span class="old-price">{{ oldPrice | number : '1.0-0' }}đ</span>
+          <span class="discount">{{ discountText }}</span>
+        </div>
+
+        <div class="option-group">
+          <div class="option-label">Style</div>
+          <div class="option-value">Unisex T-Shirt</div>
+        </div>
+
+        <div class="option-group">
+          <div class="option-label">Size</div>
+          <div class="option-chips">
+            <button
+              class="chip"
+              *ngFor="let size of sizes"
+              [class.active]="size.value === selectedSize"
+              (click)="selectSize(size)"
+            >
+              {{ size.label }}
+            </button>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <div class="option-label">Color</div>
+          <div class="color-row">
+            <button
+              class="color-dot"
+              *ngFor="let color of colors"
+              [class.active]="color.value === selectedColor"
+              (click)="selectColor(color)"
+              [attr.data-color]="color.value"
+            ></button>
+          </div>
+        </div>
+
+        <div class="option-group">
+          <div class="option-label">Quantity</div>
+          <div class="qty-row">
+            <button (click)="decreaseQty()">-</button>
+            <span>{{ quantity }}</span>
+            <button (click)="increaseQty()">+</button>
+          </div>
+        </div>
+
+        <button class="btn-add-to-cart">
+          ADD TO CART
+        </button>
+
+        <div class="shipping-info">
+          <p><strong>Estimated delivery:</strong> Dec 05 – Dec 10</p>
+          <p><strong>Shipping:</strong> Calculated at checkout</p>
+        </div>
+
+        <div class="trust-badges">
+          <div>✔ Secure checkout</div>
+          <div>✔ Easy returns within 30 days</div>
+          <div>✔ Printed and shipped from VN</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DƯỚI: REVIEWS + PERSONALIZATION + MÔ TẢ + GỢI Ý -->
+    <section class="product-secondary">
+      <!-- LEFT COLUMN -->
+      <div class="secondary-left">
+        <!-- REVIEWS -->
+        <div class="card reviews-card">
+          <div class="card-header">
+            <h2>Reviews</h2>
+            <div class="score">
+              <span class="score-value">{{ rating }}</span>
+              <span class="score-stars">
+                <i class="fa fa-star" *ngFor="let s of [1,2,3,4,5]"></i>
+              </span>
+              <span class="score-count">{{ ratingCount }} ratings</span>
+            </div>
+          </div>
+
+          <div class="review-list">
+            <article class="review-item" *ngFor="let i of [1,2,3]">
+              <div class="review-header">
+                <span class="review-name">Customer {{ i }}</span>
+                <span class="review-stars">
+                  <i class="fa fa-star" *ngFor="let s of [1,2,3,4,5]"></i>
+                </span>
+              </div>
+              <p class="review-text">
+                Great quality shirt, colors are vibrant and shipping was
+                faster than expected. Highly recommend!
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <!-- YOU MIGHT LOVE THESE -->
+        <div class="card">
+          <div class="card-header">
+            <h2>You Might Love These</h2>
+          </div>
+          <div class="reco-grid">
+            <article
+              class="reco-card"
+              *ngFor="let p of recommended; trackBy: trackById"
+            >
+              <div class="reco-image">
+                <img [src]="p.imageUrl" [alt]="p.name" />
+              </div>
+              <h3 class="reco-name">{{ p.name }}</h3>
+              <div class="reco-price">
+                {{ p.price | number : '1.0-0' }}đ
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- PRODUCT DESCRIPTION -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Product Description</h2>
+          </div>
+          <div class="card-body">
+            <p>
+              This personalized nurse t-shirt is the perfect gift for medical
+              students, nurses, and healthcare workers. Customize hair style,
+              outfit, and accessories to match your recipient.
+            </p>
+            <ul>
+              <li>Premium cotton blend</li>
+              <li>Unisex fit</li>
+              <li>Machine washable</li>
+              <li>Printed using high-quality inks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: PERSONALIZATION OPTIONS (UI giả lập) -->
+      <div class="secondary-right">
+        <div class="card">
+          <div class="card-header">
+            <h2>Personalization</h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Enter Name</label>
+              <input type="text" placeholder="E.g. Sophia" />
+            </div>
+
+            <div class="form-group">
+              <label>Hair Style</label>
+              <div class="option-grid small">
+                <div class="option-box" *ngFor="let i of [1,2,3,4,5,6]">
+                  <div class="option-thumb"></div>
+                  <span>Style {{ i }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Outfit</label>
+              <div class="option-grid medium">
+                <div class="option-box" *ngFor="let i of [1,2,3,4]">
+                  <div class="option-thumb tall"></div>
+                  <span>Outfit {{ i }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Accessories</label>
+              <div class="option-grid small">
+                <div class="option-box" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+                  <div class="option-thumb square"></div>
+                  <span>Option {{ i }}</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="note">
+              * This section only là mock UI để dựng layout. Sau này mình sẽ
+              bind với API / rule thật.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED TAGS / RECENTLY VIEWED (rút gọn) -->
+    <section class="product-tags">
+      <div class="tag-row">
+        <span class="tag-label">Related tags:</span>
+        <button class="tag-chip" *ngFor="let t of ['nurse','medical','gift','personalized']">
+          {{ t }}
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
