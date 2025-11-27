@@ -1,11 +1,19 @@
-import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive
+  ],
   templateUrl: './client.component.html',
-  styleUrl: './client.component.scss'
+  styleUrls: ['./client.component.scss'],
 })
-export class ClientComponent {}
+export class ClientComponent {
+  currentYear = new Date().getFullYear(); // dùng cho footer, xem mục 2
+}

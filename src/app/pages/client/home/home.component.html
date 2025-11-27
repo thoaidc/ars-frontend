@@ -1,1 +1,96 @@
-<p>home works!</p>
+<div class="home">
+  <!-- HERO -->
+  <section class="section hero-section">
+    <div class="container hero-grid">
+      <div class="hero-left">
+        <h1>{{ heroBanner.title }}</h1>
+        <p>{{ heroBanner.subtitle }}</p>
+        <div class="hero-actions">
+          <button class="btn-primary">{{ heroBanner.ctaLabel }}</button>
+          <button class="btn-ghost">View Gift Guide</button>
+        </div>
+        <ul class="hero-benefits">
+          <li>✅ High-quality printing</li>
+          <li>✅ Fast shipping</li>
+          <li>✅ Easy personalization</li>
+        </ul>
+      </div>
+      <div class="hero-right">
+        <img [src]="heroBanner.imageUrl" alt="Holiday gifts" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED COLLECTIONS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Collections</h2>
+        <a href="#">View all</a>
+      </div>
+      <div class="scroll-row">
+        <article class="collection-card" *ngFor="let col of featuredCollections; trackBy: trackById">
+          <div class="image-wrapper">
+            <img [src]="col.thumbnailUrl" [alt]="col.name" />
+          </div>
+          <h3>{{ col.name }}</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TODAY'S BIG DEALS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Today’s Big Deals</h2>
+        <span class="badge-time">Ends in 23:59:59</span>
+      </div>
+      <div class="product-grid">
+        <article class="product-card" *ngFor="let p of todayDeals; trackBy: trackById">
+          <div class="product-image">
+            <img [src]="p.imageUrl" [alt]="p.name" />
+            <span class="product-badge" *ngIf="p.badge">{{ p.badge }}</span>
+          </div>
+          <h3 class="product-name">{{ p.name }}</h3>
+          <div class="product-price">{{ p.price | number : '1.0-0' }}đ</div>
+          <button class="btn-outline">Add to cart</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDED -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Based On What You Love</h2>
+      </div>
+      <div class="product-grid">
+        <article class="product-card small" *ngFor="let p of recommendedProducts; trackBy: trackById">
+          <div class="product-image small">
+            <img [src]="p.imageUrl" [alt]="p.name" />
+          </div>
+          <h3 class="product-name">{{ p.name }}</h3>
+          <div class="product-price">{{ p.price | number : '1.0-0' }}đ</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRENDING COLLECTIONS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Trending Collections</h2>
+      </div>
+      <div class="trending-grid">
+        <div class="trending-card" *ngFor="let col of trendingCollections; trackBy: trackById">
+          <h3>{{ col.name }}</h3>
+          <p>Discover unique designs in {{ col.name }} collection.</p>
+          <button class="link-btn">Shop now →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

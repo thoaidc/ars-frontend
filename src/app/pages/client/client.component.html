@@ -1,3 +1,83 @@
-<div id="app-client">
-  <router-outlet></router-outlet>
+<div class="client-layout">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="container">
+      <span>✨ Free shipping cho đơn từ 500.000đ ✨</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container header-inner">
+      <div class="logo">
+        <a routerLink="/client">PTIT Store</a>
+      </div>
+
+      <nav class="main-nav">
+        <a routerLink="/client/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          Home
+        </a>
+        <a routerLink="/client/collections">Collections</a>
+        <a routerLink="/client/blog">Blog</a>
+        <a routerLink="/client/about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <input class="search-input" placeholder="Search products..." />
+        <button class="icon-btn">
+          <i class="fa fa-user"></i>
+        </button>
+        <button class="icon-btn">
+          <i class="fa fa-heart"></i>
+        </button>
+        <button class="icon-btn" [routerLink]="['/client/cart']">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>PTIT Store</h3>
+        <p>Customize products to match your unique taste and personality.</p>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <a href="#">About us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+
+      <div>
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Returns</a>
+        <a href="#">Shipping</a>
+      </div>
+
+      <div>
+        <h4>Follow us</h4>
+        <div class="socials">
+          <a href="#"><i class="fa fa-facebook"></i></a>
+          <a href="#"><i class="fa fa-instagram"></i></a>
+          <a href="#"><i class="fa fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <span>© {{ currentYear }} PTIT Store. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
 </div>
