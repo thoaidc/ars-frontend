@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { UtilsService } from '../../utils/utils.service';
-import {LIST_TIME_SELECT} from '../../../constants/common.constants';
+import {DATETIME_FORMAT, LIST_TIME_SELECT} from '../../../constants/common.constants';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
@@ -51,16 +51,39 @@ export class DateFilterComponent implements OnChanges, OnInit {
 
   changeDate() {
     const time = {
-      fromDate: this.fromDate,
-      toDate: this.toDate ? dayjs(this.toDate).endOf('day') : null,
-      periods: this.periods,
+      fromDate: this.fromDate ? this.getFromDateStr(this.fromDate) : null,
+      toDate: this.toDate ? this.getToDateStr(this.toDate) : null,
+      periods: this.periods
     };
+
     this.timeChange.emit(time);
+  }
+
+  getFromDateStr(datetime: any) {
+    if (datetime) {
+      return this.utilsService.convertToDateString(dayjs(datetime).startOf('day').toString(), DATETIME_FORMAT);
+    }
+
+    return null;
+  }
+
+  getToDateStr(datetime: any) {
+    if (datetime) {
+      return this.utilsService.convertToDateString(dayjs(datetime).endOf('day').toString(), DATETIME_FORMAT);
+    }
+
+    return null;
   }
 
   changePeriods() {
     const time = this.getTime(this.periods);
-    this.timeChange.emit(time);
+    const timeStr = {
+      fromDate: time.fromDate ? this.utilsService.convertToDateString(time.fromDate.toString(), DATETIME_FORMAT) : null,
+      toDate: time.toDate ? this.utilsService.convertToDateString(time.toDate.toString(), DATETIME_FORMAT) : null,
+      periods: time.periods
+    }
+
+    this.timeChange.emit(timeStr);
   }
 
   getTime(periods: any) {
@@ -79,19 +102,19 @@ export class DateFilterComponent implements OnChanges, OnInit {
         };
       case 3: // THIS_WEEK
         return {
-          fromDate: dayjs().startOf('week').day(1), // Set day to 1 (Monday)
+          fromDate: dayjs().startOf('week').day(1).startOf('day'), // Set day to 1 (Monday)
           toDate: dayjs().endOf('day'),
           periods: periods,
         };
       case 4: // THIS_MONTH
         return {
-          fromDate: dayjs().startOf('month'),
+          fromDate: dayjs().startOf('month').startOf('day'),
           toDate: dayjs().endOf('day'),
           periods: periods,
         };
       case 5: // THIS_YEAR
         return {
-          fromDate: dayjs().startOf('year'),
+          fromDate: dayjs().startOf('year').startOf('day'),
           toDate: dayjs().endOf('day'),
           periods: periods,
         };

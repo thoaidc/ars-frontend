@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-client',
+  selector: 'app-client-main',
   standalone: true,
   imports: [
     CommonModule,

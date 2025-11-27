@@ -7,7 +7,7 @@ import {
 
 export const SECURITY_ROUTES: Routes = [
   {
-    path: 'public-api',
+    path: 'public-apis',
     title: SIDEBAR_SECURITY_PUBLIC_API_MANAGEMENT_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./public-api/public-api.component').then(m => m.PublicApiComponent),

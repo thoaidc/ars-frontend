@@ -28,8 +28,7 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./pages/client/client.routes').then(m => m.CLIENT_ROUTES)
   },
   {
-    path: '',
-    redirectTo: 'client',
-    pathMatch: 'full'
+    path: '**',
+    redirectTo: '/client'
   }
 ];

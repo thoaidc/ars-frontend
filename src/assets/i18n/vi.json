@@ -51,7 +51,17 @@
       "role": "Vai trò"
     },
     "customer": "Khách hàng",
+    "shop": "Cửa hàng",
+    "category": "Danh mục",
     "product": "Sản phẩm",
+    "product.attribute": "Thuộc tính",
+    "product.group": "Nhóm sản phẩm",
+    "product.item": "Thiết kế",
+    "order": "Đơn hàng",
+    "finance": "Tài chính",
+    "statistic": "Thống kê & báo cáo",
+    "support": "Hỗ trợ khách hàng",
+    "setting": "Cài đặt",
     "security": {
       "title": "Bảo mật",
       "publicApi": "API",

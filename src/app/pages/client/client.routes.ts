@@ -3,6 +3,11 @@ import { SIDEBAR_HOME_TITLE } from '../../constants/sidebar.constants';
 
 export const CLIENT_ROUTES: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home'
+  },
+  {
     path: 'home',
     title: SIDEBAR_HOME_TITLE,
     pathMatch: 'full',
@@ -29,8 +34,7 @@ export const CLIENT_ROUTES: Routes = [
       import('./checkout/checkout.component').then(m => m.CheckoutComponent),
   },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home',
-  },
+    path: '**',
+    redirectTo: 'home'
+  }
 ];

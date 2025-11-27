@@ -7,7 +7,7 @@ import {SHOP_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 import {AuthService} from '../../core/services/auth.service';
 
 @Component({
-  selector: 'app-shop',
+  selector: 'app-shop-main',
   standalone: true,
   imports: [RouterOutlet, NgClass, SidebarComponent, NavbarComponent],
   templateUrl: './shop.component.html',

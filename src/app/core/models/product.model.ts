@@ -1,13 +1,61 @@
-export type ProductStatus = 'ACTIVE' | 'INACTIVE';
+import {BaseFilterRequest} from './request.model';
+import {AuditingEntity} from './common.model';
 
-export interface Product {
-  id: number;
-  code: string;        // Mã sản phẩm
-  name: string;        // Tên sản phẩm
-  quantity: number;    // Số lượng
-  unit: string;        // Đơn vị
-  price: number;       // Giá bán
-  taxRate: number;     // 0, 0.05, 0.1 ...
-  status: ProductStatus;
-  startedAt: string;   // ISO string
+export interface ProductsFilter extends BaseFilterRequest {
+  code?: string;
+}
+
+export interface Product extends AuditingEntity {
+  shopId: number;
+  name: string;
+  code: string;
+  price: string;
+  status: string;
+  thumbnailUrl: string;
+  customizable: boolean;
+  description?: string;
+  images?: string[];
+  categories?: CategoryDTO[];
+  productGroups?: ProductGroupDTO[];
+  productOptions?: ProductOptionDTO[];
+}
+
+export interface CategoryDTO extends AuditingEntity {
+  name: string;
+  description?: string;
+}
+
+export interface ProductGroupDTO extends AuditingEntity {
+  shopId: number;
+  name: string;
+}
+
+export interface ProductOptionDTO extends AuditingEntity {
+  productId: number;
+  name: string;
+  values: ProductOptionValueDTO[];
+}
+
+export interface ProductOptionValueDTO extends AuditingEntity {
+  image: string;
+}
+
+export interface CreateProductRequest {
+  shopId: number;
+  name: string;
+  code: string;
+  price: string;
+  description?: string;
+  customizable: boolean;
+  thumbnail: any;
+  originalImage?: any;
+  categoryIds?: number[];
+  productGroupIds?: number[];
+  options?: CreateOption[];
+  productImages?: any[];
+}
+
+export interface CreateOption {
+  name: string;
+  images: any[];
 }

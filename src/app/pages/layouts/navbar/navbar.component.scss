@@ -1,6 +1,6 @@
-$sidebar-width: 300px;
-$sidebar-height: 72px;
-$sidebar-width-collapsed: 76px;
+$sidebar-width: 250px;
+$sidebar-height: 50px;
+$sidebar-width-collapsed: 64px;
 $app-sidebar-transition: cubic-bezier(0.685, 0.0473, 0.346, 1);
 $color-default: #0074bd;
 
@@ -33,7 +33,7 @@ $color-default: #0074bd;
   font-size: 16px;
   justify-content: right;
   background: white;
-  height: 72px;
+  height: 50px;
 
   span,
   i,
@@ -206,6 +206,7 @@ $color-default: #0074bd;
       font-weight: 500;
       line-height: normal;
       white-space: pre;
+      flex-grow: 1;
     }
 
     .icon-arrow {
@@ -350,8 +351,8 @@ $color-default: #0074bd;
 }
 
 .user-logo {
-  height: 40px;
-  width: 40px;
+  height: 32px;
+  width: 32px;
   border: 1px solid var(--app-main-color);
   display: flex;
   justify-content: center;

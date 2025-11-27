@@ -2,9 +2,10 @@
   <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
     <div class="menu">
       <div [ngClass]="isSidebarShown ? 'menu-expanded' : 'menu-collapsed'">
-        <img *ngIf="isSidebarShown" src="assets/images/logo/logo_admin_full.png" class="logo-img" alt=""/>
+        <div class="flex-grow-1 text-center h-100">
+          <img *ngIf="isSidebarShown" src="assets/images/logo/logo_admin_full.png" class="logo-img" alt=""/>
+        </div>
         <span (click)="toggleAppSidebar()" *ngIf="isSidebarShown" [innerHTML]="ICON_CLOSE_SIDEBAR | safeHtml"></span>
-        <img *ngIf="!isSidebarShown" src="assets/images/logo/logo_admin.png" class="logo-img-custom" alt="" />
       </div>
     </div>
 

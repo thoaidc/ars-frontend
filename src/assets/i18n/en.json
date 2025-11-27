@@ -51,7 +51,17 @@
       "role": "Roles"
     },
     "customer": "Customers",
+    "shop": "Shops",
+    "category": "Categories",
     "product": "Products",
+    "product.attribute": "Attributes",
+    "product.group": "Product groups",
+    "product.item": "Design",
+    "order": "Orders",
+    "finance": "Finance",
+    "statistic": "Statistic",
+    "support": "Supports",
+    "setting": "Settings",
     "security": {
       "title": "Security",
       "publicApi": "API",

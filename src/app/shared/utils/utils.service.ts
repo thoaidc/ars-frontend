@@ -5,6 +5,8 @@ import {LOCAL_USER_AUTHORITIES_KEY} from '../../constants/local-storage.constant
 import {SidebarNavItem} from '../../core/models/sidebar.model';
 import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 import {TranslateService} from '@ngx-translate/core';
+import {BaseFilterRequest} from '../../core/models/request.model';
+import {DATETIME_FORMAT} from '../../constants/common.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -87,6 +89,35 @@ export class UtilsService {
     return isValidPassword;
   }
 
+  buildFilterRequest<T extends BaseFilterRequest>(filter: T): T {
+    const req: T = { ...filter };
+
+    req.page = (filter.page ?? 1) - 1;
+    req.size = filter.size ?? 20;
+
+    if (!filter.keyword) {
+      delete req.keyword;
+    }
+
+    if (!filter.status) {
+      delete req.status;
+    }
+
+    if (filter.fromDate) {
+      req.fromDate = this.convertToDateString(filter.fromDate.toString(), DATETIME_FORMAT);
+    } else {
+      delete req.fromDate;
+    }
+
+    if (filter.toDate) {
+      req.toDate = this.convertToDateString(filter.toDate.toString(), DATETIME_FORMAT);
+    } else {
+      delete req.toDate;
+    }
+
+    return req;
+  }
+
   findFirstAccessibleRoute(userPermissions?: string[]): string {
     if (!userPermissions) {
       userPermissions = this.getUserPermissions();
@@ -154,5 +185,35 @@ export class UtilsService {
       ...item,
       name: this.translateService.instant(item.name)
     }));
+  }
+
+  buildFormData(formData: FormData, request: any, parentKey?: string) {
+    if (request === null || request === undefined)
+      return;
+
+    if (request instanceof File) {
+      formData.append(parentKey!, request);
+      return;
+    }
+
+    if (Array.isArray(request)) {
+      request.forEach((item, index) => {
+        const key = parentKey ? `${parentKey}[${index}]` : `${index}`;
+        this.buildFormData(formData, item, key);
+      });
+      return;
+    }
+
+    if (typeof request === 'object') {
+      Object.keys(request).forEach(key => {
+        const value = request[key];
+        const newKey = parentKey ? `${parentKey}.${key}` : key;
+        this.buildFormData(formData, value, newKey);
+      });
+      return;
+    }
+
+    // primitives (string, number, boolean)
+    formData.append(parentKey!, request);
   }
 }
