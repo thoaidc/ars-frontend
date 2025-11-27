@@ -186,4 +186,34 @@ export class UtilsService {
       name: this.translateService.instant(item.name)
     }));
   }
+
+  buildFormData(formData: FormData, request: any, parentKey?: string) {
+    if (request === null || request === undefined)
+      return;
+
+    if (request instanceof File) {
+      formData.append(parentKey!, request);
+      return;
+    }
+
+    if (Array.isArray(request)) {
+      request.forEach((item, index) => {
+        const key = parentKey ? `${parentKey}[${index}]` : `${index}`;
+        this.buildFormData(formData, item, key);
+      });
+      return;
+    }
+
+    if (typeof request === 'object') {
+      Object.keys(request).forEach(key => {
+        const value = request[key];
+        const newKey = parentKey ? `${parentKey}.${key}` : key;
+        this.buildFormData(formData, value, newKey);
+      });
+      return;
+    }
+
+    // primitives (string, number, boolean)
+    formData.append(parentKey!, request);
+  }
 }

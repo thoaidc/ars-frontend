@@ -41,6 +41,7 @@ export interface ProductOptionValueDTO extends AuditingEntity {
 }
 
 export interface CreateProductRequest {
+  shopId: number;
   name: string;
   code: string;
   price: string;
@@ -51,15 +52,10 @@ export interface CreateProductRequest {
   categoryIds?: number[];
   productGroupIds?: number[];
   options?: CreateOption[];
-  images?: any[];
+  productImages?: any[];
 }
 
 export interface CreateOption {
   name: string;
-  values: CreateOptionValue[];
-}
-
-export interface CreateOptionValue {
-  image: string;
-  data?: any;
+  images: any[];
 }

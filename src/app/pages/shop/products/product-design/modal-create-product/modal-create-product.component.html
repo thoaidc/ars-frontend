@@ -147,7 +147,7 @@
         <div class="item-search w-100 mt-3">
           <label class="title-info">Ảnh bìa<span class="text-danger m-0">*</span></label>
           <div class="image-upload-container-single"
-               [class.has-image]="selectedThumbnail.url"
+               [class.has-image]="selectedThumbnail"
                (click)="fileInput.click()"
                (dragover)="onDragOver($event)"
                (dragleave)="onDragLeave($event)"
@@ -157,7 +157,7 @@
                    (change)="onSingleFileSelected($event)" style="display: none;" />
 
             <div class="single-image-display">
-              <img [src]="selectedThumbnail.url || 'assets/images/product_default.png'" alt="Selected Image" />
+              <img [src]="selectedThumbnail || 'assets/images/product_default.png'" alt="Selected Image" />
             </div>
           </div>
         </div>
@@ -178,18 +178,7 @@
         <div class="attribute-row d-flex align-items-center mb-2 gap-3">
           <form class="w-25">
             <div class="select-search-custom mt-0 attribute-form-select-custom">
-              <ng-select
-                style="max-height: 36px !important;"
-                [items]="categories"
-                bindLabel="name"
-                bindValue="id"
-                [selectableGroup]="true"
-                placeholder="Chọn thuộc tính"
-                [(ngModel)]="attributeIdSelected"
-                [closeOnSelect]="true"
-                name="productGroups"
-              >
-              </ng-select>
+
             </div>
           </form>
 

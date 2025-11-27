@@ -3,7 +3,7 @@ import {
   OnInit,
   Renderer2, ViewChild,
 } from '@angular/core';
-import {Location, NgClass, NgForOf, NgIf} from '@angular/common';
+import {Location, NgIf} from '@angular/common';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
@@ -21,8 +21,8 @@ import {ProductGroupService} from '../../../../../core/services/product-group.se
 import {AlphanumericOnlyDirective} from '../../../../../shared/directives/alphanumeric-only.directive';
 import {SafeHtmlPipe} from '../../../../../shared/pipes/safe-html.pipe';
 import {ICON_DELETE, ICON_PLUS, ICON_X_WHITE} from '../../../../../shared/utils/icon';
-import {SingleSelectedImage} from '../../../../../core/models/common.model';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ProductService} from '../../../../../core/services/product.service';
 
 @Component({
   selector: 'app-shop-product-create',
@@ -40,20 +40,18 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ModalCreateProductComponent implements OnInit {
   currentTab: number = 0;
-  attributeIdSelected: number = 0;
   categories: CategoryDTO[] = [];
   productGroups: ProductGroupDTO[] = [];
   product: CreateProductRequest = {
+    shopId: 1,
     name: '',
     code: '',
     price: '',
     customizable: false,
     thumbnail: null,
-    originalImage: null
   };
+  selectedThumbnail: any;
   @ViewChild('fileInput') fileInput!: ElementRef;
-  selectedThumbnail: SingleSelectedImage = { name: '', url: null };
-  designFile: File | null = null;
 
   constructor(
     public toastr: ToastrService,
@@ -66,7 +64,8 @@ export class ModalCreateProductComponent implements OnInit {
     public loading: LoadingOption,
     private categoryService: CategoryService,
     private productGroupService: ProductGroupService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private productService: ProductService
   ) {
     this.location.subscribe(() => {
       this.activeModal.dismiss();
@@ -95,16 +94,18 @@ export class ModalCreateProductComponent implements OnInit {
 
   onDesignFileSelected(event: any): void {
     const file = event.target.files[0];
+
     if (file) {
-      this.designFile = file;
+      this.product.originalImage = file;
     } else {
-      this.designFile = null;
+      this.product.originalImage = null;
     }
   }
 
   onSingleFileSelected(event: any): void {
     const files = event.target.files;
     if (files && files.length > 0) {
+      this.product.thumbnail = files[0];
       this.processFile(files[0]);
     }
 
@@ -115,10 +116,7 @@ export class ModalCreateProductComponent implements OnInit {
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.selectedThumbnail = {
-          name: file.name,
-          url: this.sanitizer.bypassSecurityTrustUrl(e.target.result)
-        };
+        this.selectedThumbnail = this.sanitizer.bypassSecurityTrustUrl(e.target.result);
       };
       reader.readAsDataURL(file);
     } else {
@@ -146,7 +144,13 @@ export class ModalCreateProductComponent implements OnInit {
   }
 
   confirmSave() {
-
+    this.productService.createProduct(this.product).subscribe(response => {
+      if (response.status) {
+        this.toastr.success("Tạo sản phẩm thành công");
+      } else {
+        this.toastr.error(response.message || '', "Tạo sản phẩm thất bại");
+      }
+    });
   }
 
   dismiss() {
