@@ -10,10 +10,11 @@ export interface Product extends AuditingEntity {
   name: string;
   code: string;
   price: string;
-  description: string;
-  customizable: boolean;
   status: string;
   thumbnailUrl: string;
+  customizable: boolean;
+  description?: string;
+  images?: string[];
   categories?: CategoryDTO[];
   productGroups?: ProductGroupDTO[];
   productOptions?: ProductOptionDTO[];
@@ -36,9 +37,7 @@ export interface ProductOptionDTO extends AuditingEntity {
 }
 
 export interface ProductOptionValueDTO extends AuditingEntity {
-  productOptionId: number;
   image: string;
-  data?: any;
 }
 
 export interface CreateProductRequest {
