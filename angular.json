@@ -39,10 +39,16 @@
               "src/assets/scss/app.min.scss",
               "src/assets/scss/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/eshopper/css/style.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "src/assets/js/app.min.js",
+              "src/assets/eshopper/lib/easing/easing.min.js",
+              "src/assets/eshopper/lib/owlcarousel/owl.carousel.min.js",
+              "src/assets/eshopper/mail/jqBootstrapValidation.min.js",
+              "src/assets/eshopper/mail/contact.js",
+              "src/assets/eshopper/js/main.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },

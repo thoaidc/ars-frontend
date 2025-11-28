@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Product, ProductStatus } from '../../../core/models/product.model';
+import { Product } from '../../../core/models/product.model';
 import { ProductService } from '../../../core/services/product.service';
 import { Subscription } from 'rxjs';
+import { ProductsFilter } from '../../../core/models/product.model';
 
 interface ProductForm {
   code: string;
@@ -12,7 +13,7 @@ interface ProductForm {
   unit: string;
   price: number | null;
   taxRate: number;
-  status: ProductStatus;
+  status: string;
   startedAt: string; // dùng cho input type="datetime-local"
 }
 
@@ -25,8 +26,8 @@ interface ProductForm {
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   // dữ liệu
-  allProducts: Product[] = [];
-  filteredProducts: Product[] = [];
+  allProducts: any[] = [];
+  filteredProducts: any[] = [];
 
   // filter + search
   keyword = '';
@@ -44,15 +45,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   form: ProductForm = this.createEmptyForm();
   taxOptions = [0, 0.05, 0.1];
-  statusOptions: ProductStatus[] = ['ACTIVE', 'INACTIVE'];
+  statusOptions = ['ACTIVE', 'INACTIVE'];
 
   private sub?: Subscription;
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.sub = this.productService.getAll().subscribe(list => {
-      this.allProducts = list;
+    // initial load using ProductsFilter (page and size) to call getAllWithPaging
+    const req: ProductsFilter = { page: 0, size: 100 };
+    this.sub = this.productService.getAllWithPaging(req).subscribe(resp => {
+      // Handle both cases: service might return BaseResponse or raw array
+      // @ts-ignore
+      this.allProducts = Array.isArray(resp) ? resp : (resp.result ?? []);
       this.applyFilter();
     });
   }
@@ -67,8 +72,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.filteredProducts = this.allProducts.filter(p => {
       const matchKw =
         !kw ||
-        p.code.toLowerCase().includes(kw) ||
-        p.name.toLowerCase().includes(kw);
+        (p.code && p.code.toLowerCase().includes(kw)) ||
+        (p.name && p.name.toLowerCase().includes(kw));
       const matchStatus =
         this.statusFilter === 'ALL' ? true : p.status === this.statusFilter;
       return matchKw && matchStatus;
@@ -95,7 +100,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get pagedProducts(): Product[] {
+  get pagedProducts(): any[] {
     const start = this.pageIndex * this.pageSize;
     const end = start + this.pageSize;
     return this.filteredProducts.slice(start, end);
@@ -115,12 +120,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.form = {
       code: p.code,
       name: p.name,
-      quantity: p.quantity,
-      unit: p.unit,
-      price: p.price,
-      taxRate: p.taxRate,
+      quantity: (p as any).quantity ?? null,
+      unit: (p as any).unit ?? '',
+      price: p.price ? Number(p.price) : null,
+      taxRate: (p as any).taxRate ?? 0,
       status: p.status,
-      startedAt: this.toInputDatetime(p.startedAt),
+      startedAt: this.toInputDatetime((p as any).startedAt),
     };
     this.showModal = true;
   }
@@ -135,25 +140,27 @@ export class ProductsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const payload: Omit<Product, 'id'> = {
+    // Create payload matching CreateProductRequest | Product for create/update
+    const payload: any = {
+      shopId: 0, // TODO: set current shop id
       code: this.form.code.trim(),
       name: this.form.name.trim(),
-      quantity: Number(this.form.quantity ?? 0),
-      unit: this.form.unit?.trim() || '',
-      price: Number(this.form.price ?? 0),
-      taxRate: Number(this.form.taxRate ?? 0),
-      status: this.form.status,
-      startedAt: this.form.startedAt
-        ? new Date(this.form.startedAt).toISOString()
-        : new Date().toISOString(),
+      price: String(Number(this.form.price ?? 0)),
+      description: undefined,
+      customizable: false,
+      // Note: createProduct expects FormData with fields like 'thumbnail' etc.
     };
 
     if (this.isEdit && this.editingId != null) {
-      this.productService.update(this.editingId, payload).subscribe(() => {
+      const updatePayload: any = { ...payload, id: this.editingId };
+      this.productService.updateProduct(updatePayload).subscribe(() => {
+        // refresh list
+        this.reloadList();
         this.closeModal();
       });
     } else {
-      this.productService.create(payload).subscribe(() => {
+      this.productService.createProduct(payload).subscribe(() => {
+        this.reloadList();
         this.closeModal();
       });
     }
@@ -161,7 +168,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   deleteProduct(p: Product): void {
     if (!confirm(`Xóa sản phẩm "${p.name}"?`)) return;
-    this.productService.delete(p.id).subscribe();
+    this.productService.deleteProductById(p.id).subscribe(() => this.reloadList());
   }
 
   // ---- helpers ----
@@ -186,5 +193,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     } catch {
       return iso.slice(0, 16);
     }
+  }
+
+  private reloadList(): void {
+    const req: ProductsFilter = { page: 0, size: 100 };
+    this.productService.getAllWithPaging(req).subscribe(resp => {
+      // @ts-ignore
+      this.allProducts = Array.isArray(resp) ? resp : (resp.result ?? []);
+      this.applyFilter();
+    });
   }
 }

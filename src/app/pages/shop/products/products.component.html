@@ -55,10 +55,13 @@
         <td>{{ pageIndex * pageSize + i + 1 }}</td>
         <td>{{ p.code }}</td>
         <td>{{ p.name }}</td>
-        <td>{{ p.quantity | number: '1.0-3' }}</td>
-        <td>{{ p.unit }}</td>
-        <td>{{ p.price | number: '1.0-0' }}</td>
-        <td>{{ (p.taxRate * 100) | number: '1.0-0' }}%</td>
+        <!-- quantity/unit are not part of Product model: show placeholder -->
+        <td>{{ (p['quantity'] != null) ? p['quantity'] : '-' }}</td>
+        <td>{{ (p['unit'] != null) ? p['unit'] : '-' }}</td>
+        <!-- price is string in model -> coerce to number for formatting -->
+        <td>{{ ((p.price) ? (+p.price) : 0) | number: '1.0-0' }}đ</td>
+        <!-- taxRate not available on Product model -> show placeholder -->
+        <td>{{ (p['taxRate'] != null) ? (p['taxRate'] * 100 + '%') : '-' }}</td>
         <td>
             <span
               class="badge"
@@ -70,7 +73,8 @@
               {{ p.status === 'ACTIVE' ? 'Đang kinh doanh' : 'Ngừng kinh doanh' }}
             </span>
         </td>
-        <td>{{ p.startedAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        <!-- use auditing createdDate instead of startedAt -->
+        <td>{{ p.createdDate ? (p.createdDate | date: 'yyyy-MM-dd HH:mm:ss') : '-' }}</td>
         <td>
           <button class="link" (click)="openEdit(p)">Sửa</button>
           <button class="link danger" (click)="deleteProduct(p)">Xóa</button>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { CartService } from '../../../core/services/cart.service';
 
 interface ProductImage {
   id: number;
@@ -22,7 +24,7 @@ interface RecommendedProduct {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })
@@ -108,6 +110,8 @@ export class ProductDetailComponent {
     },
   ];
 
+  constructor(private cartService: CartService) {}
+
   setActiveImage(img: ProductImage) {
     this.activeImage = img;
   }
@@ -126,6 +130,20 @@ export class ProductDetailComponent {
 
   increaseQty() {
     this.quantity++;
+  }
+
+  addToCart(): void {
+    const quantity = this.quantity || 1;
+
+    this.cartService.addItem(
+      {
+        productId: 1, // sau này đổi thành this.productId lấy từ route
+        name: this.productTitle,
+        price: this.price,
+        thumbnailUrl: this.activeImage.url,
+      },
+      quantity
+    );
   }
 
   trackById(_: number, item: { id: number }) {

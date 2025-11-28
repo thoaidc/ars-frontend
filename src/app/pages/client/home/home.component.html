@@ -1,96 +1,292 @@
-<div class="home">
-  <!-- HERO -->
-  <section class="section hero-section">
-    <div class="container hero-grid">
-      <div class="hero-left">
-        <h1>{{ heroBanner.title }}</h1>
-        <p>{{ heroBanner.subtitle }}</p>
-        <div class="hero-actions">
-          <button class="btn-primary">{{ heroBanner.ctaLabel }}</button>
-          <button class="btn-ghost">View Gift Guide</button>
-        </div>
-        <ul class="hero-benefits">
-          <li>✅ High-quality printing</li>
-          <li>✅ Fast shipping</li>
-          <li>✅ Easy personalization</li>
-        </ul>
-      </div>
-      <div class="hero-right">
-        <img [src]="heroBanner.imageUrl" alt="Holiday gifts" />
-      </div>
-    </div>
-  </section>
 
-  <!-- FEATURED COLLECTIONS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Featured Collections</h2>
-        <a href="#">View all</a>
-      </div>
-      <div class="scroll-row">
-        <article class="collection-card" *ngFor="let col of featuredCollections; trackBy: trackById">
-          <div class="image-wrapper">
-            <img [src]="col.thumbnailUrl" [alt]="col.name" />
-          </div>
-          <h3>{{ col.name }}</h3>
-        </article>
+<!-- FEATURED -->
+<div class="container-fluid pt-5">
+  <div class="row px-xl-5 pb-3">
+    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+        <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+        <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
       </div>
     </div>
-  </section>
-
-  <!-- TODAY'S BIG DEALS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Today’s Big Deals</h2>
-        <span class="badge-time">Ends in 23:59:59</span>
-      </div>
-      <div class="product-grid">
-        <article class="product-card" *ngFor="let p of todayDeals; trackBy: trackById">
-          <div class="product-image">
-            <img [src]="p.imageUrl" [alt]="p.name" />
-            <span class="product-badge" *ngIf="p.badge">{{ p.badge }}</span>
-          </div>
-          <h3 class="product-name">{{ p.name }}</h3>
-          <div class="product-price">{{ p.price | number : '1.0-0' }}đ</div>
-          <button class="btn-outline">Add to cart</button>
-        </article>
+    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+        <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+        <h5 class="font-weight-semi-bold m-0">Fast Shipping</h5>
       </div>
     </div>
-  </section>
-
-  <!-- RECOMMENDED -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Based On What You Love</h2>
-      </div>
-      <div class="product-grid">
-        <article class="product-card small" *ngFor="let p of recommendedProducts; trackBy: trackById">
-          <div class="product-image small">
-            <img [src]="p.imageUrl" [alt]="p.name" />
-          </div>
-          <h3 class="product-name">{{ p.name }}</h3>
-          <div class="product-price">{{ p.price | number : '1.0-0' }}đ</div>
-        </article>
+    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+        <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+        <h5 class="font-weight-semi-bold m-0">Easy Return</h5>
       </div>
     </div>
-  </section>
-
-  <!-- TRENDING COLLECTIONS -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <h2>Trending Collections</h2>
-      </div>
-      <div class="trending-grid">
-        <div class="trending-card" *ngFor="let col of trendingCollections; trackBy: trackById">
-          <h3>{{ col.name }}</h3>
-          <p>Discover unique designs in {{ col.name }} collection.</p>
-          <button class="link-btn">Shop now →</button>
-        </div>
+    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
+        <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+        <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
       </div>
     </div>
-  </section>
+  </div>
 </div>
+
+<!-- CATEGORIES -->
+<div class="container-fluid pt-5">
+  <div class="row px-xl-5 pb-3">
+    <div class="col-lg-4 col-md-6 pb-1">
+      <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+        <p class="text-right">15 Products</p>
+        <a href="#" class="cat-img position-relative overflow-hidden mb-3">
+          <img class="img-fluid" src="assets/eshopper/img/cat-1.jpg" alt="" />
+        </a>
+        <h5 class="font-weight-semi-bold m-0">Men's dresses</h5>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 pb-1">
+      <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+        <p class="text-right">15 Products</p>
+        <a href="#" class="cat-img position-relative overflow-hidden mb-3">
+          <img class="img-fluid" src="assets/eshopper/img/cat-2.jpg" alt="" />
+        </a>
+        <h5 class="font-weight-semi-bold m-0">Women's dresses</h5>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 pb-1">
+      <div class="cat-item d-flex flex-column border mb-4" style="padding: 30px;">
+        <p class="text-right">15 Products</p>
+        <a href="#" class="cat-img position-relative overflow-hidden mb-3">
+          <img class="img-fluid" src="assets/eshopper/img/cat-3.jpg" alt="" />
+        </a>
+        <h5 class="font-weight-semi-bold m-0">Baby's dresses</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OFFER (giữ nguyên) -->
+<div class="container-fluid offer pt-5">
+  <div class="row px-xl-5">
+    <div class="col-md-6 pb-4">
+      <div
+        class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5"
+      >
+        <img src="assets/eshopper/img/offer-1.png" alt="" />
+        <div class="position-relative" style="z-index: 1;">
+          <h5 class="text-uppercase text-primary mb-3">20% off all orders</h5>
+          <h1 class="mb-4 font-weight-semi-bold">Spring Collection</h1>
+          <a href="#" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pb-4">
+      <div
+        class="position-relative bg-secondary text-center text-md-left text-white mb-2 py-5 px-5"
+      >
+        <img src="assets/eshopper/img/offer-2.png" alt="" />
+        <div class="position-relative" style="z-index: 1;">
+          <h5 class="text-uppercase text-primary mb-3">Hot this winter</h5>
+          <h1 class="mb-4 font-weight-semi-bold">Winter Collection</h1>
+          <a href="#" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRENDY PRODUCTS (dùng API) -->
+<div class="container-fluid pt-5">
+  <div class="text-center mb-4">
+    <h2 class="section-title px-5">
+      <span class="px-2">Trandy Products</span>
+    </h2>
+    <p *ngIf="loading" class="text-muted mt-2">Đang tải sản phẩm...</p>
+    <p *ngIf="!loading && errorMessage" class="text-danger mt-2">
+      {{ errorMessage }}
+    </p>
+  </div>
+
+  <div class="row px-xl-5 pb-3">
+    <ng-container *ngIf="!loading && trendyProducts.length > 0; else noTrendy">
+      <div
+        class="col-lg-3 col-md-6 col-sm-12 pb-1"
+        *ngFor="let p of trendyProducts; trackBy: trackByProductId"
+      >
+        <div class="card product-item border-0 mb-4">
+          <div
+            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
+          >
+            <img
+              class="img-fluid w-100"
+              [src]="getProductImage(p)"
+              [alt]="p.name"
+            />
+          </div>
+          <div
+            class="card-body border-left border-right text-center p-0 pt-4 pb-3"
+          >
+            <h6 class="text-truncate mb-3">{{ p.name }}</h6>
+            <div class="d-flex justify-content-center">
+              <h6>{{ getDisplayPrice(p.price) }}</h6>
+            </div>
+            <small class="text-muted d-block">Code: {{ p.code }}</small>
+          </div>
+          <div class="card-footer d-flex justify-content-between bg-light border">
+            <a
+              [routerLink]="['/client/product', p.id]"
+              class="btn btn-sm text-dark p-0"
+            >
+              <i class="fas fa-eye text-primary mr-1"></i>View Detail
+            </a>
+            <button
+              type="button"
+              class="btn btn-sm text-dark p-0"
+              (click)="addToCart(p)"
+            >
+              <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noTrendy>
+      <div class="col-12 text-center text-muted">
+        Không có sản phẩm nào trong mục này.
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- SUBSCRIBE -->
+<div class="container-fluid bg-secondary my-5">
+  <div class="row justify-content-md-center py-5 px-xl-5">
+    <div class="col-md-6 col-12 py-5">
+      <div class="text-center mb-2 pb-2">
+        <h2 class="section-title px-5 mb-3">
+          <span class="bg-secondary px-2">Stay Updated</span>
+        </h2>
+        <p>
+          Nhận email về ưu đãi mới, bộ sưu tập hot và gợi ý sản phẩm theo gu của
+          bạn.
+        </p>
+      </div>
+      <form (submit)="$event.preventDefault()">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control border-white p-4"
+            placeholder="Email Goes Here"
+          />
+          <div class="input-group-append">
+            <button class="btn btn-primary px-4">Subscribe</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JUST ARRIVED (dùng API) -->
+<div class="container-fluid pt-5">
+  <div class="text-center mb-4">
+    <h2 class="section-title px-5">
+      <span class="px-2">Just Arrived</span>
+    </h2>
+  </div>
+
+  <div class="row px-xl-5 pb-3">
+    <ng-container *ngIf="!loading && justArrivedProducts.length > 0; else noArrived">
+      <div
+        class="col-lg-3 col-md-6 col-sm-12 pb-1"
+        *ngFor="let p of justArrivedProducts; trackBy: trackByProductId"
+      >
+        <div class="card product-item border-0 mb-4">
+          <div
+            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
+          >
+            <img
+              class="img-fluid w-100"
+              [src]="getProductImage(p)"
+              [alt]="p.name"
+            />
+          </div>
+          <div
+            class="card-body border-left border-right text-center p-0 pt-4 pb-3"
+          >
+            <h6 class="text-truncate mb-3">{{ p.name }}</h6>
+            <div class="d-flex justify-content-center">
+              <h6>{{ getDisplayPrice(p.price) }}</h6>
+            </div>
+            <small class="text-muted d-block">Code: {{ p.code }}</small>
+          </div>
+          <div class="card-footer d-flex justify-content-between bg-light border">
+            <a
+              [routerLink]="['/client/product', p.id]"
+              class="btn btn-sm text-dark p-0"
+            >
+              <i class="fas fa-eye text-primary mr-1"></i>View Detail
+            </a>
+            <button
+              type="button"
+              class="btn btn-sm text-dark p-0"
+              (click)="addToCart(p)"
+            >
+              <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #noArrived>
+      <div class="col-12 text-center text-muted">
+        Không có sản phẩm nào trong mục này.
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<!-- VENDOR -->
+<!-- Vendor Start (không dùng owl-carousel, chỉ dùng Bootstrap grid) -->
+<div class="container-fluid py-5">
+  <div class="row px-xl-5 justify-content-center text-center">
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-1.jpg" class="img-fluid" alt="Vendor 1">
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-2.jpg" class="img-fluid" alt="Vendor 2">
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-3.jpg" class="img-fluid" alt="Vendor 3">
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-4.jpg" class="img-fluid" alt="Vendor 4">
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-5.jpg" class="img-fluid" alt="Vendor 5">
+      </div>
+    </div>
+
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
+        <img src="assets/eshopper/img/vendor-6.jpg" class="img-fluid" alt="Vendor 6">
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Vendor End -->
+
