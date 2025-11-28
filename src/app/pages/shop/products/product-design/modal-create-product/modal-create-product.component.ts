@@ -3,7 +3,7 @@ import {
   OnInit,
   Renderer2, ViewChild,
 } from '@angular/core';
-import {Location, NgIf} from '@angular/common';
+import {Location, NgForOf, NgIf} from '@angular/common';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
@@ -12,7 +12,7 @@ import {UtilsService} from '../../../../../shared/utils/utils.service';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingOption} from '../../../../../shared/utils/loading-option';
 import {
-  CategoryDTO,
+  CategoryDTO, CreateOption,
   CreateProductRequest,
   ProductGroupDTO
 } from '../../../../../core/models/product.model';
@@ -33,7 +33,8 @@ import {ProductService} from '../../../../../core/services/product.service';
     FormsModule,
     AlphanumericOnlyDirective,
     SafeHtmlPipe,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './modal-create-product.component.html',
   styleUrls: ['./modal-create-product.component.scss'],
@@ -51,7 +52,11 @@ export class ModalCreateProductComponent implements OnInit {
     thumbnail: null,
   };
   selectedThumbnail: any;
+  options: CreateOption[] = [];
+  galleryImages: { file: File, previewUrl: string }[] = [];
+  optionPreviews: { file: File, previewUrl: string }[][] = [];
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('galleryInput') galleryInput!: ElementRef;
 
   constructor(
     public toastr: ToastrService,
@@ -143,7 +148,69 @@ export class ModalCreateProductComponent implements OnInit {
     }
   }
 
+  onGalleryFilesSelected(event: any): void {
+    const files: FileList = event.target.files;
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.galleryImages.push({
+            file: file,
+            previewUrl: e.target.result
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    event.target.value = '';
+  }
+
+  removeGalleryImage(index: number): void {
+    this.galleryImages.splice(index, 1);
+  }
+
+  addOption(): void {
+    this.options.push({ name: '', images: [] });
+    this.optionPreviews.push([]);
+  }
+
+  removeOption(index: number): void {
+    this.options.splice(index, 1);
+    this.optionPreviews.splice(index, 1);
+  }
+
+  onOptionImageSelected(event: any, optionIndex: number): void {
+    const files: FileList = event.target.files;
+
+    if (files && files.length > 0) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.optionPreviews[optionIndex].push({
+            file: file,
+            previewUrl: e.target.result
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    event.target.value = '';
+  }
+
+  removeOptionImage(optionIndex: number, imageIndex: number): void {
+    this.optionPreviews[optionIndex].splice(imageIndex, 1);
+  }
+
   confirmSave() {
+    this.product.productImages = this.galleryImages.map(img => img.file);
+    this.product.options = this.options.map((option, index) => ({
+      name: option.name,
+      images: this.optionPreviews[index].map(preview => preview.file)
+    }));
+
     this.productService.createProduct(this.product).subscribe(response => {
       if (response.status) {
         this.toastr.success("Tạo sản phẩm thành công");
