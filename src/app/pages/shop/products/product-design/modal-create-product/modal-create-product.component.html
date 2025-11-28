@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
 </div>
 
-<div class="modal-body pb-4" style="max-height: 75vh; overflow-y: auto">
+<div class="modal-body pb-4 pt-1" style="max-height: 75vh; overflow-y: auto">
   <ul class="nav nav-tabs tab-switcher mb-3" role="tablist">
     <li class="nav-item" role="presentation">
       <button
@@ -131,6 +131,34 @@
         </div>
 
         <div class="item-search w-100 mt-3">
+          <label class="title-info">Danh sách ảnh minh họa</label>
+          <small class="text-muted fst-italic">Tối đa 6 ảnh. Hỗ trợ định dạng: JPG, PNG, WEBP. Kích thước tối ưu 250x250.</small>
+          <div class="gallery-container d-flex flex-wrap gap-3 mt-2">
+            <div class="gallery-item position-relative" *ngFor="let img of galleryImages; let i = index">
+              <img [src]="img.previewUrl" class="gallery-img" alt="Gallery image">
+
+              <button class="btn-remove-gallery" (click)="removeGalleryImage(i)">
+                <span [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </button>
+            </div>
+
+            <div class="gallery-add-btn d-flex justify-content-center align-items-center cursor-pointer"
+                 (click)="galleryInput.click()">
+              <span class="plus-icon">+</span>
+            </div>
+
+            <input
+              type="file"
+              #galleryInput
+              multiple
+              accept="image/*"
+              style="display: none"
+              (change)="onGalleryFilesSelected($event)"
+            >
+          </div>
+        </div>
+
+        <div class="item-search w-100 mt-3">
           <label class="title-info">File thiết kế gốc</label>
           <div class="input-text-custom">
             <input
@@ -167,43 +195,76 @@
 
   <!-- Tab 2 -->
   <div *ngIf="currentTab === 1" class="tab-pane fade show active">
-    <div style="padding: 0 6px">
+    <div class="item-search w-100 mt-3 my-4">
+      <div class="d-flex align-items-center gap-5">
+        <label class="title-info mb-0 fs-6 fw-medium" style="cursor: pointer" for="batchToggle">
+          Là sản phẩm có thể tùy chỉnh
+        </label>
+
+        <label class="switch-toggle">
+          <input
+            type="checkbox"
+            id="batchToggle"
+            [(ngModel)]="product.customizable"
+            [ngModelOptions]="{standalone: true}"
+          >
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <div style="padding: 0 6px" *ngIf="product.customizable">
       <div class="card-header-custom mt-3">
         <div class="d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">Thuộc tính (Màu sắc, kích thước)</h5>
+          <h5 class="mb-0">Thuộc tính tùy chọn</h5>
         </div>
       </div>
 
       <div class="attribute-container p-2">
-        <div class="attribute-row d-flex align-items-center mb-2 gap-3">
-          <form class="w-25">
-            <div class="select-search-custom mt-0 attribute-form-select-custom">
-
+        <div class="attribute-row d-flex align-items-center mb-2 gap-3" *ngFor="let option of options; let i = index">
+          <div class="item-search mt-0 w-25 p-0">
+            <div class="input-text-custom w-100">
+              <input
+                id="option-name-{{i}}"
+                class="form-control"
+                style="height: 48px"
+                [(ngModel)]="option.name"
+                type="text"
+                placeholder="Tên nhóm thuộc tính tùy chọn"
+                alphanumericOnly
+                autocomplete="off"
+              />
             </div>
-          </form>
+          </div>
 
-          <div class="attribute-values-input flex-grow-1 d-flex flex-wrap align-items-center">
-            <div id="attributes-wrapper" class="ps-1">
-              <div class="attribute-tag me-1">S
-                <span style="width: 18px; margin-bottom: 2px" class="cursor-pointer ms-2" [innerHTML]="ICON_X_WHITE | safeHtml"></span>
-              </div>
-              <div class="attribute-tag me-1">M
-                <span style="width: 18px; margin-bottom: 2px" class="cursor-pointer ms-2" [innerHTML]="ICON_X_WHITE | safeHtml"></span>
-              </div>
+          <div class="gallery-container flex-grow-1 d-flex flex-wrap align-items-center">
+            <div class="gallery-item-2 position-relative" *ngFor="let img of optionPreviews[i]; let j = index">
+              <img [src]="img.previewUrl" class="gallery-img" alt="Gallery image">
+
+              <button class="btn-remove-gallery" (click)="removeOptionImage(i, j)">
+                <span [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </button>
+            </div>
+
+            <div class="gallery-add-btn gallery-add-btn-2 d-flex justify-content-center align-items-center cursor-pointer"
+                 (click)="galleryInput.click()">
+              <span class="plus-icon">+</span>
             </div>
 
             <input
-              id="attribute-name-input"
-              type="text"
-              class="form-control attribute-value-text-input"
-              placeholder="Nhập giá trị và Enter"
-            />
+              type="file"
+              #galleryInput
+              multiple
+              accept="image/*"
+              style="display: none"
+              (change)="onOptionImageSelected($event, i)"
+            >
           </div>
 
-          <span class="cursor-pointer mb-1 me-2" [innerHTML]="ICON_DELETE | safeHtml"></span>
+          <span class="cursor-pointer mb-1 me-2" [innerHTML]="ICON_DELETE | safeHtml" (click)="removeOption(i)"></span>
         </div>
 
-        <button class="btn btn-add-attribute">Thêm thuộc tính</button>
+        <button class="btn btn-add-attribute" (click)="addOption()">Thêm thuộc tính</button>
       </div>
     </div>
   </div>
