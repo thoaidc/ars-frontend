@@ -20,6 +20,7 @@ import {
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
 import {Authorities} from './authorities.constants';
+import {USER_TYPE} from './user.constants';
 
 export const SIDEBAR_DASHBOARD_TITLE = 'sidebar.dashboard';
 export const SIDEBAR_HOME_TITLE = 'sidebar.home';
@@ -51,7 +52,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_DASHBOARD,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/customers',
@@ -59,7 +61,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CUSTOMER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/shops',
@@ -67,7 +70,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_COMPANY,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/categories',
@@ -75,7 +79,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CATEGORY,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/products',
@@ -83,7 +88,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_PRODUCTS,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: [Authorities.SYSTEM]
+    permission: [Authorities.SYSTEM],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/orders',
@@ -91,7 +97,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_ORDER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/finance',
@@ -99,7 +106,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_FINANCE,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/statistics',
@@ -107,7 +115,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CHART,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/supports',
@@ -115,7 +124,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.ADMIN]
   },
   {
     path: '/admin/authorization',
@@ -124,6 +134,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     class: SIDEBAR_CLASS_DROPDOWN,
     isExternalLink: false,
     permission: [Authorities.ACCOUNT, Authorities.ROLE],
+    userType: [USER_TYPE.ADMIN],
     submenu: [
       {
         path: '/accounts',
@@ -131,7 +142,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_USER,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: Authorities.ACCOUNT
+        permission: Authorities.ACCOUNT,
+        userType: [USER_TYPE.ADMIN]
       },
       {
         path: '/roles',
@@ -139,7 +151,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_USER_PERMISSION,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: Authorities.ROLE
+        permission: Authorities.ROLE,
+        userType: [USER_TYPE.ADMIN]
       }
     ]
   },
@@ -150,6 +163,7 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     class: SIDEBAR_CLASS_DROPDOWN,
     isExternalLink: false,
     permission: Authorities.SYSTEM,
+    userType: [USER_TYPE.ADMIN],
     submenu: [
       {
         path: '/public-apis',
@@ -157,7 +171,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_LOCK,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: Authorities.SYSTEM
+        permission: Authorities.SYSTEM,
+        userType: [USER_TYPE.ADMIN]
       },
       {
         path: '/rate-limiter',
@@ -165,7 +180,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_RATE_LIMIT,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: Authorities.SYSTEM
+        permission: Authorities.SYSTEM,
+        userType: [USER_TYPE.ADMIN]
       }
     ]
   },
@@ -175,7 +191,8 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CONFIG,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: Authorities.SYSTEM
+    permission: Authorities.SYSTEM,
+    userType: [USER_TYPE.ADMIN]
   }
 ];
 
@@ -186,7 +203,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_DASHBOARD,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/customers',
@@ -194,7 +212,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CUSTOMER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/products',
@@ -203,6 +222,7 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],
+    userType: [USER_TYPE.SHOP],
     submenu: [
       {
         path: '/groups',
@@ -210,7 +230,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_GROUP,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: []
+        permission: [],
+        userType: [USER_TYPE.SHOP]
       },
       {
         path: '/designs',
@@ -218,7 +239,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
         icon: ICON_DESIGN,
         class: SIDEBAR_CLASS_DROPDOWN_ITEM,
         isExternalLink: false,
-        permission: []
+        permission: [],
+        userType: [USER_TYPE.SHOP]
       },
     ]
   },
@@ -228,7 +250,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_ORDER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/finance',
@@ -236,7 +259,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_FINANCE,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/statistics',
@@ -244,7 +268,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CHART,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/supports',
@@ -252,7 +277,8 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/settings',
@@ -260,6 +286,7 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     icon: ICON_CONFIG,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
-    permission: []
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   }
 ];

@@ -1,5 +1,4 @@
 import {AuditingEntity} from './common.model';
-import {USER_TYPE} from '../../constants/user.constants';
 
 export interface LoginRequest {
   username: string;
@@ -14,7 +13,7 @@ export interface Authentication extends AuditingEntity {
   address: string;
   email: string;
   phone: string;
-  type: USER_TYPE;
+  type: string;
   status: string;
   accessToken: string;
   authorities: string[];

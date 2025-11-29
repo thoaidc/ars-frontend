@@ -32,8 +32,8 @@ export const USER_STATUS_OPTIONS = [
   }
 ];
 
-export enum USER_TYPE {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-  SHOP = 'SHOP'
+export const USER_TYPE = {
+  ADMIN: 'ADMIN',
+  USER: 'USER',
+  SHOP: 'SHOP'
 }

@@ -16,39 +16,41 @@
         </div>
 
         <ng-container *ngFor="let route of routerList">
-          <div class="menu-item"
-               [class.has-sub]="route.submenu?.length"
-               [class.expand]="isExpanded(route.path)"
-               [class.closed]="!isExpanded(route.path)"
-               [ngClass]="isSidebarShown ? '' : 'menu-item-custom'"
-               *hasAuthorities="route.permission">
+          <div *hasUserType="route.userType">
+            <div class="menu-item"
+                 [class.has-sub]="route.submenu?.length"
+                 [class.expand]="isExpanded(route.path)"
+                 [class.closed]="!isExpanded(route.path)"
+                 [ngClass]="isSidebarShown ? '' : 'menu-item-custom'"
+                 *hasAuthorities="route.permission">
 
-            <a class="menu-link menu-parent"
-               (click)="route.submenu?.length ? toggleParent(route.path) : getLink(route.path)"
-               [ngClass]="latestUrl === route.path ? 'item-active' : ''"
-               [attr.aria-expanded]="route.submenu?.length ? isExpanded(route.path) : null">
-              <div class="menu-icon"><span [innerHTML]="route.icon | safeHtml"></span></div>
-              <div [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">{{ route.title | translate }}</div>
+              <a class="menu-link menu-parent"
+                 (click)="route.submenu?.length ? toggleParent(route.path) : getLink(route.path)"
+                 [ngClass]="latestUrl === route.path ? 'item-active' : ''"
+                 [attr.aria-expanded]="route.submenu?.length ? isExpanded(route.path) : null">
+                <div class="menu-icon"><span [innerHTML]="route.icon | safeHtml"></span></div>
+                <div [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">{{ route.title | translate }}</div>
+                <div *ngIf="route.submenu?.length"
+                     [ngClass]="isSidebarShown ? 'menu-caret' : 'menu-caret caret-custom'"></div>
+              </a>
+
               <div *ngIf="route.submenu?.length"
-                   [ngClass]="isSidebarShown ? 'menu-caret' : 'menu-caret caret-custom'"></div>
-            </a>
-
-            <div *ngIf="route.submenu?.length"
-                 class="order-column"
-                 [ngClass]="isSidebarShown ? 'menu-submenu' : 'menu-submenu-custom'">
-              <ng-container *ngFor="let item of route.submenu">
-                <div [ngClass]="isSidebarShown ? 'menu-item' : 'menu-submenu-item'"
-                     *hasAuthorities="item.permission">
-                  <a class="menu-link"
-                     (click)="getLink(route.path + item.path)"
-                     [ngClass]="latestUrl === route.path + item.path ? 'item-active' : ''">
-                    <div class="menu-icon"><span [innerHTML]="item.icon | safeHtml"></span></div>
-                    <div class="menu-text--sub" [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">
-                      {{ item.title | translate }}
-                    </div>
-                  </a>
-                </div>
-              </ng-container>
+                   class="order-column"
+                   [ngClass]="isSidebarShown ? 'menu-submenu' : 'menu-submenu-custom'">
+                <ng-container *ngFor="let item of route.submenu">
+                  <div [ngClass]="isSidebarShown ? 'menu-item' : 'menu-submenu-item'"
+                       *hasAuthorities="item.permission">
+                    <a class="menu-link"
+                       (click)="getLink(route.path + item.path)"
+                       [ngClass]="latestUrl === route.path + item.path ? 'item-active' : ''">
+                      <div class="menu-icon"><span [innerHTML]="item.icon | safeHtml"></span></div>
+                      <div class="menu-text--sub" [ngClass]="isSidebarShown ? 'menu-text' : 'menu-text-custom'">
+                        {{ item.title | translate }}
+                      </div>
+                    </a>
+                  </div>
+                </ng-container>
+              </div>
             </div>
           </div>
         </ng-container>

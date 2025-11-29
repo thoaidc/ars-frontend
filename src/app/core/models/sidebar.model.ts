@@ -6,4 +6,5 @@ export interface SidebarNavItem {
   isExternalLink: boolean;
   submenu?: SidebarNavItem[];
   permission: string[] | string;
+  userType: string[] | string;
 }

@@ -45,12 +45,31 @@ export class AuthService {
   }
 
   hasAllAuthorities(authorities: string[] | string): boolean {
+    const requiredAuthorities = Array.isArray(authorities) ? authorities : [authorities];
+
+    if (requiredAuthorities.length === 0) {
+      return true;
+    }
+
     if (!this.authentication || !this.authentication.authorities) {
       return false;
     }
 
-    const requiredAuthorities = Array.isArray(authorities) ? authorities : [authorities];
     return requiredAuthorities.every(required => this.authentication!.authorities?.includes(required));
+  }
+
+  hasUserType(userTypes: string[] | string): boolean {
+    const requiredUserType = Array.isArray(userTypes) ? userTypes : [userTypes];
+
+    if (requiredUserType.length === 0) {
+      return true;
+    }
+
+    if (!this.authentication || !this.authentication.type) {
+      return false;
+    }
+
+    return requiredUserType.includes(this.authentication.type);
   }
 
   hasToken(): boolean {

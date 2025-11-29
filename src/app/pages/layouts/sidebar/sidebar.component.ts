@@ -14,6 +14,7 @@ import {NgClass, NgFor, NgIf} from '@angular/common';
 import {HasAuthorityDirective} from '../../../shared/directives/has-authority.directive';
 import {TranslatePipe} from '@ngx-translate/core';
 import {SidebarNavItem} from '../../../core/models/sidebar.model';
+import {HasUserTypeDirective} from '../../../shared/directives/has-user-type.directive';
 
 @Component({
   selector: 'app-sidebar',
@@ -28,7 +29,8 @@ import {SidebarNavItem} from '../../../core/models/sidebar.model';
     NgClass,
     HasAuthorityDirective,
     RouterLink,
-    TranslatePipe
+    TranslatePipe,
+    HasUserTypeDirective
   ]
 })
 export class SidebarComponent implements AfterViewInit {
