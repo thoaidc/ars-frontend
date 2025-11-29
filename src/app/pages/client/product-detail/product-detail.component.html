@@ -4,7 +4,7 @@
     <nav class="breadcrumb">
       <a routerLink="/client/home">Home</a>
       <span>/</span>
-      <a href="#">Nurse</a>
+      <a href="#">Designs</a>
       <span>/</span>
       <span class="current">{{ productTitle }}</span>
     </nav>
@@ -13,15 +13,15 @@
     <section class="product-main">
       <!-- LEFT: GALLERY -->
       <div class="product-gallery">
-        <div class="main-image">
-          <img [src]="activeImage.url" alt="Product main image" />
+        <div class="main-image" *ngIf="activeImage">
+          <img [src]="activeImage.url" [alt]="productTitle" />
         </div>
 
-        <div class="thumb-row">
+        <div class="thumb-row" *ngIf="images.length">
           <button
             class="thumb"
             *ngFor="let img of images; trackBy: trackById"
-            [class.active]="img.id === activeImage.id"
+            [class.active]="activeImage && img.id === activeImage.id"
             (click)="setActiveImage(img)"
           >
             <img [src]="img.thumbUrl" alt="Thumbnail" />
@@ -51,35 +51,24 @@
           <span class="discount">{{ discountText }}</span>
         </div>
 
-        <div class="option-group">
-          <div class="option-label">Style</div>
-          <div class="option-value">Unisex T-Shirt</div>
-        </div>
-
-        <div class="option-group">
-          <div class="option-label">Size</div>
-          <div class="option-chips">
-            <button
-              class="chip"
-              *ngFor="let size of sizes"
-              [class.active]="size.value === selectedSize"
-              (click)="selectSize(size)"
-            >
-              {{ size.label }}
-            </button>
+        <!-- NHÓM TÙY CHỈNH THIẾT KẾ (từ productOptions) -->
+        <div
+          class="option-group"
+          *ngFor="let group of designGroups"
+        >
+          <div class="option-label">
+            {{ group.name }}
           </div>
-        </div>
 
-        <div class="option-group">
-          <div class="option-label">Color</div>
-          <div class="color-row">
+          <div class="design-options">
             <button
-              class="color-dot"
-              *ngFor="let color of colors"
-              [class.active]="color.value === selectedColor"
-              (click)="selectColor(color)"
-              [attr.data-color]="color.value"
-            ></button>
+              class="design-thumb"
+              *ngFor="let opt of group.options"
+              (click)="selectDesign(group.name, opt)"
+              [class.active]="isDesignSelected(group.name, opt)"
+            >
+              <img [src]="opt.imageUrl" alt="Design option" />
+            </button>
           </div>
         </div>
 
@@ -135,7 +124,7 @@
                 </span>
               </div>
               <p class="review-text">
-                Great quality shirt, colors are vibrant and shipping was
+                Great quality print, colors are vibrant and shipping was
                 faster than expected. Highly recommend!
               </p>
             </article>
@@ -170,21 +159,21 @@
           </div>
           <div class="card-body">
             <p>
-              This personalized nurse t-shirt is the perfect gift for medical
-              students, nurses, and healthcare workers. Customize hair style,
-              outfit, and accessories to match your recipient.
+              This personalized design is perfect as a gift for friends,
+              family, and colleagues. You can customize many elements of the
+              illustration to match the recipient.
             </p>
             <ul>
-              <li>Premium cotton blend</li>
-              <li>Unisex fit</li>
-              <li>Machine washable</li>
-              <li>Printed using high-quality inks</li>
+              <li>High-resolution artwork ready for print</li>
+              <li>Can be used on t-shirts, mugs, posters, etc.</li>
+              <li>Digital file delivered after purchase</li>
+              <li>Designed with love by PTIT Store</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: PERSONALIZATION OPTIONS (UI giả lập) -->
+      <!-- RIGHT COLUMN: PERSONALIZATION OPTIONS (UI mock) -->
       <div class="secondary-right">
         <div class="card">
           <div class="card-header">
@@ -192,8 +181,8 @@
           </div>
           <div class="card-body">
             <div class="form-group">
-              <label>Enter Name</label>
-              <input type="text" placeholder="E.g. Sophia" />
+              <label>Enter Name / Text</label>
+              <input type="text" placeholder="E.g. Sophia, Best Nurse Ever" />
             </div>
 
             <div class="form-group">
@@ -227,8 +216,8 @@
             </div>
 
             <p class="note">
-              * This section only là mock UI để dựng layout. Sau này mình sẽ
-              bind với API / rule thật.
+              * Đây chỉ là mock UI để dựng layout. Sau này mình sẽ bind với
+              rule / API tùy chỉnh thiết kế thật của hệ thống.
             </p>
           </div>
         </div>
