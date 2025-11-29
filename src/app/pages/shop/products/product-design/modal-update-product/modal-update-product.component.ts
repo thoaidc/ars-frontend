@@ -70,6 +70,7 @@ export class ModalUpdateProductComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('galleryInput') galleryInput!: ElementRef;
   @Input() productId!: number;
+  @Input() isUpdatable: boolean = false;
 
   constructor(
     public toastr: ToastrService,
@@ -111,7 +112,7 @@ export class ModalUpdateProductComponent implements OnInit {
           description: data.description,
           categoryIds: data.categories?.map(c => c.id as number),
           productGroupIds: data.productGroups?.map(g => g.id as number),
-          thumbnail: data.thumbnailUrl,
+          thumbnail: data.thumbnailUrl
         } as UpdateProductRequest;
 
         if (data.thumbnailUrl) {
@@ -145,8 +146,6 @@ export class ModalUpdateProductComponent implements OnInit {
           });
           this.optionPreviews.push(optionImages);
         });
-
-        console.log('Old product', this.product);
       }
     });
   }
@@ -275,10 +274,14 @@ export class ModalUpdateProductComponent implements OnInit {
   }
 
   confirmSave() {
+    this.product.thumbnail = this.selectedThumbnail instanceof File
+      ? this.selectedThumbnail
+      : null;
+
     this.product.productImages = this.galleryImages.map(img => {
       return {
         id: img.id,
-        image: img.file || img.id
+        image: img.file || null
       } as UpdateProductImage;
     });
 
@@ -288,7 +291,7 @@ export class ModalUpdateProductComponent implements OnInit {
       const updatedOptionImages: UpdateOptionImage[] = optionImages.map(img => {
         return {
           id: img.id,
-          image: img.file || img.id
+          image: img.file || null
         } as UpdateOptionImage;
       });
 
@@ -302,6 +305,7 @@ export class ModalUpdateProductComponent implements OnInit {
     this.productService.updateProduct(this.product).subscribe(response => {
       if (response.status) {
         this.toastr.success("Cập nhật sản phẩm thành công");
+        this.activeModal.close(true);
       } else {
         this.toastr.error(response.message || '', "Cập nhật sản phẩm thất bại");
       }
@@ -309,7 +313,7 @@ export class ModalUpdateProductComponent implements OnInit {
   }
 
   dismiss() {
-    this.activeModal.close();
+    this.activeModal.dismiss(false);
   }
 
   protected readonly ICON_DELETE = ICON_DELETE;

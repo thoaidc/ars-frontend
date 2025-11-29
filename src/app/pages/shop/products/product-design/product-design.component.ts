@@ -80,16 +80,27 @@ export class ProductDesignComponent implements OnInit {
   view(productId: number) {
     this.modalRef = this.modalService.open(ModalUpdateProductComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.productId = productId;
-    this.modalRef.componentInstance.isView = true;
+    this.modalRef.componentInstance.isUpdatable = false;
   }
 
   openModalCreateProduct() {
     this.modalRef = this.modalService.open(ModalCreateProductComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.closed.subscribe(response => {
+      if (response) {
+        this.onSearch();
+      }
+    });
   }
 
   openModalUpdateProduct(productId: number) {
     this.modalRef = this.modalService.open(ModalUpdateProductComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.productId = productId;
+    this.modalRef.componentInstance.isUpdatable = true;
+    this.modalRef.closed.subscribe(response => {
+      if (response) {
+        this.onSearch();
+      }
+    });
   }
 
   delete(product: Product) {

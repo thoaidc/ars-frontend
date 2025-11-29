@@ -75,7 +75,7 @@ export class ModalCreateProductComponent implements OnInit {
     private productService: ProductService
   ) {
     this.location.subscribe(() => {
-      this.activeModal.dismiss();
+      this.activeModal.dismiss(false);
     });
   }
 
@@ -216,6 +216,7 @@ export class ModalCreateProductComponent implements OnInit {
     this.productService.createProduct(this.product).subscribe(response => {
       if (response.status) {
         this.toastr.success("Tạo sản phẩm thành công");
+        this.activeModal.close(true);
       } else {
         this.toastr.error(response.message || '', "Tạo sản phẩm thất bại");
       }
@@ -223,7 +224,7 @@ export class ModalCreateProductComponent implements OnInit {
   }
 
   dismiss() {
-    this.activeModal.close();
+    this.activeModal.dismiss(false);
   }
 
   protected readonly ICON_DELETE = ICON_DELETE;
