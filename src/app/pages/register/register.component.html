@@ -1,0 +1,82 @@
+<div class="body-login">
+  <div class="login-img">
+    <div class="image"></div>
+  </div>
+
+  <div class="login-info">
+    <div class="form-login justify-content-center">
+      <div class="form">
+        <span class="d-flex justify-content-center">
+          <img src="./assets/images/logo/logo_login.png" alt=""/>
+        </span>
+
+        <form autocomplete="on" class="info" (ngSubmit)="register()">
+          <span class="title-login">{{ 'text.registerTitleMain' | translate }}</span>
+
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="fullname"
+              required
+              [(ngModel)]="registerRequest.fullname"
+              [placeholder]="'global.fullname' | translate"
+            />
+          </div>
+
+          <div class="input-login">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              required
+              [(ngModel)]="registerRequest.email"
+              [placeholder]="'global.email' | translate"
+            />
+          </div>
+
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="phone"
+              required
+              [(ngModel)]="registerRequest.phone"
+              [placeholder]="'global.phone' | translate"
+            />
+          </div>
+
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              required
+              [(ngModel)]="registerRequest.username"
+              [placeholder]="'global.account' | translate"
+            />
+          </div>
+
+          <div class="input-login position-relative">
+            <input
+              [type]="isHiddenPassword ? 'password' : 'text'"
+              class="form-control"
+              name="password"
+              required
+              [(ngModel)]="registerRequest.password"
+              [placeholder]="'global.password' | translate"
+            />
+            <div *ngIf="!isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
+              <span [innerHTML]="ICON_EYE | safeHtml"></span>
+            </div>
+            <div *ngIf="isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
+              <span [innerHTML]="ICON_EYE_CROSS | safeHtml"></span>
+            </div>
+          </div>
+
+          <button class="button-login" type="submit">{{ 'global.register' | translate }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

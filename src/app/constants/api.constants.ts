@@ -10,6 +10,7 @@ export const API_USERS_STATUS = API_SECURE + '/users/status';
 export const API_USERS_CHANGE_EMAIL = API_SECURE + '/users/email';
 export const API_USERS_CHANGE_PASSWORD = API_SECURE + '/users/password';
 export const API_USERS_RECOVER_PASSWORD = API_SECURE + '/users/recover';
+export const API_USERS_REGISTER = API_PUBLIC + '/users/register';
 
 // Products API constants
 export const API_PRODUCT = API_SECURE + '/products';

@@ -1,0 +1,193 @@
+<div class="page">
+  <!-- HEADER -->
+  <div class="page-header">
+    <h2>Danh sách sản phẩm (SHOP)</h2>
+
+    <div class="actions">
+      <button class="btn primary" (click)="openAdd()">+ Thêm sản phẩm</button>
+      <button class="btn">Nhập Excel</button>
+      <button class="btn">Xuất Excel</button>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="keyword"
+        placeholder="Nhập mã, tên sản phẩm"
+      />
+      <button class="btn" (click)="onSearch()">Tìm kiếm</button>
+    </div>
+
+    <div class="filter">
+      <label>Trạng thái:</label>
+      <select [(ngModel)]="statusFilter" (change)="onSearch()">
+        <option value="ALL">Tất cả</option>
+        <option value="ACTIVE">Đang kinh doanh</option>
+        <option value="INACTIVE">Ngừng kinh doanh</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+      <tr>
+        <th><input type="checkbox" /></th>
+        <th>STT</th>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Số lượng</th>
+        <th>Đơn vị</th>
+        <th>Giá bán</th>
+        <th>Thuế sản phẩm</th>
+        <th>Trạng thái</th>
+        <th>Ngày khởi tạo</th>
+        <th>Hành động</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let p of pagedProducts; let i = index">
+        <td><input type="checkbox" /></td>
+        <td>{{ pageIndex * pageSize + i + 1 }}</td>
+        <td>{{ p.code }}</td>
+        <td>{{ p.name }}</td>
+        <!-- quantity/unit are not part of Product model: show placeholder -->
+        <td>{{ (p['quantity'] != null) ? p['quantity'] : '-' }}</td>
+        <td>{{ (p['unit'] != null) ? p['unit'] : '-' }}</td>
+        <!-- price is string in model -> coerce to number for formatting -->
+        <td>{{ ((p.price) ? (+p.price) : 0) | number: '1.0-0' }}đ</td>
+        <!-- taxRate not available on Product model -> show placeholder -->
+        <td>{{ (p['taxRate'] != null) ? (p['taxRate'] * 100 + '%') : '-' }}</td>
+        <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                active: p.status === 'ACTIVE',
+                inactive: p.status === 'INACTIVE'
+              }"
+            >
+              {{ p.status === 'ACTIVE' ? 'Đang kinh doanh' : 'Ngừng kinh doanh' }}
+            </span>
+        </td>
+        <!-- use auditing createdDate instead of startedAt -->
+        <td>{{ p.createdDate ? (p.createdDate | date: 'yyyy-MM-dd HH:mm:ss') : '-' }}</td>
+        <td>
+          <button class="link" (click)="openEdit(p)">Sửa</button>
+          <button class="link danger" (click)="deleteProduct(p)">Xóa</button>
+        </td>
+      </tr>
+      <tr *ngIf="pagedProducts.length === 0">
+        <td colspan="11" class="empty">Không có dữ liệu</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FOOTER / PAGINATION -->
+  <div class="footer">
+    <div>Tổng: {{ filteredProducts.length }} bản ghi</div>
+
+    <div class="page-size">
+      <label>Hiển thị:</label>
+      <select [(ngModel)]="pageSize" (change)="changePageSize(pageSize)">
+        <option *ngFor="let size of pageSizeOptions" [ngValue]="size">
+          {{ size }} bản ghi
+        </option>
+      </select>
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="pageIndex === 0">&lt;</button>
+      <span>{{ pageIndex + 1 }}</span>
+      <button
+        (click)="nextPage()"
+        [disabled]="(pageIndex + 1) * pageSize >= filteredProducts.length"
+      >
+        &gt;
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP FORM -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-dialog" (click)="$event.stopPropagation()">
+    <h3 *ngIf="!isEdit">Thêm sản phẩm</h3>
+    <h3 *ngIf="isEdit">Chỉnh sửa sản phẩm</h3>
+
+    <form (ngSubmit)="saveProduct()">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Mã sản phẩm *</label>
+          <input [(ngModel)]="form.code" name="code" />
+        </div>
+
+        <div class="form-group">
+          <label>Tên sản phẩm *</label>
+          <input [(ngModel)]="form.name" name="name" />
+        </div>
+
+        <div class="form-group">
+          <label>Số lượng</label>
+          <input
+            type="number"
+            [(ngModel)]="form.quantity"
+            name="quantity"
+            min="0"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Đơn vị</label>
+          <input [(ngModel)]="form.unit" name="unit" />
+        </div>
+
+        <div class="form-group">
+          <label>Giá bán</label>
+          <input
+            type="number"
+            [(ngModel)]="form.price"
+            name="price"
+            min="0"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Thuế sản phẩm</label>
+          <select [(ngModel)]="form.taxRate" name="taxRate">
+            <option *ngFor="let t of taxOptions" [ngValue]="t">
+              {{ (t * 100) | number: '1.0-0' }}%
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Trạng thái</label>
+          <select [(ngModel)]="form.status" name="status">
+            <option *ngFor="let st of statusOptions" [ngValue]="st">
+              {{ st === 'ACTIVE' ? 'Đang kinh doanh' : 'Ngừng kinh doanh' }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Ngày khởi tạo</label>
+          <input
+            type="datetime-local"
+            [(ngModel)]="form.startedAt"
+            name="startedAt"
+          />
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn" (click)="closeModal()">Hủy</button>
+        <button type="submit" class="btn primary">Lưu</button>
+      </div>
+    </form>
+  </div>
+</div>
