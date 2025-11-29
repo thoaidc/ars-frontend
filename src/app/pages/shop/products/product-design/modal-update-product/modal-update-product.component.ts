@@ -1,6 +1,6 @@
 import {
   Component,
-  ElementRef,
+  ElementRef, Input,
   OnInit,
   Renderer2,
   ViewChild,
@@ -14,9 +14,7 @@ import {UtilsService} from '../../../../../shared/utils/utils.service';
 import {ToastrService} from 'ngx-toastr';
 import {LoadingOption} from '../../../../../shared/utils/loading-option';
 import {
-  CategoryDTO, CreateOption,
-  CreateProductRequest,
-  ProductGroupDTO
+  CategoryDTO, Product, ProductGroupDTO, UpdateOption, UpdateOptionImage, UpdateProductImage, UpdateProductRequest
 } from '../../../../../core/models/product.model';
 import {CategoryService} from '../../../../../core/services/category.service';
 import {ProductGroupService} from '../../../../../core/services/product-group.service';
@@ -26,8 +24,20 @@ import {ICON_DELETE, ICON_PLUS, ICON_X_WHITE} from '../../../../../shared/utils/
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductService} from '../../../../../core/services/product.service';
 
+interface ImagePreview {
+  id?: number;
+  file: File | null;
+  previewUrl: string;
+}
+
+interface OptionPreview {
+  id?: number;
+  name: string;
+  images: ImagePreview[];
+}
+
 @Component({
-  selector: 'app-shop-product-create',
+  selector: 'app-shop-product-update',
   standalone: true,
   imports: [
     NgSelectComponent,
@@ -38,27 +48,29 @@ import {ProductService} from '../../../../../core/services/product.service';
     NgIf,
     NgForOf
   ],
-  templateUrl: './modal-create-product.component.html',
-  styleUrls: ['./modal-create-product.component.scss'],
+  templateUrl: './modal-update-product.component.html',
+  styleUrls: ['./modal-update-product.component.scss'],
 })
-export class ModalCreateProductComponent implements OnInit {
+export class ModalUpdateProductComponent implements OnInit {
   currentTab: number = 0;
   categories: CategoryDTO[] = [];
   productGroups: ProductGroupDTO[] = [];
-  product: CreateProductRequest = {
+  product: UpdateProductRequest = {
+    id: 0,
     shopId: 1,
     name: '',
     code: '',
     price: '',
-    customizable: false,
-    thumbnail: null
+    customizable: false
   };
-  selectedThumbnail: any;
-  options: CreateOption[] = [];
-  galleryImages: { file: File, previewUrl: string }[] = [];
-  optionPreviews: { file: File, previewUrl: string }[][] = [];
+  selectedThumbnail: string | any;
+  galleryImages: ImagePreview[] = [];
+  options: OptionPreview[] = [];
+  optionPreviews: ImagePreview[][] = [];
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('galleryInput') galleryInput!: ElementRef;
+  @Input() productId!: number;
+  @Input() isUpdatable: boolean = false;
 
   constructor(
     public toastr: ToastrService,
@@ -75,12 +87,67 @@ export class ModalCreateProductComponent implements OnInit {
     private productService: ProductService
   ) {
     this.location.subscribe(() => {
-      this.activeModal.dismiss(false);
+      this.activeModal.dismiss();
     });
   }
 
   ngOnInit(): void {
     this.initData();
+    this.product.id = this.productId;
+    this.loadProduct(this.productId);
+  }
+
+  loadProduct(id: number): void {
+    this.productService.getById(id).subscribe(response => {
+      if (response) {
+        const data: Product = response;
+
+        this.product = {
+          ...this.product,
+          id: data.id,
+          name: data.name,
+          code: data.code,
+          price: data.price,
+          customizable: data.customizable,
+          description: data.description,
+          categoryIds: data.categories?.map(c => c.id as number),
+          productGroupIds: data.productGroups?.map(g => g.id as number),
+          thumbnail: data.thumbnailUrl
+        } as UpdateProductRequest;
+
+        if (data.thumbnailUrl) {
+          this.selectedThumbnail = data.thumbnailUrl;
+        }
+
+        this.galleryImages = (data.images || []).map((url: string) => ({
+          id: undefined,
+          file: null,
+          previewUrl: url,
+        }));
+
+        this.options = [];
+        this.optionPreviews = [];
+
+        (data.productOptions || []).forEach(optionDTO => {
+          const optionImages: ImagePreview[] = [];
+
+          (optionDTO.values || []).forEach(valueDTO => {
+            optionImages.push({
+              id: valueDTO.id,
+              file: null,
+              previewUrl: valueDTO.image,
+            });
+          });
+
+          this.options.push({
+            id: optionDTO.id,
+            name: optionDTO.name,
+            images: [],
+          });
+          this.optionPreviews.push(optionImages);
+        });
+      }
+    });
   }
 
   initData() {
@@ -207,18 +274,40 @@ export class ModalCreateProductComponent implements OnInit {
   }
 
   confirmSave() {
-    this.product.productImages = this.galleryImages.map(img => img.file);
-    this.product.options = this.options.map((option, index) => ({
-      name: option.name,
-      images: this.optionPreviews[index].map(preview => preview.file)
-    }));
+    this.product.thumbnail = this.selectedThumbnail instanceof File
+      ? this.selectedThumbnail
+      : null;
 
-    this.productService.createProduct(this.product).subscribe(response => {
+    this.product.productImages = this.galleryImages.map(img => {
+      return {
+        id: img.id,
+        image: img.file || null
+      } as UpdateProductImage;
+    });
+
+    this.product.options = this.options.map((opt, optionIndex) => {
+      const optionImages = this.optionPreviews[optionIndex];
+
+      const updatedOptionImages: UpdateOptionImage[] = optionImages.map(img => {
+        return {
+          id: img.id,
+          image: img.file || null
+        } as UpdateOptionImage;
+      });
+
+      return {
+        id: opt.id,
+        name: opt.name,
+        images: updatedOptionImages,
+      } as UpdateOption;
+    });
+
+    this.productService.updateProduct(this.product).subscribe(response => {
       if (response.status) {
-        this.toastr.success("Tạo sản phẩm thành công");
+        this.toastr.success("Cập nhật sản phẩm thành công");
         this.activeModal.close(true);
       } else {
-        this.toastr.error(response.message || '', "Tạo sản phẩm thất bại");
+        this.toastr.error(response.message || '', "Cập nhật sản phẩm thất bại");
       }
     });
   }

@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {API_PRODUCT, API_PRODUCT_PUBLIC} from '../../constants/api.constants';
 import {map, Observable} from 'rxjs';
-import {CreateProductRequest, Product, ProductsFilter} from '../models/product.model';
+import {CreateProductRequest, Product, ProductsFilter, UpdateProductRequest} from '../models/product.model';
 import {createSearchRequestParams} from '../utils/request.util';
 import {BaseResponse} from '../models/response.model';
 import {UtilsService} from '../../shared/utils/utils.service';
@@ -37,7 +37,7 @@ export class ProductService {
     return this.http.post<BaseResponse<any>>(this.productAPI, formData);
   }
 
-  updateProduct(request: Product): Observable<BaseResponse<any>> {
+  updateProduct(request: UpdateProductRequest): Observable<BaseResponse<any>> {
     const formData = new FormData();
     this.utilService.buildFormData(formData, request);
     return this.http.put<BaseResponse<any>>(this.productAPI, formData);

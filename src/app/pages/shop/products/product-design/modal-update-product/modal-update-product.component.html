@@ -1,0 +1,297 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'Chỉnh sửa thiết kế' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body pb-4 pt-1" style="max-height: 75vh; overflow-y: auto">
+  <ul class="nav nav-tabs tab-switcher mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 0"
+        (click)="currentTab = 0"
+        type="button"
+        role="tab"
+      >
+        Thông tin cơ bản
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 1"
+        (click)="currentTab = 1"
+        type="button"
+        role="tab"
+      >
+        Thông tin bổ sung
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab 1 -->
+  <div *ngIf="currentTab === 0" class="tab-pane fade show active">
+    <div class="d-flex justify-content-between align-items-start">
+      <div class="flex-grow-1">
+        <div class="item-search w-100">
+          <label for="design-name" class="title-info">Tên<span class="text-danger m-0">*</span></label>
+          <div class="input-text-custom">
+            <input
+              id="design-name"
+              class="form-control"
+              [(ngModel)]="product.name"
+              type="text"
+              placeholder="Ví dụ: Logo cửa hàng lớn,..."
+              [disabled]="!isUpdatable"
+            />
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <form class="w-50 p-2 pb-0">
+            <span>Danh mục</span>
+            <div class="select-search-custom">
+              <ng-select
+                [items]="categories"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [selectableGroup]="true"
+                placeholder="Chọn danh mục sản phẩm"
+                [(ngModel)]="product.categoryIds"
+                [closeOnSelect]="false"
+                name="categories"
+                [disabled]="!isUpdatable"
+              >
+              </ng-select>
+            </div>
+          </form>
+
+          <form class="w-50 p-2 pb-0">
+            <span>Nhóm sản phẩm</span>
+            <div class="select-search-custom">
+              <ng-select
+                [items]="productGroups"
+                bindLabel="name"
+                bindValue="id"
+                [multiple]="true"
+                [selectableGroup]="true"
+                placeholder="Chọn nhóm sản phẩm"
+                [(ngModel)]="product.productGroupIds"
+                [closeOnSelect]="false"
+                name="productGroups"
+                [disabled]="!isUpdatable"
+              >
+              </ng-select>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="design-code" class="title-info">Mã<span class="text-danger m-0">*</span></label>
+            <div class="input-text-custom">
+              <input
+                id="design-code"
+                class="form-control"
+                [(ngModel)]="product.code"
+                type="text"
+                placeholder="Ví dụ: LOGO_1"
+                alphanumericOnly
+                autocomplete="off"
+                [disabled]="!isUpdatable"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="design-price" class="title-info">Giá bán<span class="text-danger m-0">*</span></label>
+            <div class="input-text-custom">
+              <input
+                id="design-price"
+                class="form-control"
+                [(ngModel)]="product.price"
+                type="number"
+                placeholder="Ví dụ: 120000"
+                alphanumericOnly
+                autocomplete="off"
+                [disabled]="!isUpdatable"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="item-search mt-0 w-100">
+          <label for="product-description">Mô tả sản phẩm</label>
+          <div class="input-text-custom">
+            <textarea
+              id="product-description"
+              class="form-control"
+              [(ngModel)]="product.description"
+              type="text"
+              placeholder="Mô tả sản phẩm"
+              autocomplete="off"
+              [disabled]="!isUpdatable"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="item-search w-100 mt-3">
+          <label class="title-info">Danh sách ảnh minh họa</label>
+          <small class="text-muted fst-italic">Tối đa 6 ảnh. Hỗ trợ định dạng: JPG, PNG, WEBP. Kích thước tối ưu 250x250.</small>
+          <div class="gallery-container d-flex flex-wrap gap-3 mt-2">
+            <div class="gallery-item position-relative" *ngFor="let img of galleryImages; let i = index">
+              <img [src]="img.previewUrl" class="gallery-img" alt="Gallery image">
+
+              <button *ngIf="isUpdatable" class="btn-remove-gallery" (click)="removeGalleryImage(i)">
+                <span [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </button>
+            </div>
+
+            <div *ngIf="isUpdatable" class="gallery-add-btn d-flex justify-content-center align-items-center cursor-pointer"
+                 (click)="galleryInput.click()">
+              <span class="plus-icon">+</span>
+            </div>
+
+            <input
+              type="file"
+              #galleryInput
+              multiple
+              accept="image/*"
+              style="display: none"
+              [hidden]="!isUpdatable"
+              [disabled]="!isUpdatable"
+              (change)="onGalleryFilesSelected($event)"
+            >
+          </div>
+        </div>
+
+        <div class="item-search w-100 mt-3">
+          <label class="title-info">File thiết kế gốc</label>
+          <div class="input-text-custom">
+            <input
+              type="file"
+              class="form-control"
+              id="designFile"
+              (change)="onDesignFileSelected($event)"
+              [disabled]="!isUpdatable"
+              accept=".zip,.rar,.7z,.tar,.ai,.psd,.cdr,.eps,.indd..jpg,.jpeg,.png,.gif,.bmp,.webp,.tiff,.svg" />
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 250px; max-width: 25%; padding-left: 0.5rem">
+        <div class="item-search w-100 mt-3">
+          <label class="title-info">Ảnh bìa<span class="text-danger m-0">*</span></label>
+          <div class="image-upload-container-single"
+               [class.has-image]="selectedThumbnail"
+               (click)="fileInput.click()"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onDrop($event)">
+
+            <input [disabled]="!isUpdatable"
+                   [hidden]="!isUpdatable"
+                   type="file"
+                   [multiple]="false"
+                   #fileInput
+                   id="imageUploadSingle"
+                   accept="image/*"
+                   (change)="onSingleFileSelected($event)" style="display: none;"
+            />
+
+            <div class="single-image-display">
+              <img [src]="selectedThumbnail || product.thumbnail" alt="Selected Image" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div *ngIf="currentTab === 1" class="tab-pane fade show active">
+    <div class="item-search w-100 mt-3 my-4">
+      <div class="d-flex align-items-center gap-5">
+        <label class="title-info mb-0 fs-6 fw-medium" style="cursor: pointer" for="batchToggle">
+          Là sản phẩm có thể tùy chỉnh
+        </label>
+
+        <label class="switch-toggle">
+          <input
+            type="checkbox"
+            id="batchToggle"
+            [(ngModel)]="product.customizable"
+            [ngModelOptions]="{standalone: true}"
+            [disabled]="!isUpdatable"
+          >
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <div style="padding: 0 6px" *ngIf="product.customizable">
+      <div class="card-header-custom mt-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Thuộc tính tùy chọn</h5>
+        </div>
+      </div>
+
+      <div class="attribute-container p-2">
+        <div class="attribute-row d-flex align-items-center mb-2 gap-3" *ngFor="let option of options; let i = index">
+          <div class="item-search mt-0 w-25 p-0">
+            <div class="input-text-custom w-100">
+              <input
+                id="option-name-{{i}}"
+                class="form-control"
+                style="height: 48px"
+                [(ngModel)]="option.name"
+                type="text"
+                placeholder="Tên nhóm thuộc tính tùy chọn"
+                autocomplete="off"
+                [disabled]="!isUpdatable"
+              />
+            </div>
+          </div>
+
+          <div class="gallery-container flex-grow-1 d-flex flex-wrap align-items-center">
+            <div class="gallery-item-2 position-relative" *ngFor="let img of optionPreviews[i]; let j = index">
+              <img [src]="img.previewUrl" class="gallery-img" alt="Gallery image">
+
+              <button *ngIf="isUpdatable" class="btn-remove-gallery" (click)="removeOptionImage(i, j)">
+                <span [innerHTML]="ICON_X_WHITE | safeHtml"></span>
+              </button>
+            </div>
+
+            <div *ngIf="isUpdatable" class="gallery-add-btn gallery-add-btn-2 d-flex justify-content-center align-items-center cursor-pointer"
+                 (click)="galleryInput.click()">
+              <span class="plus-icon">+</span>
+            </div>
+
+            <input
+              type="file"
+              #galleryInput
+              multiple
+              accept="image/*"
+              style="display: none"
+              (change)="onOptionImageSelected($event, i)"
+              [hidden]="!isUpdatable"
+              [disabled]="!isUpdatable"
+            >
+          </div>
+
+          <span *ngIf="isUpdatable" class="cursor-pointer mb-1 me-2" [innerHTML]="ICON_DELETE | safeHtml" (click)="removeOption(i)"></span>
+        </div>
+
+        <button *ngIf="isUpdatable" class="btn btn-add-attribute" (click)="addOption()">Thêm thuộc tính</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer border-top-0" *ngIf="isUpdatable">
+  <button class="cancel-button-dialog" (click)="dismiss()">Huỷ</button>
+  <button class="save-button-dialog" (click)="confirmSave()" [disabled]="loading.isLoading">
+    <span>Lưu</span>
+  </button>
+</div>
