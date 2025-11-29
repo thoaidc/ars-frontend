@@ -1,86 +1,63 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { CartService } from '../../../core/services/cart.service';
-
-interface ApiResponse<T> {
-  code: number;
-  status: boolean;
-  message: string;
-  result: T;
-  total: number;
-}
-
-export interface Product {
-  id: number;
-  name: string;
-  code: string;
-  price: number;
-  description?: string;
-  customizable?: boolean;
-  status: string;
-  thumbnailUrl?: string;
-}
+import {ProductService} from '../../../core/services/product.service';
+import {BaseFilterRequest} from '../../../core/models/request.model';
+import {CategoryDTO, Product} from '../../../core/models/product.model';
+import {ToastrService} from 'ngx-toastr';
+import {CategoryService} from '../../../core/services/category.service';
 
 @Component({
   selector: 'app-client-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, HttpClientModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   loading = false;
-  errorMessage = '';
-
   trendyProducts: Product[] = [];
   justArrivedProducts: Product[] = [];
-
-  readonly shopId = 1;
-  private apiUrl = 'http://localhost:8080/api/p/v1/products';
-  private backendBaseUrl = 'http://localhost:8080';
+  categories: CategoryDTO[] = [];
+  productGroupsFilter: BaseFilterRequest = {
+    page: 0,
+    size: 10,
+    keyword: ''
+  };
 
   constructor(
-    private http: HttpClient,
-    private cartService: CartService
+    private cartService: CartService,
+    private productService: ProductService,
+    private categoryService: CategoryService,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loadProducts();
+    this.loadCategories();
+  }
+
+  private loadCategories() {
+    this.categoryService.getAllWithPaging(this.productGroupsFilter).subscribe(response => {
+      if (response && response.result) {
+        this.categories = response.result;
+      }
+    })
   }
 
   private loadProducts(): void {
     this.loading = true;
-    this.errorMessage = '';
+    this.productService.getAllWithPaging(this.productGroupsFilter).subscribe(response => {
+      if (response && response.result) {
+        this.trendyProducts = response.result;
+        this.justArrivedProducts = response.result;
+      } else {
+        this.toast.error('Không tải được danh sách sản phẩm')
+      }
 
-    const params = new HttpParams()
-      .set('shopId', this.shopId.toString())
-      .set('page', '0')
-      .set('size', '20')
-      .set('sort', 'created_date,desc');
-
-    this.http
-      .get<ApiResponse<Product[]>>(this.apiUrl, { params })
-      .subscribe({
-        next: (res) => {
-          const list = res.result || [];
-
-          this.trendyProducts = list.slice(0, 8);
-          this.justArrivedProducts = list.slice(8, 16);
-
-          if (this.justArrivedProducts.length === 0) {
-            this.justArrivedProducts = this.trendyProducts;
-          }
-        },
-        error: (err) => {
-          console.error('Load products failed', err);
-          this.errorMessage = 'Không tải được danh sách sản phẩm.';
-          this.trendyProducts = [];
-          this.justArrivedProducts = [];
-        },
-        complete: () => (this.loading = false),
-      });
+      this.loading = false;
+    });
   }
 
   getDisplayPrice(price: number | null | undefined): string {
@@ -99,23 +76,13 @@ export class HomeComponent implements OnInit {
     }).format(value);
   }
 
-  getProductImage(p: Product): string {
-    if (!p.thumbnailUrl) {
-      return 'assets/eshopper/img/product-1.jpg';
-    }
-    if (p.thumbnailUrl.startsWith('http')) {
-      return p.thumbnailUrl;
-    }
-    return `${this.backendBaseUrl}${p.thumbnailUrl}`;
-  }
-
   addToCart(p: Product): void {
     this.cartService.addItem(
       {
         productId: p.id,
         name: p.name,
-        price: this.normalizePrice(p.price),
-        thumbnailUrl: this.getProductImage(p),
+        price: this.normalizePrice(Number(p.price)),
+        thumbnailUrl: p.thumbnailUrl,
       },
       1
     );
@@ -130,4 +97,6 @@ export class HomeComponent implements OnInit {
   trackByProductId(_: number, item: Product): number {
     return item.id;
   }
+
+  protected readonly Number = Number;
 }

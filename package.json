@@ -44,6 +44,8 @@
     "crypto-js": "~4.2.0",
     "dayjs": "~1.11.13",
     "file-saver": "~2.0.5",
+    "jquery": "^3.7.1",
+    "jquery-ui-dist": "^1.13.3",
     "ngx-drag-drop": "~18.0.2",
     "ngx-infinite-scroll": "~18.0.0",
     "ngx-toastr": "~19.0.0",

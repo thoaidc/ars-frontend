@@ -68,6 +68,10 @@ body {
   outline: 0 !important;
 }
 
+.modal-backdrop.show {
+  z-index: 1040 !important;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
@@ -86,7 +90,6 @@ p {
 
 abbr[title],
 abbr[data-original-title] {
-  text-decoration: underline;
   text-decoration: underline dotted;
   cursor: help;
   border-bottom: 0;
@@ -228,7 +231,6 @@ button {
 }
 
 button:focus {
-  outline: 1px dotted;
   outline: 5px auto -webkit-focus-ring-color;
 }
 
@@ -1884,7 +1886,6 @@ pre code {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #EDF1FF;
-  border-radius: 0;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
@@ -2027,7 +2028,6 @@ textarea.form-control {
 .form-check {
   position: relative;
   display: block;
-  padding-left: 1.25rem;
 }
 
 .form-check-input {
@@ -3770,15 +3770,15 @@ input[type="button"].btn-block {
 }
 
 .custom-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #fff, none;
+  box-shadow: 0 0 0 1px #fff;
 }
 
 .custom-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #fff, none;
+  box-shadow: 0 0 0 1px #fff;
 }
 
 .custom-range:focus::-ms-thumb {
-  box-shadow: 0 0 0 1px #fff, none;
+  box-shadow: 0 0 0 1px #fff;
 }
 
 .custom-range::-moz-focus-outer {
@@ -4475,7 +4475,7 @@ input[type="button"].btn-block {
     margin-left: -15px;
   }
   .card-deck .card {
-    flex: 1 0 0%;
+    flex: 1 0 0;
     margin-right: 15px;
     margin-bottom: 0;
     margin-left: 15px;
@@ -4492,7 +4492,7 @@ input[type="button"].btn-block {
     flex-flow: row wrap;
   }
   .card-group > .card {
-    flex: 1 0 0%;
+    flex: 1 0 0;
     margin-bottom: 0;
   }
   .card-group > .card + .card {
@@ -5433,7 +5433,6 @@ a.close.disabled {
 
 .modal-dialog-centered::before {
   display: block;
-  height: calc(100vh - 1rem);
   height: min-content;
   content: "";
 }
@@ -5542,7 +5541,6 @@ a.close.disabled {
     min-height: calc(100% - 3.5rem);
   }
   .modal-dialog-centered::before {
-    height: calc(100vh - 3.5rem);
     height: min-content;
   }
   .modal-sm {
@@ -5572,8 +5570,6 @@ a.close.disabled {
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
-  text-align: left;
-  text-align: start;
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
@@ -5684,8 +5680,6 @@ a.close.disabled {
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
-  text-align: left;
-  text-align: start;
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
@@ -9344,7 +9338,6 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .text-hide {
-  font: 0/0 a;
   color: transparent;
   text-shadow: none;
   background-color: transparent;
@@ -9481,7 +9474,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 @media (max-width: 991.98px) {
   .navbar-light .navbar-nav .nav-link {
-    padding: 5px 0px;
+    padding: 5px 0;
   }
 }
 

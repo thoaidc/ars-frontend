@@ -13,6 +13,12 @@ export const APP_ROUTES: Routes = [
     canActivate: [LoginGuardFn]
   },
   {
+    path: 'register',
+    title: 'Đăng Ký',
+    pathMatch: 'full',
+    loadComponent: () => import('./pages/register/register.component').then(m => m.RegisterComponent)
+  },
+  {
     path: 'admin',
     component: AdminComponent,
     loadChildren: () => import('./pages/admin/admin.routes').then(m => m.ADMIN_ROUTES)

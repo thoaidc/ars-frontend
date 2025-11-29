@@ -37,6 +37,8 @@
     "total": "Total",
     "save": "Save",
     "keyword": "Keyword",
+    "email": "Email",
+    "phone": "Phone number",
     "status": "Status",
     "createdBy": "Creator",
     "createdDate": "Creation Date",
@@ -115,6 +117,20 @@
     "unlockAccount": "Active permission",
     "lockAccount": "Deactivate",
     "changePassword": "Change password",
-    "searchAccountPlaceholder": "Account, first and last name"
+    "searchAccountPlaceholder": "Account, first and last name",
+    "product": "Product",
+    "createProduct": "Create product",
+    "createProductGroup": "Create product group",
+    "productCode": "Product code",
+    "productName": "Product name",
+    "productGroup": "Product group",
+    "price": "Product price",
+    "status": "Active status",
+    "customizable": "Is a custom product",
+    "searchProductPlaceholder": "Search by name or code",
+    "productGroupName": "Product group name",
+    "createdBy": "Created by",
+    "createdDate": "Created at",
+    "registerTitleMain": "Register"
   }
 }

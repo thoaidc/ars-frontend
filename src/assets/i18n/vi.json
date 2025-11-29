@@ -37,6 +37,8 @@
     "total": "Tổng",
     "save": "Lưu",
     "keyword": "Từ khóa",
+    "email": "Email",
+    "phone": "Số điện thoại",
     "status": "Trạng thái",
     "createdBy": "Người tạo",
     "createdDate": "Ngày tạo",
@@ -115,6 +117,20 @@
     "unlockAccount": "Cấp phép hoạt động",
     "lockAccount": "Dừng hoạt động",
     "changePassword": "Đổi mật khẩu",
-    "searchAccountPlaceholder": "Tài khoản, họ và tên"
+    "searchAccountPlaceholder": "Tài khoản, họ và tên",
+    "product": "Sản phẩm",
+    "createProduct": "Tạo sản phẩm",
+    "createProductGroup": "Tạo nhóm sản phẩm",
+    "productCode": "Mã sản phẩm",
+    "productName": "Tên sản phẩm",
+    "productGroup": "Nhóm sản phẩm",
+    "price": "Giá sản phẩm",
+    "status": "Trạng thái hoạt động",
+    "customizable": "Là sản phẩm tùy chỉnh",
+    "searchProductPlaceholder": "Tìm tên hoặc mã sản phẩm",
+    "productGroupName": "Tên nhóm sản phẩm",
+    "createdBy": "Người tạo",
+    "createdDate": "Ngày tạo",
+    "registerTitleMain": "Đăng ký tài khoản"
   }
 }
