@@ -10,15 +10,49 @@
           <img src="./assets/images/logo/logo_login.png" alt=""/>
         </span>
 
-        <form autocomplete="on" class="info">
-          <span class="title-login">{{ 'text.loginTitleMain' | translate }}</span>
+        <form autocomplete="on" class="info" (ngSubmit)="register()">
+          <span class="title-login">{{ 'text.registerTitleMain' | translate }}</span>
+
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="fullname"
+              required
+              [(ngModel)]="registerRequest.fullname"
+              [placeholder]="'global.fullname' | translate"
+            />
+          </div>
+
+          <div class="input-login">
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              required
+              [(ngModel)]="registerRequest.email"
+              [placeholder]="'global.email' | translate"
+            />
+          </div>
+
+          <div class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="phone"
+              required
+              [(ngModel)]="registerRequest.phone"
+              [placeholder]="'global.phone' | translate"
+            />
+          </div>
+
           <div class="input-login">
             <input
               type="text"
               class="form-control"
               name="username"
               required
-              [(ngModel)]="loginRequest.username"
+              [(ngModel)]="registerRequest.username"
               [placeholder]="'global.account' | translate"
             />
           </div>
@@ -29,7 +63,7 @@
               class="form-control"
               name="password"
               required
-              [(ngModel)]="loginRequest.password"
+              [(ngModel)]="registerRequest.password"
               [placeholder]="'global.password' | translate"
             />
             <div *ngIf="!isHiddenPassword" class="display-password" (click)="toggleDisplayPassword()">
@@ -40,14 +74,7 @@
             </div>
           </div>
 
-          <div class="remember">
-            <div class="form-check">
-              <input class="form-check-input" name="remember" type="checkbox" id="remember" [(ngModel)]="isRememberMe"/>
-              <label class="form-check-label" for="remember">{{ 'text.rememberAccount' | translate }}</label>
-            </div>
-          </div>
-
-          <button class="button-login" (click)="login()" type="submit">{{ 'global.login' | translate }}</button>
+          <button class="button-login" type="submit">{{ 'global.register' | translate }}</button>
         </form>
       </div>
     </div>

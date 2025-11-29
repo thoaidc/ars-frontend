@@ -12,7 +12,7 @@ import {
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
 import {Authentication, LoginRequest} from '../models/auth.model';
-import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_REFRESH, API_USERS_STATUS} from '../../constants/api.constants';
+import {API_USERS_LOGIN, API_USERS_LOGOUT, API_USERS_REFRESH, API_USERS_STATUS, API_USERS_REGISTER} from '../../constants/api.constants';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -148,5 +148,20 @@ export class AuthService {
     if (previousUrl) {
       this.router.navigateByUrl(previousUrl).then();
     }
+  }
+
+  /**
+   * Register a new user (public API)
+   * @param registerRequest object with username,password,fullname,phone,email
+   * @param isShop whether registering as a shop (appends ?isShop=true|false)
+   */
+  register(registerRequest: any, isShop = false): Observable<BaseResponse<any>> {
+    const registerApi = this.applicationConfigService.getEndpointFor(API_USERS_REGISTER) + `?isShop=${isShop}`;
+    return this.http.post<BaseResponse<any>>(registerApi, registerRequest).pipe(
+      catchError((err) => {
+        // rethrow error to be handled by caller
+        throw err;
+      })
+    );
   }
 }

@@ -7,12 +7,10 @@ import {ICON_EYE, ICON_EYE_CROSS} from '../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
-import {LoginRequest} from '../../core/models/auth.model';
-import {USER_TYPE} from '../../constants/user.constants';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [
     SafeHtmlPipe,
@@ -21,15 +19,18 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     TranslatePipe
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   isHiddenPassword: boolean = true;
-  isRememberMe: boolean = false;
-  loginRequest: LoginRequest = {
+
+  // Register payload used by template
+  registerRequest: any = {
     username: '',
     password: '',
-    rememberMe: false
+    fullname: '',
+    phone: '',
+    email: ''
   };
 
   constructor(
@@ -44,35 +45,45 @@ export class RegisterComponent {
     this.isHiddenPassword = !this.isHiddenPassword;
   }
 
-  login() {
-    if (!this.loginRequest.username) {
+  register() {
+    if (!this.registerRequest.username) {
       this.toastr.error(this.translateService.instant('notification.notEmptyUsername'));
       return;
     }
 
-    if (!this.loginRequest.password) {
-      this.toastr.error(this.translateService.instant('notification.notEmptyPassword'));
-      return;
-    } else if (!this.utilsService.validatePassword(this.loginRequest.password)) {
+    if (!this.registerRequest.fullname) {
+      this.toastr.error(this.translateService.instant('notification.notEmptyFullname') || 'Full name is required');
       return;
     }
 
-    this.loginRequest.rememberMe = this.isRememberMe;
+    if (!this.registerRequest.email) {
+      this.toastr.error(this.translateService.instant('notification.notEmptyEmail') || 'Email is required');
+      return;
+    }
 
-    this.authService.authenticate(this.loginRequest, true).subscribe(authentication => {
-      if (authentication) {
-        this.toastr.success(this.translateService.instant('notification.loginSuccess'));
-        let redirectUrl = '/';
+    if (!this.registerRequest.phone) {
+      this.toastr.error(this.translateService.instant('notification.notEmptyPhone') || 'Phone is required');
+      return;
+    }
 
-        if (authentication.type === USER_TYPE.ADMIN) {
-          redirectUrl += this.utilsService.findFirstAccessibleRoute(authentication.authorities);
-        } else if (authentication.type === USER_TYPE.SHOP) {
-          redirectUrl += 'shop/dashboard';
-        } else {
-          redirectUrl += 'client/home';
-        }
+    if (!this.registerRequest.password) {
+      this.toastr.error(this.translateService.instant('notification.notEmptyPassword'));
+      return;
+    } else if (!this.utilsService.validatePassword(this.registerRequest.password)) {
+      return;
+    }
 
-        this.router.navigate([redirectUrl]).then();
+    // Call register API. curl example uses ?isShop=false
+    this.authService.register(this.registerRequest, false).subscribe({
+      next: (res) => {
+        this.toastr.success(this.translateService.instant('notification.registerSuccess') || 'Register success');
+        // redirect to login
+        this.router.navigate(['/login']).then();
+      },
+      error: (err) => {
+        // show backend message if provided
+        const msg = err?.error?.message || this.translateService.instant('notification.registerFailed') || 'Register failed';
+        this.toastr.error(msg);
       }
     });
   }
