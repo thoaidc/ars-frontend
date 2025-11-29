@@ -7,7 +7,7 @@
     "build": "npm run webapp:prod --",
     "cleanup": "rimraf target/",
     "serve": "npm run start --",
-    "start": "ng serve --hmr",
+    "start": "ng serve --proxy-config proxy.conf.json --hmr",
     "test": "ng test --coverage --log-heap-usage -w=2",
     "watch": "ng build --watch --configuration development",
     "webapp:build": "npm run cleanup && npm run webapp:build:dev",

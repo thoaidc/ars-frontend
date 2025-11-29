@@ -59,3 +59,35 @@ export interface CreateOption {
   name: string;
   images: any[];
 }
+
+export interface UpdateProductRequest {
+  id: number;
+  shopId: number;
+  name: string;
+  code: string;
+  price: string;
+  description?: string;
+  customizable: boolean;
+  thumbnail?: any;
+  originalImage?: any;
+  categoryIds?: number[];
+  productGroupIds?: number[];
+  options?: CreateOption[];
+  productImages?: UpdateProductImage[];
+}
+
+export interface UpdateProductImage {
+  id?: number;
+  image: any;
+}
+
+export interface UpdateOption {
+  id?: number;
+  name: string;
+  images: UpdateOptionImage[];
+}
+
+export interface UpdateOptionImage {
+  id?: number;
+  image: any;
+}

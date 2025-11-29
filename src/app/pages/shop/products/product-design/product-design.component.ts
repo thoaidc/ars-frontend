@@ -16,6 +16,7 @@ import {
 } from '../../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {ToastrService} from 'ngx-toastr';
 import {ModalCreateProductComponent} from './modal-create-product/modal-create-product.component';
+import {ModalUpdateProductComponent} from './modal-update-product/modal-update-product.component';
 
 @Component({
   selector: 'app-shop-product-design',
@@ -77,11 +78,18 @@ export class ProductDesignComponent implements OnInit {
   }
 
   view(productId: number) {
-
+    this.modalRef = this.modalService.open(ModalUpdateProductComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.componentInstance.productId = productId;
+    this.modalRef.componentInstance.isView = true;
   }
 
-  openModalCreateProduct(productId?: number) {
+  openModalCreateProduct() {
     this.modalRef = this.modalService.open(ModalCreateProductComponent, { size: 'xl', backdrop: 'static' });
+  }
+
+  openModalUpdateProduct(productId: number) {
+    this.modalRef = this.modalService.open(ModalUpdateProductComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.componentInstance.productId = productId;
   }
 
   delete(product: Product) {
