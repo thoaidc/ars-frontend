@@ -1,12 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from '../../core/services/cart.service';
+import {RouterLink, RouterOutlet} from '@angular/router';
+import { VndCurrencyPipe } from '../../shared/pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [RouterOutlet,RouterLinkActive, RouterLink],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    VndCurrencyPipe
+  ],
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],
 })
@@ -20,12 +25,12 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // lắng nghe tổng số item trong giỏ
-    this.sub = this.cartService.cartCount$.subscribe((count: number) => {
-      this.cartCount = count;
-    });
+    // this.sub = this.cartService.cartCount$.subscribe((count: number) => {
+    //   this.cartCount = count;
+    // });
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    // this.sub?.unsubscribe();
   }
 }

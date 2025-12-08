@@ -1,352 +1,424 @@
-<div class="client-layout">
-
-  <!-- Topbar Start -->
-  <div class="container-fluid">
-    <div class="row bg-secondary py-2 px-xl-5">
-      <div class="col-lg-6 d-none d-lg-block">
-        <div class="d-inline-flex align-items-center">
-          <a class="text-dark" href="#">FAQs</a>
-          <span class="text-muted px-2">|</span>
-          <a class="text-dark" href="#">Help</a>
-          <span class="text-muted px-2">|</span>
-          <a class="text-dark" href="#">Support</a>
+<!-- Header -->
+<header class="header-v4">
+  <!-- Header desktop -->
+  <div class="container-menu-desktop">
+    <!-- Topbar -->
+    <div class="top-bar">
+      <div class="content-topbar flex-sb-m h-full container">
+        <div class="left-top-bar">
+          Free shipping for standard order over {{ 100 | vndCurrency:23000 }}
         </div>
-      </div>
-      <div class="col-lg-6 text-center text-lg-right">
-        <div class="d-inline-flex align-items-center">
-          <a class="text-dark px-2" href="#">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a class="text-dark px-2" href="#">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a class="text-dark px-2" href="#">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-          <a class="text-dark px-2" href="#">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a class="text-dark pl-2" href="#">
-            <i class="fab fa-youtube"></i>
-          </a>
+
+        <div class="right-top-bar flex-w h-full">
+          <a href="javascript:void(0)" class="flex-c-m trans-04 p-lr-25">Help & FAQs</a>
+          <a href="javascript:void(0)" class="flex-c-m trans-04 p-lr-25">My Account</a>
+          <a href="javascript:void(0)" class="flex-c-m trans-04 p-lr-25">EN</a>
+          <a href="javascript:void(0)" class="flex-c-m trans-04 p-lr-25">USD</a>
         </div>
       </div>
     </div>
 
-    <!-- logo + search + icons -->
-    <div class="row align-items-center py-3 px-xl-5">
-      <div class="col-lg-3 d-none d-lg-block">
-        <a routerLink="/client/home" class="text-decoration-none">
-          <h1 class="m-0 display-5 font-weight-semi-bold">
-            <span class="text-primary font-weight-bold border px-3 mr-1">PTIT</span>Store
-          </h1>
+    <div class="wrap-menu-desktop how-shadow1">
+      <nav class="limiter-menu-desktop container">
+
+        <!-- Logo desktop -->
+        <a routerLink="/client/home" class="logo">
+          <img src="/assets/coza/images/icons/logo-01.png" alt="IMG-LOGO">
         </a>
+
+        <!-- Menu desktop -->
+        <div class="menu-desktop">
+          <ul class="main-menu">
+            <li><a routerLink="/client/home">Home</a></li>
+            <li><a routerLink="/client/shop">Shop</a></li>
+            <li class="label1" data-label1="hot"><a routerLink="/client/cart">Features</a></li>
+            <li><a href="javascript:void(0)">Blog</a></li>
+            <li><a href="javascript:void(0)">Category</a></li>
+            <li><a href="javascript:void(0)">Explore Design</a></li>
+          </ul>
+        </div>
+
+        <!-- Icon header + inline search -->
+        <div class="wrap-icon-header flex-w flex-r-m">
+          <div class="header-search-inline" style="display:flex;align-items:center;">
+            <input type="text" placeholder="Search..." class="plh3" style="padding:6px 10px;border-radius:20px;border:1px solid #ddd;">
+            <button style="margin-left:8px;" class="flex-c-m trans-04" type="button"><i class="zmdi zmdi-search"></i></button>
+          </div>
+
+          <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2">
+            <i class="zmdi zmdi-shopping-cart"></i>
+          </div>
+
+          <a href="javascript:void(0)" class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0">
+            <i class="zmdi zmdi-favorite-outline"></i>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Header Mobile -->
+  <div class="wrap-header-mobile">
+    <!-- Logo mobile -->
+    <div class="logo-mobile">
+      <a routerLink="/client/home"><img src="/assets/coza/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+    </div>
+
+    <!-- Icon header -->
+    <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+      <!-- replace popup trigger with simple search icon (no modal) -->
+      <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11">
+        <i class="zmdi zmdi-search"></i>
       </div>
-      <div class="col-lg-6 col-6 text-left">
-        <form (submit)="$event.preventDefault()">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for products" />
-            <div class="input-group-append">
-              <span class="input-group-text bg-transparent text-primary">
-                <i class="fa fa-search"></i>
-              </span>
+
+      <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+        <i class="zmdi zmdi-shopping-cart"></i>
+      </div>
+
+      <a href="javascript:void(0)" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
+        <i class="zmdi zmdi-favorite-outline"></i>
+      </a>
+    </div>
+
+    <!-- Button show menu -->
+    <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+      <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div class="menu-mobile">
+    <ul class="topbar-mobile">
+      <li>
+        <div class="left-top-bar">Free shipping for standard order over {{ 100 | vndCurrency:23000 }}</div>
+      </li>
+      <li>
+        <div class="right-top-bar flex-w h-full">
+          <a href="javascript:void(0)" class="flex-c-m p-lr-10 trans-04">Help & FAQs</a>
+          <a href="javascript:void(0)" class="flex-c-m p-lr-10 trans-04">My Account</a>
+          <a href="javascript:void(0)" class="flex-c-m p-lr-10 trans-04">EN</a>
+          <a href="javascript:void(0)" class="flex-c-m p-lr-10 trans-04">USD</a>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="main-menu-m">
+      <li><a routerLink="/client/home">Home</a><span class="arrow-main-menu-m"><i class="fa fa-angle-right" aria-hidden="true"></i></span></li>
+      <li><a routerLink="/client/shop">Shop</a></li>
+      <li><a routerLink="/client/cart" class="label1 rs1" data-label1="hot">Features</a></li>
+      <li><a href="javascript:void(0)">Blog</a></li>
+      <li><a href="javascript:void(0)">About</a></li>
+      <li><a href="javascript:void(0)">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Modal Search removed -->
+</header>
+
+<!-- Cart panel (tạm để nguyên UI tĩnh) -->
+<div class="wrap-header-cart js-panel-cart">
+  <div class="s-full js-hide-cart"></div>
+
+  <div class="header-cart flex-col-l p-l-65 p-r-25">
+    <div class="header-cart-title flex-w flex-sb-m p-b-8">
+      <span class="mtext-103 cl2">Your Cart</span>
+
+      <div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart"><i class="zmdi zmdi-close"></i></div>
+    </div>
+
+    <div class="header-cart-content flex-w js-pscroll">
+      <ul class="header-cart-wrapitem w-full">
+        <li class="header-cart-item flex-w flex-t m-b-12">
+          <div class="header-cart-item-img"><img src="/assets/coza/images/item-cart-01.jpg" alt="IMG"></div>
+          <div class="header-cart-item-txt p-t-8">
+            <a href="javascript:void(0)" class="header-cart-item-name m-b-18 hov-cl1 trans-04">White Shirt Pleat</a>
+            <span class="header-cart-item-info">1 x {{ 19.00 | vndCurrency:23000 }}</span>
+          </div>
+        </li>
+
+        <li class="header-cart-item flex-w flex-t m-b-12">
+          <div class="header-cart-item-img"><img src="/assets/coza/images/item-cart-02.jpg" alt="IMG"></div>
+          <div class="header-cart-item-txt p-t-8">
+            <a href="javascript:void(0)" class="header-cart-item-name m-b-18 hov-cl1 trans-04">Converse All Star</a>
+            <span class="header-cart-item-info">1 x {{ 39.00 | vndCurrency:23000 }}</span>
+          </div>
+        </li>
+
+        <li class="header-cart-item flex-w flex-t m-b-12">
+          <div class="header-cart-item-img"><img src="/assets/coza/images/item-cart-03.jpg" alt="IMG"></div>
+          <div class="header-cart-item-txt p-t-8">
+            <a href="javascript:void(0)" class="header-cart-item-name m-b-18 hov-cl1 trans-04">Nixon Porter Leather</a>
+            <span class="header-cart-item-info">1 x {{ 17.00 | vndCurrency:23000 }}</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="w-full">
+        <div class="header-cart-total w-full p-tb-40">Total: {{ 75.00 | vndCurrency:23000 }}</div>
+
+        <div class="header-cart-buttons flex-w w-full">
+          <a routerLink="/client/cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">View Cart</a>
+          <a routerLink="/client/checkout" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">Check Out</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Modal1 -->
+<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+  <div class="overlay-modal1 js-hide-modal1"></div>
+  <div class="container">
+    <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
+      <button class="how-pos3 hov3 trans-04 js-hide-modal1"><img src="/assets/coza/images/icons/icon-close.png" alt="CLOSE"></button>
+
+      <div class="row">
+        <div class="col-md-6 col-lg-7 p-b-30">
+          <div class="p-l-25 p-r-30 p-lr-0-lg">
+            <div class="wrap-slick3 flex-sb flex-w">
+              <div class="wrap-slick3-dots"></div>
+              <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+              <div class="slick3 gallery-lb">
+                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-01.jpg">
+                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-01.jpg" alt="IMG-PRODUCT"></div>
+                </div>
+                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-02.jpg">
+                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-02.jpg" alt="IMG-PRODUCT"></div>
+                </div>
+                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-03.jpg">
+                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-03.jpg" alt="IMG-PRODUCT"></div>
+                </div>
+              </div>
+
             </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-5 p-b-30">
+          <div class="p-r-50 p-t-5 p-lr-0-lg">
+            <h4 class="mtext-105 cl2 js-name-detail p-b-14">Lightweight Jacket</h4>
+            <span class="mtext-106 cl2">{{ 58.79 | vndCurrency:23000 }}</span>
+            <p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>
+
+            <div class="p-t-33">
+              <!-- options form: color and action -->
+              <div class="flex-w flex-r-m p-b-10">
+                <div class="size-203 flex-c-m respon6">Color</div>
+                <div class="size-204 respon6-next">
+                  <div class="rs1-select2 bor8 bg0">
+                    <select class="js-select2" name="color">
+                      <option>Choose color</option>
+                      <option>Red</option>
+                      <option>Blue</option>
+                      <option>White</option>
+                      <option>Grey</option>
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- START: Customization form for Modal quick view -->
+              <div class="customization-section p-t-20 bor-top">
+                <style>
+                  .modal-custom-options{margin-top:6px}
+                  .modal-custom-options .opt-grid{display:flex;gap:8px;flex-wrap:wrap}
+                  .modal-custom-options input[type="radio"]{display:none}
+                  .modal-custom-options label.option-thumb{display:inline-block;width:56px;height:56px;border:2px solid #eee;border-radius:8px;background-size:cover;background-position:center;cursor:pointer;transition:all .12s;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+                  .modal-custom-options input[type="radio"]:checked + label.option-thumb{border-color:#f7941d;box-shadow:0 6px 18px rgba(247,148,29,0.18);transform:translateY(-2px)}
+                  .opt-label{font-size:13px;color:#666;margin-bottom:6px}
+                  .modal-custom-options .hair-style{width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:2px solid #efefef;background:#fff}
+                </style>
+
+                <h5 class="mtext-108 cl2 p-b-12">Customize design</h5>
+
+                <div class="p-b-12">
+                  <div class="size-203 flex-c-m respon6 opt-label">Eye color</div>
+                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
+                    <div class="opt-grid">
+                      <input type="radio" id="m-eye-green" name="modalEyeColor" value="green">
+                      <label for="m-eye-green" class="option-thumb" title="Green" style="background: radial-gradient(circle at 30% 30%, #9ee6b3 10%, #2d8b5a 40%);"></label>
+
+                      <input type="radio" id="m-eye-brown" name="modalEyeColor" value="brown">
+                      <label for="m-eye-brown" class="option-thumb" title="Brown" style="background: radial-gradient(circle at 30% 30%, #ffd9a6 10%, #7a4a2c 40%);"></label>
+
+                      <input type="radio" id="m-eye-blue" name="modalEyeColor" value="blue">
+                      <label for="m-eye-blue" class="option-thumb" title="Blue" style="background: radial-gradient(circle at 30% 30%, #bfe8ff 10%, #1b5fb4 40%);"></label>
+
+                      <input type="radio" id="m-eye-hazel" name="modalEyeColor" value="hazel">
+                      <label for="m-eye-hazel" class="option-thumb" title="Hazel" style="background: radial-gradient(circle at 30% 30%, #f7e5c9 10%, #8b5e3c 40%);"></label>
+
+                      <input type="radio" id="m-eye-purple" name="modalEyeColor" value="purple">
+                      <label for="m-eye-purple" class="option-thumb" title="Purple" style="background: radial-gradient(circle at 30% 30%, #e6d0ff 10%, #6f2fa8 40%);"></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-b-12">
+                  <div class="size-203 flex-c-m respon6 opt-label">Hair color</div>
+                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
+                    <div class="opt-grid">
+                      <input type="radio" id="m-hair-blonde" name="modalHairColor" value="blonde">
+                      <label for="m-hair-blonde" class="option-thumb" title="Blonde" style="background: linear-gradient(180deg,#f9e7a6,#d9b24f);"></label>
+
+                      <input type="radio" id="m-hair-black" name="modalHairColor" value="black">
+                      <label for="m-hair-black" class="option-thumb" title="Black" style="background: linear-gradient(180deg,#444,#000);"></label>
+
+                      <input type="radio" id="m-hair-brown" name="modalHairColor" value="brown">
+                      <label for="m-hair-brown" class="option-thumb" title="Brown" style="background: linear-gradient(180deg,#8b5e3c,#5a381f);"></label>
+
+                      <input type="radio" id="m-hair-red" name="modalHairColor" value="red">
+                      <label for="m-hair-red" class="option-thumb" title="Red" style="background: linear-gradient(180deg,#f3a58e,#d14b2a);"></label>
+
+                      <input type="radio" id="m-hair-gray" name="modalHairColor" value="gray">
+                      <label for="m-hair-gray" class="option-thumb" title="Gray" style="background: linear-gradient(180deg,#d6d6d6,#9b9b9b);"></label>
+
+                      <input type="radio" id="m-hair-none" name="modalHairColor" value="none">
+                      <label for="m-hair-none" class="option-thumb" title="No hair" style="display:flex;align-items:center;justify-content:center;background:#e9fdf6;color:#1aa57a;font-weight:600">No</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-b-12">
+                  <div class="size-203 flex-c-m respon6 opt-label">Hair style</div>
+                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
+                    <div class="opt-grid">
+                      <input type="radio" id="m-hs-1" name="modalHairStyle" value="1">
+                      <label for="m-hs-1" class="hair-style" title="Style 1">1</label>
+
+                      <input type="radio" id="m-hs-2" name="modalHairStyle" value="2">
+                      <label for="m-hs-2" class="hair-style" title="Style 2">2</label>
+
+                      <input type="radio" id="m-hs-3" name="modalHairStyle" value="3">
+                      <label for="m-hs-3" class="hair-style" title="Style 3">3</label>
+
+                      <input type="radio" id="m-hs-4" name="modalHairStyle" value="4">
+                      <label for="m-hs-4" class="hair-style" title="Style 4">4</label>
+
+                      <input type="radio" id="m-hs-5" name="modalHairStyle" value="5">
+                      <label for="m-hs-5" class="hair-style" title="Style 5">5</label>
+
+                      <input type="radio" id="m-hs-6" name="modalHairStyle" value="6">
+                      <label for="m-hs-6" class="hair-style" title="Style 6">6</label>
+
+                      <input type="radio" id="m-hs-7" name="modalHairStyle" value="7">
+                      <label for="m-hs-7" class="hair-style" title="Style 7">7</label>
+
+                      <input type="radio" id="m-hs-8" name="modalHairStyle" value="8">
+                      <label for="m-hs-8" class="hair-style" title="Style 8">8</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="p-t-10">
+                  <small class="stext-102 cl6">Tip: Choose eye color, hair color and hair style to personalize the printed design.</small>
+                  <input type="hidden" name="modal_custom_eye" />
+                  <input type="hidden" name="modal_custom_haircolor" />
+                  <input type="hidden" name="modal_custom_hairstyle" />
+                </div>
+              </div>
+              <!-- END: Customization form -->
+
+              <div class="flex-w flex-r-m p-b-10 p-t-20">
+                <div class="size-204 flex-w flex-m respon6-next">
+                  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">Add to cart</button>
+                  <button class="flex-c-m stext-101 cl0 size-101 bg2 bor1 hov-btn1 p-lr-15 trans-04" style="margin-left:10px;">Buy now</button>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="flex-w flex-m p-l-100 p-t-40 respon7">
+              <div class="flex-m bor9 p-r-10 m-r-11"><a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist"><i class="zmdi zmdi-favorite"></i></a></div>
+
+              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus"><i class="fa fa-google-plus"></i></a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg3 p-t-75 p-b-32">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">Categories</h4>
+
+        <ul>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Women</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Men</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Shoes</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Watches</a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">Help</h4>
+
+        <ul>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Track Order</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Returns</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Shipping</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">FAQs</a></li>
+        </ul>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+
+        <p class="stext-107 cl7 size-201">Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
+
+        <div class="p-t-27">
+          <a href="javascript:void(0)" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"><i class="fa fa-facebook"></i></a>
+          <a href="javascript:void(0)" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"><i class="fa fa-instagram"></i></a>
+          <a href="javascript:void(0)" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"><i class="fa fa-pinterest-p"></i></a>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3 p-b-50">
+        <h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
+
+        <form>
+          <div class="wrap-input1 w-full p-b-4">
+            <input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+            <div class="focus-input1 trans-04"></div>
+          </div>
+
+          <div class="p-t-18">
+            <button type="button" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">Subscribe</button>
           </div>
         </form>
       </div>
-      <div class="col-lg-3 col-6 text-right">
-        <a href="#" class="btn border">
-          <i class="fas fa-heart text-primary"></i>
-          <span class="badge">0</span>
-        </a>
-        <a [routerLink]="['/client/cart']" class="btn border">
-          <i class="fas fa-shopping-cart text-primary"></i>
-          <span class="badge">{{ cartCount }}</span>
-        </a>
+    </div>
+
+    <div class="p-t-40">
+      <div class="flex-c-m flex-w p-b-18">
+        <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-01.png" alt="ICON-PAY"></a>
+        <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-02.png" alt="ICON-PAY"></a>
+        <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-03.png" alt="ICON-PAY"></a>
+        <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-04.png" alt="ICON-PAY"></a>
+        <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-05.png" alt="ICON-PAY"></a>
       </div>
+
+      <p class="stext-107 cl6 txt-center">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Template by Colorlib / ThemeWagon</p>
     </div>
   </div>
-  <!-- Topbar End -->
+</footer>
 
-  <!-- Navbar Start -->
-  <div class="container-fluid mb-5">
-    <div class="row border-top px-xl-5">
-      <!-- CATEGORIES LEFT -->
-      <div class="col-lg-3 d-none d-lg-block">
-        <!-- nút mở/đóng vertical menu -->
-        <a
-          class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
-          data-toggle="collapse"
-          href="#navbar-vertical"
-          style="height: 65px; margin-top: -1px; padding: 0 30px;"
-        >
-          <h6 class="m-0">Categories</h6>
-          <i class="fa fa-angle-down text-dark"></i>
-        </a>
-
-        <nav
-          id="navbar-vertical"
-          class="collapse navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 show"
-        >
-          <div class="navbar-nav w-100 overflow-hidden" style="max-height: 410px;">
-            <a href="#" class="nav-item nav-link">T-Shirts</a>
-            <a href="#" class="nav-item nav-link">Hoodies</a>
-            <a href="#" class="nav-item nav-link">Mugs</a>
-            <a href="#" class="nav-item nav-link">Pillows</a>
-            <a href="#" class="nav-item nav-link">Accessories</a>
-          </div>
-        </nav>
-      </div>
-
-      <!-- MAIN NAV + CAROUSEL RIGHT -->
-      <div class="col-lg-9">
-        <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-          <!-- logo khi màn hình nhỏ -->
-          <a routerLink="/client/home" class="text-decoration-none d-block d-lg-none">
-            <h1 class="m-0 display-5 font-weight-semi-bold">
-              <span class="text-primary font-weight-bold border px-3 mr-1">PTIT</span>Store
-            </h1>
-          </a>
-
-          <!-- nút hamburger cho mobile -->
-          <button
-            type="button"
-            class="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <!-- menu chính -->
-          <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-            <div class="navbar-nav mr-auto py-0">
-              <a
-                routerLink="/client/home"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                class="nav-item nav-link"
-              >Home</a>
-
-              <a routerLink="/client/shop" class="nav-item nav-link">Shop</a>
-
-              <!-- ví dụ tạm đi thẳng tới sản phẩm id=1 -->
-              <a routerLink="/client/product/1" class="nav-item nav-link">Shop Detail</a>
-
-              <div class="nav-item dropdown">
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Pages
-                </a>
-                <div class="dropdown-menu rounded-0 m-0">
-                  <a routerLink="/client/cart" class="dropdown-item">Shopping Cart</a>
-                  <a routerLink="/client/checkout" class="dropdown-item">Checkout</a>
-                </div>
-              </div>
-
-              <a href="#" class="nav-item nav-link">Contact</a>
-            </div>
-
-            <div class="navbar-nav ml-auto py-0">
-              <a routerLink="/login" class="nav-item nav-link">Login</a>
-              <a routerLink="/register" class="nav-item nav-link">Register</a>
-            </div>
-          </div>
-        </nav>
-
-        <!-- CAROUSEL -->
-        <div id="header-carousel" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active" style="height: 410px;">
-              <img
-                class="img-fluid"
-                src="assets/eshopper/img/carousel-1.jpg"
-                alt="Image"
-              />
-              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                  <h4 class="text-light text-uppercase font-weight-medium mb-3">
-                    10% Off Your First Order
-                  </h4>
-                  <h3 class="display-4 text-white font-weight-semi-bold mb-4">
-                    Fashionable Dress
-                  </h3>
-                  <a href="#" class="btn btn-light py-2 px-3">Shop Now</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="carousel-item" style="height: 410px;">
-              <img
-                class="img-fluid"
-                src="assets/eshopper/img/carousel-2.jpg"
-                alt="Image"
-              />
-              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div class="p-3" style="max-width: 700px;">
-                  <h4 class="text-light text-uppercase font-weight-medium mb-3">
-                    Best Gifts For This Season
-                  </h4>
-                  <h3 class="display-4 text-white font-weight-semi-bold mb-4">
-                    Reasonable Price
-                  </h3>
-                  <a href="#" class="btn btn-light py-2 px-3">Shop Now</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <a
-            class="carousel-control-prev"
-            href="#header-carousel"
-            role="button"
-            data-slide="prev"
-          >
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-              <span class="carousel-control-prev-icon mb-n2"></span>
-            </div>
-          </a>
-          <a
-            class="carousel-control-next"
-            href="#header-carousel"
-            role="button"
-            data-slide="next"
-          >
-            <div class="btn btn-dark" style="width: 45px; height: 45px;">
-              <span class="carousel-control-next-icon mb-n2"></span>
-            </div>
-          </a>
-        </div>
-        <!-- END CAROUSEL -->
-      </div>
-    </div>
-  </div>
-  <!-- Navbar End -->
-
-
-
-  <!-- MAIN CONTENT -->
-  <main class="client-main">
-    <router-outlet></router-outlet>
-  </main>
-
-  <!-- Footer Start (giữ nguyên bố cục EShopper, đổi sang PTIT Store) -->
-  <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
-    <div class="row px-xl-5 pt-5">
-      <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-        <a routerLink="/client/home" class="text-decoration-none">
-          <h1 class="mb-4 display-5 font-weight-semi-bold">
-            <span class="text-primary font-weight-bold border border-white px-3 mr-1">PTIT</span>Store
-          </h1>
-        </a>
-        <p>
-          Customize products to match your unique taste and personality. Print-on-demand with fast
-          delivery and friendly support.
-        </p>
-        <p class="mb-2">
-          <i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Ha Noi, Viet Nam
-        </p>
-        <p class="mb-2">
-          <i class="fa fa-envelope text-primary mr-3"></i>support.com
-        </p>
-        <p class="mb-0">
-          <i class="fa fa-phone-alt text-primary mr-3"></i>+84 123 456 789
-        </p>
-      </div>
-      <div class="col-lg-8 col-md-12">
-        <div class="row">
-          <div class="col-md-4 mb-5">
-            <h5 class="font-weight-bold text-dark mb-4">Quick Links</h5>
-            <div class="d-flex flex-column justify-content-start">
-              <a class="text-dark mb-2" routerLink="/client/home"
-              ><i class="fa fa-angle-right mr-2"></i>Home</a
-              >
-              <a class="text-dark mb-2" routerLink="/client/shop"
-              ><i class="fa fa-angle-right mr-2"></i>Our Shop</a
-              >
-              <a class="text-dark mb-2" routerLink="/client/product/1"
-              ><i class="fa fa-angle-right mr-2"></i>Shop Detail</a
-              >
-              <a class="text-dark mb-2" routerLink="/client/cart"
-              ><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a
-              >
-              <a class="text-dark mb-2" routerLink="/client/checkout"
-              ><i class="fa fa-angle-right mr-2"></i>Checkout</a
-              >
-              <a class="text-dark" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>Contact Us</a
-              >
-            </div>
-          </div>
-          <div class="col-md-4 mb-5">
-            <h5 class="font-weight-bold text-dark mb-4">Information</h5>
-            <div class="d-flex flex-column justify-content-start">
-              <a class="text-dark mb-2" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>About Us</a
-              >
-              <a class="text-dark mb-2" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>Shipping Info</a
-              >
-              <a class="text-dark mb-2" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>Returns Policy</a
-              >
-              <a class="text-dark mb-2" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>FAQs</a
-              >
-              <a class="text-dark" href="#"
-              ><i class="fa fa-angle-right mr-2"></i>Terms &amp; Conditions</a
-              >
-            </div>
-          </div>
-          <div class="col-md-4 mb-5">
-            <h5 class="font-weight-bold text-dark mb-4">Newsletter</h5>
-            <form (submit)="$event.preventDefault()">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control border-0 py-4"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="email"
-                  class="form-control border-0 py-4"
-                  placeholder="Your Email"
-                  required
-                />
-              </div>
-              <div>
-                <button class="btn btn-primary btn-block border-0 py-3" type="submit">
-                  Subscribe Now
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row border-top border-light mx-xl-5 py-4">
-      <div class="col-md-6 px-xl-0">
-        <p class="mb-md-0 text-center text-md-left text-dark">
-          &copy;
-          <a class="text-dark font-weight-semi-bold" href="#">PTIT Store</a>
-          {{ currentYear }}. All Rights Reserved.
-        </p>
-      </div>
-      <div class="col-md-6 px-xl-0 text-center text-md-right">
-        <img class="img-fluid" src="assets/eshopper/img/payments.png" alt="Payments" />
-      </div>
-    </div>
-  </div>
-  <!-- Footer End -->
-
+<!-- Back to top -->
+<div class="btn-back-to-top" id="myBtn">
+  <span class="symbol-btn-back-to-top"><i class="zmdi zmdi-chevron-up"></i></span>
 </div>

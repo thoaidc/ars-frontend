@@ -7,11 +7,12 @@ import {BaseFilterRequest} from '../../../core/models/request.model';
 import {CategoryDTO, Product} from '../../../core/models/product.model';
 import {ToastrService} from 'ngx-toastr';
 import {CategoryService} from '../../../core/services/category.service';
+import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-client-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, VndCurrencyPipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -34,8 +35,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
-    this.loadCategories();
+    // this.loadProducts();
+    // this.loadCategories();
   }
 
   private loadCategories() {

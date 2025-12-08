@@ -1,189 +1,85 @@
-<div class="cart-page">
-  <div class="container">
-    <!-- breadcrumb / step bar -->
-    <div class="cart-steps">
-      <span class="step active">Cart</span>
-      <span class="step-separator">—</span>
-      <span class="step">Order Information</span>
-      <span class="step-separator">—</span>
-      <span class="step">Complete</span>
-    </div>
-
-    <!-- banner bonus point -->
-    <div class="cart-banner" *ngIf="amountToNextBonus > 0">
-      <span>
-        Buy <strong>\${{ amountToNextBonus | number : '1.2-2' }}</strong> more to
-        get <strong>75 bonus points</strong> 🎁
-      </span>
-      <button class="banner-close">×</button>
-    </div>
-
-    <!-- main layout -->
-    <section class="cart-main">
-      <!-- LEFT: items -->
-      <div class="cart-left card">
-        <div class="cart-header-row">
-          <div class="col-item">Item</div>
-          <div class="col-price">Price</div>
-          <div class="col-qty">Quantity</div>
-          <div class="col-sub">Subtotal</div>
-        </div>
-
-        <div class="cart-items">
-          <div
-            class="cart-row"
-            *ngFor="let item of cartItems; trackBy: trackById"
-          >
-            <div class="col-item">
-              <div class="item-img">
-                <img [src]="item.imageUrl" [alt]="item.name" />
-              </div>
-              <div class="item-info">
-                <a
-                  class="item-name"
-                  [routerLink]="['/client/product', item.id]"
-                >
-                  {{ item.name }}
-                </a>
-                <div class="item-variant">{{ item.variant }}</div>
-                <button class="item-remove" (click)="removeItem(item)">
-                  Remove
-                </button>
-              </div>
-            </div>
-
-            <div class="col-price">
-              <span class="price">\${{ item.price | number : '1.2-2' }}</span>
-              <span class="old-price">\${{ 39.95 | number : '1.2-2' }}</span>
-            </div>
-
-            <div class="col-qty">
-              <div class="qty-box">
-                <button (click)="decreaseQty(item)">-</button>
-                <span>{{ item.qty }}</span>
-                <button (click)="increaseQty(item)">+</button>
-              </div>
-            </div>
-
-            <div class="col-sub">
-              <span class="sub-price">
-                \${{ (item.price * item.qty) | number : '1.2-2' }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: summary -->
-      <aside class="cart-summary card">
-        <h2>Order Summary</h2>
-
-        <div class="summary-row">
-          <span>Subtotal</span>
-          <span>\${{ subtotal | number : '1.2-2' }}</span>
-        </div>
-        <div class="summary-row">
-          <span>Shipping fee</span>
-          <span>\${{ shippingFee | number : '1.2-2' }}</span>
-        </div>
-
-        <div class="summary-total">
-          <span>Total</span>
-          <span>\${{ total | number : '1.2-2' }}</span>
-        </div>
-
-        <button class="btn-checkout" [routerLink]="['/client/checkout']">
-          CHECKOUT
-        </button>
-
-        <div class="payment-methods">
-          <span class="pm-label">We accept</span>
-          <div class="pm-icons">
-            <span class="pm">VISA</span>
-            <span class="pm">Mastercard</span>
-            <span class="pm">Momo</span>
-            <span class="pm">ZaloPay</span>
-          </div>
-        </div>
-
-        <div class="express-checkout">
-          <button class="btn-express">Pay with PayPal</button>
-          <button class="btn-express secondary">Pay with Apple Pay</button>
-        </div>
-
-        <div class="summary-rating">
-          <div class="stars">
-            <i class="fa fa-star" *ngFor="let s of [1,2,3,4,5]"></i>
-          </div>
-          <span>4.8 out of 5 based on 67017 reviews</span>
-        </div>
-
-        <div class="summary-guarantee">
-          Don’t love it? We’ll fix it. For free.
-        </div>
-      </aside>
-    </section>
-
-    <!-- YOU MAY ALSO LIKE -->
-    <section class="cart-section">
-      <h2>You may also like</h2>
-      <div class="scroll-row">
-        <article
-          class="horizontal-card"
-          *ngFor="let p of youMayAlsoLike; trackBy: trackById"
-        >
-          <div class="h-card-img">
-            <img [src]="p.imageUrl" [alt]="p.name" />
-          </div>
-          <div class="h-card-info">
-            <div class="h-card-name">{{ p.name }}</div>
-            <div class="h-card-price">
-              \${{ p.price | number : '1.2-2' }}
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- RECENTLY VIEWED -->
-    <section class="cart-section">
-      <h2>Recently viewed</h2>
-      <div class="scroll-row">
-        <article
-          class="horizontal-card"
-          *ngFor="let p of recentlyViewed; trackBy: trackById"
-        >
-          <div class="h-card-img small">
-            <img [src]="p.imageUrl" [alt]="p.name" />
-          </div>
-          <div class="h-card-info">
-            <div class="h-card-name">{{ p.name }}</div>
-            <div class="h-card-price">
-              \${{ p.price | number : '1.2-2' }}
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- TRUST BADGES ROW (trước footer) -->
-    <section class="cart-benefits">
-      <div class="benefit">
-        <strong>Worldwide Shipping</strong>
-        <span>Standard or Express delivery</span>
-      </div>
-      <div class="benefit">
-        <strong>Secure Payments</strong>
-        <span>100% Secure payment with SSL</span>
-      </div>
-      <div class="benefit">
-        <strong>Free Return</strong>
-        <span>Money back guarantee for all orders</span>
-      </div>
-      <div class="benefit">
-        <strong>Local Support</strong>
-        <span>24/7 dedicated support</span>
-      </div>
-    </section>
+<!-- breadcrumb -->
+<div class="container">
+  <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+    <a routerLink="/client/home" class="stext-109 cl8 hov-cl1 trans-04">
+      Home
+      <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+    </a>
+    <span class="stext-109 cl4">Shopping Cart</span>
   </div>
 </div>
+
+<!-- Shoping Cart -->
+<form class="bg0 p-t-75 p-b-85">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+        <div class="m-l-25 m-r--38 m-lr-0-xl">
+          <div class="wrap-table-shopping-cart">
+            <table class="table-shopping-cart">
+              <tr class="table_head">
+                <th class="column-1">Product</th>
+                <th class="column-2"></th>
+                <th class="column-3">Price</th>
+                <th class="column-4">Total</th>
+              </tr>
+
+              <tr *ngFor="let it of cartItems" class="table_row">
+                <td class="column-1">
+                  <div class="how-itemcart1">
+                    <img [src]="it.image" alt="IMG">
+                  </div>
+                </td>
+
+                <td class="column-2">{{ it.name }}</td>
+
+                <td class="column-3">{{ it.price | vndCurrency }}</td>
+
+                <td class="column-4">{{ (it.price * it.qty) | vndCurrency }}</td>
+              </tr>
+
+            </table>
+          </div>
+
+          <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+            <div class="flex-w flex-m m-r-20 m-tb-5">
+              <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+
+              <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">Apply coupon</div>
+            </div>
+
+            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Update Cart</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+        <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+          <h4 class="mtext-109 cl2 p-b-30">Cart Totals</h4>
+
+          <div class="flex-w flex-t bor12 p-b-13">
+            <div class="size-208">
+              <span class="stext-110 cl2">Subtotal:</span>
+            </div>
+            <div class="size-209">
+              <span class="mtext-110 cl2">{{ subtotal | vndCurrency }}</span>
+            </div>
+          </div>
+
+          <!-- Shipping removed as requested -->
+
+          <div class="flex-w flex-t p-t-27 p-b-33">
+            <div class="size-208">
+              <span class="mtext-101 cl2">Total:</span>
+            </div>
+            <div class="size-209 p-t-1">
+              <span class="mtext-110 cl2">{{ total | vndCurrency }}</span>
+            </div>
+          </div>
+
+          <button (click)="proceedToCheckout()" type="button" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Proceed to Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
