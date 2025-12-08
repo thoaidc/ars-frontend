@@ -1,306 +1,129 @@
-<div class="checkout-page">
-  <div class="container">
-    <!-- Steps -->
-    <div class="checkout-steps">
-      <span class="step">Cart</span>
-      <span class="step-separator">—</span>
-      <span class="step active">Order Information</span>
-      <span class="step-separator">—</span>
-      <span class="step">Complete</span>
+<div class="container p-t-30 p-b-80">
+  <div class="row">
+    <div class="col-lg-7 col-md-8 col-sm-12 m-lr-auto">
+      <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 p-lr-15-sm">
+        <h4 class="mtext-109 cl2 p-b-30">Checkout</h4>
+
+        <form [formGroup]="billingForm" (ngSubmit)="placeOrder()">
+          <div class="row">
+            <div class="col-12 p-b-20">
+              <h5 class="stext-102 cl3">Billing details</h5>
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Full name *</label>
+              <input type="text" formControlName="fullname" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Email *</label>
+              <input type="email" formControlName="email" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Phone *</label>
+              <input type="text" formControlName="phone" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Address *</label>
+              <input type="text" formControlName="address" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">City *</label>
+              <input type="text" formControlName="city" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Country *</label>
+              <input type="text" formControlName="country" class="form-control bor8">
+            </div>
+
+            <div class="col-sm-6 p-b-20">
+              <label class="stext-102 cl3">Postcode</label>
+              <input type="text" formControlName="postcode" class="form-control bor8">
+            </div>
+          </div>
+
+          <div class="p-t-20 p-b-20">
+            <label class="stext-102 cl3"><input type="checkbox" [checked]="shippingSame" (change)="onShippingSameChange($event)"> Shipping address same as billing</label>
+          </div>
+
+          <div class="p-t-20 p-b-20">
+            <h5 class="stext-102 cl3">Payment method</h5>
+            <div class="flex-w p-t-10">
+              <label class="m-r-20"><input type="radio" name="pay" (click)="paymentMethod='cod'" [checked]="paymentMethod==='cod'"> Cash on Delivery</label>
+              <label><input type="radio" name="pay" (click)="paymentMethod='card'"> Credit Card</label>
+            </div>
+
+            <div class="p-t-15" *ngIf="paymentMethod==='card'">
+              <div [formGroup]="cardForm" class="row">
+                <div class="col-sm-6 p-b-15">
+                  <input type="text" class="form-control bor8" placeholder="Card holder name" formControlName="cardName">
+                </div>
+                <div class="col-sm-6 p-b-15">
+                  <input type="text" class="form-control bor8" placeholder="Card number" formControlName="cardNumber">
+                </div>
+                <div class="col-sm-6 p-b-15">
+                  <input type="text" class="form-control bor8" placeholder="Expiry" formControlName="cardExpiry">
+                </div>
+                <div class="col-sm-6 p-b-15">
+                  <input type="text" class="form-control bor8" placeholder="CVV" formControlName="cardCvv">
+                </div>
+              </div>
+            </div>
+
+            <div class="p-t-20">
+              <button type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Place Order</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <!-- Main layout -->
-    <section class="checkout-main">
-      <!-- LEFT: Express + forms -->
-      <div class="checkout-left">
-        <!-- Express checkout -->
-        <div class="card express-card">
-          <h2>Express checkout</h2>
-          <button class="btn-express link">Pay with Link</button>
-          <button class="btn-express paypal">Pay with PayPal</button>
-          <div class="or-divider">
-            <span>or</span>
+    <div class="col-lg-4 col-md-8 col-sm-12 m-lr-auto">
+      <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 p-lr-15-sm">
+        <h4 class="mtext-109 cl2 p-b-30">Order Summary</h4>
+
+        <div *ngFor="let it of cartItems" class="flex-w flex-t p-b-20">
+          <div class="size-208">
+            <img [src]="it.image" alt="" style="width:80px;height:80px;object-fit:cover;">
+          </div>
+          <div class="size-209 p-t-2">
+            <a href="javascript:void(0)" class="stext-104 cl4 hov-cl1 trans-04">{{ it.name }}</a>
+            <span class="stext-105 cl3">{{ it.qty }} x {{ it.price | vndCurrency:23000 }}</span>
           </div>
         </div>
 
-        <!-- Billing + shipping forms -->
-        <div class="card form-card">
-          <h2>Billing information</h2>
-
-          <div class="form-row two-col">
-            <div class="form-field">
-              <label>First name</label>
-              <input type="text" />
-            </div>
-            <div class="form-field">
-              <label>Last name</label>
-              <input type="text" />
-            </div>
+        <div class="flex-w flex-t p-t-18 p-b-15 bor12">
+          <div class="size-208">
+            <span class="stext-110 cl2">Subtotal:</span>
           </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Phone (required)</label>
-              <input type="tel" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Email (required)</label>
-              <input type="email" />
-            </div>
-          </div>
-
-          <h2 class="section-title">Shipping Address</h2>
-
-          <div class="form-row checkbox-row">
-            <label>
-              <input type="checkbox" checked />
-              Send to your friend
-            </label>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Country / Region</label>
-              <select>
-                <option selected>United States</option>
-                <option>Viet Nam</option>
-                <option>Other...</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Address</label>
-              <input type="text" />
-            </div>
-          </div>
-
-          <div class="form-row two-col">
-            <div class="form-field">
-              <label>Apartment, suite, etc. (optional)</label>
-              <input type="text" />
-            </div>
-            <div class="form-field">
-              <label>State / Province</label>
-              <input type="text" />
-            </div>
-          </div>
-
-          <div class="form-row two-col">
-            <div class="form-field">
-              <label>City / Suburb</label>
-              <input type="text" />
-            </div>
-            <div class="form-field">
-              <label>ZIP / Postal code</label>
-              <input type="text" />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Order notes (optional)</label>
-              <textarea rows="2"></textarea>
-            </div>
-          </div>
-
-          <div class="form-row billing-note">
-            <span>Billing address matches shipping address</span>
-            <button class="link-button">Change</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- RIGHT: Review + summary + payment methods -->
-      <div class="checkout-right">
-        <!-- Order Review -->
-        <div class="card review-card">
-          <h2>Order Review</h2>
-          <div
-            class="review-item"
-            *ngFor="let it of items; trackBy: trackById"
-          >
-            <div class="review-img">
-              <img [src]="it.imageUrl" [alt]="it.name" />
-            </div>
-            <div class="review-info">
-              <div class="review-name">{{ it.name }}</div>
-              <div class="review-variant">{{ it.variant }}</div>
-              <button class="review-remove">Remove</button>
-            </div>
-            <div class="review-price">
-              \${{ (it.price * it.qty) | number : '1.2-2' }}
-            </div>
-          </div>
-
-          <div class="shipping-line">
-            <div class="shipping-text">
-              <div class="title">Standard shipping</div>
-              <div class="subtitle">6 – 11 business days with tracking</div>
-            </div>
-            <div class="shipping-fee">
-              \${{ shippingFee | number : '1.2-2' }}
-            </div>
+          <div class="size-209">
+            <span class="mtext-110 cl2">{{ subtotal | vndCurrency:23000 }}</span>
           </div>
         </div>
 
-        <!-- Order Summary -->
-        <div class="card summary-card">
-          <h2>Order Summary</h2>
-
-          <div class="promo-row">
-            <label>
-              <input type="checkbox" />
-              Use promotion code
-            </label>
-            <input type="text" placeholder="Enter code" />
+        <div class="flex-w flex-t p-t-18 p-b-15 bor12">
+          <div class="size-208">
+            <span class="stext-110 cl2">Shipping:</span>
           </div>
-
-          <div class="summary-row">
-            <span>Subtotal:</span>
-            <span>\${{ subtotal | number : '1.2-2' }}</span>
-          </div>
-          <div class="summary-row">
-            <span>Shipping fee:</span>
-            <span>+\${{ shippingFee | number : '1.2-2' }}</span>
-          </div>
-          <div class="summary-row">
-            <span>Tips:</span>
-            <span>\${{ tips | number : '1.2-2' }}</span>
-          </div>
-          <div class="summary-row total">
-            <span>Total:</span>
-            <span>\${{ total | number : '1.2-2' }}</span>
-          </div>
-
-          <div class="tip-row">
-            <span>Loved your purchase? Leave a small tip to support our team.</span>
-            <div class="tip-options">
-              <button (click)="setTip(0)" [class.active]="tips === 0">
-                No tips
-              </button>
-              <button (click)="setTip(5)" [class.active]="tips === 5">
-                \$5.00
-              </button>
-              <button (click)="setTip(10)" [class.active]="tips === 10">
-                \$10.00
-              </button>
-              <button (click)="setTip(20)" [class.active]="tips === 20">
-                \$20.00
-              </button>
-              <button (click)="setTip(0)" class="other">
-                Other
-              </button>
-            </div>
+          <div class="size-209">
+            <span class="mtext-110 cl2">{{ shipping | vndCurrency:23000 }}</span>
           </div>
         </div>
 
-        <!-- Payment Methods -->
-        <div class="card payment-card">
-          <h2>Payment Methods</h2>
-
-          <div class="payment-tabs">
-            <button class="tab active">Card</button>
-            <button class="tab">Buy now, pay later</button>
-            <button class="tab">PayPal</button>
+        <div class="flex-w flex-t p-t-18 p-b-15 bor12">
+          <div class="size-208">
+            <span class="stext-110 cl2">Total:</span>
           </div>
-
-          <div class="payment-logos">
-            <span>VISA</span>
-            <span>Mastercard</span>
-            <span>JCB</span>
-            <span>Momo</span>
-            <span>ZaloPay</span>
-          </div>
-
-          <div class="form-row">
-            <div class="form-field">
-              <label>Card number</label>
-              <input type="text" placeholder="1234 1234 1234 1234" />
-            </div>
-          </div>
-
-          <div class="form-row two-col">
-            <div class="form-field">
-              <label>MM / YY</label>
-              <input type="text" placeholder="08 / 28" />
-            </div>
-            <div class="form-field">
-              <label>CVC</label>
-              <input type="text" placeholder="123" />
-            </div>
-          </div>
-
-          <button class="btn-place-order">
-            Place Order Now
-          </button>
-
-          <p class="payment-note">
-            By completing your payment, you agree to our terms and policies.
-          </p>
-
-          <div class="payment-badges">
-            <span>Secure payments powered by Stripe</span>
+          <div class="size-209">
+            <span class="mtext-110 cl2">{{ total | vndCurrency:23000 }}</span>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- FAQs -->
-    <section class="checkout-faq card">
-      <h2>FAQs</h2>
-      <div class="faq-item" *ngFor="let f of faqs; trackBy: trackByIndex">
-      <button class="faq-header" (click)="toggleFaq(f)">
-          <span>{{ f.question }}</span>
-          <span class="icon">{{ f.open ? '−' : '+' }}</span>
-        </button>
-        <div class="faq-body" *ngIf="f.open">
-          <p>{{ f.answer }}</p>
-        </div>
       </div>
-    </section>
-
-    <!-- Recently viewed -->
-    <section class="checkout-recent">
-      <h2>Recently viewed</h2>
-      <div class="recent-row">
-        <article
-          class="recent-card"
-          *ngFor="let p of recentlyViewed; trackBy: trackById"
-        >
-          <div class="recent-img">
-            <img [src]="p.imageUrl" [alt]="p.name" />
-          </div>
-          <div class="recent-info">
-            <div class="name">{{ p.name }}</div>
-            <div class="price">\${{ p.price | number : '1.2-2' }}</div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- Benefits row trước footer -->
-    <section class="checkout-benefits">
-      <div class="benefit">
-        <strong>Worldwide Shipping</strong>
-        <span>Standard or Express delivery</span>
-      </div>
-      <div class="benefit">
-        <strong>Secure Payments</strong>
-        <span>256-bit SSL Encryption</span>
-      </div>
-      <div class="benefit">
-        <strong>Free Return</strong>
-        <span>Money-back guarantee for all orders</span>
-      </div>
-      <div class="benefit">
-        <strong>Local Support</strong>
-        <span>24/7 dedicated support</span>
-      </div>
-    </section>
+    </div>
   </div>
 </div>
