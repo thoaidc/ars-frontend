@@ -38,19 +38,47 @@
               "src/assets/scss/global.scss",
               "src/assets/scss/app.min.scss",
               "src/assets/scss/styles.scss",
+
+              "src/assets/coza/vendor/bootstrap/css/bootstrap.min.css",
+              "src/assets/coza/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+              "src/assets/coza/fonts/iconic/css/material-design-iconic-font.min.css",
+              "src/assets/coza/fonts/linearicons-v1.0.0/icon-font.min.css",
+              "src/assets/coza/vendor/animate/animate.css",
+              "src/assets/coza/vendor/css-hamburgers/hamburgers.min.css",
+              "src/assets/coza/vendor/animsition/css/animsition.min.css",
+              "src/assets/coza/vendor/select2/select2.min.css",
+              "src/assets/coza/vendor/daterangepicker/daterangepicker.css",
+              "src/assets/coza/vendor/slick/slick.css",
+              "src/assets/coza/vendor/MagnificPopup/magnific-popup.css",
+              "src/assets/coza/vendor/perfect-scrollbar/perfect-scrollbar.css",
+              "src/assets/coza/css/util.css",
+              "src/assets/coza/css/main.css",
+
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/eshopper/css/style.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
+
             "scripts": [
-              "src/assets/js/app.min.js",
-              "src/assets/eshopper/lib/easing/easing.min.js",
-              "src/assets/eshopper/lib/owlcarousel/owl.carousel.min.js",
-              "src/assets/eshopper/mail/jqBootstrapValidation.min.js",
-              "src/assets/eshopper/mail/contact.js",
-              "src/assets/eshopper/js/main.js",
+              "src/assets/coza/vendor/jquery/jquery-3.2.1.min.js",
+              "src/assets/coza/vendor/animsition/js/animsition.min.js",
+              "src/assets/coza/vendor/bootstrap/js/popper.js",
+              "src/assets/coza/vendor/bootstrap/js/bootstrap.min.js",
+              "src/assets/coza/vendor/select2/select2.min.js",
+              "src/assets/coza/vendor/daterangepicker/moment.min.js",
+              "src/assets/coza/vendor/daterangepicker/daterangepicker.js",
+              "src/assets/coza/vendor/slick/slick.min.js",
+              "src/assets/coza/js/slick-custom.js",
+              "src/assets/coza/vendor/parallax100/parallax100.js",
+              "src/assets/coza/vendor/MagnificPopup/jquery.magnific-popup.min.js",
+              "src/assets/coza/vendor/isotope/isotope.pkgd.min.js",
+              "src/assets/coza/vendor/sweetalert/sweetalert.min.js",
+              "src/assets/coza/vendor/perfect-scrollbar/perfect-scrollbar.min.js",
+              "src/assets/coza/js/main.js",
+              "src/assets/coza/js/coza-init.js",
+
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
+
           },
           "configurations": {
             "production": {

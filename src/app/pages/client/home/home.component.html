@@ -1,193 +1,296 @@
-
-<!-- FEATURED -->
-<div class="container-fluid pt-5">
-  <div class="row px-xl-5 pb-3">
-    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-        <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-        <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-        <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-        <h5 class="font-weight-semi-bold m-0">Fast Shipping</h5>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-        <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-        <h5 class="font-weight-semi-bold m-0">Easy Return</h5>
-      </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-      <div class="d-flex align-items-center border mb-4" style="padding: 30px;">
-        <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-        <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- OFFER (giữ nguyên) -->
-<div class="container-fluid offer pt-5">
-  <div class="text-center mb-4">
-    <h2 class="section-title px-5">
-      <span class="px-2">Danh mục sản phẩm</span>
-    </h2>
-  </div>
-  <div class="row px-xl-5">
-    <div class="col-md-6 pb-4" *ngFor="let category of categories">
-      <div
-        class="position-relative bg-secondary text-center text-md-right text-white mb-2 py-5 px-5"
-      >
-        <img src="assets/eshopper/img/offer-1.png" alt="" />
-        <div class="position-relative" style="z-index: 1;">
-          <h5 class="text-uppercase text-primary mb-3">{{ category.description }}</h5>
-          <h1 class="mb-4 font-weight-semi-bold">{{ category.name }}</h1>
-          <a href="#" class="btn btn-outline-primary py-md-2 px-md-3">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TRENDY PRODUCTS (dùng API) -->
-<div class="container-fluid pt-5">
-  <div class="text-center mb-4">
-    <h2 class="section-title px-5">
-      <span class="px-2">Sản phẩm nổi bật</span>
-    </h2>
-    <p *ngIf="loading" class="text-muted mt-2">Đang tải sản phẩm...</p>
-    <p *ngIf="!loading && trendyProducts.length == 0" class="text-danger mt-2">
-      {{ 'Không tìm thấy sản phẩm nào' }}
-    </p>
-  </div>
-
-  <div class="row px-xl-5 pb-3">
-    <ng-container *ngIf="!loading && trendyProducts.length > 0; else noTrendy">
-      <div
-        class="col-lg-3 col-md-6 col-sm-12 pb-1"
-        *ngFor="let p of trendyProducts; trackBy: trackByProductId"
-      >
-        <div class="card product-item border-0 mb-4">
-          <div
-            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
-          >
-            <img
-              class="img-fluid w-100"
-              style="aspect-ratio: 1 / 1; object-fit: cover"
-              [src]="p.thumbnailUrl"
-              [alt]="p.name"
-            />
-          </div>
-          <div
-            class="card-body p-3 border-left border-right p-0 pt-4 pb-3"
-          >
-            <h6 class="text-truncate mb-3">{{ p.name }}</h6>
-            <div class="d-flex">
-              <h6>{{ getDisplayPrice(Number(p.price)) }}</h6>
+<!-- Slider -->
+<section class="section-slide">
+  <div class="wrap-slick1">
+    <div class="slick1">
+      <div class="item-slick1" style="background-image: url('/assets/coza/images/slide-01.jpg');">
+        <div class="container h-full">
+          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+            <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
+              <span class="ltext-101 cl2 respon2">
+                Women Collection 2018
+              </span>
             </div>
-            <small class="text-muted d-block">Code: {{ p.code }}</small>
+
+            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+              <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
+                NEW SEASON
+              </h2>
+            </div>
+
+            <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
+              <!-- dùng routerLink, không dùng product.html -->
+              <a routerLink="/client/shop"
+                 class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                Shop Now
+              </a>
+            </div>
           </div>
-          <div class="card-footer d-flex justify-content-between bg-light border">
-            <a
-              [routerLink]="['/client/product', p.id]"
-              class="btn btn-sm text-dark p-0"
-            >
-              <i class="fas fa-eye text-primary mr-1"></i>View Detail
+        </div>
+      </div>
+
+      <div class="item-slick1" style="background-image: url('/assets/coza/images/slide-02.jpg');">
+        <div class="container h-full">
+          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+            <div class="layer-slick1 animated visible-false" data-appear="rollIn" data-delay="0">
+              <span class="ltext-101 cl2 respon2">
+                Men New-Season
+              </span>
+            </div>
+
+            <div class="layer-slick1 animated visible-false" data-appear="lightSpeedIn" data-delay="800">
+              <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
+                Jackets & Coats
+              </h2>
+            </div>
+
+            <div class="layer-slick1 animated visible-false" data-appear="slideInUp" data-delay="1600">
+              <a routerLink="/client/shop"
+                 class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                Shop Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item-slick1" style="background-image: url('/assets/coza/images/slide-03.jpg');">
+        <div class="container h-full">
+          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+            <div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
+              <span class="ltext-101 cl2 respon2">
+                Men Collection 2018
+              </span>
+            </div>
+
+            <div class="layer-slick1 animated visible-false" data-appear="rotateInUpRight" data-delay="800">
+              <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
+                New arrivals
+              </h2>
+            </div>
+
+            <div class="layer-slick1 animated visible-false" data-appear="rotateIn" data-delay="1600">
+              <a routerLink="/client/shop"
+                 class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+                Shop Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Banner -->
+<div class="sec-banner bg0 p-t-80 p-b-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+        <!-- Block1 -->
+        <div class="block1 wrap-pic-w">
+          <img src="/assets/coza/images/banner-01.jpg" alt="IMG-BANNER">
+
+          <a routerLink="/client/shop"
+             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+            <div class="block1-txt-child1 flex-col-l">
+              <span class="block1-name ltext-102 trans-04 p-b-8">
+                Women
+              </span>
+
+              <span class="block1-info stext-102 trans-04">
+                Spring 2018
+              </span>
+            </div>
+
+            <div class="block1-txt-child2 p-b-4 trans-05">
+              <div class="block1-link stext-101 cl0 trans-09">
+                Shop Now
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+        <div class="block1 wrap-pic-w">
+          <img src="/assets/coza/images/banner-02.jpg" alt="IMG-BANNER">
+
+          <a routerLink="/client/shop"
+             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+            <div class="block1-txt-child1 flex-col-l">
+              <span class="block1-name ltext-102 trans-04 p-b-8">
+                Men
+              </span>
+
+              <span class="block1-info stext-102 trans-04">
+                Spring 2018
+              </span>
+            </div>
+
+            <div class="block1-txt-child2 p-b-4 trans-05">
+              <div class="block1-link stext-101 cl0 trans-09">
+                Shop Now
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
+        <div class="block1 wrap-pic-w">
+          <img src="/assets/coza/images/banner-03.jpg" alt="IMG-BANNER">
+
+          <a routerLink="/client/shop"
+             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+            <div class="block1-txt-child1 flex-col-l">
+              <span class="block1-name ltext-102 trans-04 p-b-8">
+                Accessories
+              </span>
+
+              <span class="block1-info stext-102 trans-04">
+                New Trend
+              </span>
+            </div>
+
+            <div class="block1-txt-child2 p-b-4 trans-05">
+              <div class="block1-link stext-101 cl0 trans-09">
+                Shop Now
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Product -->
+<section class="bg0 p-t-23 p-b-140">
+  <div class="container">
+    <div class="p-b-10">
+      <h3 class="ltext-103 cl5">
+        Product Overview
+      </h3>
+    </div>
+
+    <div class="flex-w flex-sb-m p-b-52">
+      <div class="flex-w flex-l-m filter-tope-group m-tb-10">
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+          All Products
+        </button>
+
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
+          Women
+        </button>
+
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
+          Men
+        </button>
+
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
+          Bag
+        </button>
+
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
+          Shoes
+        </button>
+
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
+          Watches
+        </button>
+      </div>
+
+      <div class="flex-w flex-c-m m-tb-10">
+        <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+          <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+          <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+          Filter
+        </div>
+
+        <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+          <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+          <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+          Search
+        </div>
+      </div>
+
+      <!-- Search product -->
+      <div class="dis-none panel-search w-full p-t-10 p-b-15">
+        <div class="bor8 dis-flex p-l-15">
+          <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" type="button">
+            <i class="zmdi zmdi-search"></i>
+          </button>
+
+          <input class="mtext-107 cl2 size-114 plh2 p-r-15"
+                 type="text" name="search-product" placeholder="Search">
+        </div>
+      </div>
+
+      <!-- Filter -->
+      <div class="dis-none panel-filter w-full p-t-10">
+        <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+          <!-- giữ nguyên các filter-col*, chỉ là UI -->
+          ...
+        </div>
+      </div>
+    </div>
+
+    <div class="row isotope-grid">
+      <!-- 1 sản phẩm mẫu, các sản phẩm còn lại giữ nguyên cấu trúc,
+           chỉ sửa href="product-detail.html" thành routerLink -->
+      <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+        <div class="block2">
+          <div class="block2-pic hov-img0">
+            <img src="/assets/coza/images/product-01.jpg" alt="IMG-PRODUCT">
+
+            <a href="javascript:void(0)"
+               class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+              Quick View
             </a>
-            <button
-              type="button"
-              class="btn btn-sm text-dark p-0"
-              (click)="addToCart(p)"
-            >
-              <i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart
-            </button>
+          </div>
+
+          <div class="block2-txt flex-w flex-t p-t-14">
+            <div class="block2-txt-child1 flex-col-l ">
+              <a routerLink="/client/product/1"
+                 class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                Esprit Ruffle Shirt
+              </a>
+
+              <span class="stext-105 cl3">
+                {{ 16.64 | vndCurrency:23000 }}
+              </span>
+            </div>
+
+            <div class="block2-txt-child2 flex-r p-t-3">
+              <a href="javascript:void(0)"
+                 class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                <img class="icon-heart1 dis-block trans-04"
+                     src="/assets/coza/images/icons/icon-heart-01.png" alt="ICON">
+                <img class="icon-heart2 dis-block trans-04 ab-t-l"
+                     src="/assets/coza/images/icons/icon-heart-02.png" alt="ICON">
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </ng-container>
 
-    <ng-template #noTrendy>
-      <div class="col-12 text-center text-muted">
-        Không có sản phẩm nào trong mục này.
-      </div>
-    </ng-template>
-  </div>
-</div>
+      <!-- các block sản phẩm còn lại:
+           - giữ nguyên HTML
+           - chỉ thay <a href="product-detail.html"...>
+             thành <a routerLink="/client/product/1"...> hoặc id demo khác -->
 
-<!-- SUBSCRIBE -->
-<div class="container-fluid bg-secondary my-5">
-  <div class="row justify-content-md-center py-5 px-xl-5">
-    <div class="col-md-6 col-12 py-5">
-      <div class="text-center mb-2 pb-2">
-        <h2 class="section-title px-5 mb-3">
-          <span class="bg-secondary px-2">Stay Updated</span>
-        </h2>
-        <p>
-          Nhận email về ưu đãi mới, bộ sưu tập hot và gợi ý sản phẩm theo gu của
-          bạn.
-        </p>
-      </div>
-      <form (submit)="$event.preventDefault()">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control border-white p-4"
-            placeholder="Email Goes Here"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-primary px-4">Subscribe</button>
-          </div>
-        </div>
-      </form>
+      <!-- ... copy toàn bộ các block còn lại và sửa tương tự ... -->
+
+    </div>
+
+    <!-- Load more -->
+    <div class="flex-c-m flex-w w-full p-t-45">
+      <a href="javascript:void(0)"
+         class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+        Load More
+      </a>
     </div>
   </div>
-</div>
-
-<!-- VENDOR -->
-<!-- Vendor Start (không dùng owl-carousel, chỉ dùng Bootstrap grid) -->
-<div class="container-fluid py-5">
-  <div class="row px-xl-5 justify-content-center text-center">
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-1.jpg" class="img-fluid" alt="Vendor 1">
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-2.jpg" class="img-fluid" alt="Vendor 2">
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-3.jpg" class="img-fluid" alt="Vendor 3">
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-4.jpg" class="img-fluid" alt="Vendor 4">
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-5.jpg" class="img-fluid" alt="Vendor 5">
-      </div>
-    </div>
-
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-      <div class="vendor-item border p-4 d-flex align-items-center justify-content-center">
-        <img src="assets/eshopper/img/vendor-6.jpg" class="img-fluid" alt="Vendor 6">
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- Vendor End -->
-
+</section>
