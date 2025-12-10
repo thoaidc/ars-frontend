@@ -119,10 +119,10 @@ export class ModalUpdateProductComponent implements OnInit {
           this.selectedThumbnail = data.thumbnailUrl;
         }
 
-        this.galleryImages = (data.images || []).map((url: string) => ({
-          id: undefined,
+        this.galleryImages = (data.images || []).map(productImage => ({
+          id: productImage.id,
           file: null,
-          previewUrl: url,
+          previewUrl: productImage.image
         }));
 
         this.options = [];
