@@ -1,0 +1,226 @@
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'Thông tin chi tiết đơn hàng' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body pb-4 pt-1" style="max-height: 75vh; overflow-y: auto">
+  <ul class="nav nav-tabs tab-switcher mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 0"
+        (click)="currentTab = 0"
+        type="button"
+        role="tab"
+      >
+        Thông tin cơ bản
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        [class.active]="currentTab === 1"
+        (click)="currentTab = 1"
+        type="button"
+        role="tab"
+      >
+        Danh sách sản phẩm
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab 1 -->
+  <div *ngIf="currentTab === 0" class="tab-pane fade show active">
+    <div class="d-flex justify-content-between align-items-start">
+      <div class="flex-grow-1">
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-code" class="title-info">Mã đơn hàng</label>
+            <div class="input-text-custom">
+              <input
+                id="order-code"
+                class="form-control"
+                [value]="subOrderDetail?.code"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-date" class="title-info">Ngày đặt hàng</label>
+            <div class="input-text-custom">
+              <input
+                id="order-date"
+                class="form-control"
+                [value]="subOrderDetail?.orderDate"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="customer-name" class="title-info">Tên khách hàng</label>
+            <div class="input-text-custom">
+              <input
+                id="customer-name"
+                class="form-control"
+                [value]="subOrderDetail?.customerName"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-status" class="title-info">Trạng thái đơn hàng</label>
+            <div class="input-text-custom">
+              <input
+                id="order-status"
+                class="form-control"
+                [value]="subOrderDetail?.status"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-quantity" class="title-info">Số lượng sản phẩm</label>
+            <div class="input-text-custom">
+              <input
+                id="order-quantity"
+                class="form-control"
+                [value]="subOrderDetail?.quantity"
+                type="number"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-total-amount" class="title-info">Tổng tiền thanh toán</label>
+            <div class="input-text-custom">
+              <input
+                id="order-total-amount"
+                class="form-control"
+                [value]="subOrderDetail?.totalAmount"
+                type="number"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-amount" class="title-info">Tổng tiền ban đầu</label>
+            <div class="input-text-custom">
+              <input
+                id="order-amount"
+                class="form-control"
+                [value]="subOrderDetail?.amount"
+                type="number"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-discount" class="title-info">Tổng tiền chiết khấu</label>
+            <div class="input-text-custom">
+              <input
+                id="order-discount"
+                class="form-control"
+                [value]="subOrderDetail?.discount"
+                type="number"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-payment-method" class="title-info">Phương thức thanh toán</label>
+            <div class="input-text-custom">
+              <input
+                id="order-payment-method"
+                class="form-control"
+                [value]="subOrderDetail?.paymentMethod"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="order-payment-status" class="title-info">Trạng thái thanh toán</label>
+            <div class="input-text-custom">
+              <input
+                id="order-payment-status"
+                class="form-control"
+                [value]="subOrderDetail?.paymentStatus"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2 -->
+  <div *ngIf="currentTab === 1" class="tab-pane fade show active">
+    <div style="padding: 0 6px" *ngIf="subOrderDetail?.products">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+            <tr class="table-custom-header">
+              <th>{{ 'global.no' | translate }}</th>
+              <th>{{ 'text.productCode' | translate }}</th>
+              <th>{{ 'text.productName' | translate }}</th>
+              <th>{{ 'text.price' | translate }}</th>
+              <th>{{ 'text.note' | translate }}</th>
+              <th>{{ 'text.customizable' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let product of subOrderDetail?.products; let i = index">
+              <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                <td class="text-center">{{ i + 1 }}</td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.productCode }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.productName }}</td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.totalAmount }}</td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.note || '' }}</td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ !!product.data }}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer border-top-0" *ngIf="true">
+  <button class="cancel-button-dialog" (click)="dismiss()">Đóng</button>
+</div>

@@ -1,6 +1,5 @@
 import {Routes} from '@angular/router';
 import {
-  SIDEBAR_CUSTOMERS_TITLE,
   SIDEBAR_DASHBOARD_TITLE,
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
@@ -22,13 +21,6 @@ export const SHOP_ROUTES: Routes = [
     title: SIDEBAR_DASHBOARD_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./customers/customers.component').then(m => m.CustomersComponent),
     canActivate: [AuthGuardFn]
   },
   {

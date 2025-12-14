@@ -207,15 +207,6 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     userType: [USER_TYPE.SHOP]
   },
   {
-    path: '/shop/customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    icon: ICON_CUSTOMER,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.SHOP]
-  },
-  {
     path: '/shop/products',
     title: SIDEBAR_PRODUCT_TITLE,
     icon: ICON_PRODUCTS,
