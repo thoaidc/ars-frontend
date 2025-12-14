@@ -15,7 +15,8 @@ import {
   ICON_ORDER,
   ICON_RATE_LIMIT,
   ICON_DESIGN,
-  ICON_GROUP
+  ICON_GROUP,
+  ICON_VOUCHER
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
 import {Authorities} from './authorities.constants';
@@ -32,6 +33,7 @@ export const SIDEBAR_PRODUCT_TITLE = 'sidebar.product';
 export const SIDEBAR_GROUP_TITLE = 'sidebar.product.group';
 export const SIDEBAR_PRODUCT_ITEM_TITLE = 'sidebar.product.item';
 export const SIDEBAR_ORDER_TITLE = 'sidebar.order';
+export const SIDEBAR_VOUCHER_TITLE = 'sidebar.voucher';
 export const SIDEBAR_SETTING_TITLE = 'sidebar.setting';
 export const SIDEBAR_FINANCE_TITLE = 'sidebar.finance';
 export const SIDEBAR_STATISTIC_TITLE = 'sidebar.statistic';
@@ -75,6 +77,15 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/admin/products',
     title: SIDEBAR_PRODUCT_TITLE,
     icon: ICON_PRODUCTS,
+    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+    isExternalLink: false,
+    permission: [Authorities.SYSTEM],
+    userType: [USER_TYPE.ADMIN]
+  },
+  {
+    path: '/admin/vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    icon: ICON_VOUCHER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [Authorities.SYSTEM],
@@ -214,6 +225,15 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
         userType: [USER_TYPE.SHOP]
       },
     ]
+  },
+  {
+    path: '/shop/vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    icon: ICON_VOUCHER,
+    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+    isExternalLink: false,
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/orders',

@@ -5,7 +5,8 @@ import {
   SIDEBAR_ORDER_TITLE,
   SIDEBAR_SETTING_TITLE,
   SIDEBAR_STATISTIC_TITLE,
-  SIDEBAR_SUPPORT_TITLE
+  SIDEBAR_SUPPORT_TITLE,
+  SIDEBAR_VOUCHER_TITLE
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
 import {SHOP_PRODUCT_ROUTES} from './products/product.routes';
@@ -26,6 +27,13 @@ export const SHOP_ROUTES: Routes = [
   {
     path: 'products',
     loadChildren: () => SHOP_PRODUCT_ROUTES
+  },
+  {
+    path: 'vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    pathMatch: 'full',
+    loadComponent: () => import('./voucher/voucher.component').then(m => m.VoucherComponent),
+    canActivate: [AuthGuardFn]
   },
   {
     path: 'orders',

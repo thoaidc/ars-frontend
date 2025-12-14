@@ -7,7 +7,8 @@ import {
   SIDEBAR_PRODUCT_TITLE,
   SIDEBAR_SETTING_TITLE,
   SIDEBAR_SHOP_TITLE,
-  SIDEBAR_STATISTIC_TITLE
+  SIDEBAR_STATISTIC_TITLE,
+  SIDEBAR_VOUCHER_TITLE
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
 import {AUTHORIZATION_ROUTES} from './authorization/authorization.routes';
@@ -45,6 +46,13 @@ export const ADMIN_ROUTES: Routes = [
     title: SIDEBAR_PRODUCT_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./products/products.component').then(m => m.ProductsComponent),
+    canActivate: [AuthGuardFn]
+  },
+  {
+    path: 'vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    pathMatch: 'full',
+    loadComponent: () => import('./voucher/voucher.component').then(m => m.VoucherComponent),
     canActivate: [AuthGuardFn]
   },
   {
