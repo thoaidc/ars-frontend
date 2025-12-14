@@ -40,7 +40,7 @@
               <input
                 id="order-code"
                 class="form-control"
-                [value]="subOrderDetail?.code"
+                [value]="orderDetail?.code"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -54,7 +54,7 @@
               <input
                 id="order-date"
                 class="form-control"
-                [value]="subOrderDetail?.orderDate"
+                [value]="orderDetail?.orderDate"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -70,7 +70,7 @@
               <input
                 id="customer-name"
                 class="form-control"
-                [value]="subOrderDetail?.customerName"
+                [value]="orderDetail?.customerName"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -84,7 +84,7 @@
               <input
                 id="order-status"
                 class="form-control"
-                [value]="subOrderDetail?.status"
+                [value]="orderDetail?.status"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -100,7 +100,7 @@
               <input
                 id="order-quantity"
                 class="form-control"
-                [value]="subOrderDetail?.quantity"
+                [value]="orderDetail?.quantity"
                 type="number"
                 autocomplete="off"
                 [disabled]="true"
@@ -114,7 +114,7 @@
               <input
                 id="order-total-amount"
                 class="form-control"
-                [value]="subOrderDetail?.totalAmount"
+                [value]="orderDetail?.totalAmount"
                 type="number"
                 autocomplete="off"
                 [disabled]="true"
@@ -130,7 +130,7 @@
               <input
                 id="order-amount"
                 class="form-control"
-                [value]="subOrderDetail?.amount"
+                [value]="orderDetail?.amount"
                 type="number"
                 autocomplete="off"
                 [disabled]="true"
@@ -144,7 +144,7 @@
               <input
                 id="order-discount"
                 class="form-control"
-                [value]="subOrderDetail?.discount"
+                [value]="orderDetail?.discount"
                 type="number"
                 autocomplete="off"
                 [disabled]="true"
@@ -160,7 +160,7 @@
               <input
                 id="order-payment-method"
                 class="form-control"
-                [value]="subOrderDetail?.paymentMethod"
+                [value]="orderDetail?.paymentMethod"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -174,7 +174,7 @@
               <input
                 id="order-payment-status"
                 class="form-control"
-                [value]="subOrderDetail?.paymentStatus"
+                [value]="orderDetail?.paymentStatus"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -188,7 +188,7 @@
 
   <!-- Tab 2 -->
   <div *ngIf="currentTab === 1" class="tab-pane fade show active">
-    <div style="padding: 0 6px" *ngIf="subOrderDetail?.products">
+    <div style="padding: 0 6px" *ngIf="orderDetail?.products">
       <div class="panel panel-inverse">
         <div class="table-responsive">
           <table class="table editing-table">
@@ -203,13 +203,13 @@
             </tr>
             </thead>
             <tbody>
-            <ng-container *ngFor="let product of subOrderDetail?.products; let i = index">
+            <ng-container *ngFor="let product of orderDetail?.products; let i = index">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ i + 1 }}</td>
                 <td class="break-word-table text-left" (click)="view(product.id)">{{ product.productCode }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.productName }}</td>
                 <td class="break-word-table text-right" (click)="view(product.id)">{{ product.totalAmount }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.note || '' }}</td>
+                <td class="break-word-table text-left" (click)="view(product.id)">{{ product.note || '' }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ !!product.data }}</td>
               </tr>
             </ng-container>

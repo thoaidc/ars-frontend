@@ -47,9 +47,9 @@
             <ng-container *ngFor="let order of orders; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center" (click)="view(order.id)">{{ (ordersFilter.page - 1) * ordersFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.code }}</td>
+                <td class="break-word-table text-left" (click)="view(order.id)">{{ order.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(order.id)">{{ order.customerName }}</td>
-                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.totalAmount }}</td>
+                <td class="break-word-table text-right" (click)="view(order.id)">{{ order.totalAmount }}</td>
                 <td class="break-word-table text-center" (click)="view(order.id)">{{ order.status }}</td>
                 <td class="break-word-table text-center" (click)="view(order.id)">{{ order.orderDate }}</td>
                 <td class="break-word-table text-center" (click)="view(order.id)">{{ order.paymentMethod }}</td>

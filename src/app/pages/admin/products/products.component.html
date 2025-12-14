@@ -1,9 +1,5 @@
-<div class="title-feature form-space-between">
+<div class="title-feature text-left">
   <span>{{ 'text.product' | translate }}</span>
-  <button class="success-button-dialog ms-3" (click)="openModalCreateProduct()">
-    <span [innerHTML]="ICON_PLUS | safeHtml"></span>
-    {{ 'text.createProduct' | translate }}
-  </button>
 </div>
 
 <div class="field-search">
@@ -38,7 +34,6 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.shop' | translate }}</th>
               <th>{{ 'text.productCode' | translate }}</th>
               <th>{{ 'text.productName' | translate }}</th>
               <th>{{ 'text.price' | translate }}</th>
@@ -51,29 +46,14 @@
             <ng-container *ngFor="let product of products; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center" (click)="view(product.id)">{{ (productsFilter.page - 1) * productsFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.shopId }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.code }}</td>
+                <td class="break-word-table text-left" (click)="view(product.id)">{{ product.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.name }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.price }}</td>
+                <td class="break-word-table text-right" (click)="view(product.id)">{{ product.price }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.status }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.customizable }}</td>
                 <td>
                   <div class="action-table">
-                    <ng-container>
-                        <span
-                          [innerHTML]="ICON_UPDATE | safeHtml"
-                          [ngbTooltip]="'global.update' | translate"
-                          (click)="openModalCreateProduct(product.id)"
-                        ></span>
-                    </ng-container>
 
-                    <ng-container>
-                        <span
-                          [innerHTML]="ICON_DELETE | safeHtml"
-                          [ngbTooltip]="'global.delete' | translate"
-                          (click)="delete(product)"
-                        ></span>
-                    </ng-container>
                   </div>
                 </td>
               </tr>
