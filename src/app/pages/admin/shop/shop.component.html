@@ -1,1 +1,96 @@
-<p>shop works!</p>
+<div class="title-feature text-left">
+  <span>{{ 'text.product' | translate }}</span>
+</div>
+
+<div class="field-search">
+  <div class="search-criteria">
+    <div class="item-search">
+      <label for="search-role-keyword" class="fw-semibold">{{ 'global.keyword' | translate }}</label>
+      <div class="input-text-custom">
+        <input
+          [(ngModel)]="shopsFilter.keyword"
+          name="keyword"
+          class="form-control"
+          type="search"
+          id="search-role-keyword"
+          [placeholder]="'text.searchProductPlaceholder' | translate"
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+    </div>
+    <button class="save-button-dialog ms-4" (click)="onSearch()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>
+      {{ 'global.search' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="tab-pane fade active show">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+            <tr class="table-custom-header">
+              <th>{{ 'global.no' | translate }}</th>
+              <th>{{ 'text.shopName' | translate }}</th>
+              <th>{{ 'text.ownerName' | translate }}</th>
+              <th>{{ 'text.ownerEmail' | translate }}</th>
+              <th>{{ 'text.ownerPhone' | translate }}</th>
+              <th>{{ 'text.status' | translate }}</th>
+              <th>{{ 'text.createdDate' | translate }}</th>
+              <th>{{ 'global.action' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let shop of shops; index as i">
+              <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                <td class="text-center">{{ (shopsFilter.page - 1) * shopsFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-left td-text-overflow">{{ shop.name }}</td>
+                <td class="break-word-table text-center">{{ shop.ownerName }}</td>
+                <td class="break-word-table text-center">{{ shop.ownerEmail }}</td>
+                <td class="break-word-table text-center">{{ shop.ownerPhone }}</td>
+                <td class="break-word-table text-center">{{ shop.status }}</td>
+                <td class="break-word-table text-center">{{ shop.createdDate }}</td>
+                <td>
+                  <div class="action-table">
+<!--                    <ng-container>-->
+<!--                        <span-->
+<!--                          [innerHTML]="ICON_UPDATE | safeHtml"-->
+<!--                          [ngbTooltip]="'global.update' | translate"-->
+<!--                          (click)="openModalSaveCategory(shop)"-->
+<!--                        ></span>-->
+<!--                    </ng-container>-->
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="from-pagination">
+    <div class="total">
+      <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
+      <ng-select
+        [items]="PAGINATION_PAGE_SIZE"
+        [(ngModel)]="shopsFilter.size"
+        (ngModelChange)="getShopsWithPaging()"
+      >
+      </ng-select>
+    </div>
+    <ngb-pagination
+      class="pagination"
+      [collectionSize]="totalItems"
+      [pageSize]="shopsFilter.size"
+      [(page)]="shopsFilter.page"
+      [directionLinks]="true"
+      [maxSize]="5"
+      (pageChange)="onChangedPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>
