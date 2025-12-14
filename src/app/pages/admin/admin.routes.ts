@@ -1,15 +1,13 @@
 import {Routes} from '@angular/router';
 import {
   SIDEBAR_CATEGORY_TITLE,
-  SIDEBAR_CUSTOMERS_TITLE,
   SIDEBAR_DASHBOARD_TITLE,
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
   SIDEBAR_PRODUCT_TITLE,
   SIDEBAR_SETTING_TITLE,
   SIDEBAR_SHOP_TITLE,
-  SIDEBAR_STATISTIC_TITLE,
-  SIDEBAR_SUPPORT_TITLE
+  SIDEBAR_STATISTIC_TITLE
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
 import {AUTHORIZATION_ROUTES} from './authorization/authorization.routes';
@@ -26,13 +24,6 @@ export const ADMIN_ROUTES: Routes = [
     title: SIDEBAR_DASHBOARD_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./customer/customer.component').then(m => m.CustomerComponent),
     canActivate: [AuthGuardFn]
   },
   {
@@ -75,13 +66,6 @@ export const ADMIN_ROUTES: Routes = [
     title: SIDEBAR_STATISTIC_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./statistic/statistic.component').then(m => m.StatisticComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'supports',
-    title: SIDEBAR_SUPPORT_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./support/support.component').then(m => m.SupportComponent),
     canActivate: [AuthGuardFn]
   },
   {

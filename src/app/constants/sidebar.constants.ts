@@ -3,7 +3,6 @@ import {
   ICON_ADMIN_MANAGEMENT,
   ICON_USER_PERMISSION,
   ICON_USER,
-  ICON_CUSTOMER,
   ICON_PRODUCTS,
   ICON_CONFIG,
   ICON_LOCK,
@@ -27,7 +26,6 @@ export const SIDEBAR_HOME_TITLE = 'sidebar.home';
 export const SIDEBAR_AUTHORIZATION_MANAGEMENT_TITLE = 'sidebar.authorization.title';
 export const SIDEBAR_AUTHORIZATION_ACCOUNTS_MANAGEMENT_TITLE = 'sidebar.authorization.account';
 export const SIDEBAR_AUTHORIZATION_ROLES_MANAGEMENT_TITLE = 'sidebar.authorization.role';
-export const SIDEBAR_CUSTOMERS_TITLE = 'sidebar.customer';
 export const SIDEBAR_SHOP_TITLE = 'sidebar.shop';
 export const SIDEBAR_CATEGORY_TITLE = 'sidebar.category';
 export const SIDEBAR_PRODUCT_TITLE = 'sidebar.product';
@@ -50,15 +48,6 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/admin/dashboard',
     title: SIDEBAR_DASHBOARD_TITLE,
     icon: ICON_DASHBOARD,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.ADMIN]
-  },
-  {
-    path: '/admin/customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    icon: ICON_CUSTOMER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],
@@ -113,15 +102,6 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/admin/statistics',
     title: SIDEBAR_STATISTIC_TITLE,
     icon: ICON_CHART,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.ADMIN]
-  },
-  {
-    path: '/admin/supports',
-    title: SIDEBAR_SUPPORT_TITLE,
-    icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],
