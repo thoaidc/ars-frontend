@@ -270,14 +270,5 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     isExternalLink: false,
     permission: [],
     userType: [USER_TYPE.SHOP]
-  },
-  {
-    path: '/shop/settings',
-    title: SIDEBAR_SETTING_TITLE,
-    icon: ICON_CONFIG,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.SHOP]
   }
 ];

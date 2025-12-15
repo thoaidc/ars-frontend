@@ -15,7 +15,7 @@ export const CLIENT_ROUTES: Routes = [
       import('./home/home.component').then(m => m.HomeComponent),
   },
   {
-    path: 'product/:id',                    // <--- route mới
+    path: 'product/:id',
     title: 'Chi tiết sản phẩm',
     loadComponent: () =>
       import('./product-detail/product-detail.component')

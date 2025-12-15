@@ -3,7 +3,6 @@ import {
   SIDEBAR_DASHBOARD_TITLE,
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
-  SIDEBAR_SETTING_TITLE,
   SIDEBAR_STATISTIC_TITLE,
   SIDEBAR_SUPPORT_TITLE,
   SIDEBAR_VOUCHER_TITLE
@@ -61,13 +60,6 @@ export const SHOP_ROUTES: Routes = [
     title: SIDEBAR_SUPPORT_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./support/support.component').then(m => m.SupportComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'settings',
-    title: SIDEBAR_SETTING_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./setting/setting.component').then(m => m.SettingComponent),
     canActivate: [AuthGuardFn]
   },
   {
