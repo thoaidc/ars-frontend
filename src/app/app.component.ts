@@ -4,6 +4,7 @@ import {Subscription, filter} from 'rxjs';
 import {WebSocketService} from './core/services/websocket.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AuthService} from './core/services/auth.service';
+import {UtilsService} from './shared/utils/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,20 @@ export class AppComponent implements OnInit, OnDestroy {
   private stateSubscription: Subscription | null = null;
   private routerSubscription: Subscription | null = null;
 
-  constructor(private router: Router, private webSocketService: WebSocketService, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private webSocketService: WebSocketService,
+    private authService: AuthService,
+    private utilsService: UtilsService
+  ) {}
 
   ngOnInit(): void {
-    // NOTE: disable automatic authentication check at startup to allow UI to load without backend running.
-    // If you need authentication check, re-enable the following line when backend is available.
-    // this.authService.authenticate(undefined, true).subscribe(); // Force check status and reload authentication state
+    // Force check status and reload authentication state
+    this.authService.authenticate(undefined, true).subscribe(authentication => {
+      if (authentication) {
+        this.router.navigate([this.utilsService.getRedirectUrlByAuthentication(authentication)]).then();
+      }
+    });
 
     this.stateSubscription = this.webSocketService.onState().subscribe();
 
