@@ -1,0 +1,164 @@
+<div class="modal-header">
+  <h5 class="modal-title" *ngIf="!isUpdatable">Chi tiết mã giảm giá</h5>
+  <h5 class="modal-title" *ngIf="isUpdatable">{{ voucher.id > 0 ? 'Chỉnh sửa mã giảm giá' : 'Tạo mới mã giảm giá' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body" id="save-product-group">
+  <div>
+    <div class="item-search w-100">
+      <label for="voucher-name" class="title-info">Tên<span class="text-danger m-0">*</span></label>
+      <div class="input-text-custom">
+        <input
+          id="voucher-name"
+          class="form-control"
+          [disabled]="!isUpdatable"
+          [(ngModel)]="voucher.name"
+          type="text"
+          placeholder="Ví dụ: Mã giảm 20% cho sản phẩm LOGO..."
+        />
+      </div>
+    </div>
+
+    <div class="form-space-between mb-0">
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-code" class="title-info">Mã<span class="text-danger m-0">*</span></label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-code"
+            class="form-control"
+            [disabled]="!isUpdatable"
+            [(ngModel)]="voucher.code"
+            type="text"
+            placeholder="Ví dụ: V01"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-status" class="title-info">Trạng thái<span class="text-danger m-0">*</span></label>
+        <div class="mt-2 d-flex">
+          <span class="pe-4">Kích hoạt mã giảm giá</span>
+          <label class="switch-toggle">
+            <input
+              type="checkbox"
+              id="voucher-status"
+              [ngModel]="voucher.status == 1"
+              (change)="changeVoucherStatus()"
+              [disabled]="!isUpdatable"
+            >
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-space-between mb-0">
+      <div class="item-search mt-0 w-50 p-2">
+        <label class="title-info">Kiểu giảm giá<span class="text-danger m-0">*</span></label>
+        <div class="select-search-custom">
+          <ng-select
+            [items]="VoucherType"
+            bindLabel="name"
+            bindValue="value"
+            [multiple]="false"
+            [clearable]="false"
+            [(ngModel)]="voucher.type"
+            [closeOnSelect]="true"
+            name="voucher-type"
+            [disabled]="!isUpdatable"
+            [searchable]="false"
+          >
+          </ng-select>
+        </div>
+      </div>
+
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-value" class="title-info">Giá trị giảm<span class="text-danger m-0">*</span></label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-value"
+            class="form-control"
+            [disabled]="!isUpdatable"
+            [(ngModel)]="voucher.value"
+            type="number"
+            placeholder="Ví dụ: 120000"
+            alphanumericOnly
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-space-between mb-0">
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-date-started" class="title-info">Ngày bắt đầu áp dụng</label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-date-started"
+            class="form-control"
+            [disabled]="!isUpdatable"
+            [(ngModel)]="voucher.dateStarted"
+            type="text"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-date-expired" class="title-info">Ngày hết hạn</label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-date-expired"
+            class="form-control"
+            [disabled]="!isUpdatable"
+            [(ngModel)]="voucher.dateExpired"
+            type="number"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-space-between mb-0" *ngIf="!isUpdatable">
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-date-started" class="title-info">Ngày tạo</label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-created-date"
+            class="form-control"
+            [disabled]="true"
+            [(ngModel)]="voucher.createdDate"
+            type="text"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <div class="item-search mt-0 w-50 p-2">
+        <label for="voucher-date-expired" class="title-info">Lần chỉnh sửa cuối cùng</label>
+        <div class="input-text-custom">
+          <input
+            id="voucher-last-modified-date"
+            class="form-control"
+            [disabled]="true"
+            [(ngModel)]="voucher.lastModifiedDate"
+            type="text"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="cancel-button-dialog" (click)="dismiss()">Huỷ</button>
+  <button
+    class="save-button-dialog"
+    (click)="confirmSave()"
+  >
+    Lưu
+  </button>
+</div>
