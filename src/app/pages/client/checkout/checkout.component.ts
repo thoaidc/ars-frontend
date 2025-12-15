@@ -31,6 +31,7 @@ export class CheckoutComponent implements OnInit {
   subtotal = 0;
   shipping = 0;
   total = 0;
+  orderId: string | null = null;
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.billingForm = this.fb.group({
@@ -58,6 +59,8 @@ export class CheckoutComponent implements OnInit {
       { id: 'p2', name: 'Lightweight Jacket', image: '/assets/coza/images/item-cart-05.jpg', price: 16.0, qty: 1 }
     ];
     this.recalc();
+    // generate a simple order id for display
+    this.orderId = 'ORD' + Date.now().toString().slice(-6);
   }
 
   recalc(){
@@ -80,6 +83,12 @@ export class CheckoutComponent implements OnInit {
     // handle payment action here (call backend...) - currently mock
     // navigate to home or order-success page
     window.alert('Order placed successfully!');
+    this.router.navigate(['/client/home']);
+  }
+
+  confirmPayment(): void {
+    // in real app we'd verify payment with backend; here just navigate to success or home
+    window.alert('Payment confirmed (demo)');
     this.router.navigate(['/client/home']);
   }
 }

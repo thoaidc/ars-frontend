@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 /* Slider */
 .slick-loading .slick-list
 {
@@ -8,7 +8,7 @@
 /* Icons */
 @font-face
 {
-    font-family: 'slick';
+    font-family: 'slick', sans-serif;
     font-weight: normal;
     font-style: normal;
 
@@ -30,8 +30,6 @@
     width: 20px;
     height: 20px;
     padding: 0;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
 
     cursor: pointer;
@@ -66,7 +64,7 @@
 .slick-prev:before,
 .slick-next:before
 {
-    font-family: 'slick';
+    font-family: 'slick', sans-serif;
     font-size: 20px;
     line-height: 1;
 
@@ -177,7 +175,7 @@
 }
 .slick-dots li button:before
 {
-    font-family: 'slick';
+    font-family: 'slick', sans-serif;
     font-size: 6px;
     line-height: 20px;
 
