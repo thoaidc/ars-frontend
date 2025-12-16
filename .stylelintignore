@@ -1,0 +1,15 @@
+# Ignore vendor and generated css files
+src/assets/coza/vendor/**
+src/assets/coza/fonts/**
+src/assets/coza/css/**
+node_modules/**
+target/**
+uploads/**
+
+# Ignore built css
+dist/**
+build/**
+
+# Ignore other static assets
+src/assets/**/vendor/**
+
