@@ -34,6 +34,16 @@ export const CLIENT_ROUTES: Routes = [
       import('./checkout/checkout.component').then(m => m.CheckoutComponent),
   },
   {
+    path: 'order-history',
+    title: 'Lịch sử đơn hàng',
+    loadComponent: () => import('./order-history/order-history.component').then(m => m.OrderHistoryComponent)
+  },
+  {
+    path: 'user',
+    title: 'Tài khoản',
+    loadComponent: () => import('./user/user.component').then(m => m.UserComponent)
+  },
+  {
     path: '**',
     redirectTo: 'home'
   }

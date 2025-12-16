@@ -6,7 +6,7 @@
     <div class="top-bar">
       <div class="content-topbar justify-content-end flex-sb-m h-full container">
         <div class="right-top-bar flex-w h-full">
-          <a href="javascript:void(0)" class="flex-c-m trans-04 p-lr-25">My Account</a>
+          <a routerLink="/client/user" class="flex-c-m trans-04 p-lr-25">Tài khoản của tôi</a>
         </div>
       </div>
     </div>
@@ -22,15 +22,15 @@
         <!-- Menu desktop -->
         <div class="menu-desktop">
           <ul class="main-menu">
-            <li><a routerLink="/client/home">Home</a></li>
-            <li><a routerLink="/client/shop">Shop</a></li>
+            <li><a routerLink="/client/home">Trang chủ</a></li>
+            <li><a routerLink="/client/shop">Sản phẩm</a></li>
           </ul>
         </div>
 
         <!-- Icon header + inline search -->
         <div class="wrap-icon-header flex-w flex-r-m">
           <div class="header-search-inline" style="display:flex;align-items:center;">
-            <input type="text" placeholder="Search..." class="plh3" style="padding:6px 10px;border-radius:20px;border:1px solid #ddd;">
+            <input type="text" placeholder="Tìm kiếm..." class="plh3" style="padding:6px 10px;border-radius:20px;border:1px solid #ddd;">
             <button style="margin-left:8px;" class="flex-c-m trans-04" type="button"><i class="zmdi zmdi-search"></i></button>
           </div>
 
@@ -74,15 +74,15 @@
     <ul class="topbar-mobile">
       <li>
         <div class="right-top-bar flex-w h-full">
-          <a href="javascript:void(0)" class="flex-c-m p-lr-10 trans-04">My Account</a>
+          <a routerLink="/client/user" class="flex-c-m p-lr-10 trans-04">Tài khoản của tôi</a>
         </div>
       </li>
     </ul>
 
     <ul class="main-menu-m">
-      <li><a routerLink="/client/home">Home</a><span class="arrow-main-menu-m"><i class="fa fa-angle-right" aria-hidden="true"></i></span></li>
-      <li><a routerLink="/client/shop">Shop</a></li>
-      <li><a routerLink="/client/cart" class="label1 rs1" data-label1="hot">Features</a></li>
+      <li><a routerLink="/client/home">Trang chủ</a><span class="arrow-main-menu-m"><i class="fa fa-angle-right" aria-hidden="true"></i></span></li>
+      <li><a routerLink="/client/shop">Sản phẩm</a></li>
+      <li><a routerLink="/client/cart" class="label1 rs1" data-label1="hot">Giỏ hàng</a></li>
     </ul>
   </div>
 
@@ -94,216 +94,36 @@
   <router-outlet></router-outlet>
 </main>
 
-<!-- Modal1 -->
-<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
-  <div class="overlay-modal1 js-hide-modal1"></div>
-  <div class="container">
-    <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
-      <button class="how-pos3 hov3 trans-04 js-hide-modal1"><img src="/assets/coza/images/icons/icon-close.png" alt="CLOSE"></button>
-
-      <div class="row">
-        <div class="col-md-6 col-lg-7 p-b-30">
-          <div class="p-l-25 p-r-30 p-lr-0-lg">
-            <div class="wrap-slick3 flex-sb flex-w">
-              <div class="wrap-slick3-dots"></div>
-              <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-              <div class="slick3 gallery-lb">
-                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-01.jpg">
-                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-01.jpg" alt="IMG-PRODUCT"></div>
-                </div>
-                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-02.jpg">
-                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-02.jpg" alt="IMG-PRODUCT"></div>
-                </div>
-                <div class="item-slick3" data-thumb="/assets/coza/images/product-detail-03.jpg">
-                  <div class="wrap-pic-w pos-relative"><img src="/assets/coza/images/product-detail-03.jpg" alt="IMG-PRODUCT"></div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-5 p-b-30">
-          <div class="p-r-50 p-t-5 p-lr-0-lg">
-            <h4 class="mtext-105 cl2 js-name-detail p-b-14">Lightweight Jacket</h4>
-            <span class="mtext-106 cl2">{{ 58.79 | vndCurrency:23000 }}</span>
-            <p class="stext-102 cl3 p-t-23">Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare feugiat.</p>
-
-            <div class="p-t-33">
-              <!-- options form: color and action -->
-              <div class="flex-w flex-r-m p-b-10">
-                <div class="size-203 flex-c-m respon6">Color</div>
-                <div class="size-204 respon6-next">
-                  <div class="rs1-select2 bor8 bg0">
-                    <select class="js-select2" name="color">
-                      <option>Choose color</option>
-                      <option>Red</option>
-                      <option>Blue</option>
-                      <option>White</option>
-                      <option>Grey</option>
-                    </select>
-                    <div class="dropDownSelect2"></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- START: Customization form for Modal quick view -->
-              <div class="customization-section p-t-20 bor-top">
-                <style>
-                  .modal-custom-options{margin-top:6px}
-                  .modal-custom-options .opt-grid{display:flex;gap:8px;flex-wrap:wrap}
-                  .modal-custom-options input[type="radio"]{display:none}
-                  .modal-custom-options label.option-thumb{display:inline-block;width:56px;height:56px;border:2px solid #eee;border-radius:8px;background-size:cover;background-position:center;cursor:pointer;transition:all .12s;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
-                  .modal-custom-options input[type="radio"]:checked + label.option-thumb{border-color:#f7941d;box-shadow:0 6px 18px rgba(247,148,29,0.18);transform:translateY(-2px)}
-                  .opt-label{font-size:13px;color:#666;margin-bottom:6px}
-                  .modal-custom-options .hair-style{width:60px;height:60px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:2px solid #efefef;background:#fff}
-                </style>
-
-                <h5 class="mtext-108 cl2 p-b-12">Customize design</h5>
-
-                <div class="p-b-12">
-                  <div class="size-203 flex-c-m respon6 opt-label">Eye color</div>
-                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
-                    <div class="opt-grid">
-                      <input type="radio" id="m-eye-green" name="modalEyeColor" value="green">
-                      <label for="m-eye-green" class="option-thumb" title="Green" style="background: radial-gradient(circle at 30% 30%, #9ee6b3 10%, #2d8b5a 40%);"></label>
-
-                      <input type="radio" id="m-eye-brown" name="modalEyeColor" value="brown">
-                      <label for="m-eye-brown" class="option-thumb" title="Brown" style="background: radial-gradient(circle at 30% 30%, #ffd9a6 10%, #7a4a2c 40%);"></label>
-
-                      <input type="radio" id="m-eye-blue" name="modalEyeColor" value="blue">
-                      <label for="m-eye-blue" class="option-thumb" title="Blue" style="background: radial-gradient(circle at 30% 30%, #bfe8ff 10%, #1b5fb4 40%);"></label>
-
-                      <input type="radio" id="m-eye-hazel" name="modalEyeColor" value="hazel">
-                      <label for="m-eye-hazel" class="option-thumb" title="Hazel" style="background: radial-gradient(circle at 30% 30%, #f7e5c9 10%, #8b5e3c 40%);"></label>
-
-                      <input type="radio" id="m-eye-purple" name="modalEyeColor" value="purple">
-                      <label for="m-eye-purple" class="option-thumb" title="Purple" style="background: radial-gradient(circle at 30% 30%, #e6d0ff 10%, #6f2fa8 40%);"></label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="p-b-12">
-                  <div class="size-203 flex-c-m respon6 opt-label">Hair color</div>
-                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
-                    <div class="opt-grid">
-                      <input type="radio" id="m-hair-blonde" name="modalHairColor" value="blonde">
-                      <label for="m-hair-blonde" class="option-thumb" title="Blonde" style="background: linear-gradient(180deg,#f9e7a6,#d9b24f);"></label>
-
-                      <input type="radio" id="m-hair-black" name="modalHairColor" value="black">
-                      <label for="m-hair-black" class="option-thumb" title="Black" style="background: linear-gradient(180deg,#444,#000);"></label>
-
-                      <input type="radio" id="m-hair-brown" name="modalHairColor" value="brown">
-                      <label for="m-hair-brown" class="option-thumb" title="Brown" style="background: linear-gradient(180deg,#8b5e3c,#5a381f);"></label>
-
-                      <input type="radio" id="m-hair-red" name="modalHairColor" value="red">
-                      <label for="m-hair-red" class="option-thumb" title="Red" style="background: linear-gradient(180deg,#f3a58e,#d14b2a);"></label>
-
-                      <input type="radio" id="m-hair-gray" name="modalHairColor" value="gray">
-                      <label for="m-hair-gray" class="option-thumb" title="Gray" style="background: linear-gradient(180deg,#d6d6d6,#9b9b9b);"></label>
-
-                      <input type="radio" id="m-hair-none" name="modalHairColor" value="none">
-                      <label for="m-hair-none" class="option-thumb" title="No hair" style="display:flex;align-items:center;justify-content:center;background:#e9fdf6;color:#1aa57a;font-weight:600">No</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="p-b-12">
-                  <div class="size-203 flex-c-m respon6 opt-label">Hair style</div>
-                  <div class="size-204 respon6-next p-t-8 modal-custom-options">
-                    <div class="opt-grid">
-                      <input type="radio" id="m-hs-1" name="modalHairStyle" value="1">
-                      <label for="m-hs-1" class="hair-style" title="Style 1">1</label>
-
-                      <input type="radio" id="m-hs-2" name="modalHairStyle" value="2">
-                      <label for="m-hs-2" class="hair-style" title="Style 2">2</label>
-
-                      <input type="radio" id="m-hs-3" name="modalHairStyle" value="3">
-                      <label for="m-hs-3" class="hair-style" title="Style 3">3</label>
-
-                      <input type="radio" id="m-hs-4" name="modalHairStyle" value="4">
-                      <label for="m-hs-4" class="hair-style" title="Style 4">4</label>
-
-                      <input type="radio" id="m-hs-5" name="modalHairStyle" value="5">
-                      <label for="m-hs-5" class="hair-style" title="Style 5">5</label>
-
-                      <input type="radio" id="m-hs-6" name="modalHairStyle" value="6">
-                      <label for="m-hs-6" class="hair-style" title="Style 6">6</label>
-
-                      <input type="radio" id="m-hs-7" name="modalHairStyle" value="7">
-                      <label for="m-hs-7" class="hair-style" title="Style 7">7</label>
-
-                      <input type="radio" id="m-hs-8" name="modalHairStyle" value="8">
-                      <label for="m-hs-8" class="hair-style" title="Style 8">8</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="p-t-10">
-                  <small class="stext-102 cl6">Tip: Choose eye color, hair color and hair style to personalize the printed design.</small>
-                  <input type="hidden" name="modal_custom_eye" />
-                  <input type="hidden" name="modal_custom_haircolor" />
-                  <input type="hidden" name="modal_custom_hairstyle" />
-                </div>
-              </div>
-              <!-- END: Customization form -->
-
-              <div class="flex-w flex-r-m p-b-10 p-t-20">
-                <div class="size-204 flex-w flex-m respon6-next">
-                  <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">Add to cart</button>
-                  <button class="flex-c-m stext-101 cl0 size-101 bg2 bor1 hov-btn1 p-lr-15 trans-04" style="margin-left:10px;">Buy now</button>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-              <div class="flex-m bor9 p-r-10 m-r-11"><a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100" data-tooltip="Add to Wishlist"><i class="zmdi zmdi-favorite"></i></a></div>
-
-              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook"><i class="fa fa-facebook"></i></a>
-              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Twitter"><i class="fa fa-twitter"></i></a>
-              <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus"><i class="fa fa-google-plus"></i></a>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Footer -->
 <footer class="bg3 p-t-75 p-b-32">
   <div class="container">
     <div class="row">
       <div class="col-sm-6 col-lg-3 p-b-50">
-        <h4 class="stext-301 cl0 p-b-30">Categories</h4>
+        <h4 class="stext-301 cl0 p-b-30">Danh mục</h4>
 
         <ul>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Women</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Men</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Shoes</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Watches</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Nữ</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Nam</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Giày</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Đồng hồ</a></li>
         </ul>
       </div>
 
       <div class="col-sm-6 col-lg-3 p-b-50">
-        <h4 class="stext-301 cl0 p-b-30">Help</h4>
+        <h4 class="stext-301 cl0 p-b-30">Trợ giúp</h4>
 
         <ul>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Track Order</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Returns</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Shipping</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">FAQs</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Tra cứu đơn hàng</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Hoàn trả</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Giao hàng</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Câu hỏi thường gặp</a></li>
         </ul>
       </div>
 
       <div class="col-sm-6 col-lg-3 p-b-50">
-        <h4 class="stext-301 cl0 p-b-30">GET IN TOUCH</h4>
+        <h4 class="stext-301 cl0 p-b-30">Liên hệ</h4>
 
-        <p class="stext-107 cl7 size-201">Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879</p>
+        <p class="stext-107 cl7 size-201">Mọi câu hỏi? Liên hệ với chúng tôi tại cửa hàng hoặc gọi tới (+84) 96 716 6879</p>
 
         <div class="p-t-27">
           <a href="javascript:void(0)" class="fs-18 cl7 hov-cl1 trans-04 m-r-16"><i class="fa fa-facebook"></i></a>
@@ -313,7 +133,7 @@
       </div>
 
       <div class="col-sm-6 col-lg-3 p-b-50">
-        <h4 class="stext-301 cl0 p-b-30">Newsletter</h4>
+        <h4 class="stext-301 cl0 p-b-30">Đăng ký nhận tin</h4>
 
         <form>
           <div class="wrap-input1 w-full p-b-4">
@@ -322,7 +142,7 @@
           </div>
 
           <div class="p-t-18">
-            <button type="button" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">Subscribe</button>
+            <button type="button" class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">Đăng ký</button>
           </div>
         </form>
       </div>
@@ -337,7 +157,7 @@
         <a href="javascript:void(0)" class="m-all-1"><img src="/assets/coza/images/icons/icon-pay-05.png" alt="ICON-PAY"></a>
       </div>
 
-      <p class="stext-107 cl6 txt-center">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Template by Colorlib / ThemeWagon</p>
+      <p class="stext-107 cl6 txt-center">Copyright &copy;<script>document.write(new Date().getFullYear());</script> Bản quyền | Coza Shop</p>
     </div>
   </div>
 </footer>

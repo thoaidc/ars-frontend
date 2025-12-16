@@ -17,7 +17,9 @@
     "webapp:dev-ssl": "ng serve --ssl",
     "webapp:dev-verbose": "ng serve --verbose",
     "webapp:prod": "npm run cleanup && npm run webapp:build:prod",
-    "webapp:test": "npm run test --"
+    "webapp:test": "npm run test --",
+    "lint:css": "stylelint \"src/**/*.{scss,css}\" --allow-empty-input",
+    "lint:css:fix": "stylelint \"src/**/*.{scss,css}\" --allow-empty-input --fix"
   },
   "dependencies": {
     "@angular/animations": "~18.2.0",
@@ -77,7 +79,11 @@
     "prettier-plugin-packagejson": "~2.5.10",
     "swagger-ui-dist": "~5.17.14",
     "typescript": "~5.5.2",
-    "wait-on": "~7.2.0"
+    "wait-on": "~7.2.0",
+    "stylelint": "^15.0.0",
+    "stylelint-scss": "^4.0.0",
+    "stylelint-config-standard-scss": "^7.0.0",
+    "stylelint-order": "^5.0.0"
   },
   "engines": {
     "node": ">=18.18.2"
