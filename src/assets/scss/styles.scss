@@ -1,5 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
 
+// Custom local fonts (Vietnamese-friendly)
+@font-face {
+  font-family: 'PoppinsLocal';
+  src: url('/assets/coza/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PoppinsLocal';
+  src: url('/assets/coza/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PoppinsLocal';
+  src: url('/assets/coza/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MontserratLocal';
+  src: url('/assets/coza/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PlayfairLocal';
+  src: url('/assets/coza/fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+// Apply font globally (Vietnamese text will use PoppinsLocal with sensible fallbacks)
+:root {
+  --ui-font: 'PoppinsLocal', 'MontserratLocal', 'PlayfairLocal', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+html, body {
+  /* ensure analyzer sees a generic fallback */
+  font-family: var(--ui-font), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'PoppinsLocal', 'MontserratLocal', sans-serif;
+  font-weight: 600;
+}
+
+/* Product-detail customization controls */
+.custom-options { gap: 8px; align-items: center; }
+.option-swatch {
+  width: 34px; height: 34px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; display: inline-block; margin-right:6px;
+}
+.option-swatch.active { box-shadow: 0 0 0 3px rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.12); }
+.option-pill {
+  padding: 6px 12px; border-radius: 20px; border:1px solid #e6e6e6; background:#fff; cursor:pointer; margin-right:8px; font-size:14px;
+}
+.option-pill.active { background: #1487ff; color:#fff; border-color:#1487ff; }
+
+/* small helper for header inline search */
+.header-search-inline input.plh3 { min-width: 180px; }
+
 // Override Bootstrap variables
 @import './bootstrap-variables';
 // Import Bootstrap source files from node_modules
