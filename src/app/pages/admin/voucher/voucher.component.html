@@ -8,7 +8,7 @@
       <label for="search-role-keyword" class="fw-semibold">{{ 'global.keyword' | translate }}</label>
       <div class="input-text-custom">
         <input
-          [(ngModel)]="shopsFilter.keyword"
+          [(ngModel)]="vouchersFilter.keyword"
           name="keyword"
           class="form-control"
           type="search"
@@ -40,30 +40,18 @@
               <th>{{ 'text.ownerPhone' | translate }}</th>
               <th>{{ 'text.status' | translate }}</th>
               <th>{{ 'text.createdDate' | translate }}</th>
-              <th>{{ 'global.action' | translate }}</th>
             </tr>
             </thead>
             <tbody>
-            <ng-container *ngFor="let shop of shops; index as i">
+            <ng-container *ngFor="let voucher of vouchers; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
-                <td class="text-center">{{ (shopsFilter.page - 1) * shopsFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-left td-text-overflow">{{ shop.name }}</td>
-                <td class="break-word-table text-center">{{ shop.ownerName }}</td>
-                <td class="break-word-table text-center">{{ shop.ownerEmail }}</td>
-                <td class="break-word-table text-center">{{ shop.ownerPhone }}</td>
-                <td class="break-word-table text-center">{{ shop.status }}</td>
-                <td class="break-word-table text-center">{{ shop.createdDate }}</td>
-                <td>
-                  <div class="action-table">
-<!--                    <ng-container>-->
-<!--                        <span-->
-<!--                          [innerHTML]="ICON_UPDATE | safeHtml"-->
-<!--                          [ngbTooltip]="'global.update' | translate"-->
-<!--                          (click)="openModalSaveCategory(shop)"-->
-<!--                        ></span>-->
-<!--                    </ng-container>-->
-                  </div>
-                </td>
+                <td class="text-center">{{ (vouchersFilter.page - 1) * vouchersFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-left" (click)="view(voucher.id)">{{ voucher.code }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(voucher.id)">{{ voucher.name }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.type }}</td>
+                <td class="break-word-table text-right" (click)="view(voucher.id)">{{ voucher.value }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.status }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.dateExpired }}</td>
               </tr>
             </ng-container>
             </tbody>
@@ -78,7 +66,7 @@
       <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
       <ng-select
         [items]="PAGINATION_PAGE_SIZE"
-        [(ngModel)]="shopsFilter.size"
+        [(ngModel)]="vouchersFilter.size"
         (ngModelChange)="getShopsWithPaging()"
       >
       </ng-select>
@@ -86,8 +74,8 @@
     <ngb-pagination
       class="pagination"
       [collectionSize]="totalItems"
-      [pageSize]="shopsFilter.size"
-      [(page)]="shopsFilter.page"
+      [pageSize]="vouchersFilter.size"
+      [(page)]="vouchersFilter.page"
       [directionLinks]="true"
       [maxSize]="5"
       (pageChange)="onChangedPage($event)"

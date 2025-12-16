@@ -3,7 +3,6 @@ import {
   ICON_ADMIN_MANAGEMENT,
   ICON_USER_PERMISSION,
   ICON_USER,
-  ICON_CUSTOMER,
   ICON_PRODUCTS,
   ICON_CONFIG,
   ICON_LOCK,
@@ -16,7 +15,8 @@ import {
   ICON_ORDER,
   ICON_RATE_LIMIT,
   ICON_DESIGN,
-  ICON_GROUP
+  ICON_GROUP,
+  ICON_VOUCHER
 } from '../shared/utils/icon';
 import {SidebarNavItem} from '../core/models/sidebar.model';
 import {Authorities} from './authorities.constants';
@@ -27,13 +27,13 @@ export const SIDEBAR_HOME_TITLE = 'sidebar.home';
 export const SIDEBAR_AUTHORIZATION_MANAGEMENT_TITLE = 'sidebar.authorization.title';
 export const SIDEBAR_AUTHORIZATION_ACCOUNTS_MANAGEMENT_TITLE = 'sidebar.authorization.account';
 export const SIDEBAR_AUTHORIZATION_ROLES_MANAGEMENT_TITLE = 'sidebar.authorization.role';
-export const SIDEBAR_CUSTOMERS_TITLE = 'sidebar.customer';
 export const SIDEBAR_SHOP_TITLE = 'sidebar.shop';
 export const SIDEBAR_CATEGORY_TITLE = 'sidebar.category';
 export const SIDEBAR_PRODUCT_TITLE = 'sidebar.product';
 export const SIDEBAR_GROUP_TITLE = 'sidebar.product.group';
 export const SIDEBAR_PRODUCT_ITEM_TITLE = 'sidebar.product.item';
 export const SIDEBAR_ORDER_TITLE = 'sidebar.order';
+export const SIDEBAR_VOUCHER_TITLE = 'sidebar.voucher';
 export const SIDEBAR_SETTING_TITLE = 'sidebar.setting';
 export const SIDEBAR_FINANCE_TITLE = 'sidebar.finance';
 export const SIDEBAR_STATISTIC_TITLE = 'sidebar.statistic';
@@ -50,15 +50,6 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/admin/dashboard',
     title: SIDEBAR_DASHBOARD_TITLE,
     icon: ICON_DASHBOARD,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.ADMIN]
-  },
-  {
-    path: '/admin/customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    icon: ICON_CUSTOMER,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],
@@ -92,6 +83,15 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     userType: [USER_TYPE.ADMIN]
   },
   {
+    path: '/admin/vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    icon: ICON_VOUCHER,
+    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+    isExternalLink: false,
+    permission: [Authorities.SYSTEM],
+    userType: [USER_TYPE.ADMIN]
+  },
+  {
     path: '/admin/orders',
     title: SIDEBAR_ORDER_TITLE,
     icon: ICON_ORDER,
@@ -113,15 +113,6 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/admin/statistics',
     title: SIDEBAR_STATISTIC_TITLE,
     icon: ICON_CHART,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.ADMIN]
-  },
-  {
-    path: '/admin/supports',
-    title: SIDEBAR_SUPPORT_TITLE,
-    icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],
@@ -207,15 +198,6 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     userType: [USER_TYPE.SHOP]
   },
   {
-    path: '/shop/customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    icon: ICON_CUSTOMER,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.SHOP]
-  },
-  {
     path: '/shop/products',
     title: SIDEBAR_PRODUCT_TITLE,
     icon: ICON_PRODUCTS,
@@ -243,6 +225,15 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
         userType: [USER_TYPE.SHOP]
       },
     ]
+  },
+  {
+    path: '/shop/vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    icon: ICON_VOUCHER,
+    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
+    isExternalLink: false,
+    permission: [],
+    userType: [USER_TYPE.SHOP]
   },
   {
     path: '/shop/orders',
@@ -275,15 +266,6 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/shop/supports',
     title: SIDEBAR_SUPPORT_TITLE,
     icon: ICON_SUPPORT,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.SHOP]
-  },
-  {
-    path: '/shop/settings',
-    title: SIDEBAR_SETTING_TITLE,
-    icon: ICON_CONFIG,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],

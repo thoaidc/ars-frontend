@@ -1,12 +1,11 @@
 import {Routes} from '@angular/router';
 import {
-  SIDEBAR_CUSTOMERS_TITLE,
   SIDEBAR_DASHBOARD_TITLE,
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
-  SIDEBAR_SETTING_TITLE,
   SIDEBAR_STATISTIC_TITLE,
-  SIDEBAR_SUPPORT_TITLE
+  SIDEBAR_SUPPORT_TITLE,
+  SIDEBAR_VOUCHER_TITLE
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
 import {SHOP_PRODUCT_ROUTES} from './products/product.routes';
@@ -25,15 +24,15 @@ export const SHOP_ROUTES: Routes = [
     canActivate: [AuthGuardFn]
   },
   {
-    path: 'customers',
-    title: SIDEBAR_CUSTOMERS_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./customers/customers.component').then(m => m.CustomersComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
     path: 'products',
     loadChildren: () => SHOP_PRODUCT_ROUTES
+  },
+  {
+    path: 'vouchers',
+    title: SIDEBAR_VOUCHER_TITLE,
+    pathMatch: 'full',
+    loadComponent: () => import('./voucher/voucher.component').then(m => m.VoucherComponent),
+    canActivate: [AuthGuardFn]
   },
   {
     path: 'orders',
@@ -61,13 +60,6 @@ export const SHOP_ROUTES: Routes = [
     title: SIDEBAR_SUPPORT_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./support/support.component').then(m => m.SupportComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'settings',
-    title: SIDEBAR_SETTING_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./setting/setting.component').then(m => m.SettingComponent),
     canActivate: [AuthGuardFn]
   },
   {

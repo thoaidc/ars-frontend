@@ -27,9 +27,13 @@ export class ProductGroupService {
 
   saveProductGroup(request: ProductGroupDTO): Observable<BaseResponse<any>> {
     if (request.id && request.id > 0) {
-      return this.http.post<BaseResponse<any>>(this.productGroupAPI, request);
-    } else {
       return this.http.put<BaseResponse<any>>(this.productGroupAPI, request);
+    } else {
+      const createProductGroupRequest = {
+        ...request,
+        id: null
+      }
+      return this.http.post<BaseResponse<any>>(this.productGroupAPI, createProductGroupRequest);
     }
   }
 

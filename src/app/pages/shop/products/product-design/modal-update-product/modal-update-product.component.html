@@ -4,7 +4,7 @@
 </div>
 
 <div class="modal-body pb-4 pt-1" style="max-height: 75vh; overflow-y: auto">
-  <ul class="nav nav-tabs tab-switcher mb-3" role="tablist">
+  <ul class="nav nav-tabs tab-switcher mb-3" role="tablist" *ngIf="product.customizable">
     <li class="nav-item" role="presentation">
       <button
         class="nav-link"

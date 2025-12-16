@@ -8,7 +8,7 @@ import {BaseResponse} from '../models/response.model';
 import {filter} from 'rxjs/operators';
 import {
   LOCAL_USER_AUTHORITIES_KEY,
-  LOCAL_USER_TOKEN_KEY,
+  LOCAL_USER_TOKEN_KEY, LOCAL_USER_TYPE_KEY,
   LOCAL_USERNAME_KEY
 } from '../../constants/local-storage.constants';
 import {Authentication, LoginRequest} from '../models/auth.model';
@@ -140,6 +140,7 @@ export class AuthService {
         localStorage.setItem(LOCAL_USER_TOKEN_KEY, authentication.accessToken);
       }
 
+      localStorage.setItem(LOCAL_USER_TYPE_KEY, authentication.type);
       localStorage.setItem(LOCAL_USERNAME_KEY, authentication.username);
       localStorage.setItem(LOCAL_USER_AUTHORITIES_KEY, JSON.stringify(authentication.authorities));
     } else {
@@ -153,6 +154,7 @@ export class AuthService {
     localStorage.removeItem(LOCAL_USERNAME_KEY);
     localStorage.removeItem(LOCAL_USER_TOKEN_KEY);
     localStorage.removeItem(LOCAL_USER_AUTHORITIES_KEY);
+    localStorage.removeItem(LOCAL_USER_TYPE_KEY);
   }
 
   /**

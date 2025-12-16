@@ -1,1 +1,86 @@
-<p>order works!</p>
+<div class="title-feature text-left">
+  <span>{{ 'text.product' | translate }}</span>
+</div>
+
+<div class="field-search">
+  <div class="search-criteria">
+    <div class="item-search">
+      <label for="search-role-keyword" class="fw-semibold">{{ 'global.keyword' | translate }}</label>
+      <div class="input-text-custom">
+        <input
+          [(ngModel)]="ordersFilter.keyword"
+          name="keyword"
+          class="form-control"
+          type="search"
+          id="search-role-keyword"
+          [placeholder]="'text.searchProductPlaceholder' | translate"
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+    </div>
+    <button class="save-button-dialog ms-4" (click)="onSearch()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>
+      {{ 'global.search' | translate }}
+    </button>
+  </div>
+</div>
+
+<div class="tab-pane fade active show">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+            <tr class="table-custom-header">
+              <th>{{ 'global.no' | translate }}</th>
+              <th>{{ 'text.productCode' | translate }}</th>
+              <th>{{ 'text.productName' | translate }}</th>
+              <th>{{ 'text.price' | translate }}</th>
+              <th>{{ 'text.status' | translate }}</th>
+              <th>{{ 'text.customizable' | translate }}</th>
+              <th>{{ 'global.action' | translate }}</th>
+              <th>{{ 'global.action' | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let order of orders; index as i">
+              <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                <td class="text-center" (click)="view(order.id)">{{ (ordersFilter.page - 1) * ordersFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-left" (click)="view(order.id)">{{ order.code }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(order.id)">{{ order.customerName }}</td>
+                <td class="break-word-table text-right" (click)="view(order.id)">{{ order.totalAmount }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.status }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.orderDate }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.paymentMethod }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.paymentStatus }}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="from-pagination">
+    <div class="total">
+      <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
+      <ng-select
+        [items]="PAGINATION_PAGE_SIZE"
+        [(ngModel)]="ordersFilter.size"
+        (ngModelChange)="getOrderWithPaging()"
+      >
+      </ng-select>
+    </div>
+    <ngb-pagination
+      class="pagination"
+      [collectionSize]="totalItems"
+      [pageSize]="ordersFilter.size"
+      [(page)]="ordersFilter.page"
+      [directionLinks]="true"
+      [maxSize]="5"
+      (pageChange)="onChangedPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>

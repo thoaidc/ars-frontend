@@ -8,7 +8,6 @@ import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {LoginRequest} from '../../core/models/auth.model';
-import {USER_TYPE} from '../../constants/user.constants';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -62,17 +61,7 @@ export class LoginComponent {
     this.authService.authenticate(this.loginRequest, true).subscribe(authentication => {
       if (authentication) {
         this.toastr.success(this.translateService.instant('notification.loginSuccess'));
-        let redirectUrl = '/';
-
-        if (authentication.type === USER_TYPE.ADMIN) {
-          redirectUrl += this.utilsService.findFirstAccessibleRoute(authentication.authorities);
-        } else if (authentication.type === USER_TYPE.SHOP) {
-          redirectUrl += 'shop/dashboard';
-        } else {
-          redirectUrl += 'client/home';
-        }
-
-        this.router.navigate([redirectUrl]).then();
+        this.router.navigate([this.utilsService.getRedirectUrlByAuthentication(authentication)]).then();
       }
     });
   }

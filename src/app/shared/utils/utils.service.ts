@@ -7,6 +7,8 @@ import {ADMIN_SIDEBAR_ROUTES} from '../../constants/sidebar.constants';
 import {TranslateService} from '@ngx-translate/core';
 import {BaseFilterRequest} from '../../core/models/request.model';
 import {DATETIME_FORMAT} from '../../constants/common.constants';
+import {USER_TYPE} from '../../constants/user.constants';
+import {Authentication} from '../../core/models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -215,5 +217,19 @@ export class UtilsService {
 
     // primitives (string, number, boolean)
     formData.append(parentKey!, request);
+  }
+
+  getRedirectUrlByAuthentication(authentication: Authentication) {
+    let redirectUrl = '';
+
+    if (authentication.type === USER_TYPE.ADMIN) {
+      redirectUrl += this.findFirstAccessibleRoute(authentication.authorities);
+    } else if (authentication.type === USER_TYPE.SHOP) {
+      redirectUrl += 'shop/dashboard';
+    } else {
+      redirectUrl += 'client/home';
+    }
+
+    return redirectUrl;
   }
 }

@@ -14,10 +14,14 @@ export interface Product extends AuditingEntity {
   thumbnailUrl: string;
   customizable: boolean;
   description?: string;
-  images?: string[];
+  images?: ProductImageDTO[];
   categories?: CategoryDTO[];
   productGroups?: ProductGroupDTO[];
   productOptions?: ProductOptionDTO[];
+}
+
+export interface ProductImageDTO extends AuditingEntity {
+  image: string;
 }
 
 export interface CategoryDTO extends AuditingEntity {

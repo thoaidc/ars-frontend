@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {API_CATEGORY, API_CATEGORY_PUBLIC} from '../../constants/api.constants';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
 import {BaseFilterRequest} from '../models/request.model';
 import {CategoryDTO} from '../models/product.model';
@@ -27,9 +27,13 @@ export class CategoryService {
 
   saveCategory(request: CategoryDTO): Observable<BaseResponse<any>> {
     if (request.id && request.id > 0) {
-      return this.http.post<BaseResponse<any>>(this.categoryAPI, request);
-    } else {
       return this.http.put<BaseResponse<any>>(this.categoryAPI, request);
+    } else {
+      const createCategoryRequest = {
+        ...request,
+        id: null
+      }
+      return this.http.post<BaseResponse<any>>(this.categoryAPI, createCategoryRequest);
     }
   }
 
