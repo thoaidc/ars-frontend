@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import {AuthService} from '../../../core/services/auth.service';
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {NgIf} from '@angular/common';
@@ -11,7 +11,6 @@ import {NOTIFICATION_TOPIC, SocketMessage} from '../../../constants/websocket.co
 import {IMessage} from '@stomp/stompjs';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {LOCALE} from '../../../constants/common.constants';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -24,11 +23,10 @@ import { Subject, takeUntil } from 'rxjs';
     TranslatePipe
   ]
 })
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   @Input() isSidebarShown!: boolean;
   showDropdown = '';
   username: string | null = '';
-  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -45,12 +43,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       const notification: SocketMessage = JSON.parse(message.body) as SocketMessage;
       console.log(notification);
     });
-
-    this.authService.getUsername()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(username => {
-        this.username = username;
-      });
   }
 
   getUserName() {
@@ -85,13 +77,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.toast.success(this.translateService.instant('notification.logoutSuccess'));
-    // redirect to client home after logout
-    this.router.navigate(['/client/home']).then();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.router.navigate(['/login']).then();
   }
 
   protected readonly ICON_LOGOUT = ICON_LOGOUT;

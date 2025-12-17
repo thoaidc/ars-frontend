@@ -84,13 +84,6 @@ export class AuthService {
     return this.authenticationState.asObservable();
   }
 
-  /**
-   * Observable helper to get the current username (or null) and be notified on changes
-   */
-  getUsername(): Observable<string | null> {
-    return this.subscribeAuthenticationState().pipe(map(auth => auth?.username ?? null));
-  }
-
   refreshToken(): Observable<string | null> {
     const refreshTokenAPI = this.applicationConfigService.getEndpointFor(API_USERS_REFRESH);
     return this.http.post<BaseResponse<string>>(refreshTokenAPI, {}).pipe(
@@ -125,6 +118,10 @@ export class AuthService {
     const userStatusAPI = this.applicationConfigService.getEndpointFor(API_USERS_STATUS);
     const apiUrl = loginRequest ? loginAPI : userStatusAPI;
     const requestBody = loginRequest ? loginRequest: {};
+
+    if (apiUrl === userStatusAPI && !this.hasToken()) {
+      return of(null);
+    }
 
     return this.http.post<BaseResponse<Authentication>>(apiUrl, requestBody).pipe(
       map(response => {
@@ -181,10 +178,9 @@ export class AuthService {
   /**
    * Register a new user (public API)
    * @param registerRequest object with username,password,fullname,phone,email
-   * @param isShop whether registering as a shop (appends ?isShop=true|false)
    */
-  register(registerRequest: any, isShop = false): Observable<BaseResponse<any>> {
-    const registerApi = this.applicationConfigService.getEndpointFor(API_USERS_REGISTER) + `?isShop=${isShop}`;
+  register(registerRequest: any): Observable<BaseResponse<any>> {
+    const registerApi = this.applicationConfigService.getEndpointFor(API_USERS_REGISTER);
     return this.http.post<BaseResponse<any>>(registerApi, registerRequest).pipe(
       catchError((err) => {
         // rethrow error to be handled by caller

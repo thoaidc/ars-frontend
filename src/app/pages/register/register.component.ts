@@ -73,11 +73,9 @@ export class RegisterComponent {
       return;
     }
 
-    // Call register API. curl example uses ?isShop=false
-    this.authService.register(this.registerRequest, false).subscribe({
+    this.authService.register(this.registerRequest).subscribe({
       next: (res) => {
         this.toastr.success(this.translateService.instant('notification.registerSuccess') || 'Register success');
-        // redirect to login
         this.router.navigate(['/login']).then();
       },
       error: (err) => {
