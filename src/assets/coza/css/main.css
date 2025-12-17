@@ -37,8 +37,10 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 
 /*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
+[ FONT ]
+*/
 
+/* Commented out original @font-face declarations to force system fonts (avoid Poppins load)
 @font-face {
   font-family: Poppins-Regular;
   src: url('../fonts/Poppins/Poppins-Regular.ttf');
@@ -76,7 +78,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 
 
 /*---------------------------------------------*/
-@font-face {
+/*@font-face {
   font-family: PlayfairDisplay-Regular;
   src: url('../fonts/PlayfairDisplay/PlayfairDisplay-Regular.ttf');
 }
@@ -87,7 +89,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 /*---------------------------------------------*/
-@font-face {
+/*@font-face {
   font-family: Montserrat-Regular;
   src: url('../fonts/Montserrat/Montserrat-Regular.ttf');
 }
@@ -96,7 +98,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   font-family: Montserrat-Bold;
   src: url('../fonts/Montserrat/Montserrat-Bold.ttf');
 }
-
+*/
 
 /*//////////////////////////////////////////////////////////////////
 [ RS PLUGIN ]*/

@@ -2,17 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
-import {ProductService} from '../../../core/services/product.service';
-import {BaseFilterRequest} from '../../../core/models/request.model';
-import {CategoryDTO, Product} from '../../../core/models/product.model';
-import {ToastrService} from 'ngx-toastr';
-import {CategoryService} from '../../../core/services/category.service';
-import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
+import { ProductService } from '../../../core/services/product.service';
+import { BaseFilterRequest } from '../../../core/models/request.model';
+import { CategoryDTO, Product } from '../../../core/models/product.model';
+import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../../../core/services/category.service';
 
 @Component({
   selector: 'app-client-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, VndCurrencyPipe],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -35,8 +34,8 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.loadProducts();
-    // this.loadCategories();
+    this.loadProducts();
+    this.loadCategories();
   }
 
   private loadCategories() {
@@ -49,6 +48,7 @@ export class HomeComponent implements OnInit {
 
   private loadProducts(): void {
     this.loading = true;
+    // sử dụng ProductsFilter interface (productGroupsFilter phù hợp)
     this.productService.getAllWithPaging(this.productGroupsFilter).subscribe(response => {
       if (response && response.result) {
         this.trendyProducts = response.result;
@@ -58,14 +58,20 @@ export class HomeComponent implements OnInit {
       }
 
       this.loading = false;
+    }, err => {
+      this.loading = false;
+      console.error('Error loading products', err);
+      this.toast.error('Lỗi khi tải sản phẩm');
     });
   }
 
-  getDisplayPrice(price: number | null | undefined): string {
+  getDisplayPrice(price: number | string | null | undefined): string {
     if (price == null) return '';
 
-    let value = price;
-    // nếu BE đang lưu 299.99 thì bỏ nhân 1000; nếu 299.99 = 299.990đ thì mở dòng dưới:
+    let value = typeof price === 'string' ? Number(price) : price;
+    if (Number.isNaN(value)) return '';
+
+    // nếu BE đang lưu 299.99 thì nhân 1000; nếu BE lưu thẳng VND (>=1000) thì giữ nguyên
     if (value < 1000) {
       value = Math.round(value * 1000);
     }
@@ -97,6 +103,16 @@ export class HomeComponent implements OnInit {
 
   trackByProductId(_: number, item: Product): number {
     return item.id;
+  }
+
+  getImageUrl(thumbnail: string | undefined | null): string {
+    if (!thumbnail) return '/assets/coza/images/no-image.png';
+    // nếu đã là đường dẫn tuyệt đối hoặc bắt đầu bằng http(s), trả về thẳng
+    if (thumbnail.startsWith('http') || thumbnail.startsWith('//')) return thumbnail;
+    // nếu bắt đầu bằng '/', giữ nguyên (dev server proxy sẽ điều hướng tới backend)
+    if (thumbnail.startsWith('/')) return thumbnail;
+    // mặc định: coi như relative path
+    return '/uploads/' + thumbnail;
   }
 
   protected readonly Number = Number;

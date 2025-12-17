@@ -7,7 +7,8 @@ import {ICON_EYE, ICON_EYE_CROSS} from '../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {RouterModule} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-register',
@@ -16,13 +17,14 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     SafeHtmlPipe,
     FormsModule,
     NgIf,
-    TranslatePipe
+    RouterModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   isHiddenPassword: boolean = true;
+  isShop: boolean = false;
 
   // Register payload used by template
   registerRequest: any = {
@@ -32,6 +34,7 @@ export class RegisterComponent {
     phone: '',
     email: ''
   };
+  shopName: string = '';
 
   constructor(
     private router: Router,
@@ -73,9 +76,18 @@ export class RegisterComponent {
       return;
     }
 
-    // Call register API. curl example uses ?isShop=false
-    this.authService.register(this.registerRequest, false).subscribe({
-      next: (res) => {
+    if (this.isShop && !this.shopName) {
+      this.toastr.error(this.translateService.instant('notification.notEmptyShopName') || 'Shop name is required');
+      return;
+    }
+
+    // build payload
+    const payload = { ...this.registerRequest } as any;
+    if (this.isShop) payload.shopName = this.shopName;
+
+    // Call register API. pass isShop flag as query param
+    this.authService.register(payload, this.isShop).subscribe({
+      next: (_res) => {
         this.toastr.success(this.translateService.instant('notification.registerSuccess') || 'Register success');
         // redirect to login
         this.router.navigate(['/login']).then();

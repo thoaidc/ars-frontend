@@ -35,6 +35,11 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
+  // navigate to login page (used in guest view)
+  goToLogin(): void {
+    this.router.navigate(['/login']).then();
+  }
+
   logout(){
     this.authService.logout();
     // redirect to client home after logout

@@ -73,7 +73,7 @@
 
 /* Left table */
 .cart-left {
-  padding: 16px 16px 8px;
+  padding: 28px 28px 16px; /* tăng padding trái/phải để nội dung không sát viền */
 }
 
 .cart-header-row {
@@ -199,7 +199,10 @@
 
 /* Summary right */
 .cart-summary {
-  padding: 16px 18px 18px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 22px 24px 24px;
 
   h2 {
     font-size: 18px;
@@ -376,4 +379,58 @@
       color: #666;
     }
   }
+}
+
+/* Increase spacing so content in cart isn't flush to the viewport edge */
+.wrap-table-shopping-cart {
+  padding: 20px 24px;
+  /* inner padding quanh bảng */
+  background: #fff;
+  /* nhẹ nền để nhìn rõ gutter */
+  border-radius: 12px;
+}
+
+.table-shopping-cart td,
+.table-shopping-cart th {
+  padding: 18px 20px;
+  /* more horizontal breathing room */
+  vertical-align: middle;
+}
+
+/* specifically add extra right padding on the last column (Total) */
+.table-shopping-cart .column-4 {
+  padding-right: 44px; /* a bit more space from the rightmost edge */
+  text-align: right;
+}
+
+/* nếu bảng cố định min-width gây overflow, cho phép cuộn nội dung với padding hiển thị */
+.wrap-table-shopping-cart { overflow-x: auto; }
+
+/* small screens: giảm padding nhưng vẫn giữ gutter */
+@media (max-width: 767px) {
+  .cart-left {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .cart-summary {
+    padding: 16px;
+  }
+  .wrap-table-shopping-cart { padding: 12px; }
+  .table-shopping-cart td, .table-shopping-cart th { padding: 12px 10px; }
+}
+
+/* keep existing cart-summary visual but ensure inner content has space from border */
+.bor10.p-lr-40.p-t-30.p-b-40.m-l-63.m-r-40.m-lr-0-xl.p-lr-15-sm.cart-summary {
+  /* don't change border - just ensure inner spacing already set via .cart-summary */
+  margin-left: 24px !important; /* đảm bảo có khoảng cách ổn giữa table và summary */
+}
+
+/* increase right padding on the price column in the table so numbers don't sit on the right edge */
+.table-shopping-cart .column-4 {
+  padding-right: 44px; /* a bit more space from the rightmost edge */
+}
+
+/* make sure wrapper has room on the right side (so table content isn't flush against summary border) */
+.wrap-table-shopping-cart {
+  padding-right: 40px; /* a bit more space on the right */
 }
