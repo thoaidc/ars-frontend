@@ -3,6 +3,8 @@ export const LOCALE = {
   EN: 'en'
 }
 
+export const X_DEVICE_ID_HEADER = 'X-Device-ID';
+export const X_DEVICE_ID_KEY = 'dvc-k';
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss';
 export const TODAY = 'global.today';
 export const LAST_DAY = 'global.yesterday';
