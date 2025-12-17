@@ -36,6 +36,18 @@ export const API_VOUCHER_PUBLIC = API_PUBLIC + '/vouchers';
 export const API_ROLES = API_USERS + '/roles';
 export const API_ROLES_PERMISSIONS_TREE = API_ROLES + '/authorities';
 
+// Report API constants
+export const API_REPORT = API_SECURE + '/reports';
+export const API_REPORT_REVENUE_DASHBOARD = API_REPORT + '/revenue-last-seven-day';
+export const API_REPORT_SALES_DASHBOARD = API_REPORT + '/sales-last-seven-day';
+
+// Payment API constants
+export const API_PAYMENT = API_SECURE + '/payments';
+export const API_PAYMENT_PUBLIC = API_PUBLIC + '/payments';
+
+// Balance API constants
+export const API_BALANCE = API_SECURE + '/balance';
+
 // Security gateway
 export const RATE_LIMITER_API = API_SECURE + '/admin/gateway/securities/rate-limiter';
 export const RATE_LIMITER_EXCLUDED_API = API_SECURE + '/admin/gateway/securities/rate-limiter/excluded';

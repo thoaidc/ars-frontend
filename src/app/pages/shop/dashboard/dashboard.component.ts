@@ -1,12 +1,138 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Chart, registerables} from 'chart.js';
+import {ReportService} from '../../../core/services/report.service';
+import {CountUpDirective} from '../../../shared/directives/count-up-number.directive';
+import {ICON_FINANCE} from '../../../shared/utils/icon';
+import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-shop-dashboard',
   standalone: true,
-  imports: [],
+  imports: [CountUpDirective, SafeHtmlPipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit, OnInit {
+  @ViewChild('revenueCanvas') revenueCanvas!: ElementRef;
+  @ViewChild('salesCanvas') salesCanvas!: ElementRef;
+  labels7Days: any;
+  revenueLast7DayData: number[] = [];
+  salesLast7DayData: number[] = [];
+  revenueToday: number = 0;
+  ordersToday: number = 0;
 
+  constructor(private reportService: ReportService) {
+    Chart.register(...registerables);
+  }
+
+  ngOnInit(): void {
+    this.getRevenueDashboardReport();
+    this.getSalesDashboardReport();
+  }
+
+  ngAfterViewInit() {
+    this.labels7Days = this.getRecentDates();
+    this.createRevenueChart();
+    this.createSalesChart();
+  }
+
+  getRevenueDashboardReport() {
+    this.reportService.getRevenueDashboardReport().subscribe(response => {
+      if (response && response.result) {
+        this.revenueLast7DayData = response.result.map(item => item.amount);
+      }
+    });
+  }
+
+  getSalesDashboardReport() {
+    this.reportService.getSalesDashboardReport().subscribe(response => {
+      if (response && response.result) {
+        this.salesLast7DayData = response.result.map(item => item.amount);
+      }
+    });
+  }
+
+  createSalesChart() {
+    const ctx = this.salesCanvas.nativeElement.getContext('2d');
+
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: this.labels7Days,
+          datasets: [{
+            data: this.revenueLast7DayData,
+            borderColor: '#00bcd4',
+            backgroundColor: 'rgba(0, 188, 212, 0.2)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#00bcd4'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {display: false}
+          },
+          scales: {
+            y: {beginAtZero: true}
+          }
+        }
+      });
+    }
+  }
+
+  createRevenueChart() {
+    const ctx = this.revenueCanvas.nativeElement.getContext('2d');
+    if (ctx) {
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: this.labels7Days,
+          datasets: [{
+            data: this.salesLast7DayData,
+            backgroundColor: '#4e73df',
+            hoverBackgroundColor: '#2e59d9',
+            borderColor: '#4e73df',
+            borderWidth: 1,
+            borderRadius: 5,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {display: false}
+          },
+          scales: {
+            x: {
+              grid: {display: false}
+            },
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: (value) => value
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  getRecentDates(): string[] {
+    const dates = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const formattedDate = `${d.getDate()}/${d.getMonth() + 1}`;
+      dates.push(formattedDate);
+    }
+    return dates;
+  }
+
+  protected readonly ICON_FINANCE = ICON_FINANCE;
 }

@@ -42,9 +42,12 @@ export const AuthExpiredInterceptorFn: HttpInterceptorFn = (request: HttpRequest
             doLogout();
             return throwError(() => error);
           }),
-          catchError(() => {
+          catchError((refreshError: HttpErrorResponse) => {
             // If refresh also fails -> logout
-            doLogout();
+            if (refreshError.status === 401) {
+              doLogout();
+            }
+
             return throwError(() => error);
           })
         );

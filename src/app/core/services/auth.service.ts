@@ -126,6 +126,10 @@ export class AuthService {
     const apiUrl = loginRequest ? loginAPI : userStatusAPI;
     const requestBody = loginRequest ? loginRequest: {};
 
+    if (apiUrl === userStatusAPI && !this.hasToken()) {
+      return of(null);
+    }
+
     return this.http.post<BaseResponse<Authentication>>(apiUrl, requestBody).pipe(
       map(response => {
         if (response.status && response.result) {

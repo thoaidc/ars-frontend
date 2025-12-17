@@ -23,6 +23,7 @@ import {provideLoadingBar} from '@ngx-loading-bar/core';
 import {provideLoadingBarRouter} from '@ngx-loading-bar/router';
 import {CustomHttpLoaderFactory} from './core/config/i18n.config';
 import {LOCALE} from './constants/common.constants';
+import {FingerprintInterceptorFn} from './core/interceptors/fingerprint.interceptor';
 
 /**
  * {@link provideHttpClient} configure HTTP Interceptors in Angular
@@ -73,6 +74,7 @@ export const appConfig: ApplicationConfig = {
       withFetch(), // To let HttpClient use Fetch API instead of XMLHttpRequest (XHR)
       withInterceptors([
         ApiInterceptorFn,
+        FingerprintInterceptorFn,
         AuthExpiredInterceptorFn
       ])
     )
