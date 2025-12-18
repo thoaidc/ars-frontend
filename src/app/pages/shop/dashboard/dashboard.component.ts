@@ -1,18 +1,19 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Chart, registerables} from 'chart.js';
 import {ReportService} from '../../../core/services/report.service';
 import {CountUpDirective} from '../../../shared/directives/count-up-number.directive';
 import {ICON_FINANCE} from '../../../shared/utils/icon';
-import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
+import {AuthService} from '../../../core/services/auth.service';
+import {StatisticType} from '../../../core/models/report.model';
 
 @Component({
   selector: 'app-shop-dashboard',
   standalone: true,
-  imports: [CountUpDirective, SafeHtmlPipe],
+  imports: [CountUpDirective],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent implements AfterViewInit, OnInit {
+export class DashboardComponent implements OnInit {
   @ViewChild('revenueCanvas') revenueCanvas!: ElementRef;
   @ViewChild('salesCanvas') salesCanvas!: ElementRef;
   labels7Days: any;
@@ -20,34 +21,42 @@ export class DashboardComponent implements AfterViewInit, OnInit {
   salesLast7DayData: number[] = [];
   revenueToday: number = 0;
   ordersToday: number = 0;
+  shopId: number = 0;
 
-  constructor(private reportService: ReportService) {
+  constructor(private reportService: ReportService, private authService: AuthService) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
-    this.getRevenueDashboardReport();
-    this.getSalesDashboardReport();
+    this.labels7Days = this.getRecentDates();
+    this.authService.subscribeAuthenticationState().subscribe(authentication => {
+      if (authentication) {
+        this.shopId = authentication.shopId || 0;
+        this.getRevenueDashboardReport();
+        this.getSalesDashboardReport();
+        this.getRevenueToday();
+      }
+    });
   }
 
-  ngAfterViewInit() {
-    this.labels7Days = this.getRecentDates();
-    this.createRevenueChart();
-    this.createSalesChart();
+  getRevenueToday() {
+    this.reportService.getRevenueToday(StatisticType.REVENUE, this.shopId).subscribe(response => this.revenueToday = response);
   }
 
   getRevenueDashboardReport() {
-    this.reportService.getRevenueDashboardReport().subscribe(response => {
+    this.reportService.getRevenueDashboardReport(StatisticType.REVENUE, this.shopId).subscribe(response => {
       if (response && response.result) {
         this.revenueLast7DayData = response.result.map(item => item.amount);
+        this.createRevenueChart();
       }
     });
   }
 
   getSalesDashboardReport() {
-    this.reportService.getSalesDashboardReport().subscribe(response => {
+    this.reportService.getSalesDashboardReport(StatisticType.SALES, this.shopId).subscribe(response => {
       if (response && response.result) {
         this.salesLast7DayData = response.result.map(item => item.amount);
+        this.createSalesChart();
       }
     });
   }
@@ -93,7 +102,7 @@ export class DashboardComponent implements AfterViewInit, OnInit {
         data: {
           labels: this.labels7Days,
           datasets: [{
-            data: this.salesLast7DayData,
+            data: this.revenueLast7DayData,
             backgroundColor: '#4e73df',
             hoverBackgroundColor: '#2e59d9',
             borderColor: '#4e73df',

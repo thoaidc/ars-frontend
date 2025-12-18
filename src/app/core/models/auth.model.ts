@@ -7,6 +7,8 @@ export interface LoginRequest {
 }
 
 export interface Authentication extends AuditingEntity {
+  shopId?: number;
+  shopName?: string;
   username: string;
   password: string;
   fullname: string;

@@ -15,6 +15,8 @@ import {PaymentService} from '../../../core/services/payment.service';
 import {BalanceService} from '../../../core/services/balance.service';
 import {ReportService} from '../../../core/services/report.service';
 import {PaymentHistoryDetailComponent} from './payment-history-detail/payment-history-detail.component';
+import {AuthService} from '../../../core/services/auth.service';
+import {BalanceType} from '../../../core/models/report.model';
 
 @Component({
   selector: 'app-shop-finance',
@@ -39,6 +41,7 @@ export class FinanceComponent implements OnInit {
   profit: number = 0;
   platformFee: number = 0;
   paymentHistories: PaymentHistory[] = [];
+  shopId: number = 0;
 
   financesFilter: BaseFilterRequest = {
     page: 1,
@@ -53,13 +56,24 @@ export class FinanceComponent implements OnInit {
     private reportService: ReportService,
     private paymentService: PaymentService,
     private balanceService: BalanceService,
+    private authService: AuthService,
     private modalService: NgbModal,
     private toast: ToastrService
   ) {}
 
   ngOnInit() {
     this.onSearch();
-    this.balanceService.getShopBalance().subscribe(response => {
+    this.authService.subscribeAuthenticationState().subscribe(authentication => {
+      if (authentication) {
+        this.shopId = authentication.shopId || 0;
+      }
+    });
+
+    this.getBalance();
+  }
+
+  getBalance() {
+    this.balanceService.getBalance(BalanceType.SHOP).subscribe(response => {
       this.balance = response || 0;
     });
   }
