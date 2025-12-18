@@ -1,1 +1,153 @@
-<p>payment-history-detail works!</p>
+<div class="modal-header">
+  <h5 class="modal-title">{{ 'Thông tin chi tiết giao dịch' }}</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body pb-4 pt-1" style="max-height: 75vh; overflow-y: auto">
+  <div class="tab-pane fade show active">
+    <div class="d-flex justify-content-between align-items-start">
+      <div class="flex-grow-1">
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-code" class="title-info">Mã giao dịch</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-code"
+                class="form-control"
+                [value]="paymentHistoryDetail.transId || ''"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="sender-name" class="title-info">Người thực hiện</label>
+            <div class="input-text-custom">
+              <input
+                id="sender-name"
+                class="form-control"
+                [value]="paymentHistoryDetail.userId"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-type" class="title-info">Loại giao dịch</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-type"
+                class="form-control"
+                [value]="paymentHistoryDetail.type"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-status" class="title-info">Trạng thái giao dịch</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-status"
+                class="form-control"
+                [value]="paymentHistoryDetail.status"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-amount" class="title-info">Giá trị</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-amount"
+                class="form-control"
+                [value]="paymentHistoryDetail.amount"
+                type="number"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-description" class="title-info">Mô tả</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-description"
+                class="form-control"
+                [value]="paymentHistoryDetail.description"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0">
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-method" class="title-info">Phương thức thanh toán</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-method"
+                class="form-control"
+                [value]="paymentHistoryDetail.paymentMethod"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+
+          <div class="item-search mt-0 w-50 p-2">
+            <label for="payment-time" class="title-info">Thời gian giao dịch</label>
+            <div class="input-text-custom">
+              <input
+                id="payment-time"
+                class="form-control"
+                [value]="paymentHistoryDetail.paymentTime || ''"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-space-between mb-0" *ngIf="paymentHistoryDetail.error">
+          <div class="item-search mt-0 w-100 p-2">
+            <label for="payment-error" class="title-info">Chi tiết lỗi</label>
+            <div class="input-text-custom">
+              <textarea
+                id="payment-error"
+                class="form-control"
+                [value]="paymentHistoryDetail.error"
+                type="text"
+                autocomplete="off"
+                [disabled]="true"
+                rows="5"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer border-top-0" *ngIf="true">
+  <button class="cancel-button-dialog" (click)="dismiss()">Đóng</button>
+</div>

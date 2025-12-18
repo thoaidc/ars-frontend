@@ -88,10 +88,11 @@
               <th>{{ 'global.no' | translate }}</th>
               <th>{{ 'text.transactionCode' | translate }}</th>
               <th>{{ 'text.userSend' | translate }}</th>
-              <th>{{ 'text.reference' | translate }}</th>
               <th>{{ 'text.paymentType' | translate }}</th>
-              <th>{{ 'text.paymentStatus' | translate }}</th>
+              <th>{{ 'text.paymentAmount' | translate }}</th>
               <th>{{ 'text.description' | translate }}</th>
+              <th>{{ 'text.paymentStatus' | translate }}</th>
+              <th>{{ 'text.paymentMethod' | translate }}</th>
               <th>{{ 'text.paymentTime' | translate }}</th>
             </tr>
             </thead>
@@ -99,12 +100,13 @@
             <ng-container *ngFor="let paymentHistory of paymentHistories; index as i">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center" (click)="view(paymentHistory.id)">{{ (financesFilter.page - 1) * financesFilter.size + i + 1 }}</td>
-                <td class="break-word-table text-left" (click)="view(paymentHistory.id)">{{ paymentHistory.transId }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.username }}</td>
-                <td class="break-word-table text-right" (click)="view(paymentHistory.id)">{{ paymentHistory.refCode }}</td>
+                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.transId }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.userId }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.type }}</td>
+                <td class="break-word-table text-right" (click)="view(paymentHistory.id)">{{ paymentHistory.amount }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.description }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.status }}</td>
-                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.description }}</td>
+                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.paymentMethod }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.paymentTime }}</td>
               </tr>
             </ng-container>

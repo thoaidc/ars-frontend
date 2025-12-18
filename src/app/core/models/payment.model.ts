@@ -1,19 +1,39 @@
 import {BaseFilterRequest} from './request.model';
+import {AuditingEntity} from './common.model';
 
 export interface PaymentHistoriesFilterRequest extends BaseFilterRequest {
-
+  shopId?: number;
+  userId?: number;
+  transId?: string;
 }
 
-export interface PaymentHistory {
-  id: number;
+export interface PaymentHistory extends AuditingEntity {
   type: number;
-  transId: string;
-  refId: number;
-  refCode: string;
   userId: number;
-  username: string;
-  paymentTime: string;
+  receiverId: number;
+  transId: string;
+  // receiverName: string;
+  // username: string;
   amount: number;
   status: string;
   description: string;
+  paymentMethod: string;
+  paymentTime: string;
+}
+
+export interface PaymentHistoryDetail extends PaymentHistory {
+  error?: string;
+}
+
+export interface PaymentInfo {
+  accountNumber: string;
+  accountName: string;
+  amount: number;
+  description: string;
+  orderCode: number;
+  currency: string;
+  paymentLinkId: string;
+  expiredAt: number;
+  checkoutUrl: string;
+  qrCode: string;
 }
