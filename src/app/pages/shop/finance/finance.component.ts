@@ -62,14 +62,12 @@ export class FinanceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.onSearch();
     this.authService.subscribeAuthenticationState().subscribe(authentication => {
       if (authentication) {
         this.shopId = authentication.shopId || 0;
+        this.onSearch();
       }
     });
-
-    this.getBalance();
   }
 
   getBalance() {
@@ -80,6 +78,7 @@ export class FinanceComponent implements OnInit {
 
   onSearch() {
     this.financesFilter.page = 1;
+    this.getBalance();
     this.getFinanceData();
     this.getPaymentHistoriesWithPaging();
   }
