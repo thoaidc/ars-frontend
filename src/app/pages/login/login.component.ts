@@ -7,6 +7,7 @@ import {ICON_EYE, ICON_EYE_CROSS} from '../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../shared/pipes/safe-html.pipe';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
+import {RouterModule} from '@angular/router';
 import {LoginRequest} from '../../core/models/auth.model';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 
@@ -17,6 +18,7 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
     SafeHtmlPipe,
     FormsModule,
     NgIf,
+    RouterModule,
     TranslatePipe
   ],
   templateUrl: './login.component.html',

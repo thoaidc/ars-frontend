@@ -55,7 +55,9 @@
               "src/assets/coza/css/main.css",
 
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+
+              "src/assets/scss/force-system-fonts.scss"
             ],
 
             "scripts": [

@@ -1,0 +1,36 @@
+/* Force system fonts for Vietnamese compatibility and override template fonts when necessary.
+   This file is intentionally loaded last so it can override other CSS. */
+
+:root {
+  --system-ui-font: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+/* Very strong global override: force system font for all elements */
+* {
+  font-family: var(--system-ui-font), sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Keep icon fonts working (restore their font-family) */
+.fa, .fa * { font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome, sans-serif !important; font-weight: 900 !important; }
+.zmdi, .zmdi * { font-family: 'Material-Design-Iconic-Font', sans-serif !important; }
+.material-icons, .material-icons * { font-family: 'Material Icons', sans-serif !important; }
+.lnr, .lnr * { font-family: 'Linearicons Free', sans-serif !important; }
+
+/* Small utility: headings a bit bolder but still system font */
+h1, h2, h3, h4, h5, h6 { font-weight: 600 !important; }
+
+/* Prevent inputs/buttons from inheriting icon fonts */
+button, input, textarea, select { font-family: var(--system-ui-font), sans-serif !important; }
+
+/* Specific template classes that tend to set different fonts: override them */
+.stext-101, .stext-102, .stext-103, .stext-104, .stext-105, .stext-107, .mtext-105, .mtext-106 {
+  font-family: var(--system-ui-font), sans-serif !important;
+}
+
+/* Ensure price numbers align and use system font */
+.price, .mtext-110, .stext-110 { font-family: var(--system-ui-font), sans-serif !important; }
+
+/* Do not change icon-like elements that explicitly need other fonts */
+/* If some third-party widgets require their own fonts, restore them explicitly here as needed. */

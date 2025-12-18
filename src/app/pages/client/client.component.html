@@ -101,22 +101,31 @@
       <div class="col-sm-6 col-lg-3 p-b-50">
         <h4 class="stext-301 cl0 p-b-30">Danh mục</h4>
 
-        <ul>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Nữ</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Nam</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Giày</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Đồng hồ</a></li>
+        <!-- make ul unstyled and anchors block to align columns consistently -->
+        <ul class="list-unstyled">
+          <ng-container *ngIf="categories?.length; else fallbackCategories">
+            <li *ngFor="let c of categories" class="p-b-10">
+              <a [routerLink]="['/client/shop']" [queryParams]="{category: c.id}"
+                 class="stext-107 cl7 hov-cl1 trans-04 d-block">{{ c.name }}</a>
+            </li>
+          </ng-container>
+          <ng-template #fallbackCategories>
+            <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Nữ</a></li>
+            <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Nam</a></li>
+            <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Giày</a></li>
+            <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Đồng hồ</a></li>
+          </ng-template>
         </ul>
       </div>
 
       <div class="col-sm-6 col-lg-3 p-b-50">
         <h4 class="stext-301 cl0 p-b-30">Trợ giúp</h4>
 
-        <ul>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Tra cứu đơn hàng</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Hoàn trả</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Giao hàng</a></li>
-          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04">Câu hỏi thường gặp</a></li>
+        <ul class="list-unstyled">
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Tra cứu đơn hàng</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Hoàn trả</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Giao hàng</a></li>
+          <li class="p-b-10"><a href="javascript:void(0)" class="stext-107 cl7 hov-cl1 trans-04 d-block">Câu hỏi thường gặp</a></li>
         </ul>
       </div>
 

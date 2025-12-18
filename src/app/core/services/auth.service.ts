@@ -178,9 +178,12 @@ export class AuthService {
   /**
    * Register a new user (public API)
    * @param registerRequest object with username,password,fullname,phone,email
+   * @param isShop whether registering as a shop (appends ?isShop=true|false)
    */
-  register(registerRequest: any): Observable<BaseResponse<any>> {
-    const registerApi = this.applicationConfigService.getEndpointFor(API_USERS_REGISTER);
+  register(registerRequest: any, isShop = false): Observable<BaseResponse<any>> {
+    // Backend provides separate endpoint for shop registration
+    const endpointPath = isShop ? `${API_USERS_REGISTER}/shop` : API_USERS_REGISTER;
+    const registerApi = this.applicationConfigService.getEndpointFor(endpointPath);
     return this.http.post<BaseResponse<any>>(registerApi, registerRequest).pipe(
       catchError((err) => {
         // rethrow error to be handled by caller

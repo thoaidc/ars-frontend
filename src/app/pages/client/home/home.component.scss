@@ -3,3 +3,44 @@
 }
 
 /* Nếu cần custom nhẹ khoảng cách cho riêng Home thì thêm dưới đây */
+
+.product-img-frame {
+  width: 100%;
+  padding-top: 100%; /* 1:1 aspect ratio */
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f6f6f6;
+}
+
+.product-img-frame img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+
+/* ensure the product list aligns nicely */
+.block2 {
+  /* removed large fixed min-height to avoid big gaps */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* small gap between image and text */
+}
+
+.block2-pic {
+  margin: 0; /* keep img frame snug to top */
+}
+
+.block2-txt {
+  margin-top: 4px; /* small breathing space */
+  padding-bottom: 8px;
+}
+
+.block2-txt-child1 a {
+  display: inline-block;
+  margin-bottom: 6px;
+}

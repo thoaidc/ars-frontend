@@ -238,29 +238,32 @@
     </div>
 
     <div class="row isotope-grid">
-      <!-- 1 sản phẩm mẫu, các sản phẩm còn lại giữ nguyên cấu trúc,
-           chỉ sửa href="product-detail.html" thành routerLink -->
-      <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+      <!-- Products from API -->
+      <div *ngFor="let p of trendyProducts; trackBy: trackByProductId" class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">
         <div class="block2">
           <div class="block2-pic hov-img0">
-            <img src="/assets/coza/images/product-01.jpg" alt="IMG-PRODUCT">
+            <!-- fixed frame for image -->
+            <div class="product-img-frame">
+              <img [src]="getImageUrl(p.thumbnailUrl)" alt="IMG-PRODUCT" />
+            </div>
           </div>
 
           <div class="block2-txt flex-w flex-t p-t-14">
             <div class="block2-txt-child1 flex-col-l ">
-              <a routerLink="/client/product/1"
+              <a [routerLink]="['/client/product', p.id]"
                  class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                Esprit Ruffle Shirt
+                {{ p.name }}
               </a>
 
               <span class="stext-105 cl3">
-                {{ 16.64 | vndCurrency:23000 }}
+                {{ getDisplayPrice(p.price) }}
               </span>
             </div>
 
             <div class="block2-txt-child2 flex-r p-t-3">
               <a href="javascript:void(0)"
-                 class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                 class="btn-addwish-b2 dis-block pos-relative js-addwish-b2"
+                 (click)="addToCart(p)">
                 <img class="icon-heart1 dis-block trans-04"
                      src="/assets/coza/images/icons/icon-heart-01.png" alt="ICON">
                 <img class="icon-heart2 dis-block trans-04 ab-t-l"
@@ -270,13 +273,6 @@
           </div>
         </div>
       </div>
-
-      <!-- các block sản phẩm còn lại:
-           - giữ nguyên HTML
-           - chỉ thay <a href="product-detail.html"...>
-             thành <a routerLink="/client/product/1"...> hoặc id demo khác -->
-
-      <!-- ... copy toàn bộ các block còn lại và sửa tương tự ... -->
 
     </div>
 
