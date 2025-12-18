@@ -84,13 +84,6 @@ export class AuthService {
     return this.authenticationState.asObservable();
   }
 
-  /**
-   * Observable helper to get the current username (or null) and be notified on changes
-   */
-  getUsername(): Observable<string | null> {
-    return this.subscribeAuthenticationState().pipe(map(auth => auth?.username ?? null));
-  }
-
   refreshToken(): Observable<string | null> {
     const refreshTokenAPI = this.applicationConfigService.getEndpointFor(API_USERS_REFRESH);
     return this.http.post<BaseResponse<string>>(refreshTokenAPI, {}).pipe(
