@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
@@ -6,20 +6,22 @@ import { ProductService } from '../../../core/services/product.service';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { FormsModule } from '@angular/forms';
+import {Product} from '../../../core/models/product.model';
 
 @Component({
   standalone: true,
   selector: 'app-product-detail',
   imports: [CommonModule, VndCurrencyPipe, RouterModule, FormsModule],
   templateUrl: './product-detail.component.html',
-  styleUrls: []
+  styleUrls: ['product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit, AfterViewInit {
-  productId: string | null = null;
-  product: any = null;
-
-  // review form state kept as internal vars
+  productId: number = 0;
+  product!: Product;
   reviewRating = 5;
+  editingOptions: boolean = true;
+  imagePreview: any;
+  @ViewChild('imageContainer') imageContainer!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,126 +31,108 @@ export class ProductDetailComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // read product id from route param
-    this.productId = this.route.snapshot.paramMap.get('id');
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadProduct();
   }
 
   loadProduct(): void {
-    if (!this.productId) return;
-    const id = Number(this.productId);
-    if (isNaN(id)) return;
-    this.productService.getById(id).subscribe((p: any) => {
-      // normalize product shape for template
-      this.product = p ?? {
-        id,
-        name: 'Sản phẩm mẫu',
-        price: 587900,
-        description: 'Mô tả sản phẩm mẫu',
-        shortDescription: 'Mô tả ngắn',
-        images: ['/assets/coza/images/product-detail-01.jpg'],
-        thumbnailUrl: '/assets/coza/images/product-detail-01.jpg',
-        shop: { name: 'Coza Shop', location: 'Hà Nội', phone: '' },
-        reviews: [],
-        customSelection: { eyeColor: '', hairColor: '', hairStyle: '' }
-      };
-      // ensure arrays exist
-      this.product.reviews = this.product.reviews || [];
-      this.product.images = this.product.images || [];
-      this.product.customSelection = this.product.customSelection || { eyeColor: '', hairColor: '', hairStyle: '' };
+    this.productService.getById(this.productId).subscribe(response => {
+      if (response) {
+        this.product = response;
+      }
     });
-  }
-
-  // helpers to avoid template type errors
-  getDescription(): string {
-    return this.product?.shortDescription || this.product?.description || '';
-  }
-
-  getReviews(): any[] {
-    return this.product?.reviews || [];
-  }
-
-  getShop(): any {
-    return this.product?.shop || { name: 'Coza Shop', location: 'Địa chỉ cửa hàng', phone: '' };
-  }
-
-  getWeight(): string {
-    return this.product?.weight ?? '0.0';
-  }
-
-  getDimensions(): string {
-    return this.product?.dimensions ?? 'N/A';
-  }
-
-  getMaterials(): string {
-    return this.product?.materials ?? 'N/A';
-  }
-
-  getColors(): string {
-    try { return (this.product?.colors && this.product.colors.join(', ')) || 'N/A'; } catch { return 'N/A'; }
-  }
-
-  getStars(n: number): number[] {
-    return new Array(Math.max(0, Math.floor(n || 0)));
-  }
-
-  onCustomSelect(field: string, value: string): void {
-    if (!this.product) return;
-    this.product.customSelection = this.product.customSelection || {};
-    (this.product.customSelection as any)[field] = value;
-  }
-
-  addToCart(p?: any): void {
-    const prod = p || this.product;
-    if (!prod) return;
-    // product.price may be string in model; parse to number first
-    const priceNum = parseFloat(prod.price as unknown as string) || 0;
-    const vndPrice = Math.round((isNaN(priceNum) ? 0 : priceNum) * 1); // assume price already in VND in template usage
-    const thumb = prod.thumbnailUrl ?? (prod.images && prod.images.length ? prod.images[0] : undefined);
-    this.cartService.addItem({ productId: (prod as any).id ?? 0, name: prod.name ?? 'Product', price: vndPrice, thumbnailUrl: thumb }, 1);
-    // navigate to cart to show user feedback
-    this.router.navigate(['/client/cart']);
-  }
-
-  buyNow(p?: any): void {
-    const prod = p || this.product;
-    if (!prod) return;
-    // add to cart and go to checkout
-    this.addToCart(prod);
-    this.router.navigate(['/client/checkout']);
-  }
-
-  setRating(n: number): void {
-    this.reviewRating = n;
-  }
-
-  submitReview(ev?: Event): void {
-    ev?.preventDefault();
-    const form = ev?.target as HTMLFormElement | null;
-    let name = '';
-    let email = '';
-    let comment = '';
-    if (form) {
-      const fd = new FormData(form);
-      name = (fd.get('name') as string) || '';
-      email = (fd.get('email') as string) || '';
-      comment = (fd.get('review') as string) || '';
-    }
-    if (!name || !email || !comment) return;
-    const newReview = { name, avatar: '/assets/coza/images/avatar-01.jpg', rating: this.reviewRating, comment, email, createdAt: new Date() };
-    this.product.reviews = this.product.reviews || [];
-    this.product.reviews.unshift(newReview);
-    // clear form inputs via resetting the form element
-    if (form) form.reset();
-    this.reviewRating = 5;
   }
 
   ngAfterViewInit(): void {
     // ensure third-party plugins (slick, select2, magnificPopup...) are initialized
     try {
       (window as any).initCozaPlugins && (window as any).initCozaPlugins();
-    } catch (e) {
-      // ignore
+    } catch (e) {}
+
+    this.test();
+  }
+
+  productImages: string[] = [
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png',
+    'assets/images/product/main-1.png'
+  ];
+
+  selectedImage: string = this.productImages[0];
+  eyeColors: string[] = this.productImages;
+  selectedEye: string = this.eyeColors[0];
+  hairStyles: string[] = this.productImages;
+  selectedHair: number = 0;
+
+  changeImage(imageUrl: string) {
+    this.selectedImage = imageUrl;
+  }
+
+  // Thêm vào trong class ProductComponent
+  reviews = [
+    {
+      rating: 5,
+      title: 'Fast & Smooth!',
+      comment: 'Order arrived quick and the shirt feels quality. Nice print, looks just like the pics. ?',
+      initial: 'M',
+      date: 'Mon Dec 15 2025'
+    },
+    {
+      rating: 4,
+      title: 'Super Cute And Comfy!',
+      comment: 'Love this shirt! Fits perfectly and the design is adorable. Got compliments already!',
+      initial: 'E',
+      date: 'Mon Dec 15 2025'
+    },
+    {
+      rating: 4,
+      title: 'Fast Shipping!',
+      comment: 'Got my order quick and it looks exactly like the pics. Good quality for the price, will buy again.',
+      initial: 'JM',
+      date: 'Sat Dec 13 2025'
     }
+  ];
+
+
+  async mergeAndScaleImages(urls: string[]): Promise<string> {
+    const loadImages = urls.map(url => {
+      return new Promise<HTMLImageElement>((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = url;
+      });
+    });
+
+    const container = this.imageContainer.nativeElement;
+    const targetWidth = container.clientWidth;
+    const targetHeight = targetWidth + 1;
+    const images = await Promise.all(loadImages);
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    const ctx = canvas.getContext('2d');
+
+    if (!ctx) {
+      throw new Error("Could not get canvas context");
+    }
+
+    images.forEach(img => {
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+    });
+
+    return canvas.toDataURL("image/png");
+  }
+
+  test() {
+    const urls = ['assets/images/blouses/blouse1.webp', 'assets/images/body/female-body.png'];
+    this.mergeAndScaleImages(urls).then(base64 => {
+      this.imagePreview = base64;
+    });
   }
 }
