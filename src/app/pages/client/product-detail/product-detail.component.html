@@ -2,111 +2,105 @@
   <div class="bread-crumb pt-4 flex-w p-l-25 p-r-15 p-lr-0-lg">
     <a routerLink="/client/home" class="stext-109 cl8 hov-cl1 trans-04">Trang chủ<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i></a>
     <a routerLink="/client/shop" class="stext-109 cl8 hov-cl1 trans-04">Sản phẩm<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i></a>
-    <span class="stext-109 cl4">{{ product?.name }}</span>
+    <span class="stext-109 cl4">{{ product ? product.name : '' }}</span>
   </div>
 </div>
 
 <section class="sec-product-detail bg0 p-b-60">
-  <div class="container">
-    <div class="container mt-5">
-      <div class="row gx-3">
-        <div class="col-md-7">
-          <div class="d-flex align-items-start justify-content-between">
-            <div class="w-25 d-flex flex-column justify-content-start gap-2 thumb-scroll">
-              <div *ngFor="let img of productImages"
-                   (click)="changeImage(img)"
-                   [class.active-thumb]="selectedImage === img"
-                   class="thumb-item rounded clickable">
-                <img [src]="img" class="img-fluid" alt="thumbnail">
-              </div>
-            </div>
-
-            <div class="w-100 d-flex align-items-start mb-3 rounded px-3 text-center">
-              <img *ngIf="!editingOptions" [src]="selectedImage" class="img-fluid main-image" alt="">
-              <div #imageContainer class="w-100 ratio-1x1">
-                <img *ngIf="editingOptions" [src]="imagePreview" class="img-fluid w-100 main-image" alt="">
-              </div>
+  <div class="container mt-5">
+    <div class="row gx-3">
+      <div class="col-md-7">
+        <div class="d-flex align-items-start justify-content-between">
+          <div class="w-25 d-flex flex-column justify-content-start gap-2 thumb-scroll" *ngIf="product && product.images">
+            <div *ngFor="let productImage of product.images"
+                 (click)="changeImage(productImage.image)"
+                 [class.active-thumb]="selectedImage === productImage.image"
+                 class="thumb-item rounded clickable">
+              <img [src]="productImage.image" class="img-fluid" alt="thumbnail">
             </div>
           </div>
 
-          <div class="mt-5 pe-3">
-            <h3 class="fw-bold mb-4">Reviews</h3>
-
-            <div class="d-flex align-items-center mb-4">
-              <i class="bi bi-star-fill text-warning fs-2 me-2"></i>
-              <span class="fs-2 fw-bold me-2">4.6</span>
-              <span class="text-muted fs-5">/ 5.0</span>
-              <span class="ms-3 text-decoration-underline fw-bold">159 Reviews</span>
-            </div>
-            <hr>
-
-            <div *ngFor="let review of reviews" class="mb-4 pb-3 border-bottom">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <div class="text-warning">
-                  <i *ngFor="let s of [1,2,3,4,5]"
-                     class="bi"
-                     [ngClass]="s <= review.rating ? 'bi-star-fill' : 'bi-star text-secondary'"></i>
-                </div>
-                <div class="text-muted small d-flex align-items-center">
-                  <span class="avatar-circle me-2">{{ review.initial }}</span>
-                  {{ review.date }}
-                </div>
-              </div>
-
-              <h6 class="fw-bold">{{ review.title }}</h6>
-              <p class="text-secondary mb-0">{{ review.comment }}</p>
+          <div class="w-100 d-flex align-items-start mb-3 rounded px-3 text-center">
+            <div #imageContainer class="w-100 ratio-1x1">
+              <img [src]="editingOptions ? imagePreview : selectedImage" class="img-fluid w-100 main-image" alt="">
             </div>
           </div>
         </div>
 
-        <div class="col-md-5">
-          <h2 class="fw-bold fs-5">Nurse Life Pretty Doll Nurse Personalized Shirt</h2>
-          <div class="d-flex align-items-center mb-3">
-            <span class="fs-3 fw-bold text-success me-2">{{ product?.price | vndCurrency }}</span>
-            <span class="text-decoration-line-through text-muted me-2">{{ product?.price | vndCurrency }}</span>
-            <span class="badge bg-danger">65% OFF</span>
-          </div>
+        <div class="mt-5 pe-3">
+          <h3 class="fw-bold mb-4">Reviews</h3>
 
-          <p style="max-height: 116px; overflow: hidden">
-            urse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse P
-            urse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse P
-            urse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse P
-            urse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse Purse Life Pretty Doll Nurse P
-          </p>
+          <div class="d-flex align-items-center mb-4">
+            <i class="bi bi-star-fill text-warning fs-2 me-2"></i>
+            <span class="fs-2 fw-bold me-2">4.6</span>
+            <span class="text-muted fs-5">/ 5.0</span>
+            <span class="ms-3 text-decoration-underline fw-bold">159 Reviews</span>
+          </div>
           <hr>
 
-          <div class="mb-4">
-            <h6 class="form-label fw-bold">Woman's Eye Color</h6>
+          <div *ngFor="let review of reviews" class="mb-4 pb-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="text-warning">
+                <i *ngFor="let s of [1,2,3,4,5]"
+                   class="bi"
+                   [ngClass]="s <= review.rating ? 'bi-star-fill' : 'bi-star text-secondary'"></i>
+              </div>
+              <div class="text-muted small d-flex align-items-center">
+                <span class="avatar-circle me-2">{{ review.initial }}</span>
+                {{ review.date }}
+              </div>
+            </div>
+
+            <h6 class="fw-bold">{{ review.title }}</h6>
+            <p class="text-secondary mb-0">{{ review.comment }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-5" *ngIf="product">
+        <h2 class="fw-bold fs-5">{{ product.name }}</h2>
+        <div class="d-flex align-items-center mb-3">
+          <span class="fs-3 fw-bold text-success me-2">{{ product.price | vndCurrency }}</span>
+          <span class="text-decoration-line-through text-muted me-2">{{ product.price | vndCurrency }}</span>
+          <span class="badge bg-danger">65% OFF</span>
+        </div>
+
+        <p style="max-height: 116px; overflow: hidden">{{ product.description }}</p>
+        <hr>
+
+        <div class="mb-4" *ngIf="product && product.productOptions">
+          <div class="mb-3" *ngFor="let productOption of product.productOptions">
+            <h6 class="form-label fw-bold">{{ productOption.name }}</h6>
             <div class="d-flex flex-wrap" style="margin: 0 -0.2rem">
-              <div *ngFor="let eye of eyeColors"
-                   (click)="selectedEye = eye"
-                   [class.active-option]="selectedEye === eye"
+              <div *ngFor="let value of productOption.values"
+                   (click)="selectOptionValue(productOption.id, value)"
+                   [class.active-option]="selectedOptions[productOption.id] === value"
                    class="color-circle clickable"
                    style="width: 16.666666%; padding: 1%"
               >
-                <img [src]="eye" class="w-100" alt="Product Image">
+                <img [src]="value.image" class="w-100" style="border: 1px solid #eee" alt="Product Image">
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="d-flex justify-content-between align-items-center gap-2 pt-3">
-            <button class="btn w-50 rounded-3 btn-outline-primary py-3 fw-bold" type="button">Thêm vào giỏ hàng</button>
-            <button class="btn w-50 rounded-3 btn-danger py-3 fw-bold" type="button">Mua ngay</button>
+        <div class="d-flex justify-content-between align-items-center gap-2 pt-3">
+          <button class="btn w-50 rounded-3 btn-outline-primary py-3 fw-bold" type="button">Thêm vào giỏ hàng</button>
+          <button class="btn w-50 rounded-3 btn-danger py-3 fw-bold" type="button">Mua ngay</button>
+        </div>
+
+        <hr class="mt-5 mb-4">
+
+        <div class="d-flex mb-5 align-items-center bg-light p-4 rounded shadow-sm">
+          <div class="w-25 shop-logo-container position-relative">
+            <img src="assets/images/default_user.png" alt="Shop Logo" class="rounded-circle img-fluid">
           </div>
-
-          <hr class="mt-5 mb-4">
-
-          <div class="d-flex mb-5 align-items-center bg-light p-4 rounded shadow-sm">
-            <div class="w-25 shop-logo-container position-relative">
-              <img src="assets/images/default_user.png" alt="Shop Logo" class="rounded-circle img-fluid">
-            </div>
-            <div class="col-auto">
-              <h5 class="fw-bold mb-1">Pretty Doll Nurse Store</h5>
-              <p class="text-muted small mb-2">Đồng hành cùng ngành Y</p>
-              <div class="d-flex gap-3">
-                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chat-dots me-1"></i> Chat ngay</button>
-                <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-shop me-1"></i> Xem shop</button>
-              </div>
+          <div class="col-auto">
+            <h5 class="fw-bold mb-1">Pretty Doll Nurse Store</h5>
+            <p class="text-muted small mb-2">Chuyên thiết kế Logo thương hiệu</p>
+            <div class="d-flex gap-3">
+              <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chat-dots me-1"></i> Chat ngay</button>
+              <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-shop me-1"></i> Xem shop</button>
             </div>
           </div>
         </div>

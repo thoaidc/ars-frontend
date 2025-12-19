@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
@@ -6,7 +6,7 @@ import { ProductService } from '../../../core/services/product.service';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { FormsModule } from '@angular/forms';
-import {Product} from '../../../core/models/product.model';
+import {Product, ProductOptionValueDTO, SelectedOptions} from '../../../core/models/product.model';
 
 @Component({
   standalone: true,
@@ -15,64 +15,16 @@ import {Product} from '../../../core/models/product.model';
   templateUrl: './product-detail.component.html',
   styleUrls: ['product-detail.component.scss']
 })
-export class ProductDetailComponent implements OnInit, AfterViewInit {
+export class ProductDetailComponent implements OnInit {
   productId: number = 0;
   product!: Product;
   reviewRating = 5;
-  editingOptions: boolean = true;
-  imagePreview: any;
+  editingOptions: boolean = false;
+  imagePreview: string = '';
+  selectedImage: string = '';
+  selectedOptions: SelectedOptions = {};
   @ViewChild('imageContainer') imageContainer!: ElementRef;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private cartService: CartService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loadProduct();
-  }
-
-  loadProduct(): void {
-    this.productService.getById(this.productId).subscribe(response => {
-      if (response) {
-        this.product = response;
-      }
-    });
-  }
-
-  ngAfterViewInit(): void {
-    // ensure third-party plugins (slick, select2, magnificPopup...) are initialized
-    try {
-      (window as any).initCozaPlugins && (window as any).initCozaPlugins();
-    } catch (e) {}
-
-    this.test();
-  }
-
-  productImages: string[] = [
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png',
-    'assets/images/product/main-1.png'
-  ];
-
-  selectedImage: string = this.productImages[0];
-  eyeColors: string[] = this.productImages;
-  selectedEye: string = this.eyeColors[0];
-  hairStyles: string[] = this.productImages;
-  selectedHair: number = 0;
-
-  changeImage(imageUrl: string) {
-    this.selectedImage = imageUrl;
-  }
-
-  // Thêm vào trong class ProductComponent
   reviews = [
     {
       rating: 5,
@@ -97,9 +49,68 @@ export class ProductDetailComponent implements OnInit, AfterViewInit {
     }
   ];
 
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
-  async mergeAndScaleImages(urls: string[]): Promise<string> {
-    const loadImages = urls.map(url => {
+  ngOnInit(): void {
+    this.productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadProduct();
+  }
+
+  loadProduct(): void {
+    this.productService.getById(this.productId).subscribe(response => {
+      if (response) {
+        this.product = response;
+        this.selectedImage = response.thumbnailUrl;
+        this.initSelectedOptions();
+      }
+    });
+  }
+
+  changeImage(imageUrl: string) {
+    this.selectedImage = imageUrl;
+  }
+
+  initSelectedOptions() {
+    const initialSelectedOptions: Record<number, ProductOptionValueDTO> = {};
+
+    if (this.product.productOptions && this.product.productOptions.length > 0) {
+      this.product.productOptions.forEach((option) => {
+        if (option.values && option.values.length > 0) {
+          initialSelectedOptions[option.id] = option.values[0];
+        }
+      });
+    }
+
+    this.selectedOptions = initialSelectedOptions;
+    const hasAnySelection = Object.keys(this.selectedOptions).length > 0;
+
+    if (hasAnySelection) {
+      this.mergeAndScaleImages().then(imageCanvas => this.imagePreview = imageCanvas);
+    }
+  }
+
+  selectOptionValue = (optionId: number, value: ProductOptionValueDTO) => {
+    this.editingOptions = true;
+
+    this.selectedOptions = {
+      ...this.selectedOptions,
+      [optionId]: value
+    };
+
+    this.mergeAndScaleImages().then(imageCanvas => this.imagePreview = imageCanvas);
+  };
+
+  async mergeAndScaleImages(): Promise<string> {
+    const selectedImages = Object.values(this.selectedOptions)
+      .map(value => value.image)
+      .filter(img => !!img);
+
+    const loadImages = selectedImages.map(url => {
       return new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -127,12 +138,5 @@ export class ProductDetailComponent implements OnInit, AfterViewInit {
     });
 
     return canvas.toDataURL("image/png");
-  }
-
-  test() {
-    const urls = ['assets/images/blouses/blouse1.webp', 'assets/images/body/female-body.png'];
-    this.mergeAndScaleImages(urls).then(base64 => {
-      this.imagePreview = base64;
-    });
   }
 }
