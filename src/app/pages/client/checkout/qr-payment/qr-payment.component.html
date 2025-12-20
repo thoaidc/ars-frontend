@@ -1,0 +1,74 @@
+<div class="modal-body p-4" style="max-height: 75vh; overflow-y: auto">
+  <div class="text-end">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismiss()"></button>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mb-4">
+    <div class="me-3">
+      <img src="https://pay.payos.vn/images/lamp.svg" alt="">
+    </div>
+    <div>
+      Mở App Ngân hàng bất kỳ để <strong>quét mã VietQR</strong> hoặc <strong>chuyển khoản</strong> chính xác số tiền bên dưới
+    </div>
+  </div>
+
+  <div class="row p-4 g-4">
+    <div class="col-md-6 text-center border-end">
+      <div class="mb-2">
+        <img style="max-height: 40px" src="assets/images/logo/viet-qr-pro.png" alt="VietQR">
+      </div>
+      <div class="w-100 d-flex justify-content-center">
+        <div #qrContainer class="qr-container">
+          <canvas #qrCanvas></canvas>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center gap-3">
+        <img style="height: 40px" src="assets/images/logo/napas-mb.png" alt="Napas">
+      </div>
+    </div>
+
+    <div class="col-md-6 ps-md-4" *ngIf="paymentInfo">
+      <div class="d-flex align-items-center mb-4">
+        <img src="https://img.bankhub.dev/rounded/mbbank.png" class="rounded-circle me-2" width="40" height="40" alt="MB">
+        <div>
+          <div class="text-muted small">Ngân hàng</div>
+          <div class="fw-bold">Ngân hàng TMCP Quân đội</div>
+        </div>
+      </div>
+
+      <div class="payment-info mb-3">
+        <label class="text-muted small">Chủ tài khoản:</label>
+        <div class="fw-bold text-uppercase">{{ paymentInfo.accountName }}</div>
+      </div>
+
+      <div class="payment-info mb-3 d-flex justify-content-between align-items-end">
+        <div>
+          <label class="text-muted small">Số tài khoản:</label>
+          <div class="fw-bold fs-5">{{ paymentInfo.accountNumber }}</div>
+        </div>
+      </div>
+
+      <div class="payment-info mb-3 d-flex justify-content-between align-items-end">
+        <div>
+          <label class="text-muted small">Số tiền:</label>
+          <div class="fw-bold fs-5 text-dark">{{ paymentInfo.amount | vndCurrency }}</div>
+        </div>
+      </div>
+
+      <div class="payment-info mb-4 d-flex justify-content-between align-items-end">
+        <div>
+          <label class="text-muted small">Nội dung:</label>
+          <div class="fw-bold">{{ paymentInfo.description }}</div>
+        </div>
+      </div>
+
+      <div class="alert alert-light border-0 p-0">
+        Lưu ý: Nhập chính xác số tiền <strong>{{ paymentInfo.amount | vndCurrency }}</strong> khi chuyển khoản
+      </div>
+
+      <div class="w-100 d-flex justify-content-center">
+        <button class="btn btn-outline-secondary mt-4 px-5" (click)="dismiss()" data-bs-dismiss="modal">Huỷ</button>
+      </div>
+    </div>
+  </div>
+</div>

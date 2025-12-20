@@ -95,3 +95,7 @@ export interface UpdateOptionImage {
   id?: number;
   image: any;
 }
+
+export interface SelectedOptions {
+  [optionId: number]: ProductOptionValueDTO;
+}
