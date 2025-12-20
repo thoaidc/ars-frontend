@@ -7,6 +7,10 @@ Angular-based frontend application for the ARS (Auto Recharge System) platform.
 ### API Documentation
 - **[API Documentation (Vietnamese)](./API_DOCUMENTATION.md)** - Tài liệu chi tiết về vị trí và cách sử dụng API calls trong dự án
 - **[API Documentation (English)](./API_DOCUMENTATION_EN.md)** - Detailed documentation about API call locations and usage
+- **[API Quick Reference](./API_QUICK_REFERENCE.md)** - Sơ đồ trực quan và hướng dẫn nhanh về API calls / Visual diagram and quick guide
+
+### Advanced Documentation
+- **[HTTP Interceptors Documentation](./INTERCEPTORS_DOCUMENTATION.md)** - Tài liệu về interceptors: authentication, token refresh, error handling
 
 ## 🚀 Quick Start
 
