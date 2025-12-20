@@ -1,12 +1,12 @@
 {
   "/api": {
-    "target": "https://3aa822937d98.ngrok-free.app",
+    "target": "http://localhost:8080",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/uploads": {
-    "target": "https://3aa822937d98.ngrok-free.app",
+    "target": "http://localhost:8080",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
