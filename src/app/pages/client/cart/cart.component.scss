@@ -397,10 +397,18 @@
   vertical-align: middle;
 }
 
-/* specifically add extra right padding on the last column (Total) */
+/* ensure price/total columns have extra padding and right alignment so numbers are not flush against the border */
+.table-shopping-cart .column-3,
 .table-shopping-cart .column-4 {
-  padding-right: 44px; /* a bit more space from the rightmost edge */
   text-align: right;
+  /* add extra right padding and a little left padding for balance */
+  padding-right: 28px;
+  padding-left: 12px;
+}
+
+.table-shopping-cart .column-4 {
+  /* emphasize total column spacing a bit more */
+  padding-right: 32px;
 }
 
 /* nếu bảng cố định min-width gây overflow, cho phép cuộn nội dung với padding hiển thị */
