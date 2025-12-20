@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
-import {UtilsService} from '../../shared/utils/utils.service';
 import {API_ORDER, API_ORDER_BY_SHOP, API_ORDER_BY_USER} from '../../constants/api.constants';
 import {map, Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
@@ -14,8 +13,7 @@ import {CreateOrderRequest, Order, OrderDetail, OrdersFilter, SubOrder, SubOrder
 export class OrderService {
   constructor(
     private http: HttpClient,
-    private applicationConfigService: ApplicationConfigService,
-    private utilService: UtilsService
+    private applicationConfigService: ApplicationConfigService
   ) {}
 
   private orderAPI = this.applicationConfigService.getEndpointFor(API_ORDER);
@@ -53,8 +51,6 @@ export class OrderService {
   }
 
   createOrder(request: CreateOrderRequest): Observable<BaseResponse<any>> {
-    const formData = new FormData();
-    this.utilService.buildFormData(formData, request);
-    return this.http.post<BaseResponse<any>>(this.orderAPI, formData);
+    return this.http.post<BaseResponse<any>>(this.orderAPI, request);
   }
 }
