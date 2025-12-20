@@ -1,1 +1,69 @@
-<p>order-preview works!</p>
+<div class="modal-body p-4" style="max-height: 75vh; overflow-y: auto">
+  <div class="text-end">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismiss()"></button>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-bold mb-4 text-gray-800">Đặt đơn</h2>
+
+    <div class="order-detail d-flex justify-content-between">
+      <div class="flex-grow-1 shadow-sm mb-3" *ngIf="product">
+        <div class="d-flex align-items-start">
+          <div style="width: 100px; max-width: 20%">
+            <img class="img-fluid rounded" [src]="product.thumbnailUrl" alt="">
+          </div>
+          <div class="w-75 ms-3">
+            <p class="text-sm font-weight-bold mb-0">{{ product.name }}</p>
+            <p class="text-sm mt-1">{{ product.price | vndCurrency }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="width: 450px; max-width: 40%" class="p-4 pt-0 shadow-sm mb-4">
+        <div class="flex justify-between items-center mb-3">
+          <div class="flex items-center gap-2">
+            <span class="font-weight-bold">Mã giảm giá của cửa hàng</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <label class="col-12 d-flex shadow-sm rounded align-items-center py-2">
+            <input type="radio" name="voucher" class="hidden peer" checked>
+            <div class="ps-4">
+              <p class="text-sm mb-0">Giảm 50k</p>
+              <p class="font-italic mb-0" style="font-size: 12px">HSD: 31/12/2023</p>
+            </div>
+          </label>
+
+          <label class="col-12 d-flex shadow-sm rounded align-items-center py-2">
+            <input type="radio" name="voucher" class="hidden peer" checked>
+            <div class="ps-4">
+              <p class="text-sm mb-0">Giảm 50k</p>
+              <p class="font-italic mb-0" style="font-size: 12px">HSD: 31/12/2023</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 shadow-sm">
+      <h5 class="font-weight-bold mb-3">Chi tiết thanh toán</h5>
+
+      <div class="d-flex align-items-center">
+        <span class="w-25">Tổng tiền hàng: </span>
+        <span>29.990.000đ</span>
+      </div>
+      <div class="d-flex align-items-center">
+        <span class="w-25">Giảm giá Voucher: </span>
+        <span>-50.000đ</span>
+      </div>
+      <hr class="my-2 border-dashed">
+      <div class="d-flex align-items-center pt-1">
+        <span class="w-25 font-weight-bold">Tổng thanh toán: </span>
+        <span class="text-danger">29.970.000đ</span>
+      </div>
+
+      <button class="btn btn-danger w-100 py-3 mt-3" (click)="payOrder()">Đặt hàng</button>
+    </div>
+  </div>
+</div>
