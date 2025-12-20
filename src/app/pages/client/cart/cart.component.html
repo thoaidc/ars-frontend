@@ -2,42 +2,56 @@
 <div class="container">
   <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
     <a routerLink="/client/home" class="stext-109 cl8 hov-cl1 trans-04">
-      Home
+      Trang chủ
       <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
     </a>
-    <span class="stext-109 cl4">Shopping Cart</span>
+    <span class="stext-109 cl4">Giỏ hàng</span>
   </div>
 </div>
 
-<!-- Shoping Cart -->
+<!-- Giỏ hàng / Shopping Cart -->
 <form class="bg0 p-t-75 p-b-85">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
-        <!-- left column wrapper - keep only cart-left for consistent padding -->
+        <!-- left column wrapper - nội dung chính của giỏ hàng -->
         <div class="cart-left">
           <div class="wrap-table-shopping-cart">
-            <table class="table-shopping-cart">
+
+            <!-- đảm bảo bảng full width và column cố định để thẳng hàng -->
+            <table class="table-shopping-cart" style="width:100%; table-layout:fixed; border-collapse:collapse;">
+              <colgroup>
+                <col style="width:15%">
+                <col style="width:45%">
+                <col style="width:15%">
+                <col style="width:15%">
+                <col style="width:10%">
+              </colgroup>
+
               <tr class="table_head">
-                <th class="column-1">Product</th>
-                <th class="column-2"></th>
-                <th class="column-3">Price</th>
-                <th class="column-4">Total</th>
-                <th class="column-5"></th>
+                <th class="column-1" style="text-align:left; padding:18px 20px; vertical-align:middle;">Mẫu thiết kế</th>
+                <th class="column-2" style="text-align:left; padding:18px 20px; vertical-align:middle;"></th>
+                <th class="column-3" style="text-align:left; padding:18px 20px; vertical-align:middle;">Giá</th>
+                <th class="column-4" style="text-align:left; padding:18px 20px; vertical-align:middle;">Tổng</th>
+                <th class="column-5" style="padding:18px 20px; vertical-align:middle;">&nbsp;</th>
               </tr>
 
-              <tr *ngFor="let it of cartItems" class="table_row">
-                <td class="column-1">
-                  <div class="how-itemcart1">
-                    <img [src]="it.image" alt="IMG">
+              <tr *ngFor="let it of cartItems; let i = index" class="table_row" style="border-top:1px solid #eee;">
+                <td class="column-1" style="padding:18px 20px; vertical-align:middle;">
+                  <div class="how-itemcart1" style="width:90px; height:90px; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                    <img [src]="it.image" alt="Mẫu thiết kế" style="width:90px; height:90px; object-fit:cover;">
                   </div>
                 </td>
 
-                <td class="column-2">{{ it.name }}</td>
+                <!-- Hiển thị tên tiếng Việt nếu có mapping trong component -->
+                <td class="column-2" style="padding:18px 20px; text-align:left; vertical-align:middle;">{{ getDisplayName(it.name) }}</td>
 
-                <td class="column-3">{{ it.price | vndCurrency }}</td>
+                <td class="column-3" style="padding:18px 20px; text-align:left; vertical-align:middle">{{ it.price | vndCurrency }}</td>
 
-                <td class="column-4">{{ (it.price * it.qty) | vndCurrency }}</td>
+                <td class="column-4" style="padding:18px 20px; text-align:left; vertical-align:middle">{{ (it.price * it.qty) | vndCurrency }}</td>
+
+                <!-- cột trống tương ứng với header để căn hàng chính xác -->
+                <td class="column-5" style="padding:18px 20px;"></td>
               </tr>
 
             </table>
@@ -45,24 +59,24 @@
 
           <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
             <div class="flex-w flex-m m-r-20 m-tb-5">
-              <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
+              <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Mã giảm giá">
 
-              <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">Apply coupon</div>
+              <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">Áp dụng mã</div>
             </div>
 
-            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Update Cart</div>
+            <div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">Cập nhật giỏ hàng</div>
           </div>
         </div>
       </div>
 
       <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-        <!-- right column wrapper - keep only cart-summary for consistent padding -->
+        <!-- right column wrapper - Tổng tiền -->
         <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm cart-summary">
-          <h4 class="mtext-109 cl2 p-b-30">Cart Totals</h4>
+          <h4 class="mtext-109 cl2 p-b-30">Thành tiền</h4>
 
           <div class="flex-w flex-t bor12 p-b-13">
             <div class="size-208">
-              <span class="stext-110 cl2">Subtotal:</span>
+              <span class="stext-110 cl2">Tạm tính:</span>
             </div>
             <div class="size-209">
               <span class="mtext-110 cl2">{{ subtotal | vndCurrency }}</span>
@@ -73,14 +87,15 @@
 
           <div class="flex-w flex-t p-t-27 p-b-33">
             <div class="size-208">
-              <span class="mtext-101 cl2">Total:</span>
+              <span class="mtext-101 cl2">Tổng cộng:</span>
             </div>
-            <div class="size-209 p-t-1">
+            <!-- thêm padding-right để không sát viền -->
+            <div class="size-209 p-t-1" style="padding-right:20px">
               <span class="mtext-110 cl2">{{ total | vndCurrency }}</span>
             </div>
           </div>
 
-          <button (click)="proceedToCheckout()" type="button" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Proceed to Checkout</button>
+          <button (click)="proceedToCheckout()" type="button" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">Tiến hành thanh toán</button>
         </div>
       </div>
     </div>

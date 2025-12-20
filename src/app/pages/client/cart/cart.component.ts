@@ -17,12 +17,18 @@ interface CartItem {
   selector: 'app-cart',
   imports: [CommonModule, RouterModule, FormsModule, VndCurrencyPipe],
   templateUrl: './cart.component.html',
-  styleUrls: []
+  styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit, AfterViewInit {
   cartItems: CartItem[] = [];
   subtotal = 0;
   total = 0;
+
+  // mapping tên sản phẩm sang tiếng Việt
+  private nameMap: { [key: string]: string } = {
+    'Fresh Strawberries': 'Mẫu Thiết Kế - Dâu Tươi',
+    'Lightweight Jacket': 'Mẫu Thiết Kế - Áo Khoác Nhẹ'
+  };
 
   ngOnInit(): void {
     // mock cart items (replace with service later)
@@ -31,6 +37,11 @@ export class CartComponent implements OnInit, AfterViewInit {
       { id: 'p2', name: 'Lightweight Jacket', image: '/assets/coza/images/item-cart-05.jpg', price: 16.0, qty: 1 }
     ];
     this.updateTotals();
+  }
+
+  // helper trả về tên hiển thị (nếu có mapping -> tên tiếng Việt, không thì giữ nguyên)
+  getDisplayName(orig: string): string {
+    return this.nameMap[orig] || orig;
   }
 
   increment(i: number){
