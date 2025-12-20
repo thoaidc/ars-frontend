@@ -2,3 +2,16 @@
 .order-card{border:1px solid #eee;border-radius:6px}
 .modal-review .form-control{width:100%}
 
+/* basic styles for order history */
+.order-card{border-radius:10px;border:1px solid #eee}
+.status-badge{padding:6px 10px;border-radius:18px;font-weight:600;color:#fff;font-size:12px}
+.badge-completed{background:#28a745}
+.badge-pending{background:#ffc107;color:#222}
+.badge-other{background:#6c757d}
+
+.order-card .fw-bold{font-size:16px}
+.order-card .small{font-size:12px}
+
+@media(min-width:768px){
+  .container{max-width:1100px}
+}

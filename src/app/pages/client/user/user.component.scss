@@ -6,6 +6,43 @@
 .user-panel .avatar img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid #f3f4f6}
 .card.shadow-sm{box-shadow:0 6px 18px rgba(15,23,42,0.06)}
 
+/* Profile form adjustments */
+.card.p-4 {
+  font-size: 16px; /* tăng kích thước chữ */
+}
+
+.card.p-4 .col-form-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.card.p-4 .form-control {
+  font-size: 15px;
+  padding: 10px 12px;
+}
+
+.card.p-4 .btn {
+  font-size: 15px;
+}
+
+/* Sidebar icons */
+.card.p-3 ul li a i {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+  color: #666;
+}
+.card.p-3 ul li a:hover i,
+.card.p-3 ul li a.active i {
+  color: #0d6efd; /* bootstrap primary */
+}
+
+/* checkbox alignment */
+.form-check-input {
+  width: 18px;
+  height: 18px;
+}
+
 @media(max-width:576px){
   .user-panel .avatar img{width:64px;height:64px}
 }

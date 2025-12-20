@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-user',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
@@ -23,11 +24,15 @@ export class UserComponent implements OnInit, OnDestroy {
     this.sub = this.authService.subscribeAuthenticationState().subscribe((auth) => {
       this.authenticated = !!auth;
       if (auth) {
-        // set a simple user view from authentication payload (fallback to localStorage)
+        // treat auth as any to safely read optional fields that may not be on the Authentication type
+        const payload: any = auth as any;
         this.user = {
-          name: auth.fullname || auth.username || localStorage.getItem('username') || 'Người dùng',
-          email: auth.email || '',
-          phone: auth.phone || ''
+          name: payload.fullname || payload.username || localStorage.getItem('username') || 'Người dùng',
+          fullname: payload.fullname || payload.username || localStorage.getItem('username') || 'Người dùng',
+          email: payload.email || '',
+          phone: payload.phone || '',
+          gender: payload.gender || 'N',
+          avatarUrl: payload.avatarUrl || null
         };
       } else {
         this.user = null;
@@ -44,6 +49,18 @@ export class UserComponent implements OnInit, OnDestroy {
     this.authService.logout();
     // redirect to client home after logout
     this.router.navigate(['/client/home']).then();
+  }
+
+  // avatar upload not required by DB — removed file upload logic
+
+  updateProfile(): void {
+    // nếu có API, chỉ gửi các trường có thể cập nhật: fullname, gender
+    const payload = {
+      fullname: this.user?.fullname,
+      gender: this.user?.gender
+    };
+    console.log('Cập nhật profile', payload);
+    // TODO: gọi API cập nhật profile tại đây nếu cần
   }
 
   ngOnDestroy(): void {
