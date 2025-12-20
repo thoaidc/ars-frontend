@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
 import { FormsModule } from '@angular/forms';
 import {Product, ProductOptionValueDTO, SelectedOptions} from '../../../core/models/product.model';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {QrPaymentComponent} from '../checkout/qr-payment/qr-payment.component';
 
 @Component({
   standalone: true,
@@ -24,6 +26,9 @@ export class ProductDetailComponent implements OnInit {
   selectedImage: string = '';
   selectedOptions: SelectedOptions = {};
   @ViewChild('imageContainer') imageContainer!: ElementRef;
+  private modalRef?: NgbModalRef;
+
+
 
   reviews = [
     {
@@ -53,6 +58,7 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
+    private modalService: NgbModal,
     private router: Router
   ) {}
 
@@ -69,6 +75,10 @@ export class ProductDetailComponent implements OnInit {
         this.initSelectedOptions();
       }
     });
+  }
+
+  buyNow(product: Product) {
+    this.modalRef = this.modalService.open(QrPaymentComponent, { size: 'xl', backdrop: 'static' });
   }
 
   changeImage(imageUrl: string) {
