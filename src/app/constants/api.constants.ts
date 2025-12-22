@@ -22,6 +22,8 @@ export const API_CATEGORY_PUBLIC = API_PRODUCT_PUBLIC + '/categories';
 
 // Orders API constants
 export const API_ORDER = API_SECURE + '/orders';
+export const API_ORDER_SALES_TODAY = API_ORDER + '/today/by-shop';
+export const API_ORDER_SALES_ADMIN_TODAY = API_ORDER + '/today';
 export const API_ORDER_BY_USER = API_ORDER + '/by-user';
 export const API_ORDER_BY_SHOP = API_ORDER + '/by-shop';
 
@@ -42,14 +44,18 @@ export const API_PAYMENT_PUBLIC = API_PUBLIC + '/payments';
 
 // Report API constants
 export const API_REPORT = API_SECURE + '/reports';
+export const API_REPORT_ADMIN = API_REPORT + '/admin';
 
 // Revenue API constants
 export const API_REVENUES = API_PAYMENT + '/revenues';
-export const API_REVENUES_TODAY = API_PAYMENT + '/revenues/today';
-export const API_REVENUES_LAST_SEVEN_DAY = API_PAYMENT + '/revenues/last-seven-day';
+export const API_REVENUES_TODAY = API_REVENUES + '/today';
+export const API_REVENUES_TODAY_ADMIN = API_REVENUES + '/admin/today';
+export const API_REVENUES_LAST_SEVEN_DAY = API_REVENUES + '/last-seven-day';
+export const API_REVENUES_LAST_SEVEN_DAY_ADMIN = API_REVENUES + '/admin/last-seven-day';
 
 // Sales API constants
 export const API_SALES_LAST_SEVEN_DAY = API_ORDER + '/sales/last-seven-day';
+export const API_SALES_LAST_SEVEN_DAY_ADMIN = API_ORDER + '/sales/admin/last-seven-day';
 
 // Balance API constants
 export const API_BALANCE = API_SECURE + '/balances';

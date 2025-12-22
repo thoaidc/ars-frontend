@@ -26,7 +26,51 @@
       </div>
     </div>
   </div>
-  <div class="form-chart overflow-auto mt-3">
-    <canvas id="canvas" height="100%">{{ chart }}</canvas>
+
+  <div class="container-fluid py-4">
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-sm-6 col-xl-6">
+        <div class="card stat-card py-4 flex-row justify-content-left align-items-center border-0 shadow-sm p-3">
+          <div class="icon-circle bg-info text-white me-4">
+            <svg viewBox="0 0 24 24" width="24px" height="24px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g opacity="0.4"> <path d="M9.5 13.7502C9.5 14.7202 10.25 15.5002 11.17 15.5002H13.05C13.85 15.5002 14.5 14.8202 14.5 13.9702C14.5 13.0602 14.1 12.7302 13.51 12.5202L10.5 11.4702C9.91 11.2602 9.51001 10.9402 9.51001 10.0202C9.51001 9.18023 10.16 8.49023 10.96 8.49023H12.84C13.76 8.49023 14.51 9.27023 14.51 10.2402" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 7.5V16.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g> <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M17 3V7H21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M22 2L17 7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </div>
+          <div>
+            <h3 class="fw-bold mb-0" appCountUp [endValue]="revenueToday" [duration]="2000">0</h3>
+            <small class="text-secondary fw-semibold">Doanh thu hôm nay</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-xl-6">
+        <div class="card stat-card py-4 flex-row justify-content-left align-items-center border-0 shadow-sm p-3">
+          <div class="icon-circle bg-warning text-white me-4">
+            <svg viewBox="0 0 24 24" width="24px" height="24px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M7.5 18C8.32843 18 9 18.6716 9 19.5C9 20.3284 8.32843 21 7.5 21C6.67157 21 6 20.3284 6 19.5C6 18.6716 6.67157 18 7.5 18Z" stroke="#ffffff" stroke-width="1.5"></path> <path d="M16.5 18.0001C17.3284 18.0001 18 18.6716 18 19.5001C18 20.3285 17.3284 21.0001 16.5 21.0001C15.6716 21.0001 15 20.3285 15 19.5001C15 18.6716 15.6716 18.0001 16.5 18.0001Z" stroke="#ffffff" stroke-width="1.5"></path> <path d="M2 3L2.26121 3.09184C3.5628 3.54945 4.2136 3.77826 4.58584 4.32298C4.95808 4.86771 4.95808 5.59126 4.95808 7.03836V9.76C4.95808 12.7016 5.02132 13.6723 5.88772 14.5862C6.75412 15.5 8.14857 15.5 10.9375 15.5H12M16.2404 15.5C17.8014 15.5 18.5819 15.5 19.1336 15.0504C19.6853 14.6008 19.8429 13.8364 20.158 12.3075L20.6578 9.88275C21.0049 8.14369 21.1784 7.27417 20.7345 6.69708C20.2906 6.12 18.7738 6.12 17.0888 6.12H11.0235M4.95808 6.12H7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+          </div>
+          <div>
+            <h3 class="fw-bold mb-0" appCountUp [endValue]="ordersToday" [duration]="2000">0</h3>
+            <small class="text-secondary fw-semibold">Đơn hàng hôm nay</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-12 col-lg-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <h6 class="fw-bold text-muted mb-4 text-uppercase">Doanh thu 7 ngày gần nhất</h6>
+          <div class="chart-container">
+            <canvas #revenueCanvas></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card border-0 shadow-sm p-4 h-100">
+          <h6 class="fw-bold text-muted mb-4 text-uppercase">Lượt bán 7 ngày gần nhất</h6>
+          <div class="chart-container">
+            <canvas #salesCanvas></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -5,6 +5,7 @@ import {CountUpDirective} from '../../../shared/directives/count-up-number.direc
 import {ICON_FINANCE} from '../../../shared/utils/icon';
 import {AuthService} from '../../../core/services/auth.service';
 import {StatisticType} from '../../../core/models/report.model';
+import {OrderService} from '../../../core/services/order.service';
 
 @Component({
   selector: 'app-shop-dashboard',
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit {
   ordersToday: number = 0;
   shopId: number = 0;
 
-  constructor(private reportService: ReportService, private authService: AuthService) {
+  constructor(private reportService: ReportService, private authService: AuthService, private orderService: OrderService) {
     Chart.register(...registerables);
   }
 
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
         this.shopId = authentication.shopId || 0;
         this.getRevenueDashboardReport();
         this.getSalesDashboardReport();
+        this.getTotalOrdersToDay();
         this.getRevenueToday();
       }
     });
@@ -41,6 +43,12 @@ export class DashboardComponent implements OnInit {
 
   getRevenueToday() {
     this.reportService.getRevenueToday(StatisticType.REVENUE, this.shopId).subscribe(response => this.revenueToday = response);
+  }
+
+  getTotalOrdersToDay() {
+    this.orderService.getOrderTodayForShop().subscribe(response => {
+      this.ordersToday = response;
+    });
   }
 
   getRevenueDashboardReport() {

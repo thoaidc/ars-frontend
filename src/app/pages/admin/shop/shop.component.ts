@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbModal, NgbModalRef, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SafeHtmlPipe} from "../../../shared/pipes/safe-html.pipe";
 import {TranslatePipe, TranslateService} from "@ngx-translate/core";
@@ -10,7 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Shop, ShopsFilter} from '../../../core/models/shop.model';
 import {ShopService} from '../../../core/services/shop.service';
 import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
-import {ICON_SEARCH} from '../../../shared/utils/icon';
+import {ICON_SEARCH, ICON_STOP} from '../../../shared/utils/icon';
 
 @Component({
   selector: 'app-admin-shop',
@@ -24,7 +24,8 @@ import {ICON_SEARCH} from '../../../shared/utils/icon';
     SafeHtmlPipe,
     TranslatePipe,
     FormsModule,
-    NgClass
+    NgClass,
+    NgbTooltip
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
@@ -69,6 +70,11 @@ export class ShopComponent {
     });
   }
 
+  changeShopStatus(shop: Shop) {
+
+  }
+
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
+  protected readonly ICON_STOP = ICON_STOP;
 }

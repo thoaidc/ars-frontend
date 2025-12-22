@@ -55,13 +55,13 @@
                 <td class="break-word-table text-center">{{ shop.createdDate }}</td>
                 <td>
                   <div class="action-table">
-<!--                    <ng-container>-->
-<!--                        <span-->
-<!--                          [innerHTML]="ICON_UPDATE | safeHtml"-->
-<!--                          [ngbTooltip]="'global.update' | translate"-->
-<!--                          (click)="openModalSaveCategory(shop)"-->
-<!--                        ></span>-->
-<!--                    </ng-container>-->
+                    <ng-container>
+                      <span
+                        [innerHTML]="ICON_STOP | safeHtml"
+                        [ngbTooltip]="'global.update' | translate"
+                        (click)="changeShopStatus(shop)"
+                      ></span>
+                    </ng-container>
                   </div>
                 </td>
               </tr>

@@ -1,7 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
-import {API_ORDER, API_ORDER_BY_SHOP, API_ORDER_BY_USER} from '../../constants/api.constants';
+import {
+  API_ORDER,
+  API_ORDER_BY_SHOP,
+  API_ORDER_BY_USER,
+  API_ORDER_SALES_ADMIN_TODAY,
+  API_ORDER_SALES_TODAY
+} from '../../constants/api.constants';
 import {map, Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
 import {createSearchRequestParams} from '../utils/request.util';
@@ -19,6 +25,18 @@ export class OrderService {
   private orderAPI = this.applicationConfigService.getEndpointFor(API_ORDER);
   private orderByUserAPI = this.applicationConfigService.getEndpointFor(API_ORDER_BY_USER);
   private orderByShopAPI = this.applicationConfigService.getEndpointFor(API_ORDER_BY_SHOP);
+  private totalOrdersTodayAPI = this.applicationConfigService.getEndpointFor(API_ORDER_SALES_TODAY);
+  private totalOrdersTodayAdminAPI = this.applicationConfigService.getEndpointFor(API_ORDER_SALES_ADMIN_TODAY);
+
+  getOrderTodayForAdmin(): Observable<number> {
+    return this.http.get<BaseResponse<number>>(this.totalOrdersTodayAdminAPI, {})
+      .pipe(map(response => response.result || 0));
+  }
+
+  getOrderTodayForShop(): Observable<number> {
+    return this.http.get<BaseResponse<number>>(this.totalOrdersTodayAPI, {})
+      .pipe(map(response => response.result || 0));
+  }
 
   getAllWithPaging(request: OrdersFilter): Observable<BaseResponse<Order[]>> {
     const params = createSearchRequestParams(request);
