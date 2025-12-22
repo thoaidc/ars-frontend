@@ -43,8 +43,8 @@ export const API_PAYMENT = API_SECURE + '/payments';
 export const API_PAYMENT_PUBLIC = API_PUBLIC + '/payments';
 
 // Report API constants
-export const API_REPORT = API_SECURE + '/reports';
-export const API_REPORT_ADMIN = API_REPORT + '/admin';
+export const API_FINANCE_STATISTIC = API_PAYMENT + '/finances/shop';
+export const API_FINANCE_STATISTIC_ADMIN = API_PAYMENT + '/finances/admin';
 
 // Revenue API constants
 export const API_REVENUES = API_PAYMENT + '/revenues';
@@ -54,8 +54,8 @@ export const API_REVENUES_LAST_SEVEN_DAY = API_REVENUES + '/last-seven-day';
 export const API_REVENUES_LAST_SEVEN_DAY_ADMIN = API_REVENUES + '/admin/last-seven-day';
 
 // Sales API constants
-export const API_SALES_LAST_SEVEN_DAY = API_ORDER + '/sales/last-seven-day';
-export const API_SALES_LAST_SEVEN_DAY_ADMIN = API_ORDER + '/sales/admin/last-seven-day';
+export const API_SALES_LAST_SEVEN_DAY = API_ORDER + '/last-seven-day/by-shop';
+export const API_SALES_LAST_SEVEN_DAY_ADMIN = API_ORDER + '/last-seven-day/by-admin';
 
 // Balance API constants
 export const API_BALANCE = API_SECURE + '/balances';

@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getSalesDashboardReport() {
-    this.reportService.getSalesDashboardReport(StatisticType.SALES, this.shopId).subscribe(response => {
+    this.reportService.getSalesDashboardReportForShop().subscribe(response => {
       if (response && response.result) {
         this.salesLast7DayData = response.result.map(item => item.amount);
         this.createSalesChart();

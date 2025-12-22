@@ -2,8 +2,8 @@ import {Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {
-  API_REPORT,
-  API_REPORT_ADMIN,
+  API_FINANCE_STATISTIC,
+  API_FINANCE_STATISTIC_ADMIN,
   API_REVENUES_LAST_SEVEN_DAY,
   API_REVENUES_LAST_SEVEN_DAY_ADMIN,
   API_REVENUES_TODAY,
@@ -27,8 +27,8 @@ export class ReportService {
     private applicationConfigService: ApplicationConfigService
   ) {}
 
-  private reportAPI = this.applicationConfigService.getEndpointFor(API_REPORT);
-  private reportAdminAPI = this.applicationConfigService.getEndpointFor(API_REPORT_ADMIN);
+  private financeStatisticAPI = this.applicationConfigService.getEndpointFor(API_FINANCE_STATISTIC);
+  private financeStatisticAdminAPI = this.applicationConfigService.getEndpointFor(API_FINANCE_STATISTIC_ADMIN);
   private reportRevenueLast7DayAPI = this.applicationConfigService.getEndpointFor(API_REVENUES_LAST_SEVEN_DAY);
   private reportSalesLast7DayAPI = this.applicationConfigService.getEndpointFor(API_SALES_LAST_SEVEN_DAY);
   private revenueTodayAPI = this.applicationConfigService.getEndpointFor(API_REVENUES_TODAY);
@@ -41,9 +41,8 @@ export class ReportService {
     return this.http.get<BaseResponse<RevenueDashboardReportData[]>>(this.reportRevenueLast7DayAPI, {params: params});
   }
 
-  getSalesDashboardReport(type: number, receiverId: number): Observable<BaseResponse<RevenueDashboardReportData[]>> {
-    const params = createSearchRequestParams({type: type, receiverId: receiverId});
-    return this.http.get<BaseResponse<RevenueDashboardReportData[]>>(this.reportSalesLast7DayAPI, {params: params});
+  getSalesDashboardReportForShop(): Observable<BaseResponse<RevenueDashboardReportData[]>> {
+    return this.http.get<BaseResponse<RevenueDashboardReportData[]>>(this.reportSalesLast7DayAPI, {});
   }
 
   getRevenueToday(type: number, receiverId: number): Observable<number> {
@@ -67,13 +66,13 @@ export class ReportService {
 
   getFinanceStatisticForShop(request: BaseFilterRequest): Observable<FinanceData | undefined> {
     const params = createSearchRequestParams(request);
-    return this.http.get<BaseResponse<FinanceData>>(this.reportAPI, {params: params})
+    return this.http.get<BaseResponse<FinanceData>>(this.financeStatisticAPI, {params: params})
       .pipe(map(response => response.result));
   }
 
   getFinanceStatisticForShopAdmin(request: BaseFilterRequest): Observable<FinanceData | undefined> {
     const params = createSearchRequestParams(request);
-    return this.http.get<BaseResponse<FinanceData>>(this.reportAdminAPI, {params: params})
+    return this.http.get<BaseResponse<FinanceData>>(this.financeStatisticAdminAPI, {params: params})
       .pipe(map(response => response.result));
   }
 }
