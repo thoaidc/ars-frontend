@@ -14,7 +14,7 @@ import {UtilsService} from './shared/utils/utils.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private stateSubscription: Subscription | null = null;
+  private stateWebsocketSubscription: Subscription | null = null;
   private routerSubscription: Subscription | null = null;
 
   constructor(
@@ -32,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.stateSubscription = this.webSocketService.onState().subscribe();
+    this.stateWebsocketSubscription = this.webSocketService.onState().subscribe();
+    this.webSocketService.connect();
 
     // Call coza plugin initializers after each successful navigation so elements in the new view are initialized
     try {
@@ -53,12 +54,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.stateSubscription) {
-      this.stateSubscription.unsubscribe();
-    }
-
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+
+    if (this.stateWebsocketSubscription) {
+      this.stateWebsocketSubscription.unsubscribe();
     }
 
     this.webSocketService.disconnect();
