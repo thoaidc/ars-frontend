@@ -315,36 +315,6 @@
     } catch(e){}
   }
 
-  function initIsotopeFilter(){
-    try{
-      var $topeContainer = $('.isotope-grid');
-      var $filter = $('.filter-tope-group');
-
-      $(document).off('click.coza-filter', '.filter-tope-group button').on('click.coza-filter', '.filter-tope-group button', function(){
-        var filterValue = $(this).attr('data-filter');
-        if ($topeContainer.length) {
-          $topeContainer.isotope({ filter: filterValue });
-        }
-        // manage active class
-        $('.filter-tope-group button').removeClass('how-active1');
-        $(this).addClass('how-active1');
-      });
-
-      // initialize isotope for any grids currently in DOM
-      $topeContainer.each(function(){
-        try{
-          $(this).isotope({
-            itemSelector: '.isotope-item',
-            layoutMode: 'fitRows',
-            percentPosition: true,
-            animationEngine : 'best-available',
-            masonry: { columnWidth: '.isotope-item' }
-          });
-        } catch(e){}
-      });
-    } catch(e){}
-  }
-
   function initQtyButtons(){
     try{
       $(document).off('click.coza-qtydown', '.btn-num-product-down').on('click.coza-qtydown', '.btn-num-product-down', function(){
