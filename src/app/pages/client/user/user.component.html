@@ -38,66 +38,23 @@
             <div class="col-12">
               <form class="p-2" (ngSubmit)="updateProfile()">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Email</label>
-                  <div class="col-sm-9">
-                    <input class="form-control" type="email" [value]="user?.email" readonly>
-                  </div>
-                </div>
-
-                <div class="form-group row">
                   <label for="fullname" class="col-sm-3 col-form-label">Họ và tên</label>
                   <div class="col-sm-9">
                     <input id="fullname" class="form-control" type="text" [(ngModel)]="user.fullname" name="fullname">
                   </div>
                 </div>
 
-                <div class="form-group row align-items-center">
-                  <label class="col-sm-3 col-form-label">Giới tính</label>
-                  <div class="col-sm-9">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="gender-f" name="gender" [(ngModel)]="user.gender" value="F">
-                      <label class="form-check-label" for="gender-f">Nữ</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="gender-m" name="gender" [(ngModel)]="user.gender" value="M">
-                      <label class="form-check-label" for="gender-m">Nam</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="gender-n" name="gender" [(ngModel)]="user.gender" value="N">
-                      <label class="form-check-label" for="gender-n">Không muốn nói</label>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Chỉnh vị trí checkbox Đổi mật khẩu: thẳng hàng với label bằng row -->
                 <div class="form-group row">
-                  <div class="col-sm-3"></div>
+                  <label class="col-sm-3 col-form-label">Tên đăng nhập</label>
                   <div class="col-sm-9">
-                    <div class="form-check">
-                      <input #changePass id="changePass" type="checkbox" class="form-check-input">
-                      <label class="form-check-label ms-2" for="changePass">Đổi mật khẩu</label>
-                    </div>
+                    <input class="form-control" type="email" [value]="user?.name" readonly>
                   </div>
                 </div>
 
-                <div *ngIf="changePass?.checked">
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Mật khẩu hiện tại</label>
-                    <div class="col-sm-9">
-                      <input class="form-control" type="password" name="currentPassword">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Mật khẩu mới</label>
-                    <div class="col-sm-9">
-                      <input class="form-control" type="password" name="newPassword">
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Xác nhận mật khẩu</label>
-                    <div class="col-sm-9">
-                      <input class="form-control" type="password" name="confirmPassword">
-                    </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Email</label>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="email" [value]="user?.email" readonly>
                   </div>
                 </div>
 
@@ -107,17 +64,13 @@
                     <button type="submit" class="btn btn-primary px-4">Cập nhật</button>
                   </div>
                 </div>
-
               </form>
             </div>
-
           </div>
         </div>
       </div>
-
     </ng-container>
 
-    <!-- Guest layout: không có sidebar, hiển thị ở giữa full-width -->
     <ng-template #guestLayout>
       <div class="col-12">
         <div class="card p-4 shadow-sm text-center">
@@ -130,6 +83,5 @@
         </div>
       </div>
     </ng-template>
-
   </div>
 </div>

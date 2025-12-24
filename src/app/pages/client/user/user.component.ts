@@ -30,9 +30,7 @@ export class UserComponent implements OnInit, OnDestroy {
           name: payload.fullname || payload.username || localStorage.getItem('username') || 'Người dùng',
           fullname: payload.fullname || payload.username || localStorage.getItem('username') || 'Người dùng',
           email: payload.email || '',
-          phone: payload.phone || '',
-          gender: payload.gender || 'N',
-          avatarUrl: payload.avatarUrl || null
+          phone: payload.phone || ''
         };
       } else {
         this.user = null;
@@ -40,27 +38,17 @@ export class UserComponent implements OnInit, OnDestroy {
     });
   }
 
-  // navigate to login page (used in guest view)
   goToLogin(): void {
     this.router.navigate(['/login']).then();
   }
 
   logout(){
     this.authService.logout();
-    // redirect to client home after logout
     this.router.navigate(['/client/home']).then();
   }
 
-  // avatar upload not required by DB — removed file upload logic
-
   updateProfile(): void {
-    // nếu có API, chỉ gửi các trường có thể cập nhật: fullname, gender
-    const payload = {
-      fullname: this.user?.fullname,
-      gender: this.user?.gender
-    };
-    console.log('Cập nhật profile', payload);
-    // TODO: gọi API cập nhật profile tại đây nếu cần
+
   }
 
   ngOnDestroy(): void {

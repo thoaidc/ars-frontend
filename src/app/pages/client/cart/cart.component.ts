@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
 import {CartProduct} from '../../../core/models/cart.model';
-import {map, Observable, window} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {CartService} from '../../../core/services/cart.service';
 
 @Component({
@@ -14,11 +14,11 @@ import {CartService} from '../../../core/services/cart.service';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit, AfterViewInit {
+export class CartComponent implements OnInit {
   total = 0;
   cartProducts$!: Observable<CartProduct[]>;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartProducts$ = this.cartService.getCart().pipe(map(cart => cart?.products ?? []));
@@ -39,10 +39,6 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   proceedToCheckout() {
-
-  }
-
-  ngAfterViewInit(): void {
-    try { setTimeout(()=>{ (window as any).initCozaPlugins && (window as any).initCozaPlugins(); }, 50); } catch(e){}
+    this.router.navigate(['/client/checkout']).then();
   }
 }

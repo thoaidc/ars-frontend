@@ -35,7 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.stateWebsocketSubscription = this.webSocketService.onState().subscribe();
     this.webSocketService.connect();
 
-    // Call coza plugin initializers after each successful navigation so elements in the new view are initialized
     try {
       if (window && (window as any).initCozaPlugins) {
         (window as any).initCozaPlugins();

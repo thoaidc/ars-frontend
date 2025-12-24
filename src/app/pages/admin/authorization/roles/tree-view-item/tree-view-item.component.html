@@ -20,11 +20,12 @@
                 (ngModelChange)="onCheck(node); updateTree()"
                 [disabled]="node.disabled"
                 name="{{ 'customCheck1' + node.code }}"
-                style="margin-right: 5px"
+                style="position: unset !important; margin-right: 5px; z-index: unset !important; opacity: unset !important;"
               />
               <label
-                [ngClass]="isView ? 'custom-control-input cursor-pointer input-disabled' : 'custom-control-input cursor-pointer'"
+                [ngClass]="isView ? 'custom-control-input cursor-pointer input-disabled mb-0' : 'custom-control-input cursor-pointer mb-0'"
                 for="{{ 'customCheck1' + node.code }}"
+                style="position: unset !important; z-index: unset !important; opacity: unset !important;"
               >
                 {{ node.name }}
               </label>
