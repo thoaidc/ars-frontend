@@ -20,6 +20,9 @@ export const API_PRODUCT_GROUP_PUBLIC = API_PRODUCT_PUBLIC + '/groups';
 export const API_CATEGORY = API_PRODUCT + '/categories';
 export const API_CATEGORY_PUBLIC = API_PRODUCT_PUBLIC + '/categories';
 
+// Cart API constants
+export const API_CART = API_SECURE + '/carts';
+
 // Orders API constants
 export const API_ORDER = API_SECURE + '/orders';
 export const API_ORDER_SALES_TODAY = API_ORDER + '/today/by-shop';

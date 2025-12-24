@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import {Product, ProductOptionValueDTO, SelectedOptions} from '../../../core/models/product.model';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {OrderPreviewComponent} from '../checkout/order-preview/order-preview.component';
+import {CartProductOption} from '../../../core/models/cart.model';
 
 @Component({
   standalone: true,
@@ -73,6 +74,19 @@ export class ProductDetailComponent implements OnInit {
         this.initSelectedOptions();
       }
     });
+  }
+
+  addCart(product: Product) {
+    const options = this.convertSelectedOptionsToCartOptions(this.selectedOptions);
+    this.cartService.addToCart(product, options);
+  }
+
+  convertSelectedOptionsToCartOptions(selectedOptions: SelectedOptions): CartProductOption[] {
+    return Object.entries(selectedOptions).map(([optionId, optionValue]) => ({
+      id: Number(optionId),
+      selectedOptionValueId: optionValue.id,
+      selectedOptionValueImage: optionValue.image
+    }));
   }
 
   buyNow(product: Product) {
