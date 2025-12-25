@@ -1,5 +1,5 @@
 <div class="title-feature text-left">
-  <span>{{ 'text.product' | translate }}</span>
+  <span>Mã giảm giá</span>
 </div>
 
 <div class="field-search">
@@ -13,7 +13,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm theo tên hoặc mã voucher'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -34,10 +34,10 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.shopName' | translate }}</th>
-              <th>{{ 'text.ownerName' | translate }}</th>
-              <th>{{ 'text.ownerEmail' | translate }}</th>
-              <th>{{ 'text.ownerPhone' | translate }}</th>
+              <th>{{ 'Mã' }}</th>
+              <th>{{ 'Tên mã giảm giá' }}</th>
+              <th>{{ 'Loại mã giảm giá' }}</th>
+              <th>{{ 'Giá trị giảm' }}</th>
               <th>{{ 'text.status' | translate }}</th>
               <th>{{ 'text.createdDate' | translate }}</th>
             </tr>
@@ -48,9 +48,9 @@
                 <td class="text-center">{{ (vouchersFilter.page - 1) * vouchersFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-left" (click)="view(voucher.id)">{{ voucher.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(voucher.id)">{{ voucher.name }}</td>
-                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.type }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.type === 1 ? 'Giảm theo giá trị' : 'Giảm theo phần trăm' }}</td>
                 <td class="break-word-table text-right" (click)="view(voucher.id)">{{ voucher.value }}</td>
-                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.status }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.status === 1 ? 'Đang hoạt động': 'Ngừng hoạt động' }}</td>
                 <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.dateExpired }}</td>
               </tr>
             </ng-container>

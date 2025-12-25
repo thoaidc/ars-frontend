@@ -1,5 +1,5 @@
 <div class="title-feature text-left">
-  <span>{{ 'text.product' | translate }}</span>
+  <span>Đơn hàng</span>
 </div>
 
 <div class="field-search">
@@ -13,7 +13,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm theo mã đơn hàng'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -34,13 +34,13 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.productCode' | translate }}</th>
-              <th>{{ 'text.productName' | translate }}</th>
-              <th>{{ 'text.price' | translate }}</th>
-              <th>{{ 'text.status' | translate }}</th>
-              <th>{{ 'text.customizable' | translate }}</th>
-              <th>{{ 'global.action' | translate }}</th>
-              <th>{{ 'global.action' | translate }}</th>
+              <th>{{ 'Mã đơn hàng' }}</th>
+              <th>{{ 'Tên khách hàng' }}</th>
+              <th>{{ 'Tổng tiền đơn hàng' }}</th>
+              <th>{{ 'Trạng thái đơn hàng' }}</th>
+              <th>{{ 'Ngày đặt hàng' }}</th>
+              <th>{{ 'Phương thức thanh toán' }}</th>
+              <th>{{ 'Trạng thái thanh toán' }}</th>
             </tr>
             </thead>
             <tbody>
@@ -50,10 +50,10 @@
                 <td class="break-word-table text-left" (click)="view(order.id)">{{ order.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(order.id)">{{ order.customerName }}</td>
                 <td class="break-word-table text-right" (click)="view(order.id)">{{ order.totalAmount }}</td>
-                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.status }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ ORDER_STATUS[order.status] }}</td>
                 <td class="break-word-table text-center" (click)="view(order.id)">{{ order.orderDate }}</td>
-                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.paymentMethod }}</td>
-                <td class="break-word-table text-center" (click)="view(order.id)">{{ order.paymentStatus }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ PAYMENT_METHOD[order.paymentMethod] }}</td>
+                <td class="break-word-table text-center" (click)="view(order.id)">{{ PAYMENT_STATUS[order.paymentStatus] }}</td>
               </tr>
             </ng-container>
             </tbody>

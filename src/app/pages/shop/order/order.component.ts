@@ -12,6 +12,7 @@ import {Order, OrdersFilter, OrderViewType} from '../../../core/models/order.mod
 import {OrderService} from '../../../core/services/order.service';
 import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
 import {ICON_SEARCH} from '../../../shared/utils/icon';
+import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from "../../../constants/order.constants";
 
 @Component({
   selector: 'app-shop-order',
@@ -77,4 +78,7 @@ export class OrderComponent {
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
+    protected readonly ORDER_STATUS = ORDER_STATUS;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }

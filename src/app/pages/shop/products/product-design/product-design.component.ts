@@ -17,6 +17,7 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {ModalCreateProductComponent} from './modal-create-product/modal-create-product.component';
 import {ModalUpdateProductComponent} from './modal-update-product/modal-update-product.component';
+import {PRODUCT_STATUS} from '../../../../constants/order.constants';
 
 @Component({
   selector: 'app-shop-product-design',
@@ -134,4 +135,5 @@ export class ProductDesignComponent implements OnInit {
   protected readonly ICON_UPDATE = ICON_UPDATE;
   protected readonly ICON_COPY = ICON_COPY;
   protected readonly ICON_DELETE = ICON_DELETE;
+  protected readonly PRODUCT_STATUS = PRODUCT_STATUS;
 }

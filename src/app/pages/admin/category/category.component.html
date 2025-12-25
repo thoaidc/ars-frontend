@@ -1,8 +1,8 @@
 <div class="title-feature form-space-between">
-  <span>{{ 'text.product' | translate }}</span>
+  <span>Danh mục sản phẩm</span>
   <button class="success-button-dialog ms-3" (click)="openModalSaveCategory()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
-    {{ 'text.createProduct' | translate }}
+    {{ 'Tạo danh mục' }}
   </button>
 </div>
 
@@ -17,7 +17,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm tên hoặc mã danh mục'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -50,7 +50,7 @@
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ (categoriesFilter.page - 1) * categoriesFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-left td-text-overflow">{{ category.name }}</td>
-                <td class="break-word-table text-center">{{ category.description }}</td>
+                <td class="break-word-table text-left">{{ category.description }}</td>
                 <td class="break-word-table text-center">{{ category.createdBy }}</td>
                 <td class="break-word-table text-center">{{ category.createdDate }}</td>
                 <td>

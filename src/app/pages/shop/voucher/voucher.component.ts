@@ -15,6 +15,7 @@ import {ICON_DELETE, ICON_PLUS, ICON_SEARCH, ICON_UPDATE} from '../../../shared/
 import {ModalConfirmDialogComponent} from '../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 import {BaseResponse} from '../../../core/models/response.model';
 import {SaveVoucherComponent} from './save-voucher/save-voucher.component';
+import {VOUCHER_STATUS, VOUCHER_TYPE} from '../../../constants/order.constants';
 
 @Component({
   selector: 'app-voucher',
@@ -128,4 +129,6 @@ export class VoucherComponent implements OnInit {
   protected readonly ICON_UPDATE = ICON_UPDATE;
   protected readonly ICON_DELETE = ICON_DELETE;
   protected readonly ICON_PLUS = ICON_PLUS;
+  protected readonly VOUCHER_TYPE = VOUCHER_TYPE;
+  protected readonly VOUCHER_STATUS = VOUCHER_STATUS;
 }

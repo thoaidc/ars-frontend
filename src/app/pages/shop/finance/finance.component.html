@@ -65,7 +65,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm mã giao dịch'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -102,11 +102,11 @@
                 <td class="text-center" (click)="view(paymentHistory.id)">{{ (financesFilter.page - 1) * financesFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.transId }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.userId }}</td>
-                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.type }}</td>
+                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ PAYMENT_TYPE[paymentHistory.type] }}</td>
                 <td class="break-word-table text-right" (click)="view(paymentHistory.id)">{{ paymentHistory.amount }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.description }}</td>
-                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.status }}</td>
-                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.paymentMethod }}</td>
+                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ PAYMENT_STATUS[paymentHistory.status] }}</td>
+                <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ PAYMENT_METHOD[paymentHistory.paymentMethod] }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.paymentTime }}</td>
               </tr>
             </ng-container>

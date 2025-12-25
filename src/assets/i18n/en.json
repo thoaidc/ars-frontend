@@ -131,6 +131,20 @@
     "productGroupName": "Product group name",
     "createdBy": "Created by",
     "createdDate": "Created at",
-    "registerTitleMain": "Register"
+    "registerTitleMain": "Register",
+    "shopName": "Shop Name",
+    "ownerName": "Shop Owner",
+    "ownerEmail": "Email",
+    "ownerPhone": "Phone Number",
+    "categoryName": "Category Name",
+    "description": "Description",
+    "finance": "Finance",
+    "transactionCode": "Transaction Code",
+    "userSend": "Sender",
+    "paymentType": "Transaction Type",
+    "paymentAmount": "Total Payment Amount",
+    "paymentStatus": "Payment Status",
+    "paymentMethod": "Payment Method",
+    "paymentTime": "Payment Time"
   }
 }

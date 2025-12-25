@@ -17,6 +17,7 @@ import {ReportService} from '../../../core/services/report.service';
 import {PaymentHistoryDetailComponent} from './payment-history-detail/payment-history-detail.component';
 import {AuthService} from '../../../core/services/auth.service';
 import {BalanceType} from '../../../core/models/report.model';
+import {PAYMENT_METHOD, PAYMENT_STATUS, PAYMENT_TYPE} from "../../../constants/order.constants";
 
 @Component({
   selector: 'app-shop-finance',
@@ -115,4 +116,7 @@ export class FinanceComponent implements OnInit {
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
+    protected readonly PAYMENT_TYPE = PAYMENT_TYPE;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
 }

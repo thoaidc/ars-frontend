@@ -1,8 +1,8 @@
 <div class="title-feature form-space-between">
-  <span>{{ 'text.product' | translate }}</span>
+  <span>Mã giảm giá</span>
   <button class="success-button-dialog ms-3" (click)="openModalSaveVoucher()">
     <span [innerHTML]="ICON_PLUS | safeHtml"></span>
-    {{ 'text.createProduct' | translate }}
+    {{ 'Tạo mã giảm giá' }}
   </button>
 </div>
 
@@ -17,7 +17,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm theo mã hoặc tên'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -38,12 +38,12 @@
             <thead class="table-header-sticky">
             <tr class="table-custom-header">
               <th>{{ 'global.no' | translate }}</th>
-              <th>{{ 'text.shopName' | translate }}</th>
-              <th>{{ 'text.ownerName' | translate }}</th>
-              <th>{{ 'text.ownerEmail' | translate }}</th>
-              <th>{{ 'text.ownerPhone' | translate }}</th>
+              <th>{{ 'Mã' }}</th>
+              <th>{{ 'Tên' }}</th>
+              <th>{{ 'Loại mã giảm giá' }}</th>
+              <th>{{ 'Giá trị giảm giá' }}</th>
               <th>{{ 'text.status' | translate }}</th>
-              <th>{{ 'text.createdDate' | translate }}</th>
+              <th>{{ 'Ngày hết hiệu lực' }}</th>
               <th>{{ 'global.action' | translate }}</th>
             </tr>
             </thead>
@@ -53,9 +53,9 @@
                 <td class="text-center">{{ (vouchersFilter.page - 1) * vouchersFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-left" (click)="view(voucher.id)">{{ voucher.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(voucher.id)">{{ voucher.name }}</td>
-                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.type }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ VOUCHER_TYPE[voucher.type] }}</td>
                 <td class="break-word-table text-right" (click)="view(voucher.id)">{{ voucher.value }}</td>
-                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.status }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ VOUCHER_STATUS[voucher.status] }}</td>
                 <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.dateExpired }}</td>
                 <td>
                   <div class="action-table">

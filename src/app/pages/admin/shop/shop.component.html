@@ -1,5 +1,5 @@
 <div class="title-feature text-left">
-  <span>{{ 'text.product' | translate }}</span>
+  <span>Danh sách cửa hàng</span>
 </div>
 
 <div class="field-search">
@@ -13,7 +13,7 @@
           class="form-control"
           type="search"
           id="search-role-keyword"
-          [placeholder]="'text.searchProductPlaceholder' | translate"
+          [placeholder]="'Tìm theo tên cửa hàng'"
           (keyup.enter)="onSearch()"
         />
       </div>
@@ -48,10 +48,10 @@
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ (shopsFilter.page - 1) * shopsFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-left td-text-overflow">{{ shop.name }}</td>
-                <td class="break-word-table text-center">{{ shop.ownerName }}</td>
-                <td class="break-word-table text-center">{{ shop.ownerEmail }}</td>
+                <td class="break-word-table text-left">{{ shop.ownerName }}</td>
+                <td class="break-word-table text-left">{{ shop.ownerEmail }}</td>
                 <td class="break-word-table text-center">{{ shop.ownerPhone }}</td>
-                <td class="break-word-table text-center">{{ shop.status }}</td>
+                <td class="break-word-table text-center">{{ shop.status === 'ACTIVE' ? 'Đang hoạt động': 'Ngừng hoạt động' }}</td>
                 <td class="break-word-table text-center">{{ shop.createdDate }}</td>
                 <td>
                   <div class="action-table">

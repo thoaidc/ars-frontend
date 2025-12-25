@@ -131,6 +131,20 @@
     "productGroupName": "Tên nhóm sản phẩm",
     "createdBy": "Người tạo",
     "createdDate": "Ngày tạo",
-    "registerTitleMain": "Đăng ký tài khoản"
+    "registerTitleMain": "Đăng ký tài khoản",
+    "shopName": "Tên cửa hàng",
+    "ownerName": "Chủ cửa hàng",
+    "ownerEmail": "Email",
+    "ownerPhone": "Số điện thoại",
+    "categoryName": "Tên danh mục",
+    "description": "Mô tả",
+    "finance": "Tài chính",
+    "transactionCode": "Mã giao dịch",
+    "userSend": "Người gửi",
+    "paymentType": "Loại giao dịch",
+    "paymentAmount": "Tổng tiền thanh toán",
+    "paymentStatus": "Trạng thái thanh toán",
+    "paymentMethod": "Phương thức thanh toán",
+    "paymentTime": "Thời gian thanh toán"
   }
 }

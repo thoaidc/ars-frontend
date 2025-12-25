@@ -19,6 +19,7 @@ import {
 } from '../../shop/finance/payment-history-detail/payment-history-detail.component';
 import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
 import {ICON_SEARCH} from '../../../shared/utils/icon';
+import {PAYMENT_METHOD, PAYMENT_STATUS, PAYMENT_TYPE} from "../../../constants/order.constants";
 
 @Component({
   selector: 'app-admin-finance',
@@ -117,4 +118,7 @@ export class FinanceComponent implements OnInit {
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
+    protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_TYPE = PAYMENT_TYPE;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }
