@@ -1,27 +1,23 @@
 <div class="container p-t-30 p-b-80">
   <div class="row">
-    <!-- Nếu đã đăng nhập: hiển thị sidebar + nội dung tài khoản -->
     <ng-container *ngIf="authenticated; else guestLayout">
       <div class="col-md-3">
-        <!-- Sidebar menu (chỉ 3 mục) -->
         <div class="card p-3 shadow-sm mb-3">
           <ul class="list-unstyled mb-0">
             <li class="mb-2">
               <a routerLink="/client/user" class="text-dark font-weight-bold d-flex align-items-center">
-                <i class="fa fa-user me-2" aria-hidden="true"></i>
+                <i class="text-dark fa fa-user me-2" aria-hidden="true"></i>
                 <span>Tài khoản của tôi</span>
               </a>
             </li>
             <li class="mb-2">
-              <a routerLink="/client/order-history" class="text-dark d-flex align-items-center">
-                <i class="fa fa-history me-2" aria-hidden="true"></i>
+              <a routerLink="/client/order-history" class="text-dark font-weight-bold d-flex align-items-center">
+                <i class="text-dark fa fa-history me-2" aria-hidden="true"></i>
                 <span>Lịch sử đơn hàng</span>
               </a>
             </li>
-            <li class="mb-2">
-              <a href="#" (click)="logout()" class="text-dark d-flex align-items-center">
-                <!-- use 'fas' and fallback 'fa' for broader FA support -->
-                <i class="fas fa-sign-out-alt fa-sign-out me-2" aria-hidden="true"></i>
+            <li class="mb-2 w-100 d-flex justify-content-center mt-3">
+              <a href="#" (click)="logout()" class="text-danger fw-bold d-flex align-items-center">
                 <span>Đăng xuất</span>
               </a>
             </li>
@@ -30,11 +26,10 @@
       </div>
 
       <div class="col-md-9">
-        <h3 class="mb-3">Profile</h3>
+        <h3 class="mb-3">Hồ sơ tài khoản</h3>
 
         <div class="card p-4 shadow-sm">
           <div class="row">
-            <!-- Form thông tin -->
             <div class="col-12">
               <form class="p-2" (ngSubmit)="updateProfile()">
                 <div class="form-group row">

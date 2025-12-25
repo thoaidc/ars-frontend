@@ -17,7 +17,7 @@ export class WebSocketService implements OnDestroy {
   private client: Client;
   private state: BehaviorSubject<SocketClientState>;
   private topicSubscriptions: Map<string, StompSubscription> = new Map();
-  private SOCKET_SERVER_URL = `http:localhost:8080/ws`;
+  private SOCKET_SERVER_URL = `http://localhost:8080/ws`;
 
   constructor() {
     // Initialize BehaviorSubject with initial state DISCONNECTED
