@@ -28,12 +28,6 @@ export const CLIENT_ROUTES: Routes = [
       import('./cart/cart.component').then(m => m.CartComponent),
   },
   {
-    path: 'checkout',
-    title: 'Thanh toán',
-    loadComponent: () =>
-      import('./checkout/checkout.component').then(m => m.CheckoutComponent),
-  },
-  {
     path: 'order-history',
     title: 'Lịch sử đơn hàng',
     loadComponent: () => import('./order-history/order-history.component').then(m => m.OrderHistoryComponent)

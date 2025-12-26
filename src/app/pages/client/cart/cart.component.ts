@@ -41,7 +41,7 @@ export class CartComponent implements OnInit {
   }
 
   proceedToCheckout() {
-    this.router.navigate(['/client/checkout']).then();
+
   }
 
   protected readonly ICON_DELETE = ICON_DELETE;
