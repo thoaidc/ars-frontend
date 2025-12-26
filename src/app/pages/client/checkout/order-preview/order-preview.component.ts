@@ -29,6 +29,7 @@ export class OrderPreviewComponent implements OnDestroy {
   authentication!: Authentication;
   paymentTopicName: string = '/topics/payment_notification_';
   isPendingPayment: boolean = false;
+  discount: number = 0;
 
   constructor(
     private modalService: NgbModal,
@@ -63,6 +64,11 @@ export class OrderPreviewComponent implements OnDestroy {
   }
 
   createOrderRequest() {
+    if (!this.authentication) {
+      this.toast.error('Vui lòng đăng nhập để thực hiện đặt hàng');
+      return;
+    }
+
     this.orderRequest = {
       customerId: this.authentication.id,
       customerName: this.authentication.fullname,
@@ -92,4 +98,6 @@ export class OrderPreviewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.webSocketService.unsubscribeFromTopic(this.paymentTopicName);
   }
+
+  protected readonly Number = Number;
 }

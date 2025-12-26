@@ -18,14 +18,16 @@
             <table class="table-shopping-cart">
               <colgroup>
                 <col style="width:15%">
-                <col style="width:55%">
+                <col style="width:45%">
                 <col style="width:30%">
+                <col style="width:10%">
               </colgroup>
 
               <tr class="table_head">
                 <th class="column-1">Mẫu thiết kế</th>
                 <th class="column-2"></th>
                 <th class="column-4 text-right">Tổng</th>
+                <th class="column-4 text-center"></th>
               </tr>
 
               <tr *ngFor="let cartProduct of cartProducts$ | async; let i = index" class="table_row" style="border-top:1px solid #eee;">
@@ -34,6 +36,9 @@
                 </td>
                 <td class="column-2">{{ cartProduct.productName }}</td>
                 <td class="column-3 text-right">{{ cartProduct.price | vndCurrency }}</td>
+                <td class="column-3 text-right">
+                  <span (click)="removeItem(cartProduct)" [innerHTML]="ICON_DELETE | safeHtml"></span>
+                </td>
               </tr>
             </table>
           </div>

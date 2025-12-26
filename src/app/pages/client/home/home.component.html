@@ -2,16 +2,16 @@
 <section class="section-slide">
   <div class="wrap-slick1">
     <div class="slick1">
-      <div class="item-slick1" style="background-image: url('/assets/images/banner/banner1.png');">
+      <div class="item-slick1" style="background-image: url('/assets/images/banner/banner.png'); background-size: cover; height: 60vh">
         <div class="container h-full">
-          <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
+          <div class="flex-col-l-m h-full p-b-30 respon5" style="padding-top: 0; height: 60%">
             <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
               <span class="ltext-101 cl2 respon2">
                 Bộ sưu tập mẫu 2025
               </span>
             </div>
 
-            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
+            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="400">
               <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
                 MẪU THIẾT KẾ MỚI
               </h2>
@@ -29,13 +29,13 @@
     <div class="row">
       <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
         <div class="block1 wrap-pic-w">
-          <img src="/assets/coza/images/banner-01.jpg" alt="IMG-BANNER">
+          <img class="img-fluid" style="aspect-ratio: 5/3" src="/assets/images/banner/web.png" alt="">
 
           <a routerLink="/client/shop"
-             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+             class="block1-txt ab-t-l s-full flex-col-l-sb px-4 p-tb-34 trans-03 respon3 text-decoration-none">
             <div class="block1-txt-child1 flex-col-l">
               <span class="block1-name ltext-102 trans-04 p-b-8">
-                Giao diện web
+                Website
               </span>
 
               <span class="block1-info stext-102 trans-04">
@@ -54,17 +54,17 @@
 
       <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
         <div class="block1 wrap-pic-w">
-          <img src="/assets/coza/images/banner-02.jpg" alt="IMG-BANNER">
+          <img class="img-fluid" style="aspect-ratio: 5/3" src="/assets/images/banner/logo.png" alt="">
 
           <a routerLink="/client/shop"
-             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+             class="block1-txt ab-t-l s-full flex-col-l-sb px-4 p-tb-34 trans-03 respon3 text-decoration-none">
             <div class="block1-txt-child1 flex-col-l">
               <span class="block1-name ltext-102 trans-04 p-b-8">
                 Logo
               </span>
 
               <span class="block1-info stext-102 trans-04">
-                Bộ nhận diện
+                Bộ nhận diện thương hiệu
               </span>
             </div>
 
@@ -79,13 +79,13 @@
 
       <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
         <div class="block1 wrap-pic-w">
-          <img src="/assets/coza/images/banner-03.jpg" alt="IMG-BANNER">
+          <img class="img-fluid" style="aspect-ratio: 5/3" src="/assets/images/banner/poster.png" alt="">
 
           <a routerLink="/client/shop"
-             class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
+             class="block1-txt ab-t-l s-full flex-col-l-sb px-4 p-tb-34 trans-03 respon3 text-decoration-none">
             <div class="block1-txt-child1 flex-col-l">
               <span class="block1-name ltext-102 trans-04 p-b-8">
-                Thiết kế ấn phẩm
+                Ấn phẩm
               </span>
 
               <span class="block1-info stext-102 trans-04">
@@ -116,98 +116,43 @@
 
     <div class="flex-w flex-sb-m p-b-52">
       <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
+        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" (click)="updateFilter()">
           Tất cả mẫu
         </button>
 
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".women">
-          Giao diện
-        </button>
-
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".men">
-          Logo
-        </button>
-
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".bag">
-          Poster
-        </button>
-
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".shoes">
-          In ấn
-        </button>
-
-        <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" data-filter=".watches">
-          3D / Motion
-        </button>
-      </div>
-
-      <div class="flex-w flex-c-m m-tb-10">
-        <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-          <i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-          <i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-          Bộ lọc
-        </div>
-
-        <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-          <i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
-          <i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-          Tìm kiếm
-        </div>
-      </div>
-
-      <!-- Search product -->
-      <div class="dis-none panel-search w-full p-t-10 p-b-15">
-        <div class="bor8 dis-flex p-l-15">
-          <button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04" type="button">
-            <i class="zmdi zmdi-search"></i>
+        <ng-container *ngFor="let category of categories">
+          <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5" (click)="updateFilter(category.id)">
+            {{ category.name }}
           </button>
-
-          <input class="mtext-107 cl2 size-114 plh2 p-r-15"
-                 type="text" name="search-product" placeholder="Tìm kiếm thiết kế...">
-        </div>
-      </div>
-
-      <!-- Filter -->
-      <div class="dis-none panel-filter w-full p-t-10">
-        <div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
-          ...
-        </div>
+        </ng-container>
       </div>
     </div>
 
     <div class="row isotope-grid">
-      <!-- Products from API -->
       <div *ngFor="let p of trendyProducts; trackBy: trackByProductId" class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">
         <div class="block2">
-          <div class="block2-pic hov-img0">
-            <!-- fixed frame for image -->
-            <div class="product-img-frame">
-              <img [src]="p.thumbnailUrl" alt="IMG-PRODUCT" />
+          <a class="text-decoration-none text-dark" [routerLink]="['/client/product', p.id]">
+            <div class="block2-pic hov-img0">
+              <div class="product-img-frame">
+                <img [src]="p.thumbnailUrl" alt="IMG-PRODUCT" />
+              </div>
             </div>
-          </div>
 
-          <div class="block2-txt flex-w flex-t p-t-14">
-            <div class="block2-txt-child1 flex-col-l ">
-              <a [routerLink]="['/client/product', p.id]"
-                 class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                {{ p.name }}
-              </a>
-
-              <span class="stext-105 cl3">
-                {{ getDisplayPrice(p.price) }}
-              </span>
+            <div class="block2-txt flex-w flex-t p-t-14">
+              <div class="block2-txt-child1 flex-col-l ">
+                <span class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6" style="min-height: 48px">{{ p.name }}</span>
+                <span class="stext-105 cl3 fw-bold">{{ getDisplayPrice(p.price) }}</span>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
 
-    <!-- Load more -->
     <div class="flex-c-m flex-w w-full p-t-45">
-      <a href="javascript:void(0)"
-         class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+      <span class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04" (click)="loadProducts(true)">
         Xem thêm
-      </a>
+      </span>
     </div>
   </div>
 </section>

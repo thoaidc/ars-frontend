@@ -3,7 +3,7 @@ import { Component, OnInit} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { BaseFilterRequest } from '../../../core/models/request.model';
-import { CategoryDTO, Product } from '../../../core/models/product.model';
+import {CategoryDTO, Product, ProductsFilter} from '../../../core/models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../core/services/category.service';
 
@@ -17,13 +17,16 @@ import { CategoryService } from '../../../core/services/category.service';
 export class HomeComponent implements OnInit {
   loading = false;
   trendyProducts: Product[] = [];
-  justArrivedProducts: Product[] = [];
   categories: CategoryDTO[] = [];
-  productGroupsFilter: BaseFilterRequest = {
+  categoryFilter: BaseFilterRequest = {
     page: 0,
-    size: 10,
-    keyword: ''
+    size: 5
   };
+
+  productFilter: ProductsFilter = {
+    page: 0,
+    size: 12
+  }
 
   constructor(
     private productService: ProductService,
@@ -32,33 +35,45 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
     this.loadCategories();
+    this.loadProducts();
   }
 
   private loadCategories() {
-    this.categoryService.getAllWithPaging(this.productGroupsFilter).subscribe(response => {
+    this.categoryService.getAllWithPaging(this.categoryFilter).subscribe(response => {
       if (response && response.result) {
         this.categories = response.result;
       }
     })
   }
 
-  private loadProducts(): void {
+  updateFilter(categoryId?: number) {
+    if (categoryId) {
+      this.productFilter.categoryId = categoryId;
+    } else {
+      this.productFilter.categoryId = undefined;
+    }
+
+    this.productFilter.page = 0;
+    this.trendyProducts = [];
+    this.loadProducts();
+  }
+
+  loadProducts(loadMore?: boolean): void {
     this.loading = true;
-    this.productService.getAllWithPaging(this.productGroupsFilter).subscribe(response => {
+
+    if (loadMore) {
+      this.productFilter.page = this.productFilter.page + 1;
+    }
+
+    this.productService.getAllWithPaging(this.productFilter).subscribe(response => {
       if (response && response.result) {
-        this.trendyProducts = response.result;
-        this.justArrivedProducts = response.result;
+        this.trendyProducts.push(...response.result);
       } else {
-        this.toast.error('Không tải được danh sách sản phẩm')
+        this.toast.error('Đã tải hết sản phẩm');
       }
 
       this.loading = false;
-    }, err => {
-      this.loading = false;
-      console.error('Error loading products', err);
-      this.toast.error('Lỗi khi tải sản phẩm');
     });
   }
 

@@ -1,79 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterModule} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../../core/services/auth.service';
-import { firstValueFrom } from 'rxjs';
+import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../constants/order.constants';
+import {Order, OrderDetail} from '../../../core/models/order.model';
+import {OrderService} from '../../../core/services/order.service';
+import {Authentication} from '../../../core/models/auth.model';
 
 @Component({
   standalone: true,
   selector: 'app-order-history',
-  imports: [CommonModule, RouterModule, HttpClientModule, VndCurrencyPipe],
+  imports: [CommonModule, VndCurrencyPipe, RouterLink],
   templateUrl: './order-history.component.html',
   styleUrls: ['./order-history.component.scss']
 })
 export class OrderHistoryComponent implements OnInit {
-  orders: any[] = [];
-  selectedOrder: any = null;
+  orders: Order[] = [];
   loading = false;
-  lastUrl: string | null = null;
-  lastResponse: any = null;
-  lastError: any = null;
+  authentication!: Authentication;
+  selectedOrder?: OrderDetail;
+  showDetailModal: boolean = false;
 
-  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private orderService: OrderService) {}
 
   ngOnInit(): void {
-    this.fetchOrders();
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+        this.fetchOrders();
+      }
+    })
   }
 
-  private async fetchOrders(page = 0, size = 10) {
+  private fetchOrders() {
     this.loading = true;
-    const apiEndpoint = '/api/v1/orders/by-user';
-    let auth: any;
-    try {
-      auth = await firstValueFrom(this.authService.subscribeAuthenticationState());
-    } catch (e) {
-      auth = null;
-    }
-    const userId = auth?.id || auth?.userId || auth?.userID || null;
-    const url = `${apiEndpoint}?page=${page}&size=${size}${userId ? `&userId=${userId}` : ''}`;
-    this.lastUrl = url;
-
-    try {
-      const relativeUrl = apiEndpoint + `?page=${page}&size=${size}${userId ? `&userId=${userId}` : ''}`;
-      this.lastUrl = relativeUrl;
-      console.log('OrderHistory: GET via relative URL', relativeUrl);
-
-      // If running locally, ensure we forward the Authorization header (read from localStorage)
-      const token = localStorage.getItem('ars_token_k') || localStorage.getItem('auth_token') || null;
-      const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
-      const res: any = await firstValueFrom(this.http.get<any>(relativeUrl, headers ? { headers } : {}));
-      this.lastResponse = res;
-      const results = Array.isArray(res) ? res : (res && Array.isArray(res.result) ? res.result : null);
-      if (results && results.length > 0) {
-        this.orders = results.map((o: any) => ({
-          id: o.id,
-          code: o.code,
-          status: o.status,
-          paymentStatus: o.paymentStatus,
-          totalAmount: o.totalAmount || o.amount || 0,
-          orderDate: o.orderDate
-        }));
-      } else {
-        this.orders = [];
-      }
-    } catch (err) {
-      console.error('Failed to load orders (proxy attempt)', err);
-      this.lastError = err;
-      this.orders = [];
-    } finally {
+    const searchRequest = {
+      page: 0,
+      size: 100
+    };
+    this.orderService.getAllWithPaging(searchRequest).subscribe(response => {
+      this.orders = response.result || [];
       this.loading = false;
-    }
+    });
+  }
+
+  viewOrderDetail(orderId: number) {
+    this.loading = true;
+    this.orderService.getByIdForUser(orderId).subscribe({
+      next: (data) => {
+        this.selectedOrder = data;
+        this.showDetailModal = true;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Lỗi tải chi tiết đơn hàng', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  closeModal() {
+    this.showDetailModal = false;
+    this.selectedOrder = undefined;
   }
 
   logout(){
     this.authService.logout();
     this.router.navigate(['/client/home']).then();
   }
+
+  protected readonly ORDER_STATUS = ORDER_STATUS;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }

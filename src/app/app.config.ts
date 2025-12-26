@@ -1,5 +1,5 @@
 import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter, withEnabledBlockingInitialNavigation} from '@angular/router';
+import {provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling} from '@angular/router';
 import {APP_ROUTES} from './app.routes';
 import {
   provideHttpClient,
@@ -56,7 +56,14 @@ import {FingerprintInterceptorFn} from './core/interceptors/fingerprint.intercep
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), // Optional: to optimize change detection
-    provideRouter(APP_ROUTES, withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      APP_ROUTES,
+      withEnabledBlockingInitialNavigation(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+        anchorScrolling: 'enabled',
+      })
+    ),
     provideTranslateService({
       defaultLanguage: LOCALE.VI,
       loader: {

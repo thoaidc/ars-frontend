@@ -29,30 +29,114 @@
       <div *ngIf="loading" class="mb-3">Đang tải...</div>
       <div *ngIf="orders.length === 0 && !loading" class="card p-4 text-center">Bạn chưa có đơn hàng nào.</div>
 
-      <div *ngFor="let o of orders" class="order-card card mb-3 p-3">
+      <div *ngFor="let order of orders" class="order-card card mb-3 p-3">
         <div class="d-flex align-items-center">
-          <div class="status-badge me-3" [ngClass]="{
-            'badge-completed': o.status=='COMPLETED',
-            'badge-pending': o.status=='PENDING',
-            'badge-other': o.status!='COMPLETED' && o.status!='PENDING'
-          }">{{ o.status | lowercase }}</div>
-
           <div class="flex-fill">
             <div class="d-flex justify-content-between align-items-start">
               <div>
-                <div class="small text-muted">{{ o.orderDate | date:'dd MMM yyyy' }}</div>
-                <div class="fw-bold">Order ID: {{ o.code || o.id }}</div>
-                <div class="text-muted">Mô tả đơn hàng - xem chi tiết để biết sản phẩm</div>
+                <div class="small text-muted">{{ order.orderDate | date:'dd MMM yyyy' }}</div>
+                <div class="fw-bold">Mã đơn hàng: {{ order.code || order.id }}</div>
+                <div class="text-muted cursor-pointer" (click)="viewOrderDetail(order.id)">{{ order.quantity }} sản phẩm - xem chi tiết</div>
               </div>
               <div class="text-end">
-                <div class="fw-bold">{{ o.totalAmount | vndCurrency }}</div>
+                <div class="fw-bold">{{ order.totalAmount | vndCurrency }}</div>
                 <div class="mt-2">
-
+                  <div class="status-badge" [ngClass]="{
+                    'badge-completed': order.status=='COMPLETED',
+                    'badge-pending': order.status=='PENDING',
+                    'badge-other': order.status!='COMPLETED' && order.status!='PENDING'
+                  }">{{ ORDER_STATUS[order.status] }}</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show" *ngIf="showDetailModal"></div>
+
+<div class="modal fade show d-block" *ngIf="showDetailModal" tabindex="-1" role="dialog" style="overflow-y: auto;">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content" *ngIf="selectedOrder">
+
+      <div class="modal-header bg-light">
+        <h5 class="modal-title font-weight-bold">
+          Chi tiết đơn hàng #{{ selectedOrder.code || selectedOrder.id }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <p class="mb-1"><strong>Ngày đặt:</strong> {{ selectedOrder.orderDate | date:'dd/MM/yyyy HH:mm' }}</p>
+            <p class="mb-1"><strong>Trạng thái:</strong>
+              <span class="badge" [ngClass]="{
+                'bg-success': selectedOrder.status=='COMPLETED',
+                'bg-warning': selectedOrder.status=='PENDING',
+                'bg-secondary': selectedOrder.status!='COMPLETED' && selectedOrder.status!='PENDING'
+              }">{{ ORDER_STATUS[selectedOrder.status] || selectedOrder.status }}</span>
+            </p>
+            <p class="mb-1"><strong>Thanh toán:</strong> {{ PAYMENT_METHOD[selectedOrder.paymentMethod] }}</p>
+            <p class="mb-1"><strong>Trạng thái thanh toán:</strong> {{ PAYMENT_STATUS[selectedOrder.paymentStatus] }}</p>
+          </div>
+        </div>
+
+        <h6 class="border-bottom pb-2 mb-3 font-weight-bold">Danh sách sản phẩm</h6>
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead class="bg-light">
+            <tr>
+              <th style="width: 60px;">Ảnh</th>
+              <th>Sản phẩm</th>
+              <th style="width: 120px" class="text-end">Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let prod of selectedOrder.products">
+              <td>
+                <img [src]="prod.productThumbnail || 'assets/images/no-image.png'"
+                     alt="img"
+                     class="img-fluid rounded border"
+                     style="width: 50px; height: 50px; object-fit: cover;">
+              </td>
+              <td>
+                <div class="fw-bold text-dark">{{ prod.productName }}</div>
+                <div class="small text-muted">Mã SP: {{ prod.productCode }}</div>
+                <div *ngIf="prod.note" class="small text-info fst-italic">Ghi chú: {{ prod.note }}</div>
+              </td>
+              <td class="text-end fw-bold">
+                {{ prod.totalAmount | vndCurrency }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row mt-3 justify-content-end">
+          <div class="col-md-5">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Tổng tiền hàng:</span>
+              <span class="fw-bold">{{ selectedOrder.amount | vndCurrency }}</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2 text-success" *ngIf="selectedOrder.discount > 0">
+              <span>Giảm giá:</span>
+              <span>- {{ selectedOrder.discount | vndCurrency }}</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between fs-5 fw-bold text-primary">
+              <span>Tổng thanh toán:</span>
+              <span>{{ selectedOrder.totalAmount | vndCurrency }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Đóng</button>
       </div>
     </div>
   </div>

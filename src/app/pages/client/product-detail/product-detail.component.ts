@@ -32,24 +32,15 @@ export class ProductDetailComponent implements OnInit {
   reviews = [
     {
       rating: 5,
-      title: 'Fast & Smooth!',
-      comment: 'Order arrived quick and the shirt feels quality. Nice print, looks just like the pics. ?',
-      initial: 'M',
-      date: 'Mon Dec 15 2025'
+      title: 'Nguyễn Văn An',
+      comment: 'Thiết kế rất đẹp, chủ shop hỗ trợ nhiệt tình',
+      date: '12/03/2025'
     },
     {
       rating: 4,
-      title: 'Super Cute And Comfy!',
-      comment: 'Love this shirt! Fits perfectly and the design is adorable. Got compliments already!',
-      initial: 'E',
-      date: 'Mon Dec 15 2025'
-    },
-    {
-      rating: 4,
-      title: 'Fast Shipping!',
-      comment: 'Got my order quick and it looks exactly like the pics. Good quality for the price, will buy again.',
-      initial: 'JM',
-      date: 'Sat Dec 13 2025'
+      title: 'Đàm Công Thoại',
+      comment: 'Sản phẩm rất nổi bật, thiết kể trẻ trung',
+      date: '18/12/2025'
     }
   ];
 
