@@ -15,6 +15,7 @@ import {ToastrService} from 'ngx-toastr';
 import {
   ModalUpdateProductComponent
 } from '../../shop/products/product-design/modal-update-product/modal-update-product.component';
+import {VndCurrencyPipe} from '../../../shared/pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-admin-products',
@@ -28,7 +29,8 @@ import {
     SafeHtmlPipe,
     TranslatePipe,
     FormsModule,
-    NgClass
+    NgClass,
+    VndCurrencyPipe
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'

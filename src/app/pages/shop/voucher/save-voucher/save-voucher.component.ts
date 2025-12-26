@@ -7,6 +7,8 @@ import {Voucher, VoucherType} from '../../../../core/models/voucher.model';
 import {AlphanumericOnlyDirective} from '../../../../shared/directives/alphanumeric-only.directive';
 import {VoucherService} from '../../../../core/services/voucher.service';
 import {NgSelectComponent} from '@ng-select/ng-select';
+import {Authentication} from '../../../../core/models/auth.model';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-save-voucher',
@@ -33,15 +35,22 @@ export class SaveVoucherComponent implements OnInit {
   }
   @Input() voucherId!: number;
   @Input() isUpdatable: boolean = false;
+  authentication!: Authentication;
 
   constructor(
     public activeModal: NgbActiveModal,
     private voucherService: VoucherService,
     private toast: ToastrService,
     private location: Location,
+    private authService: AuthService
   ) {
     this.location.subscribe(() => {
       this.activeModal.dismiss(false);
+    });
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+      }
     });
   }
 
@@ -67,6 +76,7 @@ export class SaveVoucherComponent implements OnInit {
 
   confirmSave() {
     if (this.voucher.name && this.voucher.code) {
+      this.voucher.shopId = this.authentication?.shopId || 0;
       this.voucherService.saveVoucher(this.voucher).subscribe(response => {
         if (response.status) {
           this.toast.success("Cập nhật mã giảm giá thành công");

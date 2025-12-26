@@ -48,7 +48,7 @@
                 <td class="text-center" (click)="view(product.id)">{{ (productsFilter.page - 1) * productsFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-left" (click)="view(product.id)">{{ product.code }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.name }}</td>
-                <td class="break-word-table text-right" (click)="view(product.id)">{{ product.price }}</td>
+                <td class="break-word-table text-right" (click)="view(product.id)">{{ product.price | vndCurrency }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.status === 'ACTIVE' ? 'Đang hoạt động': 'Ngừng hoạt động' }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.customizable }}</td>
                 <td>

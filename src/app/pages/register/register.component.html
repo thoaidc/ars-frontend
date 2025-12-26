@@ -13,6 +13,17 @@
         <form autocomplete="on" class="info" (ngSubmit)="register()">
           <span class="title-login">ĐĂNG KÝ TÀI KHOẢN</span>
 
+          <div *ngIf="isShop" class="input-login">
+            <input
+              type="text"
+              class="form-control"
+              name="shop-name"
+              required
+              [(ngModel)]="shopName"
+              placeholder="Tên cửa hàng (bắt buộc)"
+            />
+          </div>
+
           <div class="input-login">
             <input
               type="text"
@@ -77,10 +88,6 @@
           <div class="form-check mb-3">
             <input class="form-check-input" type="checkbox" id="isShop" [(ngModel)]="isShop" name="isShop">
             <label class="form-check-label" for="isShop">Đăng ký cửa hàng (Shop)</label>
-          </div>
-
-          <div *ngIf="isShop" class="input-login">
-            <input type="text" class="form-control" name="shopName" [(ngModel)]="shopName" placeholder="Tên cửa hàng (bắt buộc)" />
           </div>
 
           <button class="button-login" type="submit">Đăng ký</button>

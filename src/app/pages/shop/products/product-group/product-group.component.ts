@@ -18,6 +18,8 @@ import {
 import {ToastrService} from 'ngx-toastr';
 import {BaseResponse} from '../../../../core/models/response.model';
 import {SaveProductGroupComponent} from './save-group/save-group.component';
+import {Authentication} from '../../../../core/models/auth.model';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-shop-product-group',
@@ -47,14 +49,22 @@ export class ProductGroupComponent implements OnInit {
   totalItems: number = 0;
   isLoading: boolean = false;
   private modalRef?: NgbModalRef;
+  authentication!: Authentication;
 
   constructor(
     private translateService: TranslateService,
     private productGroupService: ProductGroupService,
     private utilService: UtilsService,
     private modalService: NgbModal,
-    private toast: ToastrService
-  ) {}
+    private toast: ToastrService,
+    private authService: AuthService
+  ) {
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+      }
+    });
+  }
 
   ngOnInit() {
     this.onSearch();
@@ -82,7 +92,7 @@ export class ProductGroupComponent implements OnInit {
     this.modalRef = this.modalService.open(SaveProductGroupComponent, { size: 'lg', backdrop: 'static' });
     this.modalRef.componentInstance.productGroup = productGroup ? productGroup : {
       id: 0,
-      shopId: 0,
+      shopId: this.authentication.shopId,
       code: '',
       name: ''
     };

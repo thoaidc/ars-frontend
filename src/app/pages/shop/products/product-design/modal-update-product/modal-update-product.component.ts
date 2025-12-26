@@ -23,6 +23,8 @@ import {SafeHtmlPipe} from '../../../../../shared/pipes/safe-html.pipe';
 import {ICON_DELETE, ICON_PLUS, ICON_X_WHITE} from '../../../../../shared/utils/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductService} from '../../../../../core/services/product.service';
+import {Authentication} from '../../../../../core/models/auth.model';
+import {AuthService} from '../../../../../core/services/auth.service';
 
 interface ImagePreview {
   id?: number;
@@ -71,6 +73,7 @@ export class ModalUpdateProductComponent implements OnInit {
   @ViewChild('galleryInput') galleryInput!: ElementRef;
   @Input() productId!: number;
   @Input() isUpdatable: boolean = false;
+  authentication!: Authentication;
 
   constructor(
     public toastr: ToastrService,
@@ -84,10 +87,17 @@ export class ModalUpdateProductComponent implements OnInit {
     private categoryService: CategoryService,
     private productGroupService: ProductGroupService,
     private sanitizer: DomSanitizer,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {
     this.location.subscribe(() => {
       this.activeModal.dismiss();
+    });
+
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+      }
     });
   }
 
@@ -274,10 +284,7 @@ export class ModalUpdateProductComponent implements OnInit {
   }
 
   confirmSave() {
-    this.product.thumbnail = this.selectedThumbnail instanceof File
-      ? this.selectedThumbnail
-      : null;
-
+    this.product.thumbnail = this.product.thumbnail instanceof File ? this.product.thumbnail : null;
     this.product.productImages = this.galleryImages.map(img => {
       return {
         id: img.id,
@@ -301,6 +308,8 @@ export class ModalUpdateProductComponent implements OnInit {
         images: updatedOptionImages,
       } as UpdateOption;
     });
+
+    this.product.shopId = this.authentication?.shopId || 0;
 
     this.productService.updateProduct(this.product).subscribe(response => {
       if (response.status) {

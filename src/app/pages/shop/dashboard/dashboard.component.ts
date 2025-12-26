@@ -6,6 +6,7 @@ import {ICON_FINANCE} from '../../../shared/utils/icon';
 import {AuthService} from '../../../core/services/auth.service';
 import {StatisticType} from '../../../core/models/report.model';
 import {OrderService} from '../../../core/services/order.service';
+import {delay} from 'rxjs';
 
 @Component({
   selector: 'app-shop-dashboard',
@@ -30,7 +31,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.labels7Days = this.getRecentDates();
-    this.authService.subscribeAuthenticationState().subscribe(authentication => {
+    this.authService.subscribeAuthenticationState()
+      .pipe(delay(1000))
+      .subscribe(authentication => {
       if (authentication) {
         this.shopId = authentication.shopId || 0;
         this.getRevenueDashboardReport();

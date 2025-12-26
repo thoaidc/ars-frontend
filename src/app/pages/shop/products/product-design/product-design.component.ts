@@ -18,6 +18,7 @@ import {ToastrService} from 'ngx-toastr';
 import {ModalCreateProductComponent} from './modal-create-product/modal-create-product.component';
 import {ModalUpdateProductComponent} from './modal-update-product/modal-update-product.component';
 import {PRODUCT_STATUS} from '../../../../constants/order.constants';
+import {VndCurrencyPipe} from '../../../../shared/pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-shop-product-design',
@@ -32,7 +33,8 @@ import {PRODUCT_STATUS} from '../../../../constants/order.constants';
     TranslatePipe,
     FormsModule,
     NgbTooltip,
-    NgClass
+    NgClass,
+    VndCurrencyPipe
   ],
   templateUrl: './product-design.component.html',
   styleUrl: './product-design.component.scss'

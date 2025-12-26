@@ -25,6 +25,8 @@ import {SafeHtmlPipe} from '../../../../../shared/pipes/safe-html.pipe';
 import {ICON_DELETE, ICON_PLUS, ICON_X_WHITE} from '../../../../../shared/utils/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ProductService} from '../../../../../core/services/product.service';
+import {Authentication} from '../../../../../core/models/auth.model';
+import {AuthService} from '../../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-shop-product-create',
@@ -59,6 +61,7 @@ export class ModalCreateProductComponent implements OnInit {
   optionPreviews: { file: File, previewUrl: string }[][] = [];
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('galleryInput') galleryInput!: ElementRef;
+  authentication!: Authentication;
 
   constructor(
     public toastr: ToastrService,
@@ -72,10 +75,17 @@ export class ModalCreateProductComponent implements OnInit {
     private categoryService: CategoryService,
     private productGroupService: ProductGroupService,
     private sanitizer: DomSanitizer,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {
     this.location.subscribe(() => {
       this.activeModal.dismiss(false);
+    });
+
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+      }
     });
   }
 
@@ -212,6 +222,7 @@ export class ModalCreateProductComponent implements OnInit {
       name: option.name,
       images: this.optionPreviews[index].map(preview => preview.file)
     }));
+    this.product.shopId = this.authentication?.shopId || 0;
 
     this.productService.createProduct(this.product).subscribe(response => {
       if (response.status) {
