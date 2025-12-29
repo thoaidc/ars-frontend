@@ -4,6 +4,7 @@ import {AuditingEntity} from './common.model';
 export interface ProductsFilter extends BaseFilterRequest {
   code?: string;
   categoryId?: number;
+  shopId?: number;
 }
 
 export interface Product extends AuditingEntity {

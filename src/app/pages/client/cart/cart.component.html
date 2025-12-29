@@ -17,13 +17,17 @@
           <div class="wrap-table-shopping-cart">
             <table class="table-shopping-cart">
               <colgroup>
+                <col style="width:5%">
                 <col style="width:15%">
-                <col style="width:45%">
+                <col style="width:40%">
                 <col style="width:30%">
                 <col style="width:10%">
               </colgroup>
 
               <tr class="table_head">
+                <th class="column-1 text-center">
+                  <input type="checkbox"/>
+                </th>
                 <th class="column-1">Mẫu thiết kế</th>
                 <th class="column-2"></th>
                 <th class="column-4 text-right">Tổng</th>
@@ -31,6 +35,9 @@
               </tr>
 
               <tr *ngFor="let cartProduct of cartProducts$ | async; let i = index" class="table_row" style="border-top:1px solid #eee;">
+                <td class="text-center">
+                  <input type="checkbox"/>
+                </td>
                 <td class="column-1">
                   <img [src]="cartProduct.thumbnail" alt="" style="width:80px; height:80px; object-fit:cover;">
                 </td>

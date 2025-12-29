@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {DateFilterComponent} from '../../../shared/components/date-filter/date-filter.component';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule} from '@angular/forms';
@@ -24,7 +24,7 @@ import {OrderService} from '../../../core/services/order.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements AfterViewInit {
   public chart: any;
   periods: any = 1;
   groupByType: string = 'DAY';
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
     Chart.register(...registerables);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.labels7Days = this.getRecentDates();
     this.getRevenueToday();
     this.getTotalOrdersToDay();
@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit {
         data: {
           labels: this.labels7Days,
           datasets: [{
-            data: this.revenueLast7DayData,
+            data: this.salesLast7DayData,
             borderColor: '#00bcd4',
             backgroundColor: 'rgba(0, 188, 212, 0.2)',
             fill: true,

@@ -19,6 +19,7 @@ import {ModalCreateProductComponent} from './modal-create-product/modal-create-p
 import {ModalUpdateProductComponent} from './modal-update-product/modal-update-product.component';
 import {PRODUCT_STATUS} from '../../../../constants/order.constants';
 import {VndCurrencyPipe} from '../../../../shared/pipes/vnd-currency.pipe';
+import {AuthService} from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-shop-product-design',
@@ -45,6 +46,7 @@ export class ProductDesignComponent implements OnInit {
     size: 10,
     keyword: ''
   };
+  shopId: number = 0;
   products: Product[] = [];
   totalItems: number = 0;
   isLoading: boolean = false;
@@ -55,11 +57,21 @@ export class ProductDesignComponent implements OnInit {
     private productService: ProductService,
     private utilService: UtilsService,
     private modalService: NgbModal,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.onSearch();
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.shopId = response.shopId || 0;
+
+        if (this.shopId > 0) {
+          this.productsFilter.shopId = this.shopId;
+          this.onSearch();
+        }
+      }
+    });
   }
 
   onSearch() {
