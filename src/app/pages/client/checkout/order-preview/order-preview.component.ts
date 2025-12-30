@@ -1,7 +1,6 @@
-import {Component, Input, OnDestroy} from '@angular/core';
-import {Product} from '../../../../core/models/product.model';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {VndCurrencyPipe} from '../../../../shared/pipes/vnd-currency.pipe';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {QrPaymentComponent} from '../qr-payment/qr-payment.component';
 import {CreateOrderRequest, OrderProductRequest} from '../../../../core/models/order.model';
@@ -11,25 +10,29 @@ import {OrderService} from '../../../../core/services/order.service';
 import {ToastrService} from 'ngx-toastr';
 import {WebSocketService} from '../../../../core/services/websocket.service';
 import {PaymentInfo} from '../../../../core/models/payment.model';
+import {CartProduct} from '../../../../core/models/cart.model';
 
 @Component({
   selector: 'app-order-preview',
   standalone: true,
   imports: [
     VndCurrencyPipe,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './order-preview.component.html',
   styleUrl: './order-preview.component.scss'
 })
-export class OrderPreviewComponent implements OnDestroy {
-  @Input() product!: Product;
+export class OrderPreviewComponent implements OnInit, OnDestroy {
+  @Input() products!: CartProduct[];
   private modalRef?: NgbModalRef;
   orderRequest!: CreateOrderRequest;
   authentication!: Authentication;
   paymentTopicName: string = '/topics/payment_notification_';
   isPendingPayment: boolean = false;
+  amount: number = 0;
   discount: number = 0;
+  totalAmount: number = 0;
 
   constructor(
     private modalService: NgbModal,
@@ -58,6 +61,19 @@ export class OrderPreviewComponent implements OnDestroy {
     });
   }
 
+  ngOnInit(): void {
+    this.calculateAmount();
+  }
+
+  calculateAmount() {
+    if (this.products && this.products.length > 0) {
+      this.amount = this.products.reduce((total, cartProduct) => {
+        return total + Number(cartProduct.price);
+      }, 0);
+      this.totalAmount = this.amount;
+    }
+  }
+
   payOrder(paymentInfo: PaymentInfo) {
     this.modalRef = this.modalService.open(QrPaymentComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.paymentInfo = paymentInfo;
@@ -77,8 +93,8 @@ export class OrderPreviewComponent implements OnDestroy {
       products: []
     }
     const orderProduct: OrderProductRequest = {
-      productId: this.product.id,
-      shopId: this.product.shopId
+      productId: this.products[0].productId,
+      shopId: this.products[0].shopId
     }
     this.orderRequest.products = [orderProduct];
 

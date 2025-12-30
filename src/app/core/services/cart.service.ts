@@ -72,6 +72,7 @@ export class CartService {
     const products = Array.isArray(cart?.products) ? cart.products : [];
     const oldProductIndex = products.findIndex(cartProduct => cartProduct.productId === product.id);
     let cartProduct: CartProduct = {
+      shopId: product.shopId,
       productId: product.id,
       productName: product.name,
       thumbnail: product.thumbnailUrl,
@@ -85,6 +86,7 @@ export class CartService {
     if (oldProductIndex !== -1) {
       products[oldProductIndex] = {
         ...products[oldProductIndex],
+        shopId: cartProduct.shopId,
         productName: cartProduct.productName,
         thumbnail: cartProduct.thumbnail,
         price: cartProduct.price,

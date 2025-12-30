@@ -18,17 +18,21 @@
 
     <ng-container *ngIf="!isPendingPayment">
       <div class="order-detail d-flex justify-content-between">
-        <div class="flex-grow-1 shadow-sm" *ngIf="product">
-          <div class="d-flex align-items-start">
-            <div style="width: 100px; max-width: 20%">
-              <img class="img-fluid rounded" [src]="product.thumbnailUrl" alt="">
-            </div>
-            <div class="w-75 ms-3">
-              <p class="text-sm font-weight-bold mb-0">{{ product.name }}</p>
-              <p class="text-sm mt-1">{{ product.price | vndCurrency }}</p>
-            </div>
+        <ng-container *ngIf="products && products.length > 0">
+          <div class="flex-grow-1 shadow-sm">
+            <ng-container *ngFor="let product of products">
+              <div class="d-flex align-items-start mb-3" *ngIf="product">
+                <div style="width: 64px; max-width: 15%; aspect-ratio: 1/1">
+                  <img class="img-fluid rounded w-100 h-100" [src]="product.thumbnail" alt="">
+                </div>
+                <div class="w-75 ms-3">
+                  <p class="text-sm font-weight-bold mb-0">{{ product.productName }}</p>
+                  <p class="text-sm mt-1">{{ product.price | vndCurrency }}</p>
+                </div>
+              </div>
+            </ng-container>
           </div>
-        </div>
+        </ng-container>
 
         <div style="width: 450px; max-width: 40%" class="p-4 pt-0 shadow-sm">
           <div class="flex justify-between items-center mb-3">
@@ -61,8 +65,8 @@
         <h5 class="font-weight-bold mb-3">Chi tiết thanh toán</h5>
 
         <div class="d-flex align-items-center">
-          <span style="width: 130px" class="me-2">Tổng tiền hàng: </span>
-          <span>{{ product.price | vndCurrency }}</span>
+          <span style="width: 130px" class="me-2">Tổng tiền: </span>
+          <span>{{ amount | vndCurrency }}</span>
         </div>
         <div class="d-flex align-items-center">
           <span style="width: 130px" class="me-2">Giảm giá: </span>
@@ -72,7 +76,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex flex-grow-1 align-items-center pt-1">
             <span style="width: 130px" class="font-weight-bold me-2">Tổng thanh toán: </span>
-            <span class="text-danger fs-5 fw-bold">{{ (Number(product.price) - discount) | vndCurrency }}</span>
+            <span class="text-danger fs-5 fw-bold">{{ totalAmount | vndCurrency }}</span>
           </div>
 
           <button class="btn btn-danger w-25 py-2 mt-3" (click)="createOrderRequest()">Đặt hàng</button>

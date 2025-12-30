@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
 import {CartProduct} from '../../../core/models/cart.model';
@@ -8,6 +8,9 @@ import {map, Observable, take} from 'rxjs';
 import {CartService} from '../../../core/services/cart.service';
 import {ICON_DELETE} from '../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {OrderPreviewComponent} from '../checkout/order-preview/order-preview.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   standalone: true,
@@ -20,8 +23,9 @@ export class CartComponent implements OnInit {
   total = 0;
   cartProducts$!: Observable<CartProduct[]>;
   selectedProductIds = new Set<number>();
+  private modalRef?: NgbModalRef;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService, private modalService: NgbModal, private toast: ToastrService) {}
 
   ngOnInit(): void {
     this.cartProducts$ = this.cartService.getCart().pipe(map(cart => cart?.products ?? []));
@@ -73,7 +77,18 @@ export class CartComponent implements OnInit {
   }
 
   proceedToCheckout() {
+    this.cartProducts$.pipe(take(1)).subscribe(allProducts => {
+      const selectedItems = allProducts.filter(cartProduct => {
+        return this.selectedProductIds.has(cartProduct.productId);
+      });
 
+      if (selectedItems.length > 0) {
+        this.modalRef = this.modalService.open(OrderPreviewComponent, { size: 'xl', backdrop: 'static' });
+        this.modalRef.componentInstance.products = selectedItems;
+      } else {
+        this.toast.warning('Vui lòng chọn tối thiểu một sản phẩm để tiếp tục');
+      }
+    });
   }
 
   protected readonly ICON_DELETE = ICON_DELETE;

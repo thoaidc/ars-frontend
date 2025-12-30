@@ -1,5 +1,5 @@
 import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
 import { ProductService } from '../../../core/services/product.service';
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import {Product, ProductOptionValueDTO, SelectedOptions} from '../../../core/models/product.model';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {OrderPreviewComponent} from '../checkout/order-preview/order-preview.component';
-import {CartProductOption} from '../../../core/models/cart.model';
+import {CartProduct, CartProductOption} from '../../../core/models/cart.model';
 
 @Component({
   standalone: true,
@@ -48,8 +48,7 @@ export class ProductDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private modalService: NgbModal,
-    private router: Router
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +81,20 @@ export class ProductDetailComponent implements OnInit {
 
   buyNow(product: Product) {
     this.modalRef = this.modalService.open(OrderPreviewComponent, { size: 'xl', backdrop: 'static' });
-    this.modalRef.componentInstance.product = product;
+    const options = this.convertSelectedOptionsToCartOptions(this.selectedOptions);
+    const productCheckout: CartProduct = {
+      shopId: product.shopId,
+      productId: product.id,
+      productName: product.name,
+      thumbnail: product.thumbnailUrl,
+      price: product.price
+    };
+
+    if (options && Array.isArray(options)) {
+      productCheckout.data = JSON.stringify([...options].sort((a, b) => a.id - b.id));
+    }
+
+    this.modalRef.componentInstance.products = [productCheckout];
   }
 
   changeImage(imageUrl: string) {
