@@ -70,8 +70,8 @@ export class CartService {
   addToCart(product: Product, options?: CartProductOption[]) {
     const cart = this.cartSubject.value;
     const products = Array.isArray(cart?.products) ? cart.products : [];
-
-    const cartProduct: CartProduct = {
+    const oldProductIndex = products.findIndex(cartProduct => cartProduct.productId === product.id);
+    let cartProduct: CartProduct = {
       productId: product.id,
       productName: product.name,
       thumbnail: product.thumbnailUrl,
@@ -82,45 +82,29 @@ export class CartService {
       cartProduct.data = JSON.stringify([...options].sort((a, b) => a.id - b.id));
     }
 
+    if (oldProductIndex !== -1) {
+      products[oldProductIndex] = {
+        ...products[oldProductIndex],
+        productName: cartProduct.productName,
+        thumbnail: cartProduct.thumbnail,
+        price: cartProduct.price,
+        data: cartProduct.data
+      }
+    } else {
+      products.push(cartProduct);
+    }
+
     const newCart: Cart = cart
       ? {
         ...cart,
-        products: [...products, cartProduct],
-        quantity: cart.quantity + 1
+        products: products,
+        quantity: products.length
       }
       : {
         userId: this.userId,
         quantity: 1,
         products: [cartProduct]
       };
-
-    this.cartSubject.next(newCart);
-    this.persistCart(newCart).subscribe();
-  }
-
-  updateCartProductOptions(
-    productId: number,
-    oldOptions: CartProductOption[],
-    newOptions: CartProductOption[]
-  ) {
-    const cart = this.cartSubject.value;
-    if (!cart) return;
-
-    const oldData = JSON.stringify(oldOptions);
-    const newData = JSON.stringify(newOptions);
-
-    const products = cart.products.map(p => {
-      if (p.productId === productId && p.data === oldData) {
-        return { ...p, data: newData };
-      }
-      return p;
-    });
-
-    const newCart: Cart = {
-      ...cart,
-      products,
-      quantity: products.length
-    };
 
     this.cartSubject.next(newCart);
     this.persistCart(newCart).subscribe();
@@ -135,22 +119,6 @@ export class CartService {
     const newCart = {
       ...cart,
       products,
-      quantity: products.length
-    };
-
-    this.cartSubject.next(newCart);
-    this.persistCart(newCart).subscribe();
-  }
-
-  removeMultipleFromCart(productIds: number[]) {
-    const cart = this.cartSubject.value;
-    if (!cart) return;
-
-    const products = cart.products.filter(p => !productIds.includes(p.productId));
-
-    const newCart = {
-      ...cart,
-      products: products,
       quantity: products.length
     };
 

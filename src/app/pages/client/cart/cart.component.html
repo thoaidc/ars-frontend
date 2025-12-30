@@ -16,35 +16,40 @@
         <div class="cart-left">
           <div class="wrap-table-shopping-cart">
             <table class="table-shopping-cart">
-              <colgroup>
-                <col style="width:5%">
-                <col style="width:15%">
-                <col style="width:40%">
-                <col style="width:30%">
-                <col style="width:10%">
-              </colgroup>
-
               <tr class="table_head">
-                <th class="column-1 text-center">
-                  <input type="checkbox"/>
+                <th class="text-center" style="width: 32px;">
+                  <input
+                    *ngIf="cartProducts$ | async as products"
+                    class="cursor-pointer me-3"
+                    style="width: 20px; height: 20px"
+                    type="checkbox"
+                    [checked]="products.length > 0 && selectedProductIds.size === products.length"
+                    (change)="toggleAll(allCheck.checked)" #allCheck
+                  />
                 </th>
-                <th class="column-1">Mẫu thiết kế</th>
-                <th class="column-2"></th>
-                <th class="column-4 text-right">Tổng</th>
-                <th class="column-4 text-center"></th>
+                <th style="width: 100px;">Mẫu thiết kế</th>
+                <th></th>
+                <th class="text-right" style="width: 154px;">Tổng</th>
+                <th class="text-center" style="width: 64px"></th>
               </tr>
 
               <tr *ngFor="let cartProduct of cartProducts$ | async; let i = index" class="table_row" style="border-top:1px solid #eee;">
                 <td class="text-center">
-                  <input type="checkbox"/>
+                  <input
+                    class="cursor-pointer me-3"
+                    style="width: 20px; height: 20px"
+                    type="checkbox"
+                    [checked]="isSelected(cartProduct)"
+                    (change)="onItemSelect(cartProduct)"
+                  />
                 </td>
-                <td class="column-1">
+                <td>
                   <img [src]="cartProduct.thumbnail" alt="" style="width:80px; height:80px; object-fit:cover;">
                 </td>
-                <td class="column-2">{{ cartProduct.productName }}</td>
-                <td class="column-3 text-right">{{ cartProduct.price | vndCurrency }}</td>
-                <td class="column-3 text-right">
-                  <span (click)="removeItem(cartProduct)" [innerHTML]="ICON_DELETE | safeHtml"></span>
+                <td class="text-limit-2">{{ cartProduct.productName }}</td>
+                <td class="text-right">{{ cartProduct.price | vndCurrency }}</td>
+                <td class="text-right">
+                  <span class="cursor-pointer" (click)="removeItem(cartProduct)" [innerHTML]="ICON_DELETE | safeHtml"></span>
                 </td>
               </tr>
             </table>
