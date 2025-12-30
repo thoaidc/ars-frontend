@@ -11,6 +11,7 @@ import {ToastrService} from 'ngx-toastr';
 import {WebSocketService} from '../../../../core/services/websocket.service';
 import {PaymentInfo} from '../../../../core/models/payment.model';
 import {CartProduct} from '../../../../core/models/cart.model';
+import {CartService} from '../../../../core/services/cart.service';
 
 @Component({
   selector: 'app-order-preview',
@@ -40,7 +41,8 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private orderService: OrderService,
     private toast: ToastrService,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private cartService: CartService
   ) {
     this.authService.subscribeAuthenticationState().subscribe(response => {
       if (response) {
@@ -92,16 +94,26 @@ export class OrderPreviewComponent implements OnInit, OnDestroy {
       voucherIds: [],
       products: []
     }
-    const orderProduct: OrderProductRequest = {
-      productId: this.products[0].productId,
-      shopId: this.products[0].shopId
-    }
-    this.orderRequest.products = [orderProduct];
+
+    this.orderRequest.products = this.products.map(product => {
+      const orderProduct: OrderProductRequest = {
+        productId: product.productId,
+        shopId: product.shopId
+      }
+
+      if (product.data && product.data !== '') {
+        orderProduct.data = product.data;
+      }
+
+      return orderProduct;
+    });
 
     this.orderService.createOrder(this.orderRequest).subscribe(response => {
       if (response && response.status) {
         this.isPendingPayment = true;
         this.toast.success('Tạo đơn hành thành công');
+        const productOrderedIds = this.orderRequest.products.map(product => product.productId);
+        this.cartService.removeMultipleFromCart(productOrderedIds);
       }
     });
   }

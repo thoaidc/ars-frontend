@@ -127,4 +127,20 @@ export class CartService {
     this.cartSubject.next(newCart);
     this.persistCart(newCart).subscribe();
   }
+
+  removeMultipleFromCart(productIds: number[]) {
+    const cart = this.cartSubject.value;
+    if (!cart) return;
+
+    const products = cart.products.filter(p => !productIds.includes(p.productId));
+
+    const newCart = {
+      ...cart,
+      products: products,
+      quantity: products.length
+    };
+
+    this.cartSubject.next(newCart);
+    this.persistCart(newCart).subscribe();
+  }
 }
