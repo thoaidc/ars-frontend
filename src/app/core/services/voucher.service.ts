@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
-import {API_VOUCHER} from '../../constants/api.constants';
+import {API_VOUCHER, API_VOUCHER_PUBLIC} from '../../constants/api.constants';
 import {map, Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
 import {createSearchRequestParams} from '../utils/request.util';
@@ -17,6 +17,19 @@ export class VoucherService {
   ) {}
 
   private voucherAPI = this.applicationConfigService.getEndpointFor(API_VOUCHER);
+  private voucherPublicAPI = this.applicationConfigService.getEndpointFor(API_VOUCHER_PUBLIC);
+
+  getAllForUser(shopIds: number[]): Observable<BaseResponse<Voucher[]>> {
+    let params = new HttpParams();
+
+    if (shopIds && shopIds.length > 0) {
+      shopIds.forEach(id => {
+        params = params.append('shopIds', id.toString());
+      });
+    }
+
+    return this.http.get<BaseResponse<Voucher[]>>(this.voucherPublicAPI, {params: params});
+  }
 
   getAllWithPaging(request: VouchersFilter): Observable<BaseResponse<Voucher[]>> {
     const params = createSearchRequestParams(request);

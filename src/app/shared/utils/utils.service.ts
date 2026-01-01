@@ -232,4 +232,20 @@ export class UtilsService {
 
     return redirectUrl;
   }
+
+  formatDateNumber(dateNum: number | undefined): string {
+    if (!dateNum)
+      return '';
+
+    const s = dateNum.toString();
+
+    if (s.length !== 8)
+      return s;
+
+    const year = s.substring(0, 4);
+    const month = s.substring(4, 6);
+    const day = s.substring(6, 8);
+
+    return `${day}/${month}/${year}`;
+  }
 }
