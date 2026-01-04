@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 import { VndCurrencyPipe } from '../../../shared/pipes/vnd-currency.pipe';
 import { AuthService } from '../../../core/services/auth.service';
-import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../constants/order.constants';
-import {Order, OrderDetail} from '../../../core/models/order.model';
+import {ORDER_STATUS} from '../../../constants/order.constants';
+import {Order} from '../../../core/models/order.model';
 import {OrderService} from '../../../core/services/order.service';
 import {Authentication} from '../../../core/models/auth.model';
+import {OrderDetailComponent} from './order-detail/order-detail.component';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -19,10 +21,14 @@ export class OrderHistoryComponent implements OnInit {
   orders: Order[] = [];
   loading = false;
   authentication!: Authentication;
-  selectedOrder?: OrderDetail;
-  showDetailModal: boolean = false;
+  private modalRef?: NgbModalRef;
 
-  constructor(private authService: AuthService, private router: Router, private orderService: OrderService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private orderService: OrderService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.authService.subscribeAuthenticationState().subscribe(response => {
@@ -30,7 +36,7 @@ export class OrderHistoryComponent implements OnInit {
         this.authentication = response;
         this.fetchOrders();
       }
-    })
+    });
   }
 
   private fetchOrders() {
@@ -46,23 +52,8 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   viewOrderDetail(orderId: number) {
-    this.loading = true;
-    this.orderService.getByIdForUser(orderId).subscribe({
-      next: (data) => {
-        this.selectedOrder = data;
-        this.showDetailModal = true;
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Lỗi tải chi tiết đơn hàng', err);
-        this.loading = false;
-      }
-    });
-  }
-
-  closeModal() {
-    this.showDetailModal = false;
-    this.selectedOrder = undefined;
+    this.modalRef = this.modalService.open(OrderDetailComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.componentInstance.orderId = orderId;
   }
 
   logout(){
@@ -71,6 +62,4 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   protected readonly ORDER_STATUS = ORDER_STATUS;
-  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
-  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }
