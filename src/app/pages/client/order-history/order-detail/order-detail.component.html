@@ -27,6 +27,7 @@
         <th style="width: 60px;">Ảnh</th>
         <th>Sản phẩm</th>
         <th style="width: 120px" class="text-end">Thành tiền</th>
+        <th style="width: 80px" class="text-center" *ngIf="orderDetail.status === 'COMPLETED'">Tải file</th>
       </tr>
       </thead>
       <tbody>
@@ -42,8 +43,11 @@
           <div class="small text-muted">Mã SP: {{ prod.productCode }}</div>
           <div *ngIf="prod.note" class="small text-info fst-italic">Ghi chú: {{ prod.note }}</div>
         </td>
-        <td class="text-end fw-bold">
+        <td class="align-middle text-end fw-bold">
           {{ prod.totalAmount | vndCurrency }}
+        </td>
+        <td *ngIf="orderDetail.status === 'COMPLETED'" class="align-middle text-center download-icon">
+          <span [innerHTML]="ICON_DOWNLOAD | safeHtml" (click)="downloadFile(prod.id)"></span>
         </td>
       </tr>
       </tbody>

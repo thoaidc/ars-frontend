@@ -8,6 +8,8 @@ import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap'
 import {QrPaymentComponent} from '../../checkout/qr-payment/qr-payment.component';
 import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../../constants/order.constants';
 import {FormsModule} from '@angular/forms';
+import {ICON_DOWNLOAD} from '../../../../shared/utils/icon';
+import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
 
 @Component({
   selector: 'app-order-detail',
@@ -18,7 +20,8 @@ import {FormsModule} from '@angular/forms';
     NgIf,
     VndCurrencyPipe,
     NgClass,
-    FormsModule
+    FormsModule,
+    SafeHtmlPipe
   ],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.scss'
@@ -56,6 +59,30 @@ export class OrderDetailComponent implements OnInit {
     this.modalRef.result.then().finally(() => this.getOrderDetail());
   }
 
+  downloadFile(orderProductId: number) {
+    this.orderService.downloadProductFile(orderProductId).subscribe({
+      next: response => {
+        if (response && response.body) {
+          const blob = new Blob([response.body], { type: 'application/zip' });
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `ars_design_${orderProductId}.zip`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        } else {
+          this.toast.error('Không tìm thấy dữ liệu');
+        }
+      },
+      error: error => {
+        console.log(error);
+        this.toast.error('Không thể tải file');
+      }
+    });
+  }
+
   dismiss() {
     this.activeModal.dismiss(false);
   }
@@ -63,4 +90,5 @@ export class OrderDetailComponent implements OnInit {
   protected readonly ORDER_STATUS = ORDER_STATUS;
   protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
   protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
+  protected readonly ICON_DOWNLOAD = ICON_DOWNLOAD;
 }
