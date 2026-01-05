@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {
   API_ORDER,
@@ -80,7 +80,11 @@ export class OrderService {
 
   downloadProductFile(productId: number): Observable<HttpResponse<Blob>> {
     const url = `${this.orderAPI}/products/files/download/${productId}`;
+    const headers = new HttpHeaders({
+      'Accept': 'application/octet-stream, */*'
+    });
     return this.http.get<Blob>(url, {
+      headers: headers,
       observe: 'response',
       responseType: 'blob' as 'json'
     });

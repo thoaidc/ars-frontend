@@ -10,6 +10,7 @@ import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../../constant
 import {FormsModule} from '@angular/forms';
 import {ICON_DOWNLOAD} from '../../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-order-detail',
@@ -61,13 +62,26 @@ export class OrderDetailComponent implements OnInit {
 
   downloadFile(orderProductId: number) {
     this.orderService.downloadProductFile(orderProductId).subscribe({
-      next: response => {
+      next: (response: HttpResponse<Blob>) => {
         if (response && response.body) {
-          const blob = new Blob([response.body], { type: 'application/zip' });
+          const contentType = response.headers.get('content-type') || 'application/octet-stream';
+          const contentDisposition = response.headers.get('content-disposition');
+          let fileName = `file_${orderProductId}`;
+
+          if (contentDisposition) {
+            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = fileNameRegex.exec(contentDisposition);
+            if (matches != null && matches[1]) {
+              fileName = matches[1].replace(/['"]/g, '');
+              fileName = decodeURI(fileName.replace(/^UTF-8''/, ''));
+            }
+          }
+
+          const blob = new Blob([response.body], { type: contentType });
           const url = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = url;
-          link.download = `ars_design_${orderProductId}.zip`;
+          link.download = fileName;
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
