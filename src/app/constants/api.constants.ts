@@ -25,6 +25,7 @@ export const API_CART = API_SECURE + '/carts';
 
 // Orders API constants
 export const API_ORDER = API_SECURE + '/orders';
+export const API_ORDER_UPLOAD_DESIGN_FILE = API_ORDER + '/products/files/uploads';
 export const API_ORDER_SALES_TODAY = API_ORDER + '/today/by-shop';
 export const API_ORDER_SALES_ADMIN_TODAY = API_ORDER + '/today';
 export const API_ORDER_BY_USER = API_ORDER + '/by-user';

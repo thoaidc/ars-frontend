@@ -43,9 +43,10 @@ export class OrderHistoryComponent implements OnInit {
     this.loading = true;
     const searchRequest = {
       page: 0,
-      size: 100
+      size: 100,
+      userId: this.authentication.id
     };
-    this.orderService.getAllWithPaging(searchRequest).subscribe(response => {
+    this.orderService.getAllWithPagingForUser(searchRequest).subscribe(response => {
       this.orders = response.result || [];
       this.loading = false;
     });

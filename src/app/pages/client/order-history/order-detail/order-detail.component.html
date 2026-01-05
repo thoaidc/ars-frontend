@@ -77,7 +77,7 @@
   <button class="cancel-button-dialog" (click)="dismiss()">Đóng</button>
   <button
     class="save-button-dialog"
-    *ngIf="orderDetail?.paymentStatus === 'UNPAID'"
+    *ngIf="orderDetail?.paymentStatus === 'UNPAID' && orderDetail?.status === 'PENDING'"
     (click)="payOrder()"
   >
     Thanh toán

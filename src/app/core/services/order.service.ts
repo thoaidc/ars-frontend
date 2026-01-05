@@ -6,7 +6,8 @@ import {
   API_ORDER_BY_SHOP,
   API_ORDER_BY_USER,
   API_ORDER_SALES_ADMIN_TODAY,
-  API_ORDER_SALES_TODAY
+  API_ORDER_SALES_TODAY,
+  API_ORDER_UPLOAD_DESIGN_FILE
 } from '../../constants/api.constants';
 import {map, Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
@@ -23,10 +24,15 @@ export class OrderService {
   ) {}
 
   private orderAPI = this.applicationConfigService.getEndpointFor(API_ORDER);
+  private orderUploadDesignFileAPI = this.applicationConfigService.getEndpointFor(API_ORDER_UPLOAD_DESIGN_FILE);
   private orderByUserAPI = this.applicationConfigService.getEndpointFor(API_ORDER_BY_USER);
   private orderByShopAPI = this.applicationConfigService.getEndpointFor(API_ORDER_BY_SHOP);
   private totalOrdersTodayAPI = this.applicationConfigService.getEndpointFor(API_ORDER_SALES_TODAY);
   private totalOrdersTodayAdminAPI = this.applicationConfigService.getEndpointFor(API_ORDER_SALES_ADMIN_TODAY);
+
+  uploadDesign(formData: FormData): Observable<BaseResponse<any>> {
+    return this.http.post<BaseResponse<any>>(this.orderUploadDesignFileAPI, formData);
+  }
 
   getOrderTodayForAdmin(): Observable<number> {
     return this.http.get<BaseResponse<number>>(this.totalOrdersTodayAdminAPI, {})

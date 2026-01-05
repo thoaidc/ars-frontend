@@ -1,5 +1,6 @@
 import {BaseFilterRequest} from './request.model';
 import {AuditingEntity} from './common.model';
+import {CartProductOption} from './cart.model';
 
 export interface OrdersFilter extends BaseFilterRequest {
   userId?: number;
@@ -50,7 +51,14 @@ export interface OrderProduct {
   productThumbnail: string;
   note?: string;
   data?: string;
+  metadata?: OrderProductMetadata;
   totalAmount: number;
+}
+
+export interface OrderProductMetadata {
+  customizable: boolean;
+  designFile?: string;
+  selectedOptions?: CartProductOption[];
 }
 
 export interface CreateOrderRequest {
