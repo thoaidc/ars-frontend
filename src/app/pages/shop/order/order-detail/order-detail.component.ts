@@ -4,11 +4,14 @@ import {FormsModule} from '@angular/forms';
 import {Location, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
 import {OrderDetail, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
 import {OrderService} from '../../../../core/services/order.service';
+import {ICON_UPLOAD} from "../../../../shared/utils/icon";
+import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
+import {UploadDesignComponent} from '../upload-design-file/upload-design-file.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -19,7 +22,9 @@ import {OrderService} from '../../../../core/services/order.service';
     NgForOf,
     NgIf,
     TranslatePipe,
-    NgClass
+    NgClass,
+    SafeHtmlPipe,
+    NgbTooltip
   ],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.scss'
@@ -79,7 +84,15 @@ export class OrderDetailComponent {
 
   }
 
+  openUploadModal(orderProductId: number) {
+    const modalRef = this.modalService.open(UploadDesignComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.orderProductId = orderProductId;
+    modalRef.result.then().finally(() => this.ngOnInit());
+  }
+
   dismiss() {
     this.activeModal.dismiss(false);
   }
+
+  protected readonly ICON_UPLOAD = ICON_UPLOAD;
 }

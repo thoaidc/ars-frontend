@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h4 class="modal-title">Tải lên bản thiết kế</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body">
+  <div class="upload-container"
+       (click)="fileInput.click()"
+       (drop)="onFileDropped($event)"
+       (dragover)="onDragOver($event)"
+       (dragleave)="onDragLeave()"
+       [class.dragging]="isDragging">
+
+    <input type="file" #fileInput (change)="onFileSelected($event)" hidden accept=".zip,.pdf,.jpg,.png">
+
+    <div class="upload-icon">
+      <i class="bi bi-cloud-arrow-up fs-1"></i>
+    </div>
+    <p class="mt-2">Kéo thả file vào đây hoặc <b>nhấp để chọn file</b></p>
+    <small class="text-muted">Chấp nhận: .zip, .pdf, .jpg, .png (Tối đa 20MB)</small>
+  </div>
+
+  <div *ngIf="selectedFile" class="mt-4 p-3 border rounded d-flex align-items-center justify-content-between bg-light">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-file-earmark-zip fs-3 me-3 text-primary"></i>
+      <div>
+        <div class="fw-bold text-truncate" style="max-width: 250px;">{{ selectedFile.name }}</div>
+        <small class="text-muted">{{ (selectedFile.size / 1024 / 1024) | number:'1.1-2' }} MB</small>
+      </div>
+    </div>
+    <button class="btn btn-link text-danger" (click)="removeFile()">
+      <i class="bi bi-trash"></i> Xóa
+    </button>
+  </div>
+
+  <div class="progress mt-3" *ngIf="isUploading">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" [style.width.%]="uploadProgress"></div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Hủy</button>
+  <button type="button" class="btn btn-primary" [disabled]="!selectedFile || isUploading" (click)="upload()">
+    <span *ngIf="isUploading" class="spinner-border spinner-border-sm me-1"></span>
+    Xác nhận tải lên
+  </button>
+</div>

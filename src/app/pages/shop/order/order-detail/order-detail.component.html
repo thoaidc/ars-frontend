@@ -200,6 +200,7 @@
               <th>{{ 'text.price' | translate }}</th>
               <th>{{ 'text.note' | translate }}</th>
               <th>{{ 'text.customizable' | translate }}</th>
+              <th *ngIf="subOrderDetail?.status === 'COMPLETED'">{{ 'global.action' | translate }}</th>
             </tr>
             </thead>
             <tbody>
@@ -210,7 +211,17 @@
                 <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.productName }}</td>
                 <td class="break-word-table text-right" (click)="view(product.id)">{{ product.totalAmount }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.note || '' }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ !!product.data }}</td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.metadata?.customizable }}</td>
+                <td class="break-word-table text-center" *ngIf="subOrderDetail?.status === 'COMPLETED'">
+                  <span
+                    *ngIf="product.metadata?.customizable && !product.metadata?.designFile"
+                    (click)="openUploadModal(product.id)"
+                    [innerHTML]="ICON_UPLOAD | safeHtml"
+                    ngbTooltip="Gửi File thiết kế"
+                  >
+                  </span>
+                  <span *ngIf="product.metadata?.customizable && product.metadata?.designFile">Đã thêm file thiết kế</span>
+                </td>
               </tr>
             </ng-container>
             </tbody>
