@@ -46,7 +46,7 @@
                 <td>
                   <img [src]="cartProduct.thumbnail" alt="" style="width:80px; height:80px; object-fit:cover;">
                 </td>
-                <td class="text-limit-2">{{ cartProduct.productName }}</td>
+                <td class="text-limit-2 cursor-pointer" [routerLink]="['/client/product', cartProduct.productId]">{{ cartProduct.productName }}</td>
                 <td class="text-right">{{ cartProduct.price | vndCurrency }}</td>
                 <td class="text-right">
                   <span class="cursor-pointer" (click)="removeItem(cartProduct)" [innerHTML]="ICON_DELETE | safeHtml"></span>

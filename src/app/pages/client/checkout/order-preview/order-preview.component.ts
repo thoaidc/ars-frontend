@@ -10,11 +10,12 @@ import {OrderService} from '../../../../core/services/order.service';
 import {ToastrService} from 'ngx-toastr';
 import {WebSocketService} from '../../../../core/services/websocket.service';
 import {PaymentInfo} from '../../../../core/models/payment.model';
-import {CartProduct} from '../../../../core/models/cart.model';
+import {CartProduct, CartProductOption} from '../../../../core/models/cart.model';
 import {CartService} from '../../../../core/services/cart.service';
 import {VoucherService} from '../../../../core/services/voucher.service';
 import {Voucher} from '../../../../core/models/voucher.model';
 import {UtilsService} from '../../../../shared/utils/utils.service';
+import {CartDetailComponent} from '../../cart/cart-detail/cart-detail.component';
 
 @Component({
   selector: 'app-order-preview',
@@ -155,6 +156,22 @@ export class OrderPreviewComponent implements OnDestroy {
     });
 
     this.totalAmount = Math.max(0, this.rawAmount - totalDiscount);
+  }
+
+  previewOrderProduct(product: CartProduct) {
+    let options: CartProductOption[] = [];
+
+    if (product.data) {
+      options = JSON.parse(product.data) as CartProductOption[];
+    }
+
+    if (options && options.length > 0) {
+      this.modalRef = this.modalService.open(CartDetailComponent, {size: 'lg', backdrop: 'static'});
+      this.modalRef.componentInstance.cartProductOptions = options;
+    } else {
+      this.modalRef = this.modalService.open(CartDetailComponent, { size: 'lg', backdrop: 'static' });
+      this.modalRef.componentInstance.thumbnail = product.thumbnail;
+    }
   }
 
   payOrder(paymentInfo: PaymentInfo) {

@@ -21,7 +21,7 @@
         <ng-container *ngIf="products && products.length > 0">
           <div class="flex-grow-1 shadow-sm">
             <ng-container *ngFor="let product of products">
-              <div class="d-flex align-items-start mb-3" *ngIf="product">
+              <div class="d-flex align-items-start mb-3 cursor-pointer" *ngIf="product" (click)="previewOrderProduct(product)">
                 <div style="width: 64px; max-width: 15%; aspect-ratio: 1/1">
                   <img class="img-fluid rounded w-100 h-100" [src]="product.thumbnail" alt="">
                 </div>

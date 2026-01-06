@@ -1,0 +1,15 @@
+<div class="modal-body p-4" style="max-height: 75vh; overflow-y: auto">
+  <div class="text-end">
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="dismiss()"></button>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-bold mb-4 text-gray-500">Xem trước mẫu thiết kế</h2>
+
+    <div class="w-100 overflow-hidden d-flex justify-content-center align-items-center mb-3 rounded px-3">
+      <div #imageContainer class="d-flex justify-content-center align-items-center" style="width: 450px; height: 450px">
+        <img [src]="type === 1 ? thumbnail : imagePreview" class="img-fluid w-100 main-image object-fit-cover" alt="">
+      </div>
+    </div>
+  </div>
+</div>
