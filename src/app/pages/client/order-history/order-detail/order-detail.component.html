@@ -82,4 +82,11 @@
   >
     Thanh toán
   </button>
+  <button
+    class="save-button-dialog"
+    *ngIf="orderDetail?.status === 'COMPLETED' && notReviewed"
+    (click)="openModalReview()"
+  >
+    Đánh giá
+  </button>
 </div>

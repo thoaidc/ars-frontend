@@ -1,0 +1,42 @@
+<div class="modal-header p-4">
+  <h5 class="modal-title">Viết đánh giá</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="dismiss()"></button>
+</div>
+
+<div class="modal-body p-4" id="order-product-review" style="max-height: 600px; overflow-y: scroll">
+  <form [formGroup]="reviewForm">
+    <div formArrayName="reviews">
+      <div *ngFor="let item of reviewArray.controls; let i = index" [formGroupName]="i" class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex align-items-start mb-3">
+            <img [src]="item.value.productImage" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;" alt="">
+            <div class="d-flex flex-column align-items-start justify-content-start">
+              <h6 class="">{{ item.value.productName }}</h6>
+              <h6 class="mb-0">{{ item.value.price | vndCurrency }}</h6>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nội dung đánh giá</label>
+            <textarea formControlName="comment" class="form-control" rows="3" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm..."></textarea>
+            <div *ngIf="item.get('comment')?.invalid && item.get('comment')?.touched" class="text-danger small mt-1">
+              Vui lòng nhập ít nhất 10 ký tự.
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Hình ảnh thực tế (1 ảnh)</label>
+            <input type="file" class="form-control" (change)="onFileSelect($event, i)" accept="image/*">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer p-4">
+  <button class="cancel-button-dialog" (click)="dismiss()">Hủy</button>
+  <button type="button" class="btn btn-primary" (click)="submitReviews()" [disabled]="reviewForm.invalid">
+    Gửi tất cả đánh giá
+  </button>
+</div>

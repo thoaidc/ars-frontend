@@ -11,6 +11,10 @@ import {FormsModule} from '@angular/forms';
 import {ICON_DOWNLOAD} from '../../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
 import {HttpResponse} from '@angular/common/http';
+import {OrderProductReviewComponent} from '../order-product-review/order-product-review.component';
+import {ReviewService} from '../../../../core/services/review.service';
+import {AuthService} from '../../../../core/services/auth.service';
+import {Authentication} from '../../../../core/models/auth.model';
 
 @Component({
   selector: 'app-order-detail',
@@ -31,15 +35,24 @@ export class OrderDetailComponent implements OnInit {
   orderDetail?: OrderDetail;
   @Input() orderId: number = 0;
   private modalRef?: NgbModalRef;
+  notReviewed: boolean = false;
+  authentication!: Authentication;
 
   constructor(
     public activeModal: NgbActiveModal,
     private modalService: NgbModal,
     private orderService: OrderService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private reviewService: ReviewService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.authService.subscribeAuthenticationState().subscribe(response => {
+      if (response) {
+        this.authentication = response;
+      }
+    });
     this.getOrderDetail();
   }
 
@@ -94,6 +107,16 @@ export class OrderDetailComponent implements OnInit {
         console.log(error);
         this.toast.error('Không thể tải file');
       }
+    });
+  }
+
+  openModalReview() {
+    this.modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.componentInstance.products = this.orderDetail?.products;
+    this.modalRef.result.finally(() => {
+      this.reviewService.getAllWithPaging({page: 0, size: 10, shopId: 1, productId: 1}).subscribe(response => {
+        this.notReviewed = (response.result?.length || 0) === 0;
+      });
     });
   }
 

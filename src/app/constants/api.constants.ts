@@ -31,6 +31,10 @@ export const API_ORDER_SALES_ADMIN_TODAY = API_ORDER + '/today';
 export const API_ORDER_BY_USER = API_ORDER + '/by-user';
 export const API_ORDER_BY_SHOP = API_ORDER + '/by-shop';
 
+// Reviews API constants
+export const API_REVIEW = API_SECURE + '/reviews';
+export const API_REVIEW_PUBLIC = API_PUBLIC + '/reviews';
+
 // Shops API constants
 export const API_SHOP = API_SECURE + '/shops'
 
