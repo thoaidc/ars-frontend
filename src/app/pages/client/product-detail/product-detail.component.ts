@@ -10,6 +10,8 @@ import {Product, ProductOptionValueDTO, SelectedOptions} from '../../../core/mod
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {OrderPreviewComponent} from '../checkout/order-preview/order-preview.component';
 import {CartProduct, CartProductOption} from '../../../core/models/cart.model';
+import {Review, ReviewsFilter} from '../../../core/models/review.model';
+import {ReviewService} from '../../../core/services/review.service';
 
 @Component({
   standalone: true,
@@ -28,27 +30,14 @@ export class ProductDetailComponent implements OnInit {
   selectedOptions: SelectedOptions = {};
   @ViewChild('imageContainer') imageContainer!: ElementRef;
   private modalRef?: NgbModalRef;
-
-  reviews = [
-    {
-      rating: 5,
-      title: 'Nguyễn Văn An',
-      comment: 'Thiết kế rất đẹp, chủ shop hỗ trợ nhiệt tình',
-      date: '12/03/2025'
-    },
-    {
-      rating: 4,
-      title: 'Đàm Công Thoại',
-      comment: 'Sản phẩm rất nổi bật, thiết kể trẻ trung',
-      date: '18/12/2025'
-    }
-  ];
+  reviews: Review[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -62,8 +51,21 @@ export class ProductDetailComponent implements OnInit {
         this.product = response;
         this.selectedImage = response.thumbnailUrl;
         this.initSelectedOptions();
+        this.loadProductReviews();
       }
     });
+  }
+
+  loadProductReviews() {
+    const request: ReviewsFilter = {
+      page: 0,
+      size: 100,
+      shopId: this.product.shopId,
+      productId: this.product.id
+    }
+    this.reviewService.getAllWithPaging(request).subscribe(response => {
+      this.reviews = response.result || [];
+    })
   }
 
   addCart(product: Product) {

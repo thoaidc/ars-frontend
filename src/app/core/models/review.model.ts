@@ -25,6 +25,7 @@ export interface SaveReviewRequest {
 export interface ReviewRequest {
   shopId: number;
   productId: number;
+  orderProductId: number;
   image: any;
   content: string;
 }

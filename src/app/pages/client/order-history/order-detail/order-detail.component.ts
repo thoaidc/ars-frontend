@@ -60,6 +60,7 @@ export class OrderDetailComponent implements OnInit {
     this.orderService.getByIdForUser(this.orderId).subscribe({
       next: (data) => {
         this.orderDetail = data;
+        this.checkOrderReviews();
       },
       error: (err) => {
         console.error('Lỗi tải chi tiết đơn hàng', err);
@@ -113,10 +114,21 @@ export class OrderDetailComponent implements OnInit {
   openModalReview() {
     this.modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.products = this.orderDetail?.products;
-    this.modalRef.result.finally(() => {
-      this.reviewService.getAllWithPaging({page: 0, size: 10, shopId: 1, productId: 1}).subscribe(response => {
-        this.notReviewed = (response.result?.length || 0) === 0;
-      });
+    this.modalRef.result.finally(() => this.checkOrderReviews());
+  }
+
+  checkOrderReviews() {
+    if (this.orderDetail?.status !== 'COMPLETED') {
+      return;
+    }
+
+    const request = {
+      customerId: this.authentication.id,
+      productIds: this.orderDetail?.products.map(product => product.id)
+    }
+
+    this.reviewService.checkCustomerReviewForProducts(request).subscribe(response => {
+      this.notReviewed = (response.result?.length || 0) === 0;
     });
   }
 

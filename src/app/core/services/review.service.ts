@@ -24,6 +24,10 @@ export class ReviewService {
     return this.http.get<BaseResponse<Review[]>>(this.reviewPublicAPI, {params: params});
   }
 
+  checkCustomerReviewForProducts(request: any): Observable<BaseResponse<Review[]>> {
+    return this.http.post<BaseResponse<Review[]>>(this.reviewAPI + '/check', request);
+  }
+
   save(request: SaveReviewRequest): Observable<BaseResponse<any>> {
     const formData = new FormData();
     formData.append('customerId', request.customerId.toString());
@@ -32,6 +36,7 @@ export class ReviewService {
     request.reviews.forEach((review, index) => {
       formData.append(`reviews[${index}].shopId`, review.shopId.toString());
       formData.append(`reviews[${index}].productId`, review.productId.toString());
+      formData.append(`reviews[${index}].orderProductId`, review.orderProductId.toString());
       formData.append(`reviews[${index}].content`, review.content);
 
       if (review.image) {

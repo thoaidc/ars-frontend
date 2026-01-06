@@ -53,6 +53,7 @@ export class OrderProductReviewComponent implements OnInit {
   createProductReview(product: OrderProduct): FormGroup {
     return this.fb.group({
       shopId: [product.shopId],
+      orderProductId: [product.id],
       productId: [product.productId],
       productName: [product.productName],
       productImage: [product.productThumbnail],
@@ -80,6 +81,7 @@ export class OrderProductReviewComponent implements OnInit {
         customerName: this.authentication.fullname,
         reviews: formValues.map((item: any) => ({
           shopId: item.shopId,
+          orderProductId: item.orderProductId,
           productId: item.productId,
           content: item.comment,
           image: item.reviewImage
