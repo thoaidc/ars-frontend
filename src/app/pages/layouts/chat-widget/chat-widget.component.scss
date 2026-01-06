@@ -1,0 +1,42 @@
+.chat-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+  background: #34a2ff;
+}
+
+.card-header {
+  background: #34a2ff;
+}
+
+.chat-container {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  height: 450px;
+  z-index: 1000;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.chat-box {
+  background-color: #f8f9fa;
+}
+
+.max-w-80 {
+  max-width: 80%;
+  font-size: 0.9rem;
+}
+
+.card-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}

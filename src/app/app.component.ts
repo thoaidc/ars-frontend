@@ -5,11 +5,12 @@ import {WebSocketService} from './core/services/websocket.service';
 import {LoadingBarModule} from '@ngx-loading-bar/core';
 import {AuthService} from './core/services/auth.service';
 import {UtilsService} from './shared/utils/utils.service';
+import {ChatWidgetComponent} from './pages/layouts/chat-widget/chat-widget.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoadingBarModule],
+  imports: [RouterOutlet, LoadingBarModule, ChatWidgetComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
