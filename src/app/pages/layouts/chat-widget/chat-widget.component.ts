@@ -5,11 +5,9 @@ import {Authentication} from '../../../core/models/auth.model';
 import {AuthService} from '../../../core/services/auth.service';
 import {
   ICON_CARET_LEFT,
-  ICON_CARET_RIGHT,
-  ICON_CHART,
-  ICON_PLAY,
   ICON_SEND_MESSAGE,
-  ICON_SUPPORT_LARGER, ICON_X_LARGER
+  ICON_SUPPORT_LARGER,
+  ICON_X_LARGER
 } from '../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {USER_TYPE} from '../../../constants/user.constants';
@@ -78,21 +76,9 @@ export class ChatWidgetComponent {
 
   sendMessage() {
     if (this.newMessage.trim() && this.selectedConversation) {
-      this.selectedConversation.messages.push({
-        text: this.newMessage,
-        sender: 'user',
-        timestamp: new Date()
-      });
+      // this.selectedConversation.messages.push({  });
       this.newMessage = '';
 
-      // Giả lập bot phản hồi
-      setTimeout(() => {
-        this.selectedConversation?.messages.push({
-          text: 'Cảm ơn bạn, chúng tôi đã nhận được tin nhắn!',
-          sender: 'bot',
-          timestamp: new Date()
-        });
-      }, 1000);
     }
   }
 

@@ -23,6 +23,9 @@ export const API_CATEGORY_PUBLIC = API_PRODUCT_PUBLIC + '/categories';
 // Cart API constants
 export const API_CART = API_SECURE + '/carts';
 
+// Chat API constants
+export const API_CHAT = API_SECURE + '/chats';
+
 // Orders API constants
 export const API_ORDER = API_SECURE + '/orders';
 export const API_ORDER_UPLOAD_DESIGN_FILE = API_ORDER + '/products/files/uploads';
