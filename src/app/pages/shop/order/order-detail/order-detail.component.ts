@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {Location, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {NgbActiveModal, NgbModal, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal, NgbModalRef, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
 import {OrderDetail, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
@@ -12,6 +12,9 @@ import {OrderService} from '../../../../core/services/order.service';
 import {ICON_UPLOAD} from "../../../../shared/utils/icon";
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
 import {UploadDesignComponent} from '../upload-design-file/upload-design-file.component';
+import {
+  OrderProductReviewComponent
+} from '../../../client/order-history/order-product-review/order-product-review.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -35,6 +38,7 @@ export class OrderDetailComponent {
   subOrderDetail?: SubOrderDetail;
   @Input() orderId: number = 0;
   @Input() type: string = OrderViewType.SUB_ORDER;
+  private modalRef?: NgbModalRef;
 
   constructor(
     public toastr: ToastrService,
@@ -80,8 +84,9 @@ export class OrderDetailComponent {
     })
   }
 
-  view(productId: number) {
-
+  view() {
+    this.modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
+    this.modalRef.componentInstance.products = this.orderDetail?.products;
   }
 
   openUploadModal(orderProductId: number) {

@@ -5,7 +5,6 @@ import {
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
   SIDEBAR_PRODUCT_TITLE,
-  SIDEBAR_SETTING_TITLE,
   SIDEBAR_SHOP_TITLE,
   SIDEBAR_STATISTIC_TITLE,
   SIDEBAR_VOUCHER_TITLE
@@ -83,13 +82,6 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: 'securities',
     loadChildren: () => SECURITY_ROUTES
-  },
-  {
-    path: 'settings',
-    title: SIDEBAR_SETTING_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./setting/setting.component').then(m => m.SettingComponent),
-    canActivate: [AuthGuardFn]
   },
   {
     path: '**',

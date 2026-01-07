@@ -12,6 +12,7 @@ import {
   ICON_SUPPORT_LARGER, ICON_X_LARGER
 } from '../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
+import {USER_TYPE} from '../../../constants/user.constants';
 
 export interface Message {
   text: string;
@@ -50,7 +51,10 @@ export class ChatWidgetComponent {
     this.authService.subscribeAuthenticationState().subscribe(response => {
       if (response) {
         this.authentication = response;
-        this.active = true;
+
+        if (this.authentication.type !== USER_TYPE.ADMIN) {
+          this.active = true;
+        }
       }
     })
   }

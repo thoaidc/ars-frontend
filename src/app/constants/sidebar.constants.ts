@@ -4,12 +4,10 @@ import {
   ICON_USER_PERMISSION,
   ICON_USER,
   ICON_PRODUCTS,
-  ICON_CONFIG,
   ICON_LOCK,
   ICON_SHIELD,
   ICON_CHART,
   ICON_COMPANY,
-  ICON_SUPPORT,
   ICON_CATEGORY,
   ICON_FINANCE,
   ICON_ORDER,
@@ -34,10 +32,8 @@ export const SIDEBAR_GROUP_TITLE = 'sidebar.product.group';
 export const SIDEBAR_PRODUCT_ITEM_TITLE = 'sidebar.product.item';
 export const SIDEBAR_ORDER_TITLE = 'sidebar.order';
 export const SIDEBAR_VOUCHER_TITLE = 'sidebar.voucher';
-export const SIDEBAR_SETTING_TITLE = 'sidebar.setting';
 export const SIDEBAR_FINANCE_TITLE = 'sidebar.finance';
 export const SIDEBAR_STATISTIC_TITLE = 'sidebar.statistic';
-export const SIDEBAR_SUPPORT_TITLE = 'sidebar.support';
 export const SIDEBAR_SECURITY_MANAGEMENT_TITLE = 'sidebar.security.title';
 export const SIDEBAR_SECURITY_PUBLIC_API_MANAGEMENT_TITLE = 'sidebar.security.publicApi';
 export const SIDEBAR_SECURITY_RATE_LIMITER_API_MANAGEMENT_TITLE = 'sidebar.security.rateLimiter';
@@ -175,15 +171,6 @@ export const ADMIN_SIDEBAR_ROUTES: SidebarNavItem[] = [
         userType: [USER_TYPE.ADMIN]
       }
     ]
-  },
-  {
-    path: '/admin/settings',
-    title: SIDEBAR_SETTING_TITLE,
-    icon: ICON_CONFIG,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: Authorities.SYSTEM,
-    userType: [USER_TYPE.ADMIN]
   }
 ];
 
@@ -257,15 +244,6 @@ export const SHOP_SIDEBAR_ROUTES: SidebarNavItem[] = [
     path: '/shop/statistics',
     title: SIDEBAR_STATISTIC_TITLE,
     icon: ICON_CHART,
-    class: SIDEBAR_CLASS_DROPDOWN_ITEM,
-    isExternalLink: false,
-    permission: [],
-    userType: [USER_TYPE.SHOP]
-  },
-  {
-    path: '/shop/supports',
-    title: SIDEBAR_SUPPORT_TITLE,
-    icon: ICON_SUPPORT,
     class: SIDEBAR_CLASS_DROPDOWN_ITEM,
     isExternalLink: false,
     permission: [],

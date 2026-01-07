@@ -4,7 +4,6 @@ import {
   SIDEBAR_FINANCE_TITLE,
   SIDEBAR_ORDER_TITLE,
   SIDEBAR_STATISTIC_TITLE,
-  SIDEBAR_SUPPORT_TITLE,
   SIDEBAR_VOUCHER_TITLE
 } from '../../constants/sidebar.constants';
 import {AuthGuardFn} from '../../core/guards/auth.guard';
@@ -53,13 +52,6 @@ export const SHOP_ROUTES: Routes = [
     title: SIDEBAR_STATISTIC_TITLE,
     pathMatch: 'full',
     loadComponent: () => import('./statistic/statistic.component').then(m => m.StatisticComponent),
-    canActivate: [AuthGuardFn]
-  },
-  {
-    path: 'supports',
-    title: SIDEBAR_SUPPORT_TITLE,
-    pathMatch: 'full',
-    loadComponent: () => import('./support/support.component').then(m => m.SupportComponent),
     canActivate: [AuthGuardFn]
   },
   {
