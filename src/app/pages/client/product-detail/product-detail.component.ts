@@ -12,6 +12,8 @@ import {OrderPreviewComponent} from '../checkout/order-preview/order-preview.com
 import {CartProduct, CartProductOption} from '../../../core/models/cart.model';
 import {Review, ReviewsFilter} from '../../../core/models/review.model';
 import {ReviewService} from '../../../core/services/review.service';
+import {Shop} from '../../../core/models/shop.model';
+import {ChatService} from '../../../core/services/chat.service';
 
 @Component({
   standalone: true,
@@ -37,7 +39,8 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private modalService: NgbModal,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private chatService: ChatService
   ) {}
 
   ngOnInit(): void {
@@ -166,5 +169,11 @@ export class ProductDetailComponent implements OnInit {
     });
 
     return canvas.toDataURL("image/png");
+  }
+
+  chatWithShop(shopOwner?: Shop) {
+    if (shopOwner) {
+      this.chatService.triggerOpenChat({id: shopOwner.ownerId, name: shopOwner.name});
+    }
   }
 }

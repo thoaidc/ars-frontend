@@ -11,5 +11,6 @@ export interface Shop extends AuditingEntity {
   ownerName: string;
   ownerEmail: string;
   ownerPhone: string;
+  description?: string;
   status: string;
 }

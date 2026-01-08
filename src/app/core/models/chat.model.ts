@@ -2,8 +2,8 @@ import {BaseFilterRequest} from './request.model';
 import {AuditingEntity} from './common.model';
 
 export interface ChatMessagesFilter extends BaseFilterRequest {
-  senderId: number;
-  receiverId: number;
+  currentUserId: number;
+  partnerId: number;
   isConversationDetail: boolean;
 }
 
@@ -20,7 +20,10 @@ export interface ChatMessageDetailDTO {
   images?: string[];
 }
 
-export interface ConversationDTO extends ChatMessageDTO {
+export interface ConversationDTO {
+  partnerId: number;
+  partnerName: string;
+  latestMessageTime: string;
   messages: ConversationMessage[];
 }
 
@@ -36,4 +39,9 @@ export interface ChatMessageRequest {
   receiverName: string;
   content: string;
   imageFiles?: any[];
+}
+
+export interface Receiver {
+  id: number;
+  name: string;
 }

@@ -87,10 +87,12 @@
             <img src="assets/images/default_user.png" alt="Shop Logo" class="rounded-circle img-fluid">
           </div>
           <div class="col-auto">
-            <h5 class="fw-bold mb-1">Pretty Store</h5>
-            <p class="text-muted small mb-2">Chuyên thiết kế Logo thương hiệu</p>
+            <h5 class="fw-bold mb-1">{{ product.shopInfo?.name }}</h5>
+            <p class="text-muted small mb-2">{{ product.shopInfo?.description }}</p>
             <div class="d-flex gap-3">
-              <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-chat-dots me-1"></i> Chat ngay</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="chatWithShop(product?.shopInfo)">
+                <i class="bi bi-chat-dots me-1"></i> Chat ngay
+              </button>
               <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-shop me-1"></i> Xem shop</button>
             </div>
           </div>

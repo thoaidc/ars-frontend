@@ -1,5 +1,6 @@
 import {BaseFilterRequest} from './request.model';
 import {AuditingEntity} from './common.model';
+import {Shop} from './shop.model';
 
 export interface ProductsFilter extends BaseFilterRequest {
   code?: string;
@@ -20,6 +21,7 @@ export interface Product extends AuditingEntity {
   categories?: CategoryDTO[];
   productGroups?: ProductGroupDTO[];
   productOptions?: ProductOptionDTO[];
+  shopInfo?: Shop;
 }
 
 export interface ProductImageDTO extends AuditingEntity {
