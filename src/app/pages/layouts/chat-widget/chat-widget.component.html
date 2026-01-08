@@ -9,7 +9,7 @@
         <button *ngIf="selectedConversation" (click)="backToList()" class="btn btn-sm text-white p-0">
           <span [innerHTML]="ICON_CARET_LEFT | safeHtml"></span>
         </button>
-        <span class="fw-bold">{{ selectedConversation ? selectedConversation.title : 'Hỗ trợ' }}</span>
+        <span class="fw-bold">{{ selectedConversation ? selectedConversation.messages[0].content : 'Hỗ trợ' }}</span>
         <button class="d-flex justify-content-center align-items-center" (click)="toggleChat()">
           <span [innerHTML]="ICON_X_LARGER | safeHtml"></span>
         </button>
@@ -21,7 +21,7 @@
                   (click)="selectConversation(conv)"
                   class="list-group-item list-group-item-action border-0 px-0">
             <div class="d-flex w-100 justify-content-between">
-              <h6 class="mb-1 text-primary">{{ conv.title }}</h6>
+              <h6 class="mb-1 text-primary">{{ conv.messages[0].content }}</h6>
             </div>
             <small class="text-muted">Nhấn để bắt đầu trò chuyện</small>
           </button>
@@ -30,10 +30,10 @@
 
       <div class="card-body overflow-auto chat-box" *ngIf="selectedConversation">
         <div *ngFor="let msg of selectedConversation.messages"
-             [ngClass]="{'text-end': msg.sender === 'user'}" class="mb-3">
-          <div [ngClass]="msg.sender === 'user' ? 'bg-primary text-white' : 'bg-light text-dark'"
+             [ngClass]="{'text-end': msg.senderId === authentication.id}" class="mb-3">
+          <div [ngClass]="msg.senderId === authentication.id ? 'bg-primary text-white' : 'bg-light text-dark'"
                class="d-inline-block p-2 rounded-3 shadow-sm max-w-80">
-            {{ msg.text }}
+            {{ msg.content }}
           </div>
         </div>
       </div>

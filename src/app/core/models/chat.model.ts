@@ -13,6 +13,15 @@ export interface ConversationDTO extends AuditingEntity {
   receiverId: number;
   receiverName: string;
   messages: ChatMessage[];
+  lastMessage?: string;
+}
+
+export interface ChatMessageDTO extends AuditingEntity {
+  senderId: number;
+  senderName: string;
+  receiverId: number;
+  receiverName: string;
+  content: string;
 }
 
 export interface ChatMessage {

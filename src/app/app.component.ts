@@ -29,12 +29,11 @@ export class AppComponent implements OnInit, OnDestroy {
     // Force check status and reload authentication state
     this.authService.authenticate(undefined, true).subscribe(authentication => {
       if (authentication) {
+        this.stateWebsocketSubscription = this.webSocketService.onState().subscribe();
+        this.webSocketService.connect(authentication.id);
         this.router.navigate([this.utilsService.getRedirectUrlByAuthentication(authentication)]).then();
       }
     });
-
-    this.stateWebsocketSubscription = this.webSocketService.onState().subscribe();
-    this.webSocketService.connect();
 
     try {
       if (window && (window as any).initCozaPlugins) {

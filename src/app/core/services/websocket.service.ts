@@ -46,9 +46,13 @@ export class WebSocketService implements OnDestroy {
   }
 
   // Function to connect to WebSocket server
-  connect(): void {
+  connect(clientId?: number): void {
     if (this.state.value === SocketClientState.CONNECTED || this.state.value === SocketClientState.ATTEMPTING) {
       return;
+    }
+
+    if (clientId && clientId > 0) {
+      this.SOCKET_SERVER_URL += `?clientId=${clientId}`;
     }
 
     this.state.next(SocketClientState.ATTEMPTING);
