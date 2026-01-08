@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApplicationConfigService} from '../config/application-config.service';
 import {API_CHAT} from '../../constants/api.constants';
-import {ChatMessageDTO, ChatMessagesFilter, ConversationDTO} from '../models/chat.model';
+import {ChatMessageDTO, ChatMessagesFilter} from '../models/chat.model';
 import {Observable} from 'rxjs';
 import {BaseResponse} from '../models/response.model';
 import {createSearchRequestParams} from '../utils/request.util';

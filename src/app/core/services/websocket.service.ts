@@ -14,7 +14,7 @@ export enum SocketClientState {
   providedIn: 'root',
 })
 export class WebSocketService implements OnDestroy {
-  private client: Client;
+  private client!: Client;
   private state: BehaviorSubject<SocketClientState>;
   private topicSubscriptions: Map<string, StompSubscription> = new Map();
   private SOCKET_SERVER_URL = `http://localhost:8080/ws`;
@@ -22,7 +22,9 @@ export class WebSocketService implements OnDestroy {
   constructor() {
     // Initialize BehaviorSubject with initial state DISCONNECTED
     this.state = new BehaviorSubject<SocketClientState>(SocketClientState.DISCONNECTED);
+  }
 
+  createClientConfig() {
     this.client = new Client({
       brokerURL: this.SOCKET_SERVER_URL,
       // Auto reconnect after 5 seconds if connection is lost
@@ -55,6 +57,7 @@ export class WebSocketService implements OnDestroy {
       this.SOCKET_SERVER_URL += `?clientId=${clientId}`;
     }
 
+    this.createClientConfig();
     this.state.next(SocketClientState.ATTEMPTING);
     this.client.activate();
   }

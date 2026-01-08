@@ -7,26 +7,24 @@ export interface ChatMessagesFilter extends BaseFilterRequest {
   isConversationDetail: boolean;
 }
 
-export interface ConversationDTO extends AuditingEntity {
-  senderId: number;
-  senderName: string;
-  receiverId: number;
-  receiverName: string;
-  messages: ChatMessage[];
-  lastMessage?: string;
-}
-
 export interface ChatMessageDTO extends AuditingEntity {
   senderId: number;
   senderName: string;
   receiverId: number;
   receiverName: string;
-  content: string;
+  message: ChatMessageDetailDTO;
 }
 
-export interface ChatMessage {
+export interface ChatMessageDetailDTO {
   content: string;
   images?: string[];
+}
+
+export interface ConversationDTO extends ChatMessageDTO {
+  messages: ConversationMessage[];
+}
+
+export interface ConversationMessage extends ChatMessageDetailDTO {
   senderId: number;
   receiverId: number;
 }

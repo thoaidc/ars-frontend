@@ -7,11 +7,18 @@ import {
   ICON_CARET_LEFT,
   ICON_SEND_MESSAGE,
   ICON_SUPPORT_LARGER,
+  ICON_USER,
   ICON_X_LARGER
 } from '../../../shared/utils/icon';
 import {SafeHtmlPipe} from '../../../shared/pipes/safe-html.pipe';
 import {USER_TYPE} from '../../../constants/user.constants';
-import {ChatMessage, ChatMessageRequest, ChatMessagesFilter, ConversationDTO} from '../../../core/models/chat.model';
+import {
+  ChatMessageDTO,
+  ChatMessageRequest,
+  ChatMessagesFilter,
+  ConversationDTO,
+  ConversationMessage
+} from '../../../core/models/chat.model';
 import {WebSocketService} from '../../../core/services/websocket.service';
 import {IMessage} from '@stomp/stompjs';
 import {ChatService} from '../../../core/services/chat.service';
@@ -42,8 +49,9 @@ export class ChatWidgetComponent {
   };
   authentication!: Authentication;
   active: boolean = false;
-  topicName: string = '/user/topics/message';
+  topicName: string = '/user/topics/messages';
   sendMessageDestination: string = '/api/v1/messages/chats';
+  senderName: string = '';
 
   constructor(private authService: AuthService, private websocketService: WebSocketService, private chatService: ChatService) {
     this.authService.subscribeAuthenticationState().subscribe(response => {
@@ -51,6 +59,12 @@ export class ChatWidgetComponent {
         this.authentication = response;
 
         if (this.authentication.type !== USER_TYPE.ADMIN) {
+          if (this.authentication.type === USER_TYPE.SHOP && this.authentication.shopName) {
+            this.senderName = this.authentication.shopName;
+          } else {
+            this.senderName = this.authentication.fullname;
+          }
+
           this.active = true;
           this.websocketService.subscribeToTopic(this.topicName)
             .subscribe(message => this.handleMessage(message));
@@ -62,6 +76,10 @@ export class ChatWidgetComponent {
 
   toggleChat() {
     this.isChatVisible = !this.isChatVisible;
+
+    if (this.isChatVisible) {
+      this.loadConversations();
+    }
   }
 
   loadConversations() {
@@ -74,14 +92,10 @@ export class ChatWidgetComponent {
     }
 
     this.chatService.getAllWithPaging(request).subscribe(response => {
-      this.conversations = (response.result || []).map(res => {
+      this.conversations = (response.result || []).map(chatMessageDTO => {
         return {
-          receiverId: res.receiverId,
-          receiverName: res.receiverName,
-          senderId: this.authentication.id,
-          senderName: this.authentication.fullname,
-          createdDate: res.createdDate,
-          lastMessage: res.content
+          ...chatMessageDTO,
+          messages: []
         } as ConversationDTO
       });
     });
@@ -99,12 +113,13 @@ export class ChatWidgetComponent {
 
     this.chatService.getAllWithPaging(request).subscribe(response => {
       if (this.selectedConversation && response.result) {
-        this.selectedConversation.messages = response.result.map(res => {
+        this.selectedConversation.messages = response.result.map(chatMessageDTO => {
           return {
-            senderId: res.senderId,
-            receiverId: res.receiverId,
-            content: res.content
-          } as ChatMessage;
+            senderId: chatMessageDTO.senderId,
+            receiverId: chatMessageDTO.receiverId,
+            content: chatMessageDTO.message.content,
+            images: chatMessageDTO.message.images
+          } as ConversationMessage
         });
       }
     });
@@ -115,16 +130,39 @@ export class ChatWidgetComponent {
   }
 
   handleMessage(message: IMessage) {
+    const chatMessageDTO = JSON.parse(message.body) as ChatMessageDTO;
+    const conv = this.conversations.find(conversation =>
+      conversation.senderId === chatMessageDTO.receiverId
+    );
 
+    if (conv) {
+      const newMessage = {
+        senderId: chatMessageDTO.senderId,
+        receiverId: chatMessageDTO.receiverId,
+        content: chatMessageDTO.message.content,
+        images: chatMessageDTO.message.images
+      };
+
+      conv.messages.unshift(newMessage);
+      conv.message = conv.messages[0];
+    }
   }
 
   sendMessage() {
     if (this.newMessage.content && this.selectedConversation) {
       this.newMessage.receiverName = this.selectedConversation.receiverName;
       this.newMessage.receiverId = this.selectedConversation.receiverId;
-      this.newMessage.senderName = this.authentication.fullname;
+      this.newMessage.senderName = this.senderName;
       this.newMessage.senderId = this.authentication.id;
       this.websocketService.sendMessage(this.sendMessageDestination, this.newMessage);
+      this.selectedConversation.messages.unshift({
+        senderId: this.newMessage.senderId,
+        receiverId: this.newMessage.receiverId,
+        content: this.newMessage.content,
+        images: this.newMessage.imageFiles
+      });
+      this.newMessage.content = '';
+      this.selectedConversation.message = this.selectedConversation.messages[0];
     }
   }
 
@@ -132,4 +170,5 @@ export class ChatWidgetComponent {
   protected readonly ICON_CARET_LEFT = ICON_CARET_LEFT;
   protected readonly ICON_SUPPORT_LARGER = ICON_SUPPORT_LARGER;
   protected readonly ICON_X_LARGER = ICON_X_LARGER;
+  protected readonly ICON_USER = ICON_USER;
 }
