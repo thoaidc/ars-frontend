@@ -47,10 +47,6 @@ export class UserComponent implements OnInit, OnDestroy {
     this.router.navigate(['/client/home']).then();
   }
 
-  updateProfile(): void {
-
-  }
-
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
   }

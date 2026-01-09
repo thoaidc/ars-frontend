@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
         data: {
           labels: this.labels7Days,
           datasets: [{
-            data: this.revenueLast7DayData,
+            data: this.salesLast7DayData,
             borderColor: '#00bcd4',
             backgroundColor: 'rgba(0, 188, 212, 0.2)',
             fill: true,

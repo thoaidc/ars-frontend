@@ -77,7 +77,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.toast.success(this.translateService.instant('notification.logoutSuccess'));
-    this.router.navigate(['/login']).then();
+    this.router.navigate(['/client/home']).then();
   }
 
   protected readonly ICON_LOGOUT = ICON_LOGOUT;

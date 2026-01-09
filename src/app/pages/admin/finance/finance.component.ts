@@ -5,14 +5,13 @@ import {FormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {NgbModal, NgbModalRef, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {SafeHtmlPipe} from "../../../shared/pipes/safe-html.pipe";
-import {TranslatePipe, TranslateService} from "@ngx-translate/core";
+import {TranslatePipe} from "@ngx-translate/core";
 import {PaymentHistory} from '../../../core/models/payment.model';
 import {BaseFilterRequest} from '../../../core/models/request.model';
 import {ReportService} from '../../../core/services/report.service';
 import {PaymentService} from '../../../core/services/payment.service';
 import {BalanceService} from '../../../core/services/balance.service';
 import {AuthService} from '../../../core/services/auth.service';
-import {ToastrService} from 'ngx-toastr';
 import {BalanceType} from '../../../core/models/report.model';
 import {
   PaymentHistoryDetailComponent
@@ -55,13 +54,11 @@ export class FinanceComponent implements OnInit {
   private modalRef?: NgbModalRef;
 
   constructor(
-    private translateService: TranslateService,
     private reportService: ReportService,
     private paymentService: PaymentService,
     private balanceService: BalanceService,
     private authService: AuthService,
-    private modalService: NgbModal,
-    private toast: ToastrService
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -95,9 +92,9 @@ export class FinanceComponent implements OnInit {
   getFinanceData() {
     this.reportService.getFinanceStatisticForShopAdmin(this.financesFilter).subscribe(response => {
       if (response) {
-        this.revenue = response.revenue;
-        this.profit = response.profit;
-        this.platformFee = response.platformFee;
+        this.revenue = response.totalRevenue;
+        this.profit = response.totalProfit;
+        this.platformFee = response.totalPlatformFee;
       }
     });
   }

@@ -5,9 +5,9 @@ export interface RevenueDashboardReportData {
 }
 
 export interface FinanceData {
-  revenue: number;
-  profit: number;
-  platformFee: number;
+  totalRevenue: number;
+  totalPlatformFee: number;
+  totalProfit: number;
 }
 
 export const StatisticType = {

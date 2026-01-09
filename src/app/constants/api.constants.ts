@@ -54,8 +54,8 @@ export const API_PAYMENT = API_SECURE + '/payments';
 export const API_PAYMENT_PUBLIC = API_PUBLIC + '/payments';
 
 // Report API constants
-export const API_FINANCE_STATISTIC = API_PAYMENT + '/finances/shop';
-export const API_FINANCE_STATISTIC_ADMIN = API_PAYMENT + '/finances/admin';
+export const API_FINANCE_STATISTIC = API_PAYMENT + '/finances/statistic/shop';
+export const API_FINANCE_STATISTIC_ADMIN = API_PAYMENT + '/finances/statistic/admin';
 
 // Revenue API constants
 export const API_REVENUES = API_PAYMENT + '/revenues';
