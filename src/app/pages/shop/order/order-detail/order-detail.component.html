@@ -84,7 +84,7 @@
               <input
                 id="order-status"
                 class="form-control"
-                [value]="subOrderDetail?.status"
+                [value]="ORDER_STATUS[subOrderDetail?.status || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -160,7 +160,7 @@
               <input
                 id="order-payment-method"
                 class="form-control"
-                [value]="subOrderDetail?.paymentMethod"
+                [value]="PAYMENT_METHOD[subOrderDetail?.paymentMethod || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -174,7 +174,7 @@
               <input
                 id="order-payment-status"
                 class="form-control"
-                [value]="subOrderDetail?.paymentStatus"
+                [value]="PAYMENT_STATUS[subOrderDetail?.paymentStatus || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -207,11 +207,11 @@
             <ng-container *ngFor="let product of subOrderDetail?.products; let i = index">
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center">{{ i + 1 }}</td>
-                <td class="break-word-table text-left" (click)="view()">{{ product.productCode }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view()">{{ product.productName }}</td>
-                <td class="break-word-table text-right" (click)="view()">{{ product.totalAmount }}</td>
-                <td class="break-word-table text-center" (click)="view()">{{ product.note || '' }}</td>
-                <td class="break-word-table text-center" (click)="view()">{{ product.metadata?.customizable }}</td>
+                <td class="break-word-table text-left" (click)="view(product)">{{ product.productCode }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(product)">{{ product.productName }}</td>
+                <td class="break-word-table text-right" (click)="view(product)">{{ product.totalAmount }}</td>
+                <td class="break-word-table text-center" (click)="view(product)">{{ product.note || '' }}</td>
+                <td class="break-word-table text-center" (click)="view(product)">{{ checkCustomizable(product.data || '') ? 'Có' : 'Không' }}</td>
                 <td class="break-word-table text-center" *ngIf="subOrderDetail?.status === 'COMPLETED'">
                   <span
                     *ngIf="product.metadata?.customizable && !product.metadata?.designFile"

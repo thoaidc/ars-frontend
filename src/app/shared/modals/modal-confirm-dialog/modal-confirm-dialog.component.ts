@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Location, NgClass} from '@angular/common';
 import {TranslatePipe} from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import {TranslatePipe} from '@ngx-translate/core';
   styleUrls: ['./modal-confirm-dialog.component.scss'],
 })
 export class ModalConfirmDialogComponent {
-  title = '';
+  @Input() title = '';
   type = '';
   classBtn = '';
 

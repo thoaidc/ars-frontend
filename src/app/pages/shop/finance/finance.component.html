@@ -101,7 +101,9 @@
               <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
                 <td class="text-center" (click)="view(paymentHistory.id)">{{ (financesFilter.page - 1) * financesFilter.size + i + 1 }}</td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ paymentHistory.transId }}</td>
-                <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.userId }}</td>
+                <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">
+                  {{ paymentHistory.userId === 0 ? 'Hệ thống' : paymentHistory.username }}
+                </td>
                 <td class="break-word-table text-center" (click)="view(paymentHistory.id)">{{ PAYMENT_TYPE[paymentHistory.type] }}</td>
                 <td class="break-word-table text-right" (click)="view(paymentHistory.id)">{{ paymentHistory.amount }}</td>
                 <td class="break-word-table text-left td-text-overflow" (click)="view(paymentHistory.id)">{{ paymentHistory.description }}</td>

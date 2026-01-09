@@ -22,4 +22,12 @@ export class ShopService {
     const params = createSearchRequestParams(request);
     return this.http.get<BaseResponse<Shop[]>>(this.shopAPI, {params: params});
   }
+
+  activeShop(shopId: number): Observable<BaseResponse<any>> {
+    return this.http.post<BaseResponse<any>>(this.shopAPI + `/active/${shopId}`, {});
+  }
+
+  inactiveShop(shopId: number) {
+    return this.http.post<BaseResponse<any>>(this.shopAPI + `/inactive/${shopId}`, {});
+  }
 }

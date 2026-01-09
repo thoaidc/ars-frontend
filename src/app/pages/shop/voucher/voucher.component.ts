@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {NgbModal, NgbModalRef, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -20,18 +20,19 @@ import {VOUCHER_STATUS, VOUCHER_TYPE} from '../../../constants/order.constants';
 @Component({
   selector: 'app-voucher',
   standalone: true,
-  imports: [
-    DecimalPipe,
-    NgForOf,
-    NgSelectComponent,
-    NgbPagination,
-    ReactiveFormsModule,
-    SafeHtmlPipe,
-    TranslatePipe,
-    NgbTooltip,
-    NgClass,
-    FormsModule
-  ],
+    imports: [
+        DecimalPipe,
+        NgForOf,
+        NgSelectComponent,
+        NgbPagination,
+        ReactiveFormsModule,
+        SafeHtmlPipe,
+        TranslatePipe,
+        NgbTooltip,
+        NgClass,
+        FormsModule,
+        DatePipe
+    ],
   templateUrl: './voucher.component.html',
   styleUrl: './voucher.component.scss'
 })
@@ -109,6 +110,19 @@ export class VoucherComponent implements OnInit {
           this.modalRef.close();
       }
     });
+  }
+
+  formatDateString(date?: number): string {
+    if (date) {
+      const dateStr = String(date);
+      if (!dateStr || dateStr.length !== 8) return dateStr;
+      const year = dateStr.substring(0, 4);
+      const month = dateStr.substring(4, 6);
+      const day = dateStr.substring(6, 8);
+      return `${year}-${month}-${day}`;
+    }
+
+    return '';
   }
 
   private notify(response: BaseResponse<any>, successMessage: string, errorMessage: string) {

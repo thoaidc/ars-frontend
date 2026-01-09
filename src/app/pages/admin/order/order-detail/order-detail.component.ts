@@ -6,13 +6,14 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
-import {OrderDetail, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
+import {OrderDetail, OrderProduct, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
 import {OrderService} from '../../../../core/services/order.service';
 import {
   OrderProductReviewComponent
 } from '../../../client/order-history/order-product-review/order-product-review.component';
 import {CartDetailComponent} from '../../../client/cart/cart-detail/cart-detail.component';
 import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../../constants/order.constants';
+import {CartProductOption} from '../../../../core/models/cart.model';
 
 @Component({
   selector: 'app-order-detail',
@@ -78,9 +79,30 @@ export class OrderDetailComponent implements OnInit {
     })
   }
 
-  view() {
-    const modalRef = this.modalService.open(CartDetailComponent, { size: 'xl', backdrop: 'static' });
-    modalRef.componentInstance.products = this.orderDetail?.products;
+  view(product: OrderProduct) {
+    let options: CartProductOption[] = [];
+
+    if (product.data) {
+      const dataProduct = JSON.parse(product.data);
+      options = dataProduct.selectedOptions;
+    }
+
+    if (options && options.length > 0) {
+      const modalRef = this.modalService.open(CartDetailComponent, {size: 'lg', backdrop: 'static'});
+      modalRef.componentInstance.cartProductOptions = options;
+    } else {
+      const modalRef = this.modalService.open(CartDetailComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.thumbnail = product.productThumbnail;
+    }
+  }
+
+  checkCustomizable(productData: string): boolean {
+    if (productData) {
+      const dataProduct = JSON.parse(productData);
+      return dataProduct.customizable;
+    }
+
+    return false;
   }
 
   dismiss() {

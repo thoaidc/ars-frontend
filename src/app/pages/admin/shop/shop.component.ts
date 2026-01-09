@@ -11,6 +11,7 @@ import {Shop, ShopsFilter} from '../../../core/models/shop.model';
 import {ShopService} from '../../../core/services/shop.service';
 import {PAGINATION_PAGE_SIZE} from '../../../constants/common.constants';
 import {ICON_SEARCH, ICON_STOP} from '../../../shared/utils/icon';
+import {ModalConfirmDialogComponent} from '../../../shared/modals/modal-confirm-dialog/modal-confirm-dialog.component';
 
 @Component({
   selector: 'app-admin-shop',
@@ -71,7 +72,37 @@ export class ShopComponent {
   }
 
   changeShopStatus(shop: Shop) {
+    this.modalRef = this.modalService.open(ModalConfirmDialogComponent, {size:'lg', backdrop: 'static'});
 
+    if (shop.status === 'ACTIVE') {
+      this.modalRef.componentInstance.title = 'Bạn có chắc chắn muốn dừng hoạt động cửa hàng này không?';
+      this.modalRef.closed.subscribe((isConfirmed?: boolean) => {
+        if (isConfirmed) {
+          this.shopService.inactiveShop(shop.id).subscribe(response => {
+            if (response.status) {
+              this.toast.success('Dừng hoạt động cửa hàng thành công', 'Thông báo');
+              shop.status = 'INACTIVE';
+            } else {
+              this.toast.error(response.message, 'Dừng hoạt động cửa hàng thất bại');
+            }
+          });
+        }
+      });
+    } else {
+      this.modalRef.componentInstance.title = 'Bạn có chắc chắn muốn hoạt động lại cửa hàng này không?';
+      this.modalRef.closed.subscribe((isConfirmed?: boolean) => {
+        if (isConfirmed) {
+          this.shopService.activeShop(shop.id).subscribe(response => {
+            if (response.status) {
+              this.toast.success('Hoạt động lại cửa hàng thành công', 'Thông báo');
+              shop.status = 'ACTIVE';
+            } else {
+              this.toast.error(response.message, 'Hoạt động lại cửa hàng thất bại');
+            }
+          });
+        }
+      });
+    }
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

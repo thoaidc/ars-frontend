@@ -7,7 +7,7 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {NgbActiveModal, NgbModal, NgbModalRef, NgbTooltip} from '@ng-bootstrap/ng-bootstrap';
 import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
-import {OrderDetail, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
+import {OrderDetail, OrderProduct, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
 import {OrderService} from '../../../../core/services/order.service';
 import {ICON_UPLOAD} from "../../../../shared/utils/icon";
 import {SafeHtmlPipe} from '../../../../shared/pipes/safe-html.pipe';
@@ -15,6 +15,9 @@ import {UploadDesignComponent} from '../upload-design-file/upload-design-file.co
 import {
   OrderProductReviewComponent
 } from '../../../client/order-history/order-product-review/order-product-review.component';
+import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from "../../../../constants/order.constants";
+import {CartProductOption} from '../../../../core/models/cart.model';
+import {CartDetailComponent} from '../../../client/cart/cart-detail/cart-detail.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -84,9 +87,30 @@ export class OrderDetailComponent {
     })
   }
 
-  view() {
-    this.modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
-    this.modalRef.componentInstance.products = this.orderDetail?.products;
+  view(product: OrderProduct) {
+    let options: CartProductOption[] = [];
+
+    if (product.data) {
+      const dataProduct = JSON.parse(product.data);
+      options = dataProduct.selectedOptions;
+    }
+
+    if (options && options.length > 0) {
+      const modalRef = this.modalService.open(CartDetailComponent, {size: 'lg', backdrop: 'static'});
+      modalRef.componentInstance.cartProductOptions = options;
+    } else {
+      const modalRef = this.modalService.open(CartDetailComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.thumbnail = product.productThumbnail;
+    }
+  }
+
+  checkCustomizable(productData: string): boolean {
+    if (productData) {
+      const dataProduct = JSON.parse(productData);
+      return dataProduct.customizable;
+    }
+
+    return false;
   }
 
   openUploadModal(orderProductId: number) {
@@ -100,4 +124,7 @@ export class OrderDetailComponent {
   }
 
   protected readonly ICON_UPLOAD = ICON_UPLOAD;
+    protected readonly ORDER_STATUS = ORDER_STATUS;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }
