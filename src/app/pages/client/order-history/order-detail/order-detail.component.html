@@ -32,18 +32,18 @@
       </thead>
       <tbody>
       <tr *ngFor="let prod of orderDetail.products">
-        <td>
+        <td (click)="view(prod)">
           <img [src]="prod.productThumbnail || 'assets/images/no-image.png'"
                alt="img"
                class="img-fluid rounded border"
                style="width: 50px; height: 50px; object-fit: cover;">
         </td>
-        <td>
+        <td (click)="view(prod)">
           <div class="fw-bold text-dark">{{ prod.productName }}</div>
           <div class="small text-muted">Mã SP: {{ prod.productCode }}</div>
           <div *ngIf="prod.note" class="small text-info fst-italic">Ghi chú: {{ prod.note }}</div>
         </td>
-        <td class="align-middle text-end fw-bold">
+        <td class="align-middle text-end fw-bold" (click)="view(prod)">
           {{ prod.totalAmount | vndCurrency }}
         </td>
         <td *ngIf="orderDetail.status === 'COMPLETED'" class="align-middle text-center download-icon">

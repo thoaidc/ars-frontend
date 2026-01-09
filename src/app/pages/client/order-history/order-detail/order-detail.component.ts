@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {VndCurrencyPipe} from "../../../../shared/pipes/vnd-currency.pipe";
-import {OrderDetail} from '../../../../core/models/order.model';
+import {OrderDetail, OrderProduct} from '../../../../core/models/order.model';
 import {OrderService} from '../../../../core/services/order.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgbActiveModal, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,8 @@ import {OrderProductReviewComponent} from '../order-product-review/order-product
 import {ReviewService} from '../../../../core/services/review.service';
 import {AuthService} from '../../../../core/services/auth.service';
 import {Authentication} from '../../../../core/models/auth.model';
+import {CartProductOption} from '../../../../core/models/cart.model';
+import {CartDetailComponent} from '../../cart/cart-detail/cart-detail.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -115,6 +117,23 @@ export class OrderDetailComponent implements OnInit {
     this.modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.products = this.orderDetail?.products;
     this.modalRef.result.finally(() => this.checkOrderReviews());
+  }
+
+  view(product: OrderProduct) {
+    let options: CartProductOption[] = [];
+
+    if (product.data) {
+      const dataProduct = JSON.parse(product.data);
+      options = dataProduct.selectedOptions;
+    }
+
+    if (options && options.length > 0) {
+      const modalRef = this.modalService.open(CartDetailComponent, {size: 'lg', backdrop: 'static'});
+      modalRef.componentInstance.cartProductOptions = options;
+    } else {
+      const modalRef = this.modalService.open(CartDetailComponent, { size: 'lg', backdrop: 'static' });
+      modalRef.componentInstance.thumbnail = product.productThumbnail;
+    }
   }
 
   checkOrderReviews() {
