@@ -1,4 +1,4 @@
-import {Component, Input, Renderer2} from '@angular/core';
+import {Component, Input, OnInit, Renderer2} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {Location, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
@@ -8,6 +8,9 @@ import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
 import {OrderDetail, OrderViewType, SubOrderDetail} from '../../../../core/models/order.model';
 import {OrderService} from '../../../../core/services/order.service';
+import {
+  OrderProductReviewComponent
+} from '../../../client/order-history/order-product-review/order-product-review.component';
 
 @Component({
   selector: 'app-order-detail',
@@ -22,7 +25,7 @@ import {OrderService} from '../../../../core/services/order.service';
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.scss'
 })
-export class OrderDetailComponent {
+export class OrderDetailComponent implements OnInit {
   currentTab: number = 0;
   orderDetail?: OrderDetail;
   subOrderDetail?: SubOrderDetail;
@@ -73,8 +76,9 @@ export class OrderDetailComponent {
     })
   }
 
-  view(productId: number) {
-
+  view() {
+    const modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.products = this.orderDetail?.products;
   }
 
   dismiss() {
