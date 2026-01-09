@@ -39,7 +39,6 @@
               <th>{{ 'text.price' | translate }}</th>
               <th>{{ 'text.status' | translate }}</th>
               <th>{{ 'text.customizable' | translate }}</th>
-              <th>{{ 'global.action' | translate }}</th>
             </tr>
             </thead>
             <tbody>
@@ -50,12 +49,7 @@
                 <td class="break-word-table text-left td-text-overflow" (click)="view(product.id)">{{ product.name }}</td>
                 <td class="break-word-table text-right" (click)="view(product.id)">{{ product.price | vndCurrency }}</td>
                 <td class="break-word-table text-center" (click)="view(product.id)">{{ product.status === 'ACTIVE' ? 'Đang hoạt động': 'Ngừng hoạt động' }}</td>
-                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.customizable }}</td>
-                <td>
-                  <div class="action-table">
-
-                  </div>
-                </td>
+                <td class="break-word-table text-center" (click)="view(product.id)">{{ product.customizable ? 'Có' : 'Không' }}</td>
               </tr>
             </ng-container>
             </tbody>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
@@ -30,7 +30,7 @@ import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from "../../../constants/o
   templateUrl: './order.component.html',
   styleUrl: './order.component.scss'
 })
-export class OrderComponent {
+export class OrderComponent implements OnInit {
   ordersFilter: OrdersFilter = {
     page: 1,
     size: 10
@@ -78,7 +78,7 @@ export class OrderComponent {
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
-    protected readonly ORDER_STATUS = ORDER_STATUS;
+  protected readonly ORDER_STATUS = ORDER_STATUS;
   protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
   protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }

@@ -99,7 +99,7 @@
             id="voucher-date-started"
             class="form-control"
             [disabled]="!isUpdatable"
-            [(ngModel)]="voucher.dateStarted"
+            [(ngModel)]="displayDateStart"
             type="text"
             autocomplete="off"
           />
@@ -113,8 +113,8 @@
             id="voucher-date-expired"
             class="form-control"
             [disabled]="!isUpdatable"
-            [(ngModel)]="voucher.dateExpired"
-            type="number"
+            [(ngModel)]="displayDate"
+            type="text"
             autocomplete="off"
           />
         </div>

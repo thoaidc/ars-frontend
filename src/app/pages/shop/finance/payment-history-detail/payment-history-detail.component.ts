@@ -7,6 +7,7 @@ import {UtilsService} from '../../../../shared/utils/utils.service';
 import {LoadingOption} from '../../../../shared/utils/loading-option';
 import {PaymentService} from '../../../../core/services/payment.service';
 import {PaymentHistoryDetail} from '../../../../core/models/payment.model';
+import {PAYMENT_METHOD, PAYMENT_STATUS, PAYMENT_TYPE} from '../../../../constants/order.constants';
 
 @Component({
   selector: 'app-payment-history-detail',
@@ -54,4 +55,8 @@ export class PaymentHistoryDetailComponent implements OnInit {
   dismiss() {
     this.activeModal.dismiss(false);
   }
+
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
+  protected readonly PAYMENT_TYPE = PAYMENT_TYPE;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
 }

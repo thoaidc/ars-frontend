@@ -12,8 +12,7 @@ export interface PaymentHistory extends AuditingEntity {
   userId: number;
   receiverId: number;
   transId: string;
-  // receiverName: string;
-  // username: string;
+  username: string;
   amount: number;
   status: string;
   description: string;

@@ -1,1 +1,80 @@
-<p>statistic works!</p>
+<div class="title-feature text-left">
+  <span>Báo cáo doanh thu theo sản phẩm</span>
+</div>
+
+<div class="field-search d-flex justify-content-between flex-row align-items-end">
+  <div class="search-criteria">
+    <app-date-filter
+      [class]="periods == 8 ? 'col-9' : 'col-3'"
+      (timeChange)="onTimeChange($event)"
+      [periods]="periods"
+      [clearable]="false"
+    >
+    </app-date-filter>
+    <button class="save-button-dialog ms-4" (click)="onSearch()" [disabled]="isLoading">
+      <span [innerHTML]="ICON_SEARCH | safeHtml"></span>
+      {{ 'global.search' | translate }}
+    </button>
+  </div>
+
+  <button class="save-button-dialog mb-2" (click)="exportExcel()" [disabled]="isLoading">
+    <span [innerHTML]="ICON_EXCEL | safeHtml"></span>
+    Excel
+  </button>
+</div>
+
+<div class="tab-pane fade active show">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="panel panel-inverse">
+        <div class="table-responsive">
+          <table class="table editing-table">
+            <thead class="table-header-sticky">
+            <tr class="table-custom-header">
+              <th>{{ 'global.no' | translate }}</th>
+              <th>{{ 'Mã sản phẩm' }}</th>
+              <th>{{ 'Tên sản phẩm' }}</th>
+              <th>{{ 'Doanh thu theo giá bán' }}</th>
+              <th>{{ 'Doanh thu thực tế' }}</th>
+              <th>{{ 'Tổng số lượng bán' }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let report of reports; index as i">
+              <tr [ngClass]="{ 'odd-row': i % 2 === 1, 'even-row': i % 2 === 0 }" class="table-custom-body">
+                <td class="text-center">{{ (statisticFilter.page - 1) * statisticFilter.size + i + 1 }}</td>
+                <td class="break-word-table text-left">{{ report.productCode }}</td>
+                <td class="break-word-table text-left td-text-overflow">{{ report.productName }}</td>
+                <td class="break-word-table text-right">{{ report.grossRevenue | vndCurrency }}</td>
+                <td class="break-word-table text-center">{{ report.netRevenue | vndCurrency }}</td>
+                <td class="break-word-table text-center">{{ report.totalSales }}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="from-pagination">
+    <div class="total">
+      <span class="label-total">{{ 'global.total' | translate }}: {{ totalItems | number }}</span>
+      <ng-select
+        [items]="PAGINATION_PAGE_SIZE"
+        [(ngModel)]="statisticFilter.size"
+        (ngModelChange)="getReportWithPaging()"
+      >
+      </ng-select>
+    </div>
+    <ngb-pagination
+      class="pagination"
+      [collectionSize]="totalItems"
+      [pageSize]="statisticFilter.size"
+      [(page)]="statisticFilter.page"
+      [directionLinks]="true"
+      [maxSize]="5"
+      (pageChange)="onChangedPage($event)"
+    ></ngb-pagination>
+  </div>
+</div>

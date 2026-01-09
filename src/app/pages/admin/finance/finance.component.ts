@@ -11,7 +11,6 @@ import {BaseFilterRequest} from '../../../core/models/request.model';
 import {ReportService} from '../../../core/services/report.service';
 import {PaymentService} from '../../../core/services/payment.service';
 import {BalanceService} from '../../../core/services/balance.service';
-import {AuthService} from '../../../core/services/auth.service';
 import {BalanceType} from '../../../core/models/report.model';
 import {
   PaymentHistoryDetailComponent
@@ -41,10 +40,7 @@ export class FinanceComponent implements OnInit {
   balance: number = 0;
   revenue: number = 0;
   profit: number = 0;
-  platformFee: number = 0;
   paymentHistories: PaymentHistory[] = [];
-  shopId: number = 0;
-
   financesFilter: BaseFilterRequest = {
     page: 1,
     size: 10
@@ -57,17 +53,11 @@ export class FinanceComponent implements OnInit {
     private reportService: ReportService,
     private paymentService: PaymentService,
     private balanceService: BalanceService,
-    private authService: AuthService,
     private modalService: NgbModal
   ) {}
 
   ngOnInit() {
-    this.authService.subscribeAuthenticationState().subscribe(authentication => {
-      if (authentication) {
-        this.shopId = authentication.shopId || 0;
-        this.onSearch();
-      }
-    });
+    this.onSearch();
   }
 
   getBalance() {
@@ -94,7 +84,6 @@ export class FinanceComponent implements OnInit {
       if (response) {
         this.revenue = response.totalRevenue;
         this.profit = response.totalProfit;
-        this.platformFee = response.totalPlatformFee;
       }
     });
   }
@@ -115,7 +104,7 @@ export class FinanceComponent implements OnInit {
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;
   protected readonly ICON_SEARCH = ICON_SEARCH;
-    protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
   protected readonly PAYMENT_TYPE = PAYMENT_TYPE;
   protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }

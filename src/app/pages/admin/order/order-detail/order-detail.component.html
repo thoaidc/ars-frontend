@@ -54,7 +54,7 @@
               <input
                 id="order-date"
                 class="form-control"
-                [value]="orderDetail?.orderDate"
+                [value]="orderDetail?.orderDate || ''"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -84,7 +84,7 @@
               <input
                 id="order-status"
                 class="form-control"
-                [value]="orderDetail?.status"
+                [value]="ORDER_STATUS[orderDetail?.status || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -160,7 +160,7 @@
               <input
                 id="order-payment-method"
                 class="form-control"
-                [value]="orderDetail?.paymentMethod"
+                [value]="PAYMENT_METHOD[orderDetail?.paymentMethod || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -174,7 +174,7 @@
               <input
                 id="order-payment-status"
                 class="form-control"
-                [value]="orderDetail?.paymentStatus"
+                [value]="PAYMENT_STATUS[orderDetail?.paymentStatus || '']"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"

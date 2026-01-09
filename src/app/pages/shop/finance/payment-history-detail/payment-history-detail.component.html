@@ -28,7 +28,7 @@
               <input
                 id="sender-name"
                 class="form-control"
-                [value]="paymentHistoryDetail.userId"
+                [value]="(paymentHistoryDetail.userId === 0 ? 'Hệ thống' : paymentHistoryDetail.username)"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -44,7 +44,7 @@
               <input
                 id="payment-type"
                 class="form-control"
-                [value]="paymentHistoryDetail.type"
+                [value]="PAYMENT_TYPE[paymentHistoryDetail.type]"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -58,7 +58,7 @@
               <input
                 id="payment-status"
                 class="form-control"
-                [value]="paymentHistoryDetail.status"
+                [value]="PAYMENT_STATUS[paymentHistoryDetail.status]"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"
@@ -104,7 +104,7 @@
               <input
                 id="payment-method"
                 class="form-control"
-                [value]="paymentHistoryDetail.paymentMethod"
+                [value]="PAYMENT_METHOD[paymentHistoryDetail.paymentMethod]"
                 type="text"
                 autocomplete="off"
                 [disabled]="true"

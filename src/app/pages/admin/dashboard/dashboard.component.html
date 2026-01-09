@@ -1,31 +1,5 @@
 <div class="chart-container">
   <label class="title-feature">Thống kê</label>
-  <div class="field-search">
-    <div class="search-criteria">
-      <app-date-filter
-        [class]="periods == 8 ? 'col-9' : 'col-3'"
-        (timeChange)="onTimeChange($event)"
-        [periods]="periods"
-        [clearable]="false"
-      >
-      </app-date-filter>
-
-      <div class="type-report item-search">
-        <span>Loại thống kê</span>
-        <div class="select-search-custom">
-          <ng-select
-            [items]="listType"
-            bindLabel="name"
-            bindValue="value"
-            [clearable]="false"
-            [(ngModel)]="groupByType"
-            (ngModelChange)="onChangeValue()"
-          >
-          </ng-select>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="container-fluid py-4">
     <div class="row g-3 mb-4">

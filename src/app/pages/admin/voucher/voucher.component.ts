@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {DecimalPipe, NgClass, NgForOf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgClass, NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {NgbModal, NgbModalRef, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
@@ -25,7 +25,8 @@ import {ICON_SEARCH} from '../../../shared/utils/icon';
     NgbPagination,
     SafeHtmlPipe,
     TranslatePipe,
-    NgClass
+    NgClass,
+    DatePipe
   ],
   templateUrl: './voucher.component.html',
   styleUrl: './voucher.component.scss'
@@ -74,6 +75,19 @@ export class VoucherComponent {
     this.modalRef = this.modalService.open(SaveVoucherComponent, { size: 'xl', backdrop: 'static' });
     this.modalRef.componentInstance.voucherId = voucherId;
     this.modalRef.componentInstance.isUpdatable = false;
+  }
+
+  formatDateString(date?: number): string {
+    if (date) {
+      const dateStr = String(date);
+      if (!dateStr || dateStr.length !== 8) return dateStr;
+      const year = dateStr.substring(0, 4);
+      const month = dateStr.substring(4, 6);
+      const day = dateStr.substring(6, 8);
+      return `${year}-${month}-${day}`;
+    }
+
+    return '';
   }
 
   protected readonly PAGINATION_PAGE_SIZE = PAGINATION_PAGE_SIZE;

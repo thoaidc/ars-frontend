@@ -11,6 +11,8 @@ import {OrderService} from '../../../../core/services/order.service';
 import {
   OrderProductReviewComponent
 } from '../../../client/order-history/order-product-review/order-product-review.component';
+import {CartDetailComponent} from '../../../client/cart/cart-detail/cart-detail.component';
+import {ORDER_STATUS, PAYMENT_METHOD, PAYMENT_STATUS} from '../../../../constants/order.constants';
 
 @Component({
   selector: 'app-order-detail',
@@ -77,11 +79,15 @@ export class OrderDetailComponent implements OnInit {
   }
 
   view() {
-    const modalRef = this.modalService.open(OrderProductReviewComponent, { size: 'xl', backdrop: 'static' });
+    const modalRef = this.modalService.open(CartDetailComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.products = this.orderDetail?.products;
   }
 
   dismiss() {
     this.activeModal.dismiss(false);
   }
+
+  protected readonly ORDER_STATUS = ORDER_STATUS;
+  protected readonly PAYMENT_METHOD = PAYMENT_METHOD;
+  protected readonly PAYMENT_STATUS = PAYMENT_STATUS;
 }

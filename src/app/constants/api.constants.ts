@@ -41,6 +41,9 @@ export const API_REVIEW_PUBLIC = API_PUBLIC + '/reviews';
 // Shops API constants
 export const API_SHOP = API_SECURE + '/shops'
 
+export const API_STATISTIC_REVENUE = API_ORDER + '/reports/revenues';
+export const API_STATISTIC_REVENUE_EXCEL = API_SECURE + '/reports/revenues';
+
 // Voucher API constants
 export const API_VOUCHER = API_SECURE + '/vouchers';
 export const API_VOUCHER_PUBLIC = API_PUBLIC + '/vouchers';

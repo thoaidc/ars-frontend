@@ -51,7 +51,7 @@
                 <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.type === 1 ? 'Giảm theo giá trị' : 'Giảm theo phần trăm' }}</td>
                 <td class="break-word-table text-right" (click)="view(voucher.id)">{{ voucher.value }}</td>
                 <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.status === 1 ? 'Đang hoạt động': 'Ngừng hoạt động' }}</td>
-                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ voucher.dateExpired }}</td>
+                <td class="break-word-table text-center" (click)="view(voucher.id)">{{ formatDateString(voucher.dateExpired) | date:'dd/MM/yyyy' }}</td>
               </tr>
             </ng-container>
             </tbody>

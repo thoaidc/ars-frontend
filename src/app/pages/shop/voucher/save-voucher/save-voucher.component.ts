@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
-import {Location, NgIf} from '@angular/common';
+import {DatePipe, Location, NgIf} from '@angular/common';
 import {Voucher, VoucherType} from '../../../../core/models/voucher.model';
 import {AlphanumericOnlyDirective} from '../../../../shared/directives/alphanumeric-only.directive';
 import {VoucherService} from '../../../../core/services/voucher.service';
@@ -18,7 +18,8 @@ import {AuthService} from '../../../../core/services/auth.service';
     FormsModule,
     AlphanumericOnlyDirective,
     NgIf,
-    NgSelectComponent
+    NgSelectComponent,
+    DatePipe
   ],
   templateUrl: './save-voucher.component.html',
   styleUrl: './save-voucher.component.scss'
@@ -88,6 +89,53 @@ export class SaveVoucherComponent implements OnInit {
     } else {
       this.toast.error('Tên và mã voucher không được phép để trống');
     }
+  }
+
+  get displayDateStart() {
+    if (this.voucher.dateStarted) {
+      const dateStr = String(this.voucher.dateStarted);
+      if (dateStr.length !== 8) return dateStr;
+      return `${dateStr.substring(6, 8)}/${dateStr.substring(4, 6)}/${dateStr.substring(0, 4)}`;
+    }
+
+    return '';
+  }
+
+  set displayDateStart(value: string) {
+    const cleanValue = value.replace(/\D/g, '');
+    if (cleanValue.length <= 8) {
+      this.voucher.dateStarted = Number(cleanValue);
+    }
+  }
+
+  get displayDate() {
+    if (this.voucher.dateExpired) {
+      const dateStr = String(this.voucher.dateExpired);
+      if (dateStr.length !== 8) return dateStr;
+      return `${dateStr.substring(6, 8)}/${dateStr.substring(4, 6)}/${dateStr.substring(0, 4)}`;
+    }
+
+    return '';
+  }
+
+  set displayDate(value: string) {
+    const cleanValue = value.replace(/\D/g, '');
+    if (cleanValue.length <= 8) {
+      this.voucher.dateExpired = Number(cleanValue);
+    }
+  }
+
+  formatDateString(date?: number): string {
+    if (date) {
+      const dateStr = String(date);
+      if (!dateStr || dateStr.length !== 8) return dateStr;
+      const year = dateStr.substring(0, 4);
+      const month = dateStr.substring(4, 6);
+      const day = dateStr.substring(6, 8);
+      return `${year}-${month}-${day}`;
+    }
+
+    return 'Vô thời hạn';
   }
 
   dismiss() {
